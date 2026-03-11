@@ -17,7 +17,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* SAME GALAXY BACKGROUND */
+/* SAME BACKGROUND */
 
 .galaxy{
 
@@ -41,6 +41,8 @@ z-index:-2;
 .stars{
 
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:200%;
 
@@ -149,8 +151,6 @@ background:#0ea5e9;
 <br>
 
 <button onclick="copyScript()">Copy Script</button>
-<button onclick="downloadScript()">Download</button>
-<button onclick="window.open('https://rekonise.com')">Get Link</button>
 
 </div>
 
@@ -161,17 +161,9 @@ const scripts={
 bloxfruit:{
 title:"Blox Fruits Auto Farm",
 image:"https://tr.rbxcdn.com/7b2c9c0bba8b4c728c59c1e06c2e2d42/768/432/Image/Png",
-description:"Powerful auto farm script for Blox Fruits.",
-howto:"1. Open executor\n2. Paste script\n3. Execute",
-script:'loadstring(game:HttpGet("https://example.com/script1"))()'
-},
-
-esp:{
-title:"ESP Player Script",
-image:"https://tr.rbxcdn.com/9c9f0fdde9d2c1c3e3cb14d6c2e1dbb6/768/432/Image/Png",
-description:"ESP script showing players.",
-howto:"1. Copy script\n2. Execute",
-script:'loadstring(game:HttpGet("https://example.com/script2"))()'
+description:"Powerful auto farm script.",
+howto:"1 Copy\n2 Paste\n3 Execute",
+script:'loadstring(game:HttpGet("https://example.com/script"))()'
 }
 
 }
@@ -193,20 +185,6 @@ function copyScript(){
 navigator.clipboard.writeText(data.script)
 
 alert("Script Copied!")
-
-}
-
-function downloadScript(){
-
-let blob=new Blob([data.script],{type:"text/plain"})
-
-let a=document.createElement("a")
-
-a.href=URL.createObjectURL(blob)
-
-a.download="script.txt"
-
-a.click()
 
 }
 
