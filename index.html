@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Script Galaxy</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#050b18;
+color:white;
+}
+
+/* animated galaxy background */
+
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%,#0ea5e9 0%,transparent 40%),
+radial-gradient(circle at 80% 60%,#1e40af 0%,transparent 40%),
+radial-gradient(circle at 40% 80%,#0284c7 0%,transparent 40%);
+animation:bgmove 15s infinite alternate;
+z-index:-1;
+}
+
+@keyframes bgmove{
+0%{transform:scale(1)}
+100%{transform:scale(1.2)}
+}
+
+header{
+padding:25px;
+font-size:24px;
+font-weight:bold;
+color:#38bdf8;
+text-align:center;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:30px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:#081022;
+border-radius:12px;
+overflow:hidden;
+cursor:pointer;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 25px #0ea5e9;
+}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+.card h3{
+padding:15px;
+color:#38bdf8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>Script Galaxy</header>
+
+<div class="container">
+
+<div class="grid">
+
+<!-- SCRIPT 1 -->
+
+<div class="card" onclick="openScript('bloxfruit')">
+
+<img src="https://tr.rbxcdn.com/7b2c9c0bba8b4c728c59c1e06c2e2d42/768/432/Image/Png">
+
+<h3>Blox Fruits Auto Farm</h3>
+
+</div>
+
+<!-- SCRIPT 2 -->
+
+<div class="card" onclick="openScript('esp')">
+
+<img src="https://tr.rbxcdn.com/9c9f0fdde9d2c1c3e3cb14d6c2e1dbb6/768/432/Image/Png">
+
+<h3>ESP Player Script</h3>
+
+</div>
+
+<!-- SCRIPT 3 -->
+
+<div class="card" onclick="openScript('speed')">
+
+<img src="https://tr.rbxcdn.com/0a2f3e6e6a6bfa89f1f9d35c1d7b1a2b/768/432/Image/Png">
+
+<h3>Speed Hack</h3>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function openScript(name){
+window.location.href="scriptpage.html?script="+name
+}
+
+</script>
+
+</body>
+</html>
