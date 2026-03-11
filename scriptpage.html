@@ -12,46 +12,73 @@
 body{
 margin:0;
 font-family:Arial;
-background:#050b18;
+background:#030712;
 color:white;
 overflow-x:hidden;
 }
 
-/* GALAXY BACKGROUND */
+/* SAME GALAXY BACKGROUND */
 
 .galaxy{
+
 position:fixed;
 top:0;
 left:0;
-width:100%;
-height:100%;
+width:200%;
+height:200%;
+
 background:
+
 radial-gradient(circle at 20% 30%, rgba(14,165,233,0.4), transparent 40%),
-radial-gradient(circle at 80% 60%, rgba(37,99,235,0.35), transparent 40%);
-animation:galaxyMove 20s ease-in-out infinite alternate;
+radial-gradient(circle at 70% 60%, rgba(59,130,246,0.35), transparent 45%);
+
+animation:galaxyMove 60s linear infinite;
+
 z-index:-2;
+
 }
 
 .stars{
+
 position:fixed;
 width:100%;
-height:100%;
+height:200%;
+
 background-image:
-radial-gradient(2px 2px at 20% 30%, white, transparent),
-radial-gradient(1px 1px at 70% 80%, white, transparent),
-radial-gradient(2px 2px at 40% 60%, white, transparent);
-animation:starsMove 60s linear infinite;
+
+radial-gradient(2px 2px at 20% 20%, white, transparent),
+radial-gradient(2px 2px at 80% 40%, white, transparent),
+radial-gradient(1px 1px at 60% 80%, white, transparent),
+radial-gradient(2px 2px at 30% 70%, white, transparent);
+
+animation:starsMove 120s linear infinite;
+
 z-index:-1;
+
 }
 
 @keyframes galaxyMove{
-0%{transform:scale(1)}
-100%{transform:scale(1.2) translateY(-40px)}
+
+from{
+transform:translateY(0);
+}
+
+to{
+transform:translateY(-500px);
+}
+
 }
 
 @keyframes starsMove{
-0%{transform:translateY(0)}
-100%{transform:translateY(-200px)}
+
+from{
+transform:translateY(0);
+}
+
+to{
+transform:translateY(-800px);
+}
+
 }
 
 .container{
@@ -72,7 +99,7 @@ color:#38bdf8;
 textarea{
 width:100%;
 height:150px;
-background:#081022;
+background:#0b1220;
 color:#38bdf8;
 border:none;
 padding:10px;
@@ -95,6 +122,7 @@ background:#0ea5e9;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -141,23 +169,17 @@ script:'loadstring(game:HttpGet("https://example.com/script1"))()'
 esp:{
 title:"ESP Player Script",
 image:"https://tr.rbxcdn.com/9c9f0fdde9d2c1c3e3cb14d6c2e1dbb6/768/432/Image/Png",
-description:"ESP script showing players and items.",
-howto:"1. Copy script\n2. Paste in executor\n3. Execute",
+description:"ESP script showing players.",
+howto:"1. Copy script\n2. Execute",
 script:'loadstring(game:HttpGet("https://example.com/script2"))()'
-},
-
-speed:{
-title:"Speed Hack",
-image:"https://tr.rbxcdn.com/0a2f3e6e6a6bfa89f1f9d35c1d7b1a2b/768/432/Image/Png",
-description:"Increase movement speed instantly.",
-howto:"1. Copy script\n2. Run in executor",
-script:'loadstring(game:HttpGet("https://example.com/script3"))()'
 }
 
 }
 
 const params=new URLSearchParams(location.search)
+
 const name=params.get("script")
+
 const data=scripts[name]
 
 document.getElementById("title").innerText=data.title
@@ -167,16 +189,21 @@ document.getElementById("howto").innerText=data.howto
 document.getElementById("script").value=data.script
 
 function copyScript(){
+
 navigator.clipboard.writeText(data.script)
+
 alert("Script Copied!")
+
 }
 
 function downloadScript(){
 
 let blob=new Blob([data.script],{type:"text/plain"})
+
 let a=document.createElement("a")
 
 a.href=URL.createObjectURL(blob)
+
 a.download="script.txt"
 
 a.click()
