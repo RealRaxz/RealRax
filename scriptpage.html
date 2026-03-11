@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Script Page</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#050b18;
+color:white;
+}
+
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%,#0ea5e9 0%,transparent 40%),
+radial-gradient(circle at 80% 60%,#1e40af 0%,transparent 40%);
+animation:bgmove 15s infinite alternate;
+z-index:-1;
+}
+
+@keyframes bgmove{
+0%{transform:scale(1)}
+100%{transform:scale(1.2)}
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:40px;
+}
+
+img{
+width:100%;
+border-radius:10px;
+}
+
+h1{
+color:#38bdf8;
+}
+
+textarea{
+width:100%;
+height:150px;
+background:#081022;
+color:#38bdf8;
+border:none;
+padding:10px;
+margin-top:15px;
+}
+
+button{
+padding:12px 18px;
+margin-top:10px;
+margin-right:10px;
+background:#0369a1;
+border:none;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#0ea5e9;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<img id="image">
+
+<h1 id="title"></h1>
+
+<h3>Description</h3>
+<p id="description"></p>
+
+<h3>How To Use</h3>
+<p id="howto"></p>
+
+<h3>Script</h3>
+
+<textarea id="script"></textarea>
+
+<br>
+
+<button onclick="copyScript()">Copy Script</button>
+
+<button onclick="downloadScript()">Download</button>
+
+<button onclick="window.open('https://rekonise.com')">Get Link</button>
+
+</div>
+
+<script>
+
+const scripts={
+
+bloxfruit:{
+title:"Blox Fruits Auto Farm",
+image:"https://tr.rbxcdn.com/7b2c9c0bba8b4c728c59c1e06c2e2d42/768/432/Image/Png",
+description:"Powerful auto farm script for Blox Fruits.",
+howto:"1. Open executor\n2. Paste script\n3. Execute",
+script:'loadstring(game:HttpGet("https://example.com/script1"))()'
+},
+
+esp:{
+title:"ESP Player Script",
+image:"https://tr.rbxcdn.com/9c9f0fdde9d2c1c3e3cb14d6c2e1dbb6/768/432/Image/Png",
+description:"ESP script showing players and items.",
+howto:"1. Copy script\n2. Paste in executor\n3. Execute",
+script:'loadstring(game:HttpGet("https://example.com/script2"))()'
+},
+
+speed:{
+title:"Speed Hack",
+image:"https://tr.rbxcdn.com/0a2f3e6e6a6bfa89f1f9d35c1d7b1a2b/768/432/Image/Png",
+description:"Increase movement speed instantly.",
+howto:"1. Copy script\n2. Run in executor",
+script:'loadstring(game:HttpGet("https://example.com/script3"))()'
+}
+
+}
+
+const params=new URLSearchParams(location.search)
+const name=params.get("script")
+const data=scripts[name]
+
+document.getElementById("title").innerText=data.title
+document.getElementById("image").src=data.image
+document.getElementById("description").innerText=data.description
+document.getElementById("howto").innerText=data.howto
+document.getElementById("script").value=data.script
+
+function copyScript(){
+navigator.clipboard.writeText(data.script)
+alert("Script Copied!")
+}
+
+function downloadScript(){
+
+let blob=new Blob([data.script],{type:"text/plain"})
+
+let a=document.createElement("a")
+
+a.href=URL.createObjectURL(blob)
+
+a.download="script.txt"
+
+a.click()
+
+}
+
+</script>
+
+</body>
+</html>
