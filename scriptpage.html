@@ -17,7 +17,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* SAME PARTICLE BACKGROUND */
+/* PARTICLES BACKGROUND */
 
 .particles{
 
@@ -31,13 +31,27 @@ z-index:-1;
 
 background-image:
 
-radial-gradient(2px 2px at 10% 20%, #38bdf8, transparent),
-radial-gradient(2px 2px at 30% 80%, #38bdf8, transparent),
-radial-gradient(2px 2px at 50% 50%, #38bdf8, transparent),
-radial-gradient(2px 2px at 70% 30%, #38bdf8, transparent),
-radial-gradient(2px 2px at 90% 70%, #38bdf8, transparent),
-radial-gradient(2px 2px at 20% 60%, #38bdf8, transparent),
-radial-gradient(2px 2px at 80% 10%, #38bdf8, transparent);
+radial-gradient(2px 2px at 5% 10%, #38bdf8, transparent),
+radial-gradient(2px 2px at 15% 30%, #38bdf8, transparent),
+radial-gradient(2px 2px at 25% 80%, #38bdf8, transparent),
+radial-gradient(2px 2px at 35% 60%, #38bdf8, transparent),
+radial-gradient(2px 2px at 45% 20%, #38bdf8, transparent),
+radial-gradient(2px 2px at 55% 70%, #38bdf8, transparent),
+radial-gradient(2px 2px at 65% 40%, #38bdf8, transparent),
+radial-gradient(2px 2px at 75% 10%, #38bdf8, transparent),
+radial-gradient(2px 2px at 85% 50%, #38bdf8, transparent),
+radial-gradient(2px 2px at 95% 80%, #38bdf8, transparent),
+
+radial-gradient(2px 2px at 10% 90%, #38bdf8, transparent),
+radial-gradient(2px 2px at 20% 50%, #38bdf8, transparent),
+radial-gradient(2px 2px at 30% 10%, #38bdf8, transparent),
+radial-gradient(2px 2px at 40% 70%, #38bdf8, transparent),
+radial-gradient(2px 2px at 50% 40%, #38bdf8, transparent),
+radial-gradient(2px 2px at 60% 85%, #38bdf8, transparent),
+radial-gradient(2px 2px at 70% 60%, #38bdf8, transparent),
+radial-gradient(2px 2px at 80% 25%, #38bdf8, transparent),
+radial-gradient(2px 2px at 90% 45%, #38bdf8, transparent),
+radial-gradient(2px 2px at 98% 15%, #38bdf8, transparent);
 
 animation:particleMove 40s linear infinite;
 
@@ -59,11 +73,6 @@ transform:translateY(-50%);
 max-width:900px;
 margin:auto;
 padding:40px;
-}
-
-img{
-width:100%;
-border-radius:10px;
 }
 
 textarea{
@@ -99,18 +108,9 @@ background:#0ea5e9;
 
 <div class="container">
 
-<img id="image">
+<h1 id="title">Script</h1>
 
-<h1 id="title"></h1>
-
-<p id="description"></p>
-
-<h3>How To Use</h3>
-<p id="howto"></p>
-
-<h3>Script</h3>
-
-<textarea id="script"></textarea>
+<textarea id="script">loadstring()</textarea>
 
 <br>
 
@@ -120,33 +120,11 @@ background:#0ea5e9;
 
 <script>
 
-const scripts={
-
-bloxfruit:{
-title:"Blox Fruits Auto Farm",
-image:"https://tr.rbxcdn.com/7b2c9c0bba8b4c728c59c1e06c2e2d42/768/432/Image/Png",
-description:"Powerful auto farm script.",
-howto:"1 Copy Script\n2 Paste\n3 Execute",
-script:'loadstring(game:HttpGet("https://example.com/script"))()'
-}
-
-}
-
-const params=new URLSearchParams(location.search)
-
-const name=params.get("script")
-
-const data=scripts[name]
-
-document.getElementById("title").innerText=data.title
-document.getElementById("image").src=data.image
-document.getElementById("description").innerText=data.description
-document.getElementById("howto").innerText=data.howto
-document.getElementById("script").value=data.script
-
 function copyScript(){
 
-navigator.clipboard.writeText(data.script)
+let text=document.getElementById("script")
+
+navigator.clipboard.writeText(text.value)
 
 alert("Script Copied")
 
