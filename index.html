@@ -28,27 +28,18 @@ height:200%;
 z-index:-1;
 
 background-image:
-radial-gradient(2px 2px at 3% 10%, #38bdf8, transparent),
-radial-gradient(2px 2px at 6% 30%, #38bdf8, transparent),
-radial-gradient(2px 2px at 9% 70%, #38bdf8, transparent),
-radial-gradient(2px 2px at 12% 50%, #38bdf8, transparent),
-radial-gradient(2px 2px at 18% 90%, #38bdf8, transparent),
-radial-gradient(2px 2px at 22% 25%, #38bdf8, transparent),
-radial-gradient(2px 2px at 27% 60%, #38bdf8, transparent),
-radial-gradient(2px 2px at 33% 15%, #38bdf8, transparent),
-radial-gradient(2px 2px at 38% 45%, #38bdf8, transparent),
-radial-gradient(2px 2px at 44% 80%, #38bdf8, transparent),
-radial-gradient(2px 2px at 50% 35%, #38bdf8, transparent),
-radial-gradient(2px 2px at 56% 75%, #38bdf8, transparent),
-radial-gradient(2px 2px at 63% 20%, #38bdf8, transparent),
-radial-gradient(2px 2px at 69% 55%, #38bdf8, transparent),
-radial-gradient(2px 2px at 75% 85%, #38bdf8, transparent),
-radial-gradient(2px 2px at 81% 40%, #38bdf8, transparent),
-radial-gradient(2px 2px at 87% 65%, #38bdf8, transparent),
-radial-gradient(2px 2px at 93% 30%, #38bdf8, transparent),
-radial-gradient(2px 2px at 97% 75%, #38bdf8, transparent);
+radial-gradient(2px 2px at 5% 10%, #38bdf8, transparent),
+radial-gradient(2px 2px at 15% 40%, #38bdf8, transparent),
+radial-gradient(2px 2px at 25% 70%, #38bdf8, transparent),
+radial-gradient(2px 2px at 35% 20%, #38bdf8, transparent),
+radial-gradient(2px 2px at 45% 60%, #38bdf8, transparent),
+radial-gradient(2px 2px at 55% 80%, #38bdf8, transparent),
+radial-gradient(2px 2px at 65% 30%, #38bdf8, transparent),
+radial-gradient(2px 2px at 75% 50%, #38bdf8, transparent),
+radial-gradient(2px 2px at 85% 70%, #38bdf8, transparent),
+radial-gradient(2px 2px at 95% 20%, #38bdf8, transparent);
 
-animation:move 40s linear infinite;
+animation:move 35s linear infinite;
 }
 
 @keyframes move{
@@ -152,12 +143,25 @@ let channelID="UCQpsD3OgICNaiyGaVeiC5BQ"
 let page=0
 let allVideos=[]
 
-fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=${channelID}`)
-.then(res=>res.json())
-.then(data=>{
+async function loadChannel(){
+
+let url="https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id="+channelID
+
+let res=await fetch(url)
+let data=await res.json()
+
+if(!data.items){
+console.log("โหลดคลิปไม่ได้")
+return
+}
+
 allVideos=data.items
+
 loadVideos()
-})
+
+}
+
+loadChannel()
 
 function loadVideos(){
 
@@ -166,7 +170,8 @@ let grid=document.getElementById("videos")
 for(let i=page;i<page+10 && i<allVideos.length;i++){
 
 let video=allVideos[i]
-let id=video.link.split("v=")[1]
+
+let id=video.link.split("v=")[1].split("&")[0]
 
 let card=document.createElement("div")
 card.className="card"
@@ -176,7 +181,7 @@ card.innerHTML=`
 
 ${i==0?'<div class="top">⭐ Top Script</div>':''}
 
-<img src="https://img.youtube.com/vi/${id}/maxresdefault.jpg">
+<img src="https://img.youtube.com/vi/${id}/hqdefault.jpg">
 
 <h3>${video.title}</h3>
 
