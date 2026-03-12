@@ -13,25 +13,38 @@
 body{
 margin:0;
 font-family:Arial;
-background:#020617;
 color:white;
 overflow-x:hidden;
+
+background:
+linear-gradient(135deg,#0f172a,#020617,#1e293b);
 }
 
 /* NAVBAR */
 
 .navbar{
+
 position:sticky;
 top:0;
 z-index:999;
+
 display:flex;
 align-items:center;
 justify-content:space-between;
+
 margin:16px;
 padding:14px 22px;
-border-radius:18px;
-background:linear-gradient(180deg,#0b1220,#070f1c);
-border:1px solid rgba(255,255,255,0.08);
+
+border-radius:20px;
+
+background:rgba(255,255,255,0.08);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,0.18);
+
+box-shadow:0 8px 32px rgba(0,0,0,0.4);
+
 }
 
 .nav-left{
@@ -44,6 +57,7 @@ gap:12px;
 width:38px;
 height:38px;
 border-radius:50%;
+object-fit:cover;
 }
 
 .nav-text{
@@ -78,14 +92,35 @@ gap:12px;
 }
 
 .nav-btn{
+
 padding:10px 18px;
+
 border-radius:12px;
+
 font-size:14px;
+
 cursor:pointer;
-border:1px solid rgba(255,255,255,0.08);
-background:#0f172a;
+
+background:rgba(255,255,255,0.08);
+
+backdrop-filter:blur(10px);
+
+border:1px solid rgba(255,255,255,0.2);
+
 color:white;
+
 text-decoration:none;
+
+transition:0.25s;
+
+}
+
+.nav-btn:hover{
+
+background:rgba(255,255,255,0.18);
+
+transform:translateY(-2px);
+
 }
 
 /* HEADER */
@@ -109,25 +144,42 @@ margin-bottom:30px;
 }
 
 .search input{
+
 width:320px;
 max-width:90%;
+
 padding:12px;
-border-radius:8px;
-border:1px solid #ffffff;
-background:#020617;
+
+border-radius:10px;
+
+background:rgba(255,255,255,0.08);
+
+border:1px solid rgba(255,255,255,0.2);
+
+backdrop-filter:blur(10px);
+
 color:white;
+
 }
 
 /* GRID */
 
 .grid{
+
 display:grid;
+
 grid-template-columns:repeat(4,1fr);
+
 gap:20px;
+
 padding:20px;
+
 max-width:1100px;
+
 margin:auto;
+
 transition:opacity 0.25s ease;
+
 }
 
 /* CARD */
@@ -137,86 +189,122 @@ position:relative;
 }
 
 .card{
-background:#0f172a;
-border:1px solid #ffffff;
-border-radius:14px;
+
+background:rgba(255,255,255,0.08);
+
+backdrop-filter:blur(20px);
+
+border-radius:16px;
+
+border:1px solid rgba(255,255,255,0.18);
+
+box-shadow:0 8px 24px rgba(0,0,0,0.35);
+
 overflow:hidden;
+
 cursor:pointer;
-transition:0.2s;
+
+transition:0.25s;
+
 }
 
 .card:hover{
-transform:translateY(-4px);
+
+transform:translateY(-6px) scale(1.02);
+
+box-shadow:0 15px 40px rgba(0,0,0,0.45);
+
 }
 
 .card img{
+
 width:100%;
 height:140px;
+
 object-fit:cover;
+
 }
 
 .card-title{
+
 padding:12px;
+
 font-size:15px;
+
 color:#e2e8f0;
+
 }
 
 .badge{
+
 position:absolute;
+
 top:8px;
 left:8px;
+
 background:#f59e0b;
+
 color:black;
+
 font-size:12px;
+
 padding:4px 8px;
+
 border-radius:6px;
+
 font-weight:bold;
+
 }
 
 /* PAGINATION */
 
 .pagination{
+
 text-align:center;
+
 margin:40px 0;
+
 }
 
-/* BUTTON */
-
 .page-btn{
-display:inline-block;
-margin:4px;
-padding:10px 16px;
-border-radius:10px;
 
-background:#0ea5e9;
+display:inline-block;
+
+margin:4px;
+
+padding:10px 16px;
+
+border-radius:12px;
+
+background:rgba(255,255,255,0.1);
+
+backdrop-filter:blur(10px);
+
+border:1px solid rgba(255,255,255,0.2);
+
 color:white;
 
 cursor:pointer;
-font-weight:bold;
-
-border:1px solid rgba(255,255,255,0.15);
 
 transition:0.25s;
-}
 
-/* HOVER */
+}
 
 .page-btn:hover{
-background:#0284c7;
-transform:translateY(-2px);
-}
 
-/* CLICK ANIMATION */
+background:rgba(255,255,255,0.18);
+
+transform:translateY(-2px);
+
+}
 
 .page-btn:active{
 
-transform:scale(0.92);
-
-box-shadow:0 0 10px #38bdf8;
+transform:scale(0.9);
 
 }
 
-/* PARTICLE */
+/* PARTICLES */
 
 canvas{
 position:fixed;
@@ -288,100 +376,11 @@ OPERATIONAL
 
 <div class="grid" id="grid">
 
-<!-- CARD 1 -->
-<div class="card-item">
-<div class="badge">⭐ TOP</div>
-<div class="card" onclick="openScript('script1')">
-<img src="https://picsum.photos/400/200?1">
-<div class="card-title">Script 1</div>
-</div>
-</div>
-
-<!-- CARD 2 -->
-<div class="card-item">
-<div class="card" onclick="openScript('script2')">
-<img src="https://picsum.photos/400/200?2">
-<div class="card-title">Script 2</div>
-</div>
-</div>
-
-<!-- CARD 3 -->
-<div class="card-item">
-<div class="card" onclick="openScript('script3')">
-<img src="https://picsum.photos/400/200?3">
-<div class="card-title">Script 3</div>
-</div>
-</div>
-
-<!-- CARD 4 -->
-<div class="card-item">
-<div class="card" onclick="openScript('script4')">
-<img src="https://picsum.photos/400/200?4">
-<div class="card-title">Script 4</div>
-</div>
-</div>
-
-<!-- CARD 5 -->
-<div class="card-item">
-<div class="card" onclick="openScript('script5')">
-<img src="https://picsum.photos/400/200?5">
-<div class="card-title">Script 5</div>
-</div>
-</div>
-
-<!-- CARD 6 -->
-<div class="card-item">
-<div class="card" onclick="openScript('script6')">
-<img src="https://picsum.photos/400/200?6">
-<div class="card-title">Script 6</div>
-</div>
-</div>
-
-<!-- CARD 7 -->
-<div class="card-item">
-<div class="card" onclick="openScript('script7')">
-<img src="https://picsum.photos/400/200?7">
-<div class="card-title">Script 7</div>
-</div>
-</div>
-
-<!-- CARD 8 -->
-<div class="card-item">
-<div class="card" onclick="openScript('script8')">
-<img src="https://picsum.photos/400/200?8">
-<div class="card-title">Script 8</div>
-</div>
-</div>
-
-<!-- CARD 9 -->
-<div class="card-item">
-<div class="card" onclick="openScript('script9')">
-<img src="https://picsum.photos/400/200?9">
-<div class="card-title">Script 9</div>
-</div>
-</div>
-
-<!-- CARD 10 -->
-<div class="card-item">
-<div class="card" onclick="openScript('script10')">
-<img src="https://picsum.photos/400/200?10">
-<div class="card-title">Script 10</div>
-</div>
-</div>
-
 </div>
 
 <div class="pagination" id="pagination"></div>
 
 <script>
-
-/* OPEN SCRIPT */
-
-function openScript(name){
-window.location.href="scriptpage.html?script="+name;
-}
-
-/* SEARCH */
 
 function searchScript(){
 
@@ -397,66 +396,6 @@ card.style.display = text.includes(input) ? "block" : "none";
 
 }
 
-/* PAGINATION */
-
-const cardsPerPage = 8;
-let currentPage = 1;
-
-const cards = document.querySelectorAll(".card-item");
-const totalPages = Math.ceil(cards.length / cardsPerPage);
-
-function showPage(page){
-
-if(page<1) page=1;
-if(page>totalPages) page=totalPages;
-
-currentPage=page;
-
-const grid=document.getElementById("grid");
-
-grid.style.opacity="0";
-
-setTimeout(()=>{
-
-let start=(page-1)*cardsPerPage;
-let end=start+cardsPerPage;
-
-cards.forEach((card,index)=>{
-
-card.style.display=(index>=start && index<end)?"block":"none";
-
-});
-
-grid.style.opacity="1";
-
-renderPagination();
-
-},150);
-
-}
-
-function renderPagination(){
-
-let container=document.getElementById("pagination");
-
-container.innerHTML="";
-
-container.innerHTML+=`<span class="page-btn" onclick="showPage(1)">«</span>`;
-container.innerHTML+=`<span class="page-btn" onclick="showPage(${currentPage-1})">‹</span>`;
-
-for(let i=1;i<=Math.min(totalPages,10);i++){
-
-container.innerHTML+=`<span class="page-btn" onclick="showPage(${i})">${i}</span>`;
-
-}
-
-container.innerHTML+=`<span class="page-btn" onclick="showPage(${currentPage+1})">›</span>`;
-container.innerHTML+=`<span class="page-btn" onclick="showPage(${totalPages})">»</span>`;
-
-}
-
-showPage(1);
-
 /* PARTICLE BACKGROUND */
 
 const canvas=document.getElementById("particles");
@@ -470,10 +409,12 @@ let particles=[];
 for(let i=0;i<80;i++){
 
 particles.push({
+
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 size:Math.random()*2,
 speed:Math.random()*0.4+0.1
+
 });
 
 }
@@ -493,8 +434,10 @@ ctx.fill();
 p.y-=p.speed;
 
 if(p.y<0){
+
 p.y=canvas.height;
 p.x=Math.random()*canvas.width;
+
 }
 
 });
