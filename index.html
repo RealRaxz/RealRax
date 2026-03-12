@@ -48,7 +48,6 @@ margin-bottom:30px;
 }
 
 .search input{
-
 width:320px;
 max-width:90%;
 padding:12px;
@@ -57,26 +56,22 @@ border:1px solid #ffffff;
 background:#020617;
 color:white;
 box-shadow:0 0 8px rgba(255,255,255,0.15);
-
 }
 
 /* grid */
 
 .grid{
-
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:20px;
 padding:20px;
 max-width:1100px;
 margin:auto;
-
 }
 
 /* card */
 
 .card{
-
 background:#0f172a;
 border:1px solid #ffffff;
 border-radius:14px;
@@ -84,36 +79,28 @@ overflow:hidden;
 box-shadow:0 0 8px rgba(255,255,255,0.15);
 cursor:pointer;
 transition:0.2s;
-
 }
 
 .card:hover{
-
 transform:translateY(-4px);
 box-shadow:0 0 14px rgba(255,255,255,0.2);
-
 }
 
 .card img{
-
 width:100%;
 height:140px;
 object-fit:cover;
-
 }
 
 .card-title{
-
 padding:12px;
 font-size:15px;
 color:#e2e8f0;
-
 }
 
 /* badge */
 
 .badge{
-
 position:absolute;
 background:#f59e0b;
 color:black;
@@ -123,40 +110,46 @@ border-radius:6px;
 top:8px;
 left:8px;
 font-weight:bold;
-
 }
 
 .card-wrap{
 position:relative;
 }
 
-/* ad */
+/* pagination */
 
-.ad{
-
-max-width:1000px;
-margin:auto;
+.pagination{
 text-align:center;
-padding:20px;
+margin:30px;
+}
 
+.pagination button{
+padding:10px 18px;
+margin:5px;
+background:#0ea5e9;
+border:none;
+border-radius:8px;
+color:white;
+cursor:pointer;
+font-weight:bold;
+}
+
+.pagination button:hover{
+background:#0284c7;
 }
 
 /* mobile */
 
 @media(max-width:900px){
-
 .grid{
 grid-template-columns:repeat(2,1fr);
 }
-
 }
 
 @media(max-width:500px){
-
 .grid{
 grid-template-columns:1fr;
 }
-
 }
 
 </style>
@@ -168,114 +161,77 @@ grid-template-columns:1fr;
 <canvas id="particles"></canvas>
 
 <div class="header">
-
 <div class="title">🚀 Script Hub</div>
-
 </div>
 
 <div class="search">
-
 <input id="search" placeholder="🔎 Search Script..." onkeyup="searchScript()">
-
-</div>
-
-<div class="ad">
-
-<!-- Adsterra code here -->
-
 </div>
 
 <div class="grid" id="grid">
 
-<!-- CARD 1 -->
-
 <div class="card-wrap">
-
 <div class="badge">⭐ TOP</div>
-
 <div class="card" onclick="openScript('script1')">
-
 <img src="https://picsum.photos/400/200?1">
-
 <div class="card-title">Script #1</div>
-
 </div>
-
 </div>
-
-<!-- CARD 2 -->
 
 <div class="card" onclick="openScript('script2')">
-
 <img src="https://picsum.photos/400/200?2">
-
 <div class="card-title">Script #2</div>
-
 </div>
 
 <div class="card" onclick="openScript('script3')">
-
 <img src="https://picsum.photos/400/200?3">
-
 <div class="card-title">Script #3</div>
-
 </div>
 
 <div class="card" onclick="openScript('script4')">
-
 <img src="https://picsum.photos/400/200?4">
-
 <div class="card-title">Script #4</div>
-
 </div>
 
 <div class="card" onclick="openScript('script5')">
-
 <img src="https://picsum.photos/400/200?5">
-
 <div class="card-title">Script #5</div>
-
 </div>
 
 <div class="card" onclick="openScript('script6')">
-
 <img src="https://picsum.photos/400/200?6">
-
 <div class="card-title">Script #6</div>
-
 </div>
 
 <div class="card" onclick="openScript('script7')">
-
 <img src="https://picsum.photos/400/200?7">
-
 <div class="card-title">Script #7</div>
-
 </div>
 
 <div class="card" onclick="openScript('script8')">
-
 <img src="https://picsum.photos/400/200?8">
-
 <div class="card-title">Script #8</div>
-
 </div>
 
 <div class="card" onclick="openScript('script9')">
-
 <img src="https://picsum.photos/400/200?9">
-
 <div class="card-title">Script #9</div>
-
 </div>
 
 <div class="card" onclick="openScript('script10')">
-
 <img src="https://picsum.photos/400/200?10">
-
 <div class="card-title">Script #10</div>
+</div>
 
 </div>
+
+<div class="pagination">
+
+<button onclick="prevPage()">⬅ Prev</button>
+
+<span id="pageNumber">Page 1</span>
+
+<button onclick="nextPage()">Next ➡</button>
 
 </div>
 
@@ -284,9 +240,7 @@ grid-template-columns:1fr;
 /* open script */
 
 function openScript(name){
-
 window.location.href="scriptpage.html?script="+name;
-
 }
 
 /* search */
@@ -294,7 +248,6 @@ window.location.href="scriptpage.html?script="+name;
 function searchScript(){
 
 let input=document.getElementById("search").value.toLowerCase();
-
 let cards=document.querySelectorAll(".card");
 
 cards.forEach(card=>{
@@ -302,18 +255,64 @@ cards.forEach(card=>{
 let title=card.innerText.toLowerCase();
 
 if(title.includes(input)){
-
 card.style.display="block";
-
 }else{
-
 card.style.display="none";
-
 }
 
 });
 
 }
+
+/* pagination */
+
+const cardsPerPage=8;
+let currentPage=1;
+
+const cards=document.querySelectorAll(".card");
+
+function showPage(page){
+
+let start=(page-1)*cardsPerPage;
+let end=start+cardsPerPage;
+
+cards.forEach((card,index)=>{
+
+if(index>=start && index<end){
+card.parentElement.style.display="block";
+}else{
+card.parentElement.style.display="none";
+}
+
+});
+
+document.getElementById("pageNumber").innerText="Page "+page;
+
+}
+
+function nextPage(){
+
+if(currentPage*cardsPerPage<cards.length){
+
+currentPage++;
+showPage(currentPage);
+
+}
+
+}
+
+function prevPage(){
+
+if(currentPage>1){
+
+currentPage--;
+showPage(currentPage);
+
+}
+
+}
+
+showPage(1);
 
 /* particle background */
 
@@ -321,10 +320,8 @@ const canvas=document.getElementById("particles");
 const ctx=canvas.getContext("2d");
 
 function resize(){
-
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
-
 }
 
 resize();
@@ -360,10 +357,8 @@ ctx.fill();
 p.y-=p.speed;
 
 if(p.y<0){
-
 p.y=canvas.height;
 p.x=Math.random()*canvas.width;
-
 }
 
 });
