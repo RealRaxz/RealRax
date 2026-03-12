@@ -17,6 +17,76 @@ color:white;
 overflow-x:hidden;
 }
 
+/* NAVBAR */
+
+.navbar{
+position:sticky;
+top:0;
+z-index:999;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 24px;
+background:#020617;
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.nav-left{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.nav-logo{
+width:38px;
+height:38px;
+border-radius:50%;
+}
+
+.nav-title{
+font-weight:bold;
+font-size:16px;
+}
+
+.nav-status{
+font-size:12px;
+color:#38bdf8;
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.dot{
+width:7px;
+height:7px;
+background:#22c55e;
+border-radius:50%;
+}
+
+.nav-right{
+display:flex;
+gap:10px;
+}
+
+.nav-btn{
+padding:8px 14px;
+border-radius:8px;
+border:1px solid rgba(255,255,255,0.1);
+background:#0f172a;
+color:white;
+cursor:pointer;
+}
+
+.nav-btn.primary{
+background:#3b82f6;
+}
+
+.nav-btn.discord{
+background:#5865F2;
+}
+
+/* particle */
+
 canvas{
 position:fixed;
 top:0;
@@ -118,7 +188,6 @@ margin:40px 0;
 }
 
 .page-btn{
-
 display:inline-block;
 margin:4px;
 padding:10px 16px;
@@ -153,6 +222,39 @@ grid-template-columns:1fr;
 </head>
 
 <body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="nav-left">
+
+<img src="logo.png" class="nav-logo">
+
+<div>
+
+<div class="nav-title">RealRax</div>
+
+<div class="nav-status">
+<span class="dot"></span>
+Activate
+</div>
+
+</div>
+
+</div>
+
+<div class="nav-right">
+
+<button class="nav-btn">Download</button>
+
+<button class="nav-btn primary">Purchase</button>
+
+<button class="nav-btn discord">Discord</button>
+
+</div>
+
+</div>
 
 <canvas id="particles"></canvas>
 
