@@ -29,6 +29,7 @@ background:#0f172a;
 border:none;
 color:#38bdf8;
 padding:10px;
+border-radius:6px;
 }
 
 button{
@@ -64,11 +65,11 @@ loadstring(game:HttpGet("SCRIPT_HERE"))()
 
 function copy(){
 
-let text=document.getElementById("script").value
+let text=document.getElementById("script")
 
-navigator.clipboard.writeText(text)
+navigator.clipboard.writeText(text.value)
 
-alert("Script Copied")
+alert("Copied!")
 
 }
 
