@@ -51,9 +51,7 @@ cursor:pointer;
 <h2>Copy Script</h2>
 
 <textarea id="script">
-
 loadstring(game:HttpGet("SCRIPT_HERE"))()
-
 </textarea>
 
 <br>
@@ -66,9 +64,9 @@ loadstring(game:HttpGet("SCRIPT_HERE"))()
 
 function copy(){
 
-let text=document.getElementById("script")
+let text=document.getElementById("script").value
 
-navigator.clipboard.writeText(text.value)
+navigator.clipboard.writeText(text)
 
 alert("Script Copied")
 
