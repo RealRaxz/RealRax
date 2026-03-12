@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Script Page</title>
+<title>Copy Script</title>
 
 <style>
 
@@ -14,7 +14,19 @@ margin:0;
 font-family:Arial;
 background:#020617;
 color:white;
+overflow:hidden;
 }
+
+/* particle canvas */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* container */
 
 .container{
 max-width:800px;
@@ -63,10 +75,31 @@ button:hover{
 background:#0284c7;
 }
 
+/* toast */
+
+.toast{
+position:fixed;
+bottom:30px;
+right:30px;
+background:#0ea5e9;
+padding:12px 20px;
+border-radius:8px;
+color:white;
+font-size:14px;
+opacity:0;
+transition:0.3s;
+}
+
+.toast.show{
+opacity:1;
+}
+
 </style>
 </head>
 
 <body>
+
+<canvas id="particles"></canvas>
 
 <div class="container">
 
@@ -76,15 +109,15 @@ background:#0284c7;
 
 📝 <b>คำอธิบาย</b><br><br>
 
-🚀 Script นี้ถูกออกแบบมาเพื่อช่วยให้คุณใช้งานฟีเจอร์ต่าง ๆ ในเกมได้ง่ายขึ้นและสะดวกมากขึ้น<br>
-⚡ รองรับการใช้งานบน Executor ส่วนใหญ่ทั้ง PC และ Mobile<br>
-💡 ใช้งานง่าย เพียงคัดลอก Script แล้วนำไปวางใน Executor ก็สามารถเริ่มใช้งานได้ทันที<br><br>
+🚀 Script นี้ช่วยเพิ่มความสะดวกในการเล่นเกม และปลดล็อกฟีเจอร์ต่าง ๆ ให้ใช้งานได้ง่ายขึ้น<br>
+⚡ รองรับ Executor หลายตัว ทั้งบน PC และ Mobile<br>
+💡 เพียงคัดลอก Script แล้วนำไปวางใน Executor ก็สามารถใช้งานได้ทันที<br><br>
 
 📖 <b>วิธีใช้</b><br><br>
 
-1️⃣ กดปุ่ม <b>Copy Script</b> ด้านล่าง<br>
-2️⃣ เปิดโปรแกรม Executor ของคุณ<br>
-3️⃣ วาง Script ลงในช่อง Script ของ Executor<br>
+1️⃣ กดปุ่ม Copy Script ด้านล่าง<br>
+2️⃣ เปิดโปรแกรม Executor<br>
+3️⃣ วาง Script ลงในช่อง Script<br>
 4️⃣ กด Execute หรือ Run Script<br>
 5️⃣ กลับเข้าเกมแล้วใช้งานเมนู Script ได้ทันที 🎮
 
@@ -98,7 +131,11 @@ background:#0284c7;
 
 </div>
 
+<div id="toast" class="toast">✅ Script Copied!</div>
+
 <script>
+
+/* script system */
 
 const scripts={
 
@@ -130,15 +167,86 @@ const scriptName=params.get("script");
 
 document.getElementById("script").value=scripts[scriptName] || "Script not found";
 
+
+/* copy */
+
 function copy(){
 
-let text=document.getElementById("script").value;
+let text=document.getElementById("script").value
 
-navigator.clipboard.writeText(text);
+navigator.clipboard.writeText(text)
 
-alert("✅ Script Copied Successfully!");
+showToast()
 
 }
+
+
+/* toast */
+
+function showToast(){
+
+let toast=document.getElementById("toast")
+
+toast.classList.add("show")
+
+setTimeout(()=>{
+toast.classList.remove("show")
+},2000)
+
+}
+
+
+/* particles */
+
+const canvas=document.getElementById("particles")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let particles=[]
+
+for(let i=0;i<120;i++){
+
+particles.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2+1,
+speed:Math.random()*0.4+0.1
+
+})
+
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="#38bdf8"
+
+particles.forEach(p=>{
+
+ctx.beginPath()
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2)
+ctx.fill()
+
+p.y-=p.speed
+
+if(p.y<0){
+
+p.y=canvas.height
+p.x=Math.random()*canvas.width
+
+}
+
+})
+
+requestAnimationFrame(animate)
+
+}
+
+animate()
 
 </script>
 
