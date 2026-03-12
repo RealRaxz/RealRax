@@ -19,66 +19,32 @@ overflow-x:hidden;
 
 /* SAME BACKGROUND */
 
-.galaxy{
-
+.bg{
 position:fixed;
 top:0;
 left:0;
 width:200%;
 height:200%;
-
-background:
-
-radial-gradient(circle at 20% 30%, rgba(14,165,233,0.4), transparent 40%),
-radial-gradient(circle at 70% 60%, rgba(59,130,246,0.35), transparent 45%);
-
-animation:galaxyMove 60s linear infinite;
-
-z-index:-2;
-
-}
-
-.stars{
-
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:200%;
-
-background-image:
-
-radial-gradient(2px 2px at 20% 20%, white, transparent),
-radial-gradient(2px 2px at 80% 40%, white, transparent),
-radial-gradient(1px 1px at 60% 80%, white, transparent),
-radial-gradient(2px 2px at 30% 70%, white, transparent);
-
-animation:starsMove 120s linear infinite;
-
 z-index:-1;
 
+background:
+radial-gradient(circle at 20% 30%, rgba(0,140,255,0.25), transparent 40%),
+radial-gradient(circle at 80% 60%, rgba(0,90,255,0.25), transparent 45%),
+radial-gradient(circle at 50% 90%, rgba(0,170,255,0.2), transparent 40%);
+
+animation:movebg 60s linear infinite;
+
+filter:blur(40px);
 }
 
-@keyframes galaxyMove{
+@keyframes movebg{
 
-from{
+0%{
 transform:translateY(0);
 }
 
-to{
-transform:translateY(-500px);
-}
-
-}
-
-@keyframes starsMove{
-
-from{
-transform:translateY(0);
-}
-
-to{
-transform:translateY(-800px);
+100%{
+transform:translateY(-600px);
 }
 
 }
@@ -99,38 +65,41 @@ color:#38bdf8;
 }
 
 textarea{
+
 width:100%;
-height:150px;
+height:160px;
 background:#0b1220;
 color:#38bdf8;
 border:none;
 padding:10px;
 margin-top:15px;
+
 }
 
 button{
-padding:12px 18px;
-margin-top:10px;
-margin-right:10px;
+
+padding:12px 20px;
+margin-top:12px;
 background:#0369a1;
 border:none;
 color:white;
 border-radius:6px;
 cursor:pointer;
+
 }
 
 button:hover{
+
 background:#0ea5e9;
+
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="galaxy"></div>
-<div class="stars"></div>
+<div class="bg"></div>
 
 <div class="container">
 
@@ -138,10 +107,10 @@ background:#0ea5e9;
 
 <h1 id="title"></h1>
 
-<h3>Description</h3>
 <p id="description"></p>
 
 <h3>How To Use</h3>
+
 <p id="howto"></p>
 
 <h3>Script</h3>
@@ -162,8 +131,16 @@ bloxfruit:{
 title:"Blox Fruits Auto Farm",
 image:"https://tr.rbxcdn.com/7b2c9c0bba8b4c728c59c1e06c2e2d42/768/432/Image/Png",
 description:"Powerful auto farm script.",
-howto:"1 Copy\n2 Paste\n3 Execute",
+howto:"1 Copy Script\n2 Paste in Executor\n3 Execute",
 script:'loadstring(game:HttpGet("https://example.com/script"))()'
+},
+
+esp:{
+title:"ESP Player Script",
+image:"https://tr.rbxcdn.com/9c9f0fdde9d2c1c3e3cb14d6c2e1dbb6/768/432/Image/Png",
+description:"See players through walls.",
+howto:"1 Copy Script\n2 Execute",
+script:'loadstring(game:HttpGet("https://example.com/esp"))()'
 }
 
 }
@@ -184,7 +161,7 @@ function copyScript(){
 
 navigator.clipboard.writeText(data.script)
 
-alert("Script Copied!")
+alert("Script Copied")
 
 }
 
