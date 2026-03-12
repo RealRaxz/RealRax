@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Copy Script</title>
+<title>Script Page</title>
 
 <style>
 
@@ -74,27 +74,23 @@ background:#0284c7;
 
 <div class="description">
 
-🚀 <b>Script นี้ถูกออกแบบมาเพื่อช่วยให้คุณเล่นเกมได้สะดวกและรวดเร็วขึ้น</b><br><br>
+📝 <b>คำอธิบาย</b><br><br>
 
-✨ <b>รายละเอียด</b><br>
-• รองรับการใช้งานบน Executor ส่วนใหญ่<br>
-• ทำงานได้บน PC และ Mobile<br>
-• ใช้งานง่าย เพียงคัดลอกแล้วนำไปวาง<br><br>
+🚀 Script นี้ถูกออกแบบมาเพื่อช่วยให้คุณใช้งานฟีเจอร์ต่าง ๆ ในเกมได้ง่ายขึ้นและสะดวกมากขึ้น<br>
+⚡ รองรับการใช้งานบน Executor ส่วนใหญ่ทั้ง PC และ Mobile<br>
+💡 ใช้งานง่าย เพียงคัดลอก Script แล้วนำไปวางใน Executor ก็สามารถเริ่มใช้งานได้ทันที<br><br>
 
-📖 <b>วิธีใช้งาน</b><br>
+📖 <b>วิธีใช้</b><br><br>
+
 1️⃣ กดปุ่ม <b>Copy Script</b> ด้านล่าง<br>
 2️⃣ เปิดโปรแกรม Executor ของคุณ<br>
-3️⃣ วาง Script ลงในช่อง Script<br>
+3️⃣ วาง Script ลงในช่อง Script ของ Executor<br>
 4️⃣ กด Execute หรือ Run Script<br>
 5️⃣ กลับเข้าเกมแล้วใช้งานเมนู Script ได้ทันที 🎮
 
 </div>
 
-<textarea id="script">
-
-loadstring(game:HttpGet("SCRIPT HERE"))()
-
-</textarea>
+<textarea id="script"></textarea>
 
 <br>
 
@@ -104,13 +100,43 @@ loadstring(game:HttpGet("SCRIPT HERE"))()
 
 <script>
 
+const scripts={
+
+script1:`loadstring(game:HttpGet("SCRIPT_LINK_1"))()`,
+
+script2:`loadstring(game:HttpGet("SCRIPT_LINK_2"))()`,
+
+script3:`loadstring(game:HttpGet("SCRIPT_LINK_3"))()`,
+
+script4:`loadstring(game:HttpGet("SCRIPT_LINK_4"))()`,
+
+script5:`loadstring(game:HttpGet("SCRIPT_LINK_5"))()`,
+
+script6:`loadstring(game:HttpGet("SCRIPT_LINK_6"))()`,
+
+script7:`loadstring(game:HttpGet("SCRIPT_LINK_7"))()`,
+
+script8:`loadstring(game:HttpGet("SCRIPT_LINK_8"))()`,
+
+script9:`loadstring(game:HttpGet("SCRIPT_LINK_9"))()`,
+
+script10:`loadstring(game:HttpGet("SCRIPT_LINK_10"))()`
+
+};
+
+const params=new URLSearchParams(window.location.search);
+
+const scriptName=params.get("script");
+
+document.getElementById("script").value=scripts[scriptName] || "Script not found";
+
 function copy(){
 
-let text=document.getElementById("script").value
+let text=document.getElementById("script").value;
 
-navigator.clipboard.writeText(text)
+navigator.clipboard.writeText(text);
 
-alert("✅ Script Copied Successfully!")
+alert("✅ Script Copied Successfully!");
 
 }
 
