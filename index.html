@@ -14,10 +14,9 @@ margin:0;
 font-family:Arial;
 background:#020617;
 color:white;
-overflow-x:hidden;
 }
 
-/* particle background */
+/* background */
 
 .particles{
 position:fixed;
@@ -38,7 +37,7 @@ radial-gradient(2px 2px at 70% 50%, #38bdf8, transparent),
 radial-gradient(2px 2px at 80% 20%, #38bdf8, transparent),
 radial-gradient(2px 2px at 90% 70%, #38bdf8, transparent);
 
-animation:move 30s linear infinite;
+animation:move 35s linear infinite;
 }
 
 @keyframes move{
@@ -46,17 +45,18 @@ animation:move 30s linear infinite;
 100%{transform:translateY(-50%)}
 }
 
-/* header */
-
 header{
 text-align:center;
 padding:25px;
 font-size:28px;
-font-weight:bold;
 color:#38bdf8;
 }
 
-/* search */
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
 
 .search{
 text-align:center;
@@ -72,14 +72,6 @@ color:white;
 border-radius:6px;
 }
 
-/* grid */
-
-.container{
-max-width:1200px;
-margin:auto;
-padding:20px;
-}
-
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -91,12 +83,11 @@ background:#0f172a;
 border-radius:10px;
 overflow:hidden;
 cursor:pointer;
-transition:.3s;
 }
 
 .card:hover{
-transform:translateY(-6px);
 box-shadow:0 0 15px #38bdf8;
+transform:translateY(-5px);
 }
 
 .card img{
@@ -109,12 +100,6 @@ object-fit:cover;
 padding:10px;
 font-size:14px;
 color:#38bdf8;
-}
-
-.top{
-color:#facc15;
-padding:8px;
-font-size:13px;
 }
 
 </style>
@@ -142,24 +127,17 @@ const channelID="UCQpsD3OgICNaiyGaVeiC5BQ"
 
 async function loadVideos(){
 
-try{
+const res = await fetch(
+"https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id="+channelID
+)
 
-const url="https://api.allorigins.win/get?url="+encodeURIComponent("https://www.youtube.com/feeds/videos.xml?channel_id="+channelID)
-
-const res=await fetch(url)
-const data=await res.json()
-
-const parser=new DOMParser()
-const xml=parser.parseFromString(data.contents,"text/xml")
-
-const items=xml.querySelectorAll("entry")
+const data = await res.json()
 
 const grid=document.getElementById("videos")
 
-items.forEach((video,i)=>{
+data.items.forEach((video,i)=>{
 
-let id=video.querySelector("videoId").textContent
-let title=video.querySelector("title").textContent
+let id=video.link.split("v=")[1]
 
 let card=document.createElement("div")
 card.className="card"
@@ -169,20 +147,15 @@ window.location="scriptpage.html?video="+id
 }
 
 card.innerHTML=`
-${i==0?'<div class="top">⭐ Top Script</div>':''}
+
 <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg">
-<h3>${title}</h3>
+<h3>${video.title}</h3>
+
 `
 
 grid.appendChild(card)
 
 })
-
-}catch(e){
-
-console.error("โหลดคลิปไม่ได้",e)
-
-}
 
 }
 
