@@ -12,34 +12,38 @@
 body{
 margin:0;
 font-family:Arial;
+background:#030712;
 color:white;
 overflow-x:hidden;
 }
 
-/* BACKGROUND IMAGE ANIMATION */
+/* BLUE PARTICLES BACKGROUND */
 
-.bg{
+.particles{
 
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:200%;
+pointer-events:none;
 z-index:-1;
 
-background-image:url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564");
+background-image:
 
-background-size:cover;
-background-repeat:repeat-y;
-background-position:center;
+radial-gradient(2px 2px at 10% 20%, #38bdf8, transparent),
+radial-gradient(2px 2px at 30% 80%, #38bdf8, transparent),
+radial-gradient(2px 2px at 50% 50%, #38bdf8, transparent),
+radial-gradient(2px 2px at 70% 30%, #38bdf8, transparent),
+radial-gradient(2px 2px at 90% 70%, #38bdf8, transparent),
+radial-gradient(2px 2px at 20% 60%, #38bdf8, transparent),
+radial-gradient(2px 2px at 80% 10%, #38bdf8, transparent);
 
-animation:bgmove 60s linear infinite;
-
-filter:brightness(0.35);
+animation:particleMove 40s linear infinite;
 
 }
 
-@keyframes bgmove{
+@keyframes particleMove{
 
 0%{
 transform:translateY(0);
@@ -104,7 +108,7 @@ color:#38bdf8;
 
 <body>
 
-<div class="bg"></div>
+<div class="particles"></div>
 
 <header>Script Galaxy</header>
 
@@ -117,14 +121,6 @@ color:#38bdf8;
 <img src="https://tr.rbxcdn.com/7b2c9c0bba8b4c728c59c1e06c2e2d42/768/432/Image/Png">
 
 <h3>Blox Fruits Auto Farm</h3>
-
-</div>
-
-<div class="card" onclick="openScript('esp')">
-
-<img src="https://tr.rbxcdn.com/9c9f0fdde9d2c1c3e3cb14d6c2e1dbb6/768/432/Image/Png">
-
-<h3>ESP Player</h3>
 
 </div>
 
