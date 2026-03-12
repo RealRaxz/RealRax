@@ -17,14 +17,11 @@ color:white;
 overflow-x:hidden;
 }
 
-/* particle */
-
 canvas{
 position:fixed;
 top:0;
 left:0;
 z-index:-1;
-pointer-events:none;
 }
 
 /* header */
@@ -68,14 +65,13 @@ max-width:1100px;
 margin:auto;
 }
 
-/* card item */
+/* card */
 
 .card-item{
 position:relative;
 }
 
 .card{
-
 background:#0f172a;
 border:1px solid #ffffff;
 border-radius:14px;
@@ -83,14 +79,11 @@ overflow:hidden;
 cursor:pointer;
 box-shadow:0 0 8px rgba(255,255,255,0.15);
 transition:0.2s;
-
 }
 
 .card:hover{
-
 transform:translateY(-4px);
 box-shadow:0 0 14px rgba(255,255,255,0.2);
-
 }
 
 .card img{
@@ -101,11 +94,9 @@ object-fit:cover;
 
 .card-title{
 padding:12px;
-color:#e2e8f0;
 font-size:15px;
+color:#e2e8f0;
 }
-
-/* badge */
 
 .badge{
 position:absolute;
@@ -123,19 +114,24 @@ font-weight:bold;
 
 .pagination{
 text-align:center;
-margin:30px;
+margin:40px 0;
 }
 
-.pagination button{
+.page-btn{
 
-padding:10px 18px;
-margin:5px;
+display:inline-block;
+margin:4px;
+padding:10px 16px;
+border-radius:10px;
 background:#0ea5e9;
-border:none;
-border-radius:8px;
 color:white;
 cursor:pointer;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+}
 
+.page-btn.active{
+background:#0284c7;
 }
 
 /* mobile */
@@ -243,15 +239,7 @@ grid-template-columns:1fr;
 
 </div>
 
-<div class="pagination">
-
-<button onclick="prevPage()">⬅ Prev</button>
-
-<span id="pageNumber">Page 1</span>
-
-<button onclick="nextPage()">Next ➡</button>
-
-</div>
+<div class="pagination" id="pagination"></div>
 
 <script>
 
@@ -284,12 +272,18 @@ card.style.display="none";
 
 /* pagination */
 
-const cardsPerPage=8;
-let currentPage=1;
+const cardsPerPage = 8;
+let currentPage = 1;
 
-const cards=document.querySelectorAll(".card-item");
+const cards = document.querySelectorAll(".card-item");
+const totalPages = Math.ceil(cards.length / cardsPerPage);
 
 function showPage(page){
+
+if(page<1) page=1;
+if(page>totalPages) page=totalPages;
+
+currentPage=page;
 
 let start=(page-1)*cardsPerPage;
 let end=start+cardsPerPage;
@@ -304,25 +298,28 @@ card.style.display="none";
 
 });
 
-document.getElementById("pageNumber").innerText="Page "+page;
+renderPagination();
 
 }
 
-function nextPage(){
+function renderPagination(){
 
-if(currentPage*cardsPerPage<cards.length){
-currentPage++;
-showPage(currentPage);
+let container=document.getElementById("pagination");
+container.innerHTML="";
+
+container.innerHTML+=`<span class="page-btn" onclick="showPage(1)">«</span>`;
+container.innerHTML+=`<span class="page-btn" onclick="showPage(${currentPage-1})">‹</span>`;
+
+for(let i=1;i<=Math.min(totalPages,10);i++){
+
+let active=i===currentPage?"active":"";
+
+container.innerHTML+=`<span class="page-btn ${active}" onclick="showPage(${i})">${i}</span>`;
+
 }
 
-}
-
-function prevPage(){
-
-if(currentPage>1){
-currentPage--;
-showPage(currentPage);
-}
+container.innerHTML+=`<span class="page-btn" onclick="showPage(${currentPage+1})">›</span>`;
+container.innerHTML+=`<span class="page-btn" onclick="showPage(${totalPages})">»</span>`;
 
 }
 
@@ -334,10 +331,8 @@ const canvas=document.getElementById("particles");
 const ctx=canvas.getContext("2d");
 
 function resize(){
-
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
-
 }
 
 resize();
