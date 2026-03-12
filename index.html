@@ -17,7 +17,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* PARTICLES */
+/* particle background */
 
 .particles{
 position:fixed;
@@ -28,26 +28,25 @@ height:200%;
 z-index:-1;
 
 background-image:
-radial-gradient(2px 2px at 5% 10%, #38bdf8, transparent),
-radial-gradient(2px 2px at 15% 40%, #38bdf8, transparent),
-radial-gradient(2px 2px at 25% 70%, #38bdf8, transparent),
-radial-gradient(2px 2px at 35% 20%, #38bdf8, transparent),
-radial-gradient(2px 2px at 45% 60%, #38bdf8, transparent),
-radial-gradient(2px 2px at 55% 80%, #38bdf8, transparent),
-radial-gradient(2px 2px at 65% 30%, #38bdf8, transparent),
-radial-gradient(2px 2px at 75% 50%, #38bdf8, transparent),
-radial-gradient(2px 2px at 85% 70%, #38bdf8, transparent),
-radial-gradient(2px 2px at 95% 20%, #38bdf8, transparent);
+radial-gradient(2px 2px at 10% 20%, #38bdf8, transparent),
+radial-gradient(2px 2px at 20% 40%, #38bdf8, transparent),
+radial-gradient(2px 2px at 30% 70%, #38bdf8, transparent),
+radial-gradient(2px 2px at 40% 30%, #38bdf8, transparent),
+radial-gradient(2px 2px at 50% 60%, #38bdf8, transparent),
+radial-gradient(2px 2px at 60% 80%, #38bdf8, transparent),
+radial-gradient(2px 2px at 70% 50%, #38bdf8, transparent),
+radial-gradient(2px 2px at 80% 20%, #38bdf8, transparent),
+radial-gradient(2px 2px at 90% 70%, #38bdf8, transparent);
 
-animation:move 35s linear infinite;
+animation:move 30s linear infinite;
 }
 
 @keyframes move{
-0%{transform:translateY(0);}
-100%{transform:translateY(-50%);}
+0%{transform:translateY(0)}
+100%{transform:translateY(-50%)}
 }
 
-/* HEADER */
+/* header */
 
 header{
 text-align:center;
@@ -57,7 +56,7 @@ font-weight:bold;
 color:#38bdf8;
 }
 
-/* SEARCH */
+/* search */
 
 .search{
 text-align:center;
@@ -73,7 +72,7 @@ color:white;
 border-radius:6px;
 }
 
-/* GRID */
+/* grid */
 
 .container{
 max-width:1200px;
@@ -96,8 +95,8 @@ transition:.3s;
 }
 
 .card:hover{
-transform:translateY(-8px);
-box-shadow:0 0 20px #38bdf8;
+transform:translateY(-6px);
+box-shadow:0 0 15px #38bdf8;
 }
 
 .card img{
@@ -114,7 +113,7 @@ color:#38bdf8;
 
 .top{
 color:#facc15;
-padding-left:10px;
+padding:8px;
 font-size:13px;
 }
 
@@ -139,87 +138,61 @@ font-size:13px;
 
 <script>
 
-let channelID="UCQpsD3OgICNaiyGaVeiC5BQ"
-let page=0
-let allVideos=[]
+const channelID="UCQpsD3OgICNaiyGaVeiC5BQ"
 
-async function loadChannel(){
+async function loadVideos(){
 
-let url="https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id="+channelID
+try{
 
-let res=await fetch(url)
-let data=await res.json()
+const url="https://api.allorigins.win/get?url="+encodeURIComponent("https://www.youtube.com/feeds/videos.xml?channel_id="+channelID)
 
-if(!data.items){
-console.log("โหลดคลิปไม่ได้")
-return
-}
+const res=await fetch(url)
+const data=await res.json()
 
-allVideos=data.items
+const parser=new DOMParser()
+const xml=parser.parseFromString(data.contents,"text/xml")
 
-loadVideos()
+const items=xml.querySelectorAll("entry")
 
-}
+const grid=document.getElementById("videos")
 
-loadChannel()
+items.forEach((video,i)=>{
 
-function loadVideos(){
-
-let grid=document.getElementById("videos")
-
-for(let i=page;i<page+10 && i<allVideos.length;i++){
-
-let video=allVideos[i]
-
-let id=video.link.split("v=")[1].split("&")[0]
+let id=video.querySelector("videoId").textContent
+let title=video.querySelector("title").textContent
 
 let card=document.createElement("div")
 card.className="card"
-card.onclick=()=>openScript(id)
+
+card.onclick=()=>{
+window.location="scriptpage.html?video="+id
+}
 
 card.innerHTML=`
-
 ${i==0?'<div class="top">⭐ Top Script</div>':''}
-
 <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg">
-
-<h3>${video.title}</h3>
-
+<h3>${title}</h3>
 `
 
 grid.appendChild(card)
 
-}
-
-page+=10
-
-}
-
-/* INFINITE SCROLL */
-
-window.addEventListener("scroll",()=>{
-
-if(window.innerHeight+window.scrollY>=document.body.offsetHeight-200){
-
-loadVideos()
-
-}
-
 })
 
-function openScript(id){
+}catch(e){
 
-window.location.href="scriptpage.html?video="+id
+console.error("โหลดคลิปไม่ได้",e)
 
 }
+
+}
+
+loadVideos()
 
 function searchScript(){
 
 let input=document.getElementById("search").value.toLowerCase()
 
-let cards=document.querySelectorAll(".card")
-
-cards.forEach(card=>{
+document.querySelectorAll(".card").forEach(card=>{
 
 let text=card.innerText.toLowerCase()
 
