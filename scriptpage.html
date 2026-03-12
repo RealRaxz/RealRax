@@ -17,7 +17,7 @@ color:white;
 overflow:hidden;
 }
 
-/* particle canvas */
+/* particle */
 
 canvas{
 position:fixed;
@@ -95,6 +95,7 @@ opacity:1;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -135,7 +136,7 @@ opacity:1;
 
 <script>
 
-/* script system */
+/* scripts */
 
 const scripts={
 
@@ -161,12 +162,10 @@ script10:`loadstring(game:HttpGet("SCRIPT_LINK_10"))()`
 
 };
 
-const params=new URLSearchParams(window.location.search);
+const params=new URLSearchParams(window.location.search)
+const scriptName=params.get("script")
 
-const scriptName=params.get("script");
-
-document.getElementById("script").value=scripts[scriptName] || "Script not found";
-
+document.getElementById("script").value=scripts[scriptName] || "Script not found"
 
 /* copy */
 
@@ -179,7 +178,6 @@ navigator.clipboard.writeText(text)
 showToast()
 
 }
-
 
 /* toast */
 
@@ -195,14 +193,23 @@ toast.classList.remove("show")
 
 }
 
+/* particles fix */
 
-/* particles */
+document.addEventListener("DOMContentLoaded",function(){
 
 const canvas=document.getElementById("particles")
 const ctx=canvas.getContext("2d")
 
+function resize(){
+
 canvas.width=window.innerWidth
 canvas.height=window.innerHeight
+
+}
+
+resize()
+
+window.addEventListener("resize",resize)
 
 let particles=[]
 
@@ -247,6 +254,8 @@ requestAnimationFrame(animate)
 }
 
 animate()
+
+})
 
 </script>
 
