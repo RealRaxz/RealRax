@@ -80,12 +80,15 @@ font-size:14px;
 font-family:monospace;
 resize:none;
 overflow:auto;
+box-sizing:border-box;
+margin-top:10px;
+margin-bottom:10px;
 }
 
 /* button */
 
 button{
-margin-top:18px;
+margin-top:10px;
 padding:12px 26px;
 background:#0ea5e9;
 border:none;
@@ -157,7 +160,7 @@ height:180px;
 
 📖 <b>วิธีใช้</b><br><br>
 
-1️⃣ กดปุ่ม Copy Script<br>
+1️⃣ กดปุ่ม Copy Script ด้านล่าง<br>
 2️⃣ เปิด Executor<br>
 3️⃣ วาง Script ลงในช่อง Script<br>
 4️⃣ กด Execute<br>
@@ -179,30 +182,30 @@ height:180px;
 
 /* scripts */
 
-const scripts = {
+const scripts={
 
-script1: 'loadstring(game:HttpGet("SCRIPT_LINK_1"))()',
-script2: 'loadstring(game:HttpGet("SCRIPT_LINK_2"))()',
-script3: 'loadstring(game:HttpGet("SCRIPT_LINK_3"))()',
-script4: 'loadstring(game:HttpGet("SCRIPT_LINK_4"))()',
-script5: 'loadstring(game:HttpGet("SCRIPT_LINK_5"))()',
-script6: 'loadstring(game:HttpGet("SCRIPT_LINK_6"))()',
-script7: 'loadstring(game:HttpGet("SCRIPT_LINK_7"))()',
-script8: 'loadstring(game:HttpGet("SCRIPT_LINK_8"))()',
-script9: 'loadstring(game:HttpGet("SCRIPT_LINK_9"))()',
+script1:'loadstring(game:HttpGet("SCRIPT_LINK_1"))()',
+script2:'loadstring(game:HttpGet("SCRIPT_LINK_2"))()',
+script3:'loadstring(game:HttpGet("SCRIPT_LINK_3"))()',
+script4:'loadstring(game:HttpGet("SCRIPT_LINK_4"))()',
+script5:'loadstring(game:HttpGet("SCRIPT_LINK_5"))()',
+script6:'loadstring(game:HttpGet("SCRIPT_LINK_6"))()',
+script7:'loadstring(game:HttpGet("SCRIPT_LINK_7"))()',
+script8:'loadstring(game:HttpGet("SCRIPT_LINK_8"))()',
+script9:'loadstring(game:HttpGet("SCRIPT_LINK_9"))()',
 script10:'loadstring(game:HttpGet("SCRIPT_LINK_10"))()'
 
 };
 
-const params = new URLSearchParams(window.location.search);
-const scriptName = params.get("script");
+const params=new URLSearchParams(window.location.search);
+const scriptName=params.get("script");
 
-const box = document.getElementById("script");
+const box=document.getElementById("script");
 
 if(scriptName && scripts[scriptName]){
-box.value = scripts[scriptName];
+box.value=scripts[scriptName];
 }else{
-box.value = "Script not found";
+box.value="Script not found";
 }
 
 /* copy */
@@ -230,14 +233,11 @@ const canvas=document.getElementById("particles");
 const ctx=canvas.getContext("2d");
 
 function resize(){
-
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
-
 }
 
 resize();
-
 window.addEventListener("resize",resize);
 
 let particles=[];
@@ -267,13 +267,11 @@ ctx.beginPath();
 ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
 ctx.fill();
 
-p.y -= p.speed;
+p.y-=p.speed;
 
-if(p.y < 0){
-
-p.y = canvas.height;
-p.x = Math.random()*canvas.width;
-
+if(p.y<0){
+p.y=canvas.height;
+p.x=Math.random()*canvas.width;
 }
 
 });
