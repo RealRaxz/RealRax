@@ -21,24 +21,17 @@ overflow-x:hidden;
 /* NAVBAR */
 
 .navbar{
-
 position:sticky;
 top:0;
 z-index:999;
-
 display:flex;
 align-items:center;
 justify-content:space-between;
-
 margin:16px;
 padding:14px 22px;
-
 border-radius:18px;
-
 background:linear-gradient(180deg,#0b1220,#070f1c);
-
 border:1px solid rgba(255,255,255,0.08);
-
 }
 
 .nav-left{
@@ -134,6 +127,7 @@ gap:20px;
 padding:20px;
 max-width:1100px;
 margin:auto;
+transition:opacity 0.25s ease;
 }
 
 /* CARD */
@@ -186,15 +180,40 @@ text-align:center;
 margin:40px 0;
 }
 
+/* BUTTON */
+
 .page-btn{
 display:inline-block;
 margin:4px;
 padding:10px 16px;
 border-radius:10px;
-background:#ff3b3b;
+
+background:#0ea5e9;
 color:white;
+
 cursor:pointer;
 font-weight:bold;
+
+border:1px solid rgba(255,255,255,0.15);
+
+transition:0.25s;
+}
+
+/* HOVER */
+
+.page-btn:hover{
+background:#0284c7;
+transform:translateY(-2px);
+}
+
+/* CLICK ANIMATION */
+
+.page-btn:active{
+
+transform:scale(0.92);
+
+box-shadow:0 0 10px #38bdf8;
+
 }
 
 /* PARTICLE */
@@ -250,9 +269,7 @@ OPERATIONAL
 <div class="nav-right">
 
 <a class="nav-btn">Download</a>
-
 <a class="nav-btn">Purchase</a>
-
 <a class="nav-btn">Discord</a>
 
 </div>
@@ -374,7 +391,6 @@ let cards=document.querySelectorAll(".card-item");
 cards.forEach(card=>{
 
 let text=card.innerText.toLowerCase();
-
 card.style.display = text.includes(input) ? "block" : "none";
 
 });
@@ -396,16 +412,26 @@ if(page>totalPages) page=totalPages;
 
 currentPage=page;
 
+const grid=document.getElementById("grid");
+
+grid.style.opacity="0";
+
+setTimeout(()=>{
+
 let start=(page-1)*cardsPerPage;
 let end=start+cardsPerPage;
 
 cards.forEach((card,index)=>{
 
-card.style.display = (index>=start && index<end) ? "block" : "none";
+card.style.display=(index>=start && index<end)?"block":"none";
 
 });
 
+grid.style.opacity="1";
+
 renderPagination();
+
+},150);
 
 }
 
@@ -431,7 +457,7 @@ container.innerHTML+=`<span class="page-btn" onclick="showPage(${totalPages})">Â
 
 showPage(1);
 
-/* FAST PARTICLE */
+/* PARTICLE BACKGROUND */
 
 const canvas=document.getElementById("particles");
 const ctx=canvas.getContext("2d");
