@@ -38,8 +38,8 @@ padding:40px 20px;
 /* card */
 
 .card{
-background:rgba(15,23,42,0.9);
-border:1px solid rgba(56,189,248,0.2);
+background:#0f172a;
+border:1px solid #1e293b;
 border-radius:16px;
 padding:30px;
 box-shadow:0 0 25px rgba(0,0,0,0.6);
@@ -57,13 +57,13 @@ font-weight:bold;
 /* description */
 
 .description{
-background:#0f172a;
+background:#020617;
 padding:18px;
 border-radius:10px;
 margin-bottom:20px;
 line-height:1.6;
 color:#cbd5f5;
-border:1px solid rgba(56,189,248,0.15);
+border:1px solid #1e293b;
 }
 
 /* script box */
@@ -94,12 +94,10 @@ color:white;
 cursor:pointer;
 font-size:15px;
 font-weight:bold;
-transition:0.25s;
 }
 
 button:hover{
 background:#0284c7;
-box-shadow:0 0 12px rgba(56,189,248,0.7);
 }
 
 /* toast */
@@ -114,13 +112,11 @@ border-radius:8px;
 color:white;
 font-size:14px;
 opacity:0;
-transform:translateY(10px);
 transition:0.3s;
 }
 
 .toast.show{
 opacity:1;
-transform:translateY(0);
 }
 
 /* mobile */
@@ -156,22 +152,22 @@ height:180px;
 📝 <b>คำอธิบาย</b><br><br>
 
 🚀 Script นี้ช่วยเพิ่มความสะดวกในการเล่นเกม และปลดล็อกฟีเจอร์ต่าง ๆ ให้ใช้งานได้ง่ายขึ้น<br>
-⚡ รองรับ Executor หลายตัว ทั้งบน PC และ Mobile<br>
-💡 เพียงคัดลอก Script แล้วนำไปวางใน Executor ก็สามารถใช้งานได้ทันที<br><br>
+⚡ รองรับ Executor หลายตัว ทั้ง PC และ Mobile<br>
+💡 คัดลอก Script แล้วนำไปวางใน Executor ได้ทันที<br><br>
 
 📖 <b>วิธีใช้</b><br><br>
 
-1️⃣ กดปุ่ม Copy Script ด้านล่าง<br>
-2️⃣ เปิดโปรแกรม Executor<br>
+1️⃣ กดปุ่ม Copy Script<br>
+2️⃣ เปิด Executor<br>
 3️⃣ วาง Script ลงในช่อง Script<br>
-4️⃣ กด Execute หรือ Run Script<br>
+4️⃣ กด Execute<br>
 5️⃣ กลับเข้าเกมแล้วใช้งานเมนู Script ได้ทันที 🎮
 
 </div>
 
 <textarea id="script" readonly></textarea>
 
-<button onclick="copy()">📋 Copy Script</button>
+<button onclick="copyScript()">📋 Copy Script</button>
 
 </div>
 
@@ -183,78 +179,68 @@ height:180px;
 
 /* scripts */
 
-const scripts={
+const scripts = {
 
-script1:`loadstring(game:HttpGet("SCRIPT_LINK_1"))()`,
-
-script2:`loadstring(game:HttpGet("SCRIPT_LINK_2"))()`,
-
-script3:`loadstring(game:HttpGet("SCRIPT_LINK_3"))()`,
-
-script4:`loadstring(game:HttpGet("SCRIPT_LINK_4"))()`,
-
-script5:`loadstring(game:HttpGet("SCRIPT_LINK_5"))()`,
-
-script6:`loadstring(game:HttpGet("SCRIPT_LINK_6"))()`,
-
-script7:`loadstring(game:HttpGet("SCRIPT_LINK_7"))()`,
-
-script8:`loadstring(game:HttpGet("SCRIPT_LINK_8"))()`,
-
-script9:`loadstring(game:HttpGet("SCRIPT_LINK_9"))()`,
-
-script10:`loadstring(game:HttpGet("SCRIPT_LINK_10"))()`
+script1: 'loadstring(game:HttpGet("SCRIPT_LINK_1"))()',
+script2: 'loadstring(game:HttpGet("SCRIPT_LINK_2"))()',
+script3: 'loadstring(game:HttpGet("SCRIPT_LINK_3"))()',
+script4: 'loadstring(game:HttpGet("SCRIPT_LINK_4"))()',
+script5: 'loadstring(game:HttpGet("SCRIPT_LINK_5"))()',
+script6: 'loadstring(game:HttpGet("SCRIPT_LINK_6"))()',
+script7: 'loadstring(game:HttpGet("SCRIPT_LINK_7"))()',
+script8: 'loadstring(game:HttpGet("SCRIPT_LINK_8"))()',
+script9: 'loadstring(game:HttpGet("SCRIPT_LINK_9"))()',
+script10:'loadstring(game:HttpGet("SCRIPT_LINK_10"))()'
 
 };
 
-const params=new URLSearchParams(window.location.search)
-const scriptName=params.get("script")
+const params = new URLSearchParams(window.location.search);
+const scriptName = params.get("script");
 
-document.getElementById("script").value=scripts[scriptName] || "Script not found"
+const box = document.getElementById("script");
+
+if(scriptName && scripts[scriptName]){
+box.value = scripts[scriptName];
+}else{
+box.value = "Script not found";
+}
 
 /* copy */
 
-function copy(){
+function copyScript(){
 
-let text=document.getElementById("script").value
+box.select();
+box.setSelectionRange(0,99999);
 
-navigator.clipboard.writeText(text)
+navigator.clipboard.writeText(box.value);
 
-showToast()
+const toast=document.getElementById("toast");
 
-}
+toast.classList.add("show");
 
-/* toast */
-
-function showToast(){
-
-let toast=document.getElementById("toast")
-
-toast.classList.add("show")
-
-setTimeout(()=>{
-toast.classList.remove("show")
-},2000)
+setTimeout(function(){
+toast.classList.remove("show");
+},2000);
 
 }
 
 /* particles */
 
-document.addEventListener("DOMContentLoaded",function(){
-
-const canvas=document.getElementById("particles")
-const ctx=canvas.getContext("2d")
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
 
 function resize(){
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
 }
 
-resize()
+resize();
 
-window.addEventListener("resize",resize)
+window.addEventListener("resize",resize);
 
-let particles=[]
+let particles=[];
 
 for(let i=0;i<120;i++){
 
@@ -263,42 +249,40 @@ particles.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 size:Math.random()*2+1,
-speed:Math.random()*0.4+0.1
+speed:Math.random()*0.5+0.2
 
-})
+});
 
 }
 
 function animate(){
 
-ctx.clearRect(0,0,canvas.width,canvas.height)
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-ctx.fillStyle="#38bdf8"
+ctx.fillStyle="#38bdf8";
 
 particles.forEach(p=>{
 
-ctx.beginPath()
-ctx.arc(p.x,p.y,p.size,0,Math.PI*2)
-ctx.fill()
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fill();
 
-p.y-=p.speed
+p.y -= p.speed;
 
-if(p.y<0){
+if(p.y < 0){
 
-p.y=canvas.height
-p.x=Math.random()*canvas.width
-
-}
-
-})
-
-requestAnimationFrame(animate)
+p.y = canvas.height;
+p.x = Math.random()*canvas.width;
 
 }
 
-animate()
+});
 
-})
+requestAnimationFrame(animate);
+
+}
+
+animate();
 
 </script>
 
