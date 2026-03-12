@@ -17,7 +17,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* particle background */
+/* particle */
 
 canvas{
 position:fixed;
@@ -48,9 +48,18 @@ margin-bottom:30px;
 padding:12px;
 width:260px;
 border:none;
-border-radius:6px;
+border-radius:8px;
 background:#0f172a;
 color:white;
+outline:none;
+border:1px solid rgba(56,189,248,0.15);
+
+}
+
+.search input:focus{
+
+border-color:#38bdf8;
+box-shadow:0 0 10px rgba(56,189,248,0.4);
 
 }
 
@@ -71,17 +80,22 @@ margin:auto;
 
 .card{
 
-background:#0f172a;
-border-radius:10px;
+position:relative;
+background:linear-gradient(145deg,#0f172a,#020617);
+border-radius:14px;
 overflow:hidden;
 cursor:pointer;
-transition:0.2s;
+transition:0.25s;
+border:1px solid rgba(56,189,248,0.15);
+box-shadow:0 0 15px rgba(0,0,0,0.4);
 
 }
 
 .card:hover{
 
-transform:scale(1.05);
+transform:translateY(-6px) scale(1.03);
+border-color:#38bdf8;
+box-shadow:0 0 18px rgba(56,189,248,0.35);
 
 }
 
@@ -95,9 +109,34 @@ object-fit:cover;
 
 .card-title{
 
-padding:10px;
+padding:12px;
 font-size:14px;
 text-align:center;
+color:#7dd3fc;
+font-weight:500;
+letter-spacing:0.3px;
+
+}
+
+.card:hover .card-title{
+
+color:#38bdf8;
+
+}
+
+/* TOP badge */
+
+.top{
+
+position:absolute;
+top:10px;
+left:10px;
+background:#38bdf8;
+color:#020617;
+font-size:11px;
+padding:3px 8px;
+border-radius:6px;
+font-weight:bold;
 
 }
 
@@ -124,86 +163,91 @@ RealRax Script Hub
 </div>
 
 <div class="search">
-<input placeholder="🔎 Search Script">
+<input id="search" placeholder="🔎 Search Script">
 </div>
 
-<div class="grid">
+<div class="grid" id="grid">
 
-<a href="scriptpage.html?script=script1">
-<div class="card">
+<a href="scriptpage.html?script=script1" class="card">
+<div class="top">TOP</div>
 <img src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg">
 <div class="card-title">Script 1</div>
-</div>
 </a>
 
-<a href="scriptpage.html?script=script2">
-<div class="card">
+<a href="scriptpage.html?script=script2" class="card">
+<div class="top">TOP</div>
 <img src="https://i.ytimg.com/vi/3JZ_D3ELwOQ/hqdefault.jpg">
 <div class="card-title">Script 2</div>
-</div>
 </a>
 
-<a href="scriptpage.html?script=script3">
-<div class="card">
+<a href="scriptpage.html?script=script3" class="card">
 <img src="https://i.ytimg.com/vi/L_jWHffIx5E/hqdefault.jpg">
 <div class="card-title">Script 3</div>
-</div>
 </a>
 
-<a href="scriptpage.html?script=script4">
-<div class="card">
+<a href="scriptpage.html?script=script4" class="card">
 <img src="https://i.ytimg.com/vi/tVj0ZTS4WF4/hqdefault.jpg">
 <div class="card-title">Script 4</div>
-</div>
 </a>
 
-<a href="scriptpage.html?script=script5">
-<div class="card">
+<a href="scriptpage.html?script=script5" class="card">
 <img src="https://i.ytimg.com/vi/kXYiU_JCYtU/hqdefault.jpg">
 <div class="card-title">Script 5</div>
-</div>
 </a>
 
-<a href="scriptpage.html?script=script6">
-<div class="card">
+<a href="scriptpage.html?script=script6" class="card">
 <img src="https://i.ytimg.com/vi/fLexgOxsZu0/hqdefault.jpg">
 <div class="card-title">Script 6</div>
-</div>
 </a>
 
-<a href="scriptpage.html?script=script7">
-<div class="card">
+<a href="scriptpage.html?script=script7" class="card">
 <img src="https://i.ytimg.com/vi/uelHwf8o7_U/hqdefault.jpg">
 <div class="card-title">Script 7</div>
-</div>
 </a>
 
-<a href="scriptpage.html?script=script8">
-<div class="card">
+<a href="scriptpage.html?script=script8" class="card">
 <img src="https://i.ytimg.com/vi/9bZkp7q19f0/hqdefault.jpg">
 <div class="card-title">Script 8</div>
-</div>
 </a>
 
-<a href="scriptpage.html?script=script9">
-<div class="card">
+<a href="scriptpage.html?script=script9" class="card">
 <img src="https://i.ytimg.com/vi/YQHsXMglC9A/hqdefault.jpg">
 <div class="card-title">Script 9</div>
-</div>
 </a>
 
-<a href="scriptpage.html?script=script10">
-<div class="card">
+<a href="scriptpage.html?script=script10" class="card">
 <img src="https://i.ytimg.com/vi/CevxZvSJLk8/hqdefault.jpg">
 <div class="card-title">Script 10</div>
-</div>
 </a>
 
 </div>
 
 <script>
 
-/* particle background */
+/* search system */
+
+const search=document.getElementById("search")
+const cards=document.querySelectorAll(".card")
+
+search.addEventListener("keyup",function(){
+
+let value=this.value.toLowerCase()
+
+cards.forEach(card=>{
+
+let text=card.innerText.toLowerCase()
+
+if(text.includes(value)){
+card.style.display=""
+}else{
+card.style.display="none"
+}
+
+})
+
+})
+
+/* particles */
 
 const canvas=document.getElementById("particles")
 const ctx=canvas.getContext("2d")
