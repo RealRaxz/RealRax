@@ -17,46 +17,26 @@ color:white;
 overflow-x:hidden;
 }
 
-/* PARTICLE BACKGROUND */
+/* particle background */
 
-.particles{
+canvas{
 position:fixed;
 top:0;
 left:0;
-width:100%;
-height:200%;
 z-index:-1;
-
-background-image:
-radial-gradient(2px 2px at 10% 20%, #38bdf8, transparent),
-radial-gradient(2px 2px at 20% 40%, #38bdf8, transparent),
-radial-gradient(2px 2px at 30% 70%, #38bdf8, transparent),
-radial-gradient(2px 2px at 40% 30%, #38bdf8, transparent),
-radial-gradient(2px 2px at 50% 60%, #38bdf8, transparent),
-radial-gradient(2px 2px at 60% 80%, #38bdf8, transparent),
-radial-gradient(2px 2px at 70% 50%, #38bdf8, transparent),
-radial-gradient(2px 2px at 80% 20%, #38bdf8, transparent),
-radial-gradient(2px 2px at 90% 70%, #38bdf8, transparent);
-
-animation:move 35s linear infinite;
 }
 
-@keyframes move{
-0%{transform:translateY(0)}
-100%{transform:translateY(-50%)}
-}
+/* header */
 
-/* HEADER */
-
-header{
+.header{
 text-align:center;
-padding:25px;
+padding:30px;
 font-size:28px;
 color:#38bdf8;
 font-weight:bold;
 }
 
-/* SEARCH */
+/* search */
 
 .search{
 text-align:center;
@@ -64,180 +44,216 @@ margin-bottom:30px;
 }
 
 .search input{
-padding:10px;
+
+padding:12px;
 width:260px;
-background:#0f172a;
 border:none;
 border-radius:6px;
+background:#0f172a;
 color:white;
+
 }
 
-/* GRID */
-
-.container{
-max-width:1100px;
-margin:auto;
-padding:20px;
-}
+/* grid */
 
 .grid{
+
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:20px;
+padding:20px;
+max-width:1000px;
+margin:auto;
+
 }
 
-/* MOBILE */
-
-@media(max-width:900px){
-.grid{
-grid-template-columns:repeat(2,1fr);
-}
-}
+/* card */
 
 .card{
+
 background:#0f172a;
 border-radius:10px;
 overflow:hidden;
 cursor:pointer;
-transition:.3s;
+transition:0.2s;
+
 }
 
 .card:hover{
-transform:translateY(-6px);
-box-shadow:0 0 15px #38bdf8;
+
+transform:scale(1.05);
+
 }
 
 .card img{
+
 width:100%;
-height:130px;
+height:140px;
 object-fit:cover;
+
 }
 
-.card h3{
+.card-title{
+
 padding:10px;
 font-size:14px;
-color:#38bdf8;
+text-align:center;
+
 }
 
-.top{
-color:#facc15;
-padding:8px;
-font-size:13px;
+/* mobile */
+
+@media(max-width:800px){
+
+.grid{
+grid-template-columns:repeat(2,1fr);
+}
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="particles"></div>
+<canvas id="particles"></canvas>
 
-<header>RealRax Script Hub</header>
-
-<div class="container">
+<div class="header">
+RealRax Script Hub
+</div>
 
 <div class="search">
-<input id="search" placeholder="Search Script..." onkeyup="searchScript()">
+<input placeholder="🔎 Search Script">
 </div>
 
 <div class="grid">
 
-<!-- SCRIPT 1 -->
-
-<div class="card" onclick="openScript('script1')">
-<div class="top">⭐ Top Script</div>
-<img src="IMAGE_LINK">
-<h3>Script Title 1</h3>
+<a href="scriptpage.html?script=script1">
+<div class="card">
+<img src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg">
+<div class="card-title">Script 1</div>
 </div>
+</a>
 
-<!-- SCRIPT 2 -->
-
-<div class="card" onclick="openScript('script2')">
-<img src="IMAGE_LINK">
-<h3>Script Title 2</h3>
+<a href="scriptpage.html?script=script2">
+<div class="card">
+<img src="https://i.ytimg.com/vi/3JZ_D3ELwOQ/hqdefault.jpg">
+<div class="card-title">Script 2</div>
 </div>
+</a>
 
-<!-- SCRIPT 3 -->
-
-<div class="card" onclick="openScript('script3')">
-<img src="IMAGE_LINK">
-<h3>Script Title 3</h3>
+<a href="scriptpage.html?script=script3">
+<div class="card">
+<img src="https://i.ytimg.com/vi/L_jWHffIx5E/hqdefault.jpg">
+<div class="card-title">Script 3</div>
 </div>
+</a>
 
-<!-- SCRIPT 4 -->
-
-<div class="card" onclick="openScript('script4')">
-<img src="IMAGE_LINK">
-<h3>Script Title 4</h3>
+<a href="scriptpage.html?script=script4">
+<div class="card">
+<img src="https://i.ytimg.com/vi/tVj0ZTS4WF4/hqdefault.jpg">
+<div class="card-title">Script 4</div>
 </div>
+</a>
 
-<!-- SCRIPT 5 -->
-
-<div class="card" onclick="openScript('script5')">
-<img src="IMAGE_LINK">
-<h3>Script Title 5</h3>
+<a href="scriptpage.html?script=script5">
+<div class="card">
+<img src="https://i.ytimg.com/vi/kXYiU_JCYtU/hqdefault.jpg">
+<div class="card-title">Script 5</div>
 </div>
+</a>
 
-<!-- SCRIPT 6 -->
-
-<div class="card" onclick="openScript('script6')">
-<img src="IMAGE_LINK">
-<h3>Script Title 6</h3>
+<a href="scriptpage.html?script=script6">
+<div class="card">
+<img src="https://i.ytimg.com/vi/fLexgOxsZu0/hqdefault.jpg">
+<div class="card-title">Script 6</div>
 </div>
+</a>
 
-<!-- SCRIPT 7 -->
-
-<div class="card" onclick="openScript('script7')">
-<img src="IMAGE_LINK">
-<h3>Script Title 7</h3>
+<a href="scriptpage.html?script=script7">
+<div class="card">
+<img src="https://i.ytimg.com/vi/uelHwf8o7_U/hqdefault.jpg">
+<div class="card-title">Script 7</div>
 </div>
+</a>
 
-<!-- SCRIPT 8 -->
-
-<div class="card" onclick="openScript('script8')">
-<img src="IMAGE_LINK">
-<h3>Script Title 8</h3>
+<a href="scriptpage.html?script=script8">
+<div class="card">
+<img src="https://i.ytimg.com/vi/9bZkp7q19f0/hqdefault.jpg">
+<div class="card-title">Script 8</div>
 </div>
+</a>
 
-<!-- SCRIPT 9 -->
-
-<div class="card" onclick="openScript('script9')">
-<img src="IMAGE_LINK">
-<h3>Script Title 9</h3>
+<a href="scriptpage.html?script=script9">
+<div class="card">
+<img src="https://i.ytimg.com/vi/YQHsXMglC9A/hqdefault.jpg">
+<div class="card-title">Script 9</div>
 </div>
+</a>
 
-<!-- SCRIPT 10 -->
-
-<div class="card" onclick="openScript('script10')">
-<img src="IMAGE_LINK">
-<h3>Script Title 10</h3>
+<a href="scriptpage.html?script=script10">
+<div class="card">
+<img src="https://i.ytimg.com/vi/CevxZvSJLk8/hqdefault.jpg">
+<div class="card-title">Script 10</div>
 </div>
-
-</div>
+</a>
 
 </div>
 
 <script>
 
-function openScript(name){
+/* particle background */
 
-window.location="scriptpage.html?script="+name
+const canvas=document.getElementById("particles")
+const ctx=canvas.getContext("2d")
 
-}
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
 
-function searchScript(){
+let particles=[]
 
-let input=document.getElementById("search").value.toLowerCase()
+for(let i=0;i<120;i++){
 
-document.querySelectorAll(".card").forEach(card=>{
+particles.push({
 
-let text=card.innerText.toLowerCase()
-
-card.style.display=text.includes(input)?"block":"none"
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2+1,
+speed:Math.random()*0.4+0.1
 
 })
 
 }
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="#38bdf8"
+
+particles.forEach(p=>{
+
+ctx.beginPath()
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2)
+ctx.fill()
+
+p.y-=p.speed
+
+if(p.y<0){
+
+p.y=canvas.height
+p.x=Math.random()*canvas.width
+
+}
+
+})
+
+requestAnimationFrame(animate)
+
+}
+
+animate()
 
 </script>
 
