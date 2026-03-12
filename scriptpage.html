@@ -22,24 +22,45 @@ margin:auto;
 padding:40px;
 }
 
+.title{
+font-size:28px;
+color:#38bdf8;
+margin-bottom:10px;
+}
+
+.description{
+background:#0f172a;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;
+line-height:1.6;
+color:#cbd5f5;
+}
+
 textarea{
 width:100%;
 height:200px;
 background:#0f172a;
 border:none;
 color:#38bdf8;
-padding:10px;
+padding:12px;
 border-radius:6px;
+font-size:14px;
 }
 
 button{
 margin-top:15px;
-padding:12px 20px;
+padding:12px 22px;
 background:#0ea5e9;
 border:none;
 border-radius:6px;
 color:white;
 cursor:pointer;
+font-size:15px;
+}
+
+button:hover{
+background:#0284c7;
 }
 
 </style>
@@ -49,7 +70,25 @@ cursor:pointer;
 
 <div class="container">
 
-<h2>Copy Script</h2>
+<div class="title">📜 Script Copy</div>
+
+<div class="description">
+
+🚀 <b>Script นี้ถูกออกแบบมาเพื่อช่วยให้คุณเล่นเกมได้สะดวกและรวดเร็วขึ้น</b><br><br>
+
+✨ <b>รายละเอียด</b><br>
+• รองรับการใช้งานบน Executor ส่วนใหญ่<br>
+• ทำงานได้บน PC และ Mobile<br>
+• ใช้งานง่าย เพียงคัดลอกแล้วนำไปวาง<br><br>
+
+📖 <b>วิธีใช้งาน</b><br>
+1️⃣ กดปุ่ม <b>Copy Script</b> ด้านล่าง<br>
+2️⃣ เปิดโปรแกรม Executor ของคุณ<br>
+3️⃣ วาง Script ลงในช่อง Script<br>
+4️⃣ กด Execute หรือ Run Script<br>
+5️⃣ กลับเข้าเกมแล้วใช้งานเมนู Script ได้ทันที 🎮
+
+</div>
 
 <textarea id="script">
 
@@ -59,7 +98,7 @@ loadstring(game:HttpGet("SCRIPT HERE"))()
 
 <br>
 
-<button onclick="copy()">Copy Script</button>
+<button onclick="copy()">📋 Copy Script</button>
 
 </div>
 
@@ -71,7 +110,7 @@ let text=document.getElementById("script").value
 
 navigator.clipboard.writeText(text)
 
-alert("Copied!")
+alert("✅ Script Copied Successfully!")
 
 }
 
