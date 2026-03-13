@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RealRax Scripts</title>
 
 <style>
@@ -10,55 +10,54 @@
 body{
 margin:0;
 font-family:Arial;
-background:white;
+background:#fff;
 }
-
-/* navbar */
 
 .navbar{
 position:sticky;
 top:0;
+background:#d60000;
+color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:15px 40px;
-background:rgba(214,0,0,0.8);
-backdrop-filter:blur(8px);
-color:white;
+padding:14px 30px;
 z-index:1000;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
-.navlinks a{
-margin-left:20px;
+.navbar a{
 color:white;
 text-decoration:none;
-font-weight:bold;
+margin-left:15px;
+padding:6px 12px;
+border-radius:6px;
+transition:0.3s;
 }
 
-/* hero */
+.navbar a:hover{
+background:white;
+color:#d60000;
+}
 
 .hero{
 background:linear-gradient(#d60000,#ff4040);
 color:white;
 text-align:center;
-padding:70px 20px;
+padding:60px 20px;
 }
-
-/* search */
 
 .search{
 text-align:center;
-margin:30px;
+margin:25px;
 }
 
 .search input{
-padding:12px;
+padding:10px;
 width:260px;
 border-radius:6px;
 border:1px solid #ccc;
 }
-
-/* grid */
 
 .container{
 max-width:1200px;
@@ -69,38 +68,46 @@ padding:20px;
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:25px;
+gap:22px;
 }
 
 .card{
 background:white;
 border-radius:10px;
-box-shadow:0 8px 18px rgba(0,0,0,0.15);
+box-shadow:0 6px 16px rgba(0,0,0,0.15);
 overflow:hidden;
 position:relative;
+transition:0.25s;
+}
+
+.card:hover{
+transform:translateY(-6px);
 }
 
 .card img{
 width:100%;
-height:160px;
+height:150px;
 object-fit:cover;
 }
 
 .card h3{
-margin:15px;
+margin:12px;
 }
 
 .card a{
 display:inline-block;
+margin:12px;
+padding:8px 14px;
 background:#d60000;
 color:white;
-padding:10px 18px;
-margin:15px;
-border-radius:6px;
 text-decoration:none;
+border-radius:6px;
+transition:0.2s;
 }
 
-/* badge */
+.card a:hover{
+background:#a80000;
+}
 
 .badge{
 position:absolute;
@@ -108,12 +115,10 @@ top:10px;
 left:10px;
 background:red;
 color:white;
+padding:3px 9px;
+border-radius:4px;
 font-size:12px;
-padding:4px 10px;
-border-radius:5px;
 }
-
-/* pagination */
 
 .pagination{
 text-align:center;
@@ -121,16 +126,14 @@ margin-top:30px;
 }
 
 .pagination button{
-padding:8px 14px;
-margin:5px;
+padding:7px 12px;
+margin:4px;
 border:none;
 background:#d60000;
 color:white;
 border-radius:5px;
 cursor:pointer;
 }
-
-/* snow */
 
 #snow{
 position:fixed;
@@ -151,7 +154,7 @@ pointer-events:none;
 <div class="navbar">
 <div>🎄 RealRax Scripts</div>
 
-<div class="navlinks">
+<div>
 <a href="index.html">Home</a>
 <a href="download.html">Download</a>
 <a href="https://www.youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
@@ -178,34 +181,31 @@ pointer-events:none;
 
 <script>
 
-/* scripts list */
+/* generate 30 scripts */
 
 let scripts=[]
 
 for(let i=1;i<=30;i++){
 
 scripts.push({
-
-title:"Script "+i,
+title:"Blox Fruits Script "+i,
 img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
-badge: i%5==0 ? "HOT" : "",
+badge:i<4?"HOT":(i<7?"NEW":""),
 id:i
-
 })
 
 }
 
 let page=1
-const perPage=8
+let perPage=8
 
 function render(){
 
-const search=document.getElementById("search").value.toLowerCase()
+let search=document.getElementById("search").value.toLowerCase()
 
 let filtered=scripts.filter(s=>s.title.toLowerCase().includes(search))
 
 let start=(page-1)*perPage
-
 let items=filtered.slice(start,start+perPage)
 
 let grid=document.getElementById("grid")
@@ -218,7 +218,7 @@ grid.innerHTML+=`
 
 <div class="card">
 
-${s.badge ? `<div class="badge">${s.badge}</div>`:""}
+${s.badge?`<div class="badge">${s.badge}</div>`:""}
 
 <img src="${s.img}">
 
@@ -232,11 +232,11 @@ ${s.badge ? `<div class="badge">${s.badge}</div>`:""}
 
 })
 
-renderPagination(filtered.length)
+pagination(filtered.length)
 
 }
 
-function renderPagination(total){
+function pagination(total){
 
 let pages=Math.ceil(total/perPage)
 
@@ -253,17 +253,13 @@ document.getElementById("pagination").innerHTML=html
 }
 
 function go(p){
-
 page=p
-
 render()
-
 }
 
 document.getElementById("search").addEventListener("input",()=>{
 
 page=1
-
 render()
 
 })
@@ -278,25 +274,19 @@ const ctx=canvas.getContext("2d")
 let snow=[]
 
 function resize(){
-
 canvas.width=window.innerWidth
 canvas.height=window.innerHeight
-
 }
 
 resize()
 
-window.addEventListener("resize",resize)
-
-for(let i=0;i<150;i++){
+for(let i=0;i<160;i++){
 
 snow.push({
-
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*3+1,
-speed:Math.random()*1+0.5
-
+s:Math.random()*1+0.5
 })
 
 }
@@ -306,13 +296,11 @@ function draw(){
 ctx.clearRect(0,0,canvas.width,canvas.height)
 
 ctx.fillStyle="white"
-
 ctx.beginPath()
 
 snow.forEach(f=>{
 
 ctx.moveTo(f.x,f.y)
-
 ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
 
 })
@@ -321,7 +309,7 @@ ctx.fill()
 
 snow.forEach(f=>{
 
-f.y+=f.speed
+f.y+=f.s
 
 if(f.y>canvas.height){
 
