@@ -1,47 +1,49 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="th">
 <head>
 
 <meta charset="UTF-8">
-<title>RealRax Script</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Blox Fruits Script</title>
 
 <link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
 
 </head>
 
 <body>
 
-<canvas id="snow"></canvas>
+<section class="scriptpage">
 
-<h1>RealRax Script</h1>
-
-<img class="thumb"
-src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
-
-<h2>Blox Fruits Auto Farm</h2>
+<h1>Blox Fruits Auto Farm Script</h1>
 
 <p>
 
-This script allows automatic farming in Blox Fruits.  
-Supports both mobile and PC executors.  
-Helps leveling faster with automated combat.  
-Includes basic farming functions.  
-Provided free by RealRax YouTube channel.
+สคริปต์นี้ถูกออกแบบมาสำหรับผู้เล่นเกม Blox Fruits
+ที่ต้องการฟาร์มเลเวลอย่างรวดเร็วโดยไม่ต้องทำเองทั้งหมด
+
+ระบบของสคริปต์จะช่วยให้ตัวละครของคุณ
+โจมตีศัตรูอัตโนมัติและเก็บค่าประสบการณ์ได้อย่างต่อเนื่อง
+
+เหมาะสำหรับผู้เล่นที่ต้องการเร่งเลเวล
+หรือฟาร์มเงินในเกมโดยประหยัดเวลา
+
+สคริปต์นี้ทำงานได้กับ executor ส่วนใหญ่
+และมีระบบป้องกันการค้างของตัวละคร
 
 </p>
 
-<textarea id="script">
+<textarea id="code">
 
--- paste script here
+loadstring(game:HttpGet("https://example.com/script.lua"))()
 
 </textarea>
 
-<br><br>
+<button onclick="copyScript()">คัดลอก Script</button>
 
-<button onclick="copyScript()">Copy Script</button>
+</section>
+
+<script src="script.js"></script>
 
 </body>
-
 </html>
