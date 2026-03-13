@@ -1,26 +1,24 @@
-// COPY SCRIPT
-
 function copyScript(){
 
-var copyText = document.getElementById("script");
+let text=document.getElementById("script");
 
-copyText.select();
-copyText.setSelectionRange(0,99999);
+text.select();
 
-navigator.clipboard.writeText(copyText.value);
+navigator.clipboard.writeText(text.value);
 
-alert("Script copied!");
+alert("Script copied");
 
 }
 
 
-// PAGINATION
-
 let page=1;
 
 function nextPage(){
+
 page++;
+
 location.href="index.html?page="+page;
+
 }
 
 function prevPage(){
@@ -36,7 +34,6 @@ location.href="index.html?page="+page;
 }
 
 
-// SNOW EFFECT
 
 const canvas=document.getElementById("snow");
 
@@ -45,18 +42,19 @@ if(canvas){
 const ctx=canvas.getContext("2d");
 
 canvas.width=window.innerWidth;
+
 canvas.height=window.innerHeight;
 
-let snowflakes=[];
+let snow=[];
 
-for(let i=0;i<120;i++){
+for(let i=0;i<150;i++){
 
-snowflakes.push({
+snow.push({
 
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*3+1,
-d:Math.random()+1
+s:Math.random()*1+0.5
 
 })
 
@@ -68,51 +66,28 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 
 ctx.fillStyle="white";
 
+snow.forEach(f=>{
+
 ctx.beginPath();
 
-for(let i=0;i<snowflakes.length;i++){
-
-let f=snowflakes[i];
-
-ctx.moveTo(f.x,f.y);
-
-ctx.arc(f.x,f.y,f.r,0,Math.PI*2,true)
-
-}
+ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
 
 ctx.fill();
 
-move();
-
-}
-
-function move(){
-
-for(let i=0;i<snowflakes.length;i++){
-
-let f=snowflakes[i];
-
-f.y+=Math.pow(f.d,2)+1;
-
-f.x+=Math.sin(f.y*0.01);
+f.y+=f.s;
 
 if(f.y>canvas.height){
 
-snowflakes[i]={
+f.y=0;
 
-x:Math.random()*canvas.width,
-y:0,
-r:f.r,
-d:f.d
+f.x=Math.random()*canvas.width;
 
 }
 
-}
+})
 
 }
 
-}
-
-setInterval(draw,25)
+setInterval(draw,30)
 
 }
