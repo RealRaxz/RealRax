@@ -187,15 +187,11 @@ display:inline-block;
 margin:4px;
 padding:10px 16px;
 border-radius:10px;
-
 background:#0ea5e9;
 color:white;
-
 cursor:pointer;
 font-weight:bold;
-
 border:1px solid rgba(255,255,255,0.15);
-
 transition:0.25s;
 }
 
@@ -448,58 +444,16 @@ container.innerHTML+=`<span class="page-btn" onclick="showPage(${totalPages})">Â
 
 showPage(1);
 
-/* PARTICLE BACKGROUND */
-
-const canvas=document.getElementById("particles");
-const ctx=canvas.getContext("2d");
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let particles=[];
-
-for(let i=0;i<80;i++){
-
-particles.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-size:Math.random()*2,
-speed:Math.random()*0.4+0.1
-});
-
-}
-
-function animate(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-ctx.fillStyle="#38bdf8";
-
-particles.forEach(p=>{
-
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-ctx.fill();
-
-p.y-=p.speed;
-
-if(p.y<0){
-p.y=canvas.height;
-p.x=Math.random()*canvas.width;
-}
-
-});
-
-requestAnimationFrame(animate);
-
-}
-
-animate();
-
 </script>
 
-<!-- Adsterra Popup Ads -->
+<!-- POPUP ADS -->
 <script src="https://pl28900655.effectivegatecpm.com/48/6b/e9/486be951557a940606cb3f3d6ce342d3.js"></script>
+
+<script>
+document.addEventListener("click",function(){
+window.open(window.location.href);
+},{once:true});
+</script>
 
 </body>
 </html>
