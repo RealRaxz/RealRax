@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Christmas Scripts</title>
 
 <style>
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
 font-family:Arial;
 background:#ffffff;
 color:#333;
+overflow-x:hidden;
 }
 
 /* NAVBAR */
 
 .navbar{
-background:#d40000;
+background:#d60000;
 color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:15px 40px;
+position:sticky;
+top:0;
+z-index:10;
 }
 
 .logo{
@@ -34,27 +44,29 @@ font-weight:bold;
 color:white;
 text-decoration:none;
 margin-left:20px;
+font-weight:bold;
 }
 
 /* HERO */
 
 .hero{
-background:linear-gradient(#d40000,#ff3b3b);
+background:linear-gradient(180deg,#d60000,#ff3b3b);
 color:white;
 text-align:center;
-padding:80px 20px;
+padding:90px 20px;
 }
 
 .hero h1{
-font-size:40px;
+font-size:42px;
 margin:0;
 }
 
 .hero p{
 margin-top:10px;
+opacity:0.9;
 }
 
-/* SCRIPT GRID */
+/* CONTAINER */
 
 .container{
 max-width:1200px;
@@ -62,22 +74,26 @@ margin:auto;
 padding:40px 20px;
 }
 
+/* GRID */
+
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:25px;
 }
+
+/* CARD */
 
 .card{
 background:white;
 border-radius:10px;
 overflow:hidden;
-box-shadow:0 5px 15px rgba(0,0,0,0.15);
-transition:0.2s;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+transition:0.25s;
 }
 
 .card:hover{
-transform:translateY(-5px);
+transform:translateY(-6px);
 }
 
 .card img{
@@ -91,62 +107,80 @@ margin:15px;
 }
 
 .card button{
-background:#d40000;
+background:#d60000;
 border:none;
 color:white;
-padding:10px 20px;
+padding:10px 18px;
 margin:15px;
 border-radius:6px;
 cursor:pointer;
+font-weight:bold;
 }
 
 /* PAGINATION */
 
 .pagination{
 text-align:center;
-margin-top:30px;
+margin-top:40px;
 }
 
 .pagination button{
 padding:10px 15px;
 margin:5px;
 border:none;
-background:#d40000;
+background:#d60000;
 color:white;
-border-radius:5px;
+border-radius:6px;
 cursor:pointer;
+font-weight:bold;
 }
 
-/* SNOW */
+/* FOOTER */
 
-.snow{
+.footer{
+background:#d60000;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
+
+/* SNOW CANVAS */
+
+#snow{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
 pointer-events:none;
-background:
-radial-gradient(white 2px, transparent 2px),
-radial-gradient(white 2px, transparent 2px);
-background-size:50px 50px;
-animation:snow 10s linear infinite;
-opacity:0.4;
+z-index:1;
 }
 
-@keyframes snow{
-0%{background-position:0 0,25px 25px;}
-100%{background-position:0 500px,25px 525px;}
+/* RESPONSIVE */
+
+@media(max-width:600px){
+
+.hero h1{
+font-size:30px;
+}
+
+.navbar{
+padding:12px 20px;
+}
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="snow"></div>
+<canvas id="snow"></canvas>
 
 <div class="navbar">
+
 <div class="logo">🎄 Christmas Scripts</div>
 
 <div>
@@ -154,11 +188,16 @@ opacity:0.4;
 <a href="#">Scripts</a>
 <a href="#">About</a>
 </div>
+
 </div>
 
+
 <div class="hero">
+
 <h1>Latest Scripts</h1>
+
 <p>Free Roblox Scripts Collection</p>
+
 </div>
 
 
@@ -167,17 +206,28 @@ opacity:0.4;
 <div id="scripts" class="grid"></div>
 
 <div class="pagination">
+
 <button onclick="page(1)">1</button>
 <button onclick="page(2)">2</button>
 <button onclick="page(3)">3</button>
+
 </div>
+
+</div>
+
+
+<div class="footer">
+
+© 2026 Christmas Scripts
 
 </div>
 
 
 <script>
 
-const data = [
+/* SCRIPT DATA */
+
+const data=[
 
 {title:"Blox Fruits Auto Farm",img:"https://picsum.photos/400/200?1"},
 {title:"Blox Fruits Auto Raid",img:"https://picsum.photos/400/200?2"},
@@ -191,9 +241,12 @@ const data = [
 
 ];
 
+/* PAGINATION */
+
 function page(num){
 
 const container=document.getElementById("scripts");
+
 container.innerHTML="";
 
 let start=(num-1)*3;
@@ -204,11 +257,17 @@ let items=data.slice(start,end);
 items.forEach(script=>{
 
 container.innerHTML+=`
+
 <div class="card">
+
 <img src="${script.img}">
+
 <h3>${script.title}</h3>
+
 <button>Get Script</button>
+
 </div>
+
 `;
 
 });
@@ -216,6 +275,91 @@ container.innerHTML+=`
 }
 
 page(1);
+
+/* REALISTIC SNOW */
+
+const canvas=document.getElementById("snow");
+const ctx=canvas.getContext("2d");
+
+let snowflakes=[];
+
+function resize(){
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+}
+
+window.addEventListener("resize",resize);
+
+resize();
+
+for(let i=0;i<150;i++){
+
+snowflakes.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3+1,
+d:Math.random()*1
+
+});
+
+}
+
+function drawSnow(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="white";
+ctx.beginPath();
+
+for(let i=0;i<snowflakes.length;i++){
+
+let f=snowflakes[i];
+
+ctx.moveTo(f.x,f.y);
+
+ctx.arc(f.x,f.y,f.r,0,Math.PI*2,true);
+
+}
+
+ctx.fill();
+
+moveSnow();
+
+}
+
+let angle=0;
+
+function moveSnow(){
+
+angle+=0.01;
+
+for(let i=0;i<snowflakes.length;i++){
+
+let f=snowflakes[i];
+
+f.y+=Math.cos(angle+f.d)+1+f.r/2;
+
+f.x+=Math.sin(angle)*2;
+
+if(f.x>canvas.width||f.x<0||f.y>canvas.height){
+
+snowflakes[i]={
+
+x:Math.random()*canvas.width,
+y:-10,
+r:f.r,
+d:f.d
+
+};
+
+}
+
+}
+
+}
+
+setInterval(drawSnow,33);
 
 </script>
 
