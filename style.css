@@ -1,5 +1,5 @@
 body{
-font-family: Arial;
+font-family:Arial;
 background:#111;
 color:white;
 text-align:center;
@@ -24,21 +24,21 @@ background:#222;
 }
 
 .cards{
-display:flex;
-justify-content:center;
-margin-top:40px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+padding:40px;
 }
 
 .card{
-background:#222;
-padding:20px;
+background:#1c1c1c;
+padding:15px;
 border-radius:10px;
-width:300px;
 }
 
 .card img{
 width:100%;
-border-radius:10px;
+border-radius:8px;
 }
 
 .btn{
@@ -48,7 +48,7 @@ color:white;
 padding:10px 20px;
 margin-top:10px;
 text-decoration:none;
-border-radius:5px;
+border-radius:6px;
 }
 
 textarea{
@@ -60,31 +60,15 @@ margin-top:20px;
 .thumb{
 width:500px;
 border-radius:10px;
-margin-top:20px;
 }
 
-/* Snow */
+.pagination{
+margin-bottom:40px;
+}
 
-.snow{
+canvas{
 position:fixed;
 top:0;
 left:0;
-width:100%;
-height:100%;
 pointer-events:none;
-background-image:
-radial-gradient(white 2px, transparent 2px),
-radial-gradient(white 2px, transparent 2px),
-radial-gradient(white 2px, transparent 2px);
-background-size:100px 100px;
-animation:snowfall 10s linear infinite;
-}
-
-@keyframes snowfall{
-0%{
-background-position:0 0,50px 50px,100px 100px;
-}
-100%{
-background-position:0 1000px,50px 1050px,100px 1100px;
-}
 }
