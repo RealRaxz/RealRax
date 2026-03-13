@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Download</title>
 
 <style>
@@ -12,28 +14,37 @@ margin:0;
 font-family:Arial;
 background:linear-gradient(#d60000,#ff4040);
 min-height:100vh;
-color:white;
-text-align:center;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
-.container{
-margin-top:120px;
+.box{
+background:white;
+padding:30px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 6px 16px rgba(0,0,0,0.2);
+}
+
+a.button{
+display:inline-block;
+margin-top:15px;
+padding:10px 16px;
+background:#d60000;
+color:white;
+text-decoration:none;
+border-radius:6px;
 }
 
 button{
-background:white;
-color:#d60000;
+margin-top:10px;
+padding:10px 14px;
 border:none;
-padding:15px 30px;
-border-radius:8px;
-font-size:18px;
-cursor:pointer;
-}
-
-a{
+background:#555;
 color:white;
-display:block;
-margin-top:20px;
+border-radius:6px;
+cursor:pointer;
 }
 
 </style>
@@ -41,23 +52,22 @@ margin-top:20px;
 
 <body>
 
-<div class="container">
+<div class="box">
 
-<h1>📥 Download Delta Executor</h1>
+<h2>📥 Delta Executor Download</h2>
 
 <p>
-⚡ โปรแกรมสำหรับรัน Script Roblox<br>
-🚀 รองรับ Script ส่วนใหญ่<br>
-📱 ใช้งานง่ายบนมือถือ
+⚡ โปรแกรมรัน Roblox Script  
+📱 รองรับ Android  
+🚀 ใช้งานง่าย  
+🎮 เหมาะกับ Blox Fruits
 </p>
 
-<a href="https://www.mediafire.com/file/g2n0ans81o4lb87/Delta-2.711.876.apk/file">
+<a class="button" href="https://www.mediafire.com/file/g2n0ans81o4lb87/Delta-2.711.876.apk/file" target="_blank">Download</a>
 
-<button>Download APK</button>
+<br>
 
-</a>
-
-<a href="index.html">🔙 Back</a>
+<button onclick="history.back()">⬅ Back</button>
 
 </div>
 
