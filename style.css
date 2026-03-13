@@ -1,15 +1,12 @@
 body{
 
 margin:0;
-font-family:Arial;
+font-family:Arial, sans-serif;
 background:#ffffff;
-color:#222;
 
 }
 
-/* TITLE */
-
-.latest{
+.container{
 
 max-width:1200px;
 margin:auto;
@@ -17,20 +14,18 @@ padding:40px;
 
 }
 
-.latest h1{
+.title{
 
 text-align:center;
-color:#c40000;
+color:#cc0000;
 
 }
-
-/* GRID */
 
 .grid{
 
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:30px;
+gap:25px;
 margin-top:40px;
 
 }
@@ -38,18 +33,11 @@ margin-top:40px;
 .card{
 
 background:white;
-border-radius:12px;
+border-radius:10px;
 overflow:hidden;
 text-decoration:none;
 color:black;
-box-shadow:0 5px 15px rgba(0,0,0,0.15);
-transition:0.3s;
-
-}
-
-.card:hover{
-
-transform:translateY(-5px);
+box-shadow:0 4px 12px rgba(0,0,0,0.15);
 
 }
 
@@ -62,12 +50,10 @@ display:block;
 
 .card h3{
 
-padding:15px;
 text-align:center;
+padding:15px;
 
 }
-
-/* PAGINATION */
 
 .pagination{
 
@@ -78,17 +64,17 @@ margin-top:40px;
 
 .pagination button{
 
-background:#c40000;
+background:#cc0000;
 color:white;
 border:none;
-padding:10px 20px;
+padding:10px 18px;
 margin:5px;
-border-radius:6px;
 cursor:pointer;
+border-radius:6px;
 
 }
 
-/* SNOW */
+/* snow */
 
 .snow{
 
@@ -97,22 +83,22 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-pointer-events:none;
 background-image:url("https://i.imgur.com/M6aQY3H.png");
-animation:snow 15s linear infinite;
+animation:snow 18s linear infinite;
+pointer-events:none;
 
 }
 
 @keyframes snow{
 
-0%{background-position:0 -1000px}
-100%{background-position:0 1000px}
+0%{background-position:0 -1000px;}
+100%{background-position:0 1000px;}
 
 }
 
-/* RESPONSIVE */
+/* responsive */
 
-@media(max-width:900px){
+@media (max-width:900px){
 
 .grid{
 
@@ -122,7 +108,7 @@ grid-template-columns:repeat(2,1fr);
 
 }
 
-@media(max-width:500px){
+@media (max-width:500px){
 
 .grid{
 
