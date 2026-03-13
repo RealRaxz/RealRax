@@ -1,39 +1,337 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RealRax Scripts</title>
+<title>Christmas Wonderland</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
 
+body{
+margin:0;
+font-family:Arial;
+background:#b60000;
+color:white;
+}
+
+/* NAVBAR */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#c40000;
+padding:15px 40px;
+}
+
+.navbar a{
+color:white;
+text-decoration:none;
+margin:0 15px;
+font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+background:url("https://images.unsplash.com/photo-1543589077-47d81606c1bf");
+background-size:cover;
+background-position:center;
+padding:120px 20px;
+text-align:center;
+}
+
+.hero h1{
+font-size:60px;
+margin:0;
+}
+
+.hero p{
+font-size:22px;
+}
+
+.hero button{
+background:#ff2d2d;
+border:none;
+color:white;
+padding:15px 35px;
+font-size:18px;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* CARDS */
+
+.section{
+background:#efe2c6;
+color:black;
+padding:40px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+max-width:1200px;
+margin:auto;
+}
+
+.card{
+background:white;
+border-radius:10px;
+overflow:hidden;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+.card img{
+width:100%;
+}
+
+.card h3{
+padding:15px;
+}
+
+/* ABOUT */
+
+.about{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:30px;
+max-width:1200px;
+margin:auto;
+align-items:center;
+}
+
+.about img{
+width:100%;
+border-radius:10px;
+}
+
+/* PRODUCTS */
+
+.products{
+background:#c40000;
+padding:40px;
+}
+
+.products h2{
+text-align:center;
+}
+
+.product-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+max-width:1200px;
+margin:auto;
+}
+
+.product{
+background:white;
+color:black;
+border-radius:10px;
+padding:10px;
+text-align:center;
+}
+
+.product img{
+width:100%;
+}
+
+/* BLOG */
+
+.blog{
+background:#9b0000;
+padding:40px;
+text-align:center;
+}
+
+.blog-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+max-width:1000px;
+margin:auto;
+}
+
+.blog img{
+width:100%;
+border-radius:10px;
+}
+
+/* SNOW */
+
+.snow{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+background:
+radial-gradient(white 2px, transparent 2px),
+radial-gradient(white 2px, transparent 2px);
+background-size:50px 50px;
+animation:snow 12s linear infinite;
+opacity:0.4;
+}
+
+@keyframes snow{
+0%{background-position:0 0,25px 25px;}
+100%{background-position:0 500px,25px 525px;}
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.grid{
+grid-template-columns:1fr 1fr;
+}
+
+.product-grid{
+grid-template-columns:1fr 1fr;
+}
+
+.about{
+grid-template-columns:1fr;
+}
+
+.blog-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="snow"></div>
 
-<div class="container">
+<div class="navbar">
+<div><b>Merry Christmas</b></div>
 
-<h1 class="title">Latest Scripts</h1>
+<div>
+<a href="#">Home</a>
+<a href="#">About</a>
+<a href="#">Shop</a>
+<a href="#">Gallery</a>
+<a href="#">Contact</a>
+</div>
+</div>
 
-<div id="scriptGrid" class="grid"></div>
 
-<div class="pagination">
+<section class="hero">
 
-<button id="prevBtn">◀</button>
+<h1>Christmas Wonderland</h1>
 
-<span id="pageNum">1</span>
+<p>Celebrate the Joy of the Season</p>
 
-<button id="nextBtn">▶</button>
+<button>Shop Now</button>
 
+</section>
+
+
+<section class="section">
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1607344645866-009c320b63e0">
+<h3>Holiday Deals</h3>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1608889175123-8ee362201f81">
+<h3>Gift Ideas</h3>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1512389098783-66b81f86e199">
+<h3>Festive Decor</h3>
 </div>
 
 </div>
 
-<script src="script.js"></script>
+</section>
+
+
+<section class="section">
+
+<div class="about">
+
+<div>
+<h2>About Us</h2>
+
+<p>
+
+Bringing you the best of the holiday spirit
+with joy, warmth and festive cheer.
+
+</p>
+
+<button>Learn More</button>
+
+</div>
+
+<img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48">
+
+</div>
+
+</section>
+
+
+<section class="products">
+
+<h2>Featured Products</h2>
+
+<div class="product-grid">
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a">
+<p>Santa Plush Toy</p>
+</div>
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48">
+<p>Christmas Wreath</p>
+</div>
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1607344645866-009c320b63e0">
+<p>Holiday Ornament</p>
+</div>
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1512389098783-66b81f86e199">
+<p>LED String Lights</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="blog">
+
+<h2>Latest from Our Blog</h2>
+
+<div class="blog-grid">
+
+<img src="https://images.unsplash.com/photo-1608889175123-8ee362201f81">
+
+<img src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a">
+
+<img src="https://images.unsplash.com/photo-1607344645866-009c320b63e0">
+
+</div>
+
+</section>
 
 </body>
 </html>
