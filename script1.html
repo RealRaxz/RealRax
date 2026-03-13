@@ -12,13 +12,14 @@
 body{
 margin:0;
 font-family:Arial;
-background:white;
+background:linear-gradient(#d60000,#ff4040);
+min-height:100vh;
 }
 
 .navbar{
-background:#d60000;
+background:#b80000;
 color:white;
-padding:16px 40px;
+padding:18px 40px;
 font-size:22px;
 font-weight:bold;
 }
@@ -33,11 +34,7 @@ padding:40px 20px;
 background:white;
 border-radius:10px;
 padding:30px;
-box-shadow:0 8px 18px rgba(0,0,0,0.15);
-}
-
-h2{
-color:#d60000;
+box-shadow:0 8px 18px rgba(0,0,0,0.2);
 }
 
 textarea{
@@ -46,7 +43,6 @@ height:200px;
 border:1px solid #ccc;
 border-radius:6px;
 padding:10px;
-margin-top:10px;
 resize:none;
 }
 
@@ -58,18 +54,6 @@ padding:12px 20px;
 border-radius:6px;
 margin-top:10px;
 cursor:pointer;
-font-size:16px;
-}
-
-button:hover{
-background:#b80000;
-}
-
-a{
-display:inline-block;
-margin-top:20px;
-color:#d60000;
-text-decoration:none;
 }
 
 #toast{
@@ -89,8 +73,6 @@ transition:0.4s;
 opacity:1;
 }
 
-/* snow */
-
 #snow{
 position:fixed;
 top:0;
@@ -109,7 +91,7 @@ pointer-events:none;
 <canvas id="snow"></canvas>
 
 <div class="navbar">
-🎄 Christmas Scripts
+🎄 RealRax Scripts
 </div>
 
 <div class="container">
@@ -121,20 +103,20 @@ pointer-events:none;
 <h3>รายละเอียด</h3>
 
 <p>
-สคริปต์นี้ถูกพัฒนาขึ้นสำหรับเกม Roblox เพื่อช่วยให้ผู้เล่นสามารถใช้งานระบบต่างๆภายในเกมได้สะดวกมากยิ่งขึ้น
-ตัวสคริปต์มีฟังก์ชันอัตโนมัติหลายอย่างที่ช่วยลดขั้นตอนการเล่นเกม
-เหมาะสำหรับผู้เล่นที่ต้องการประหยัดเวลาในการฟาร์มหรือทำภารกิจ
-ระบบถูกออกแบบให้ใช้งานง่ายและสามารถเปิดใช้งานได้ทันที
-รองรับ Executor ส่วนใหญ่ที่ใช้ในปัจจุบัน
+สคริปต์นี้ถูกพัฒนาขึ้นเพื่อช่วยให้ผู้เล่น Roblox ใช้งานระบบต่างๆได้ง่ายขึ้น
+มีระบบอัตโนมัติที่ช่วยลดเวลาในการเล่นเกม
+เหมาะสำหรับผู้เล่นที่ต้องการฟาร์มไอเทมหรือเลเวลอย่างรวดเร็ว
+สามารถใช้งานร่วมกับ Executor ส่วนใหญ่ได้
+และถูกออกแบบมาให้ใช้งานได้ง่าย
 </p>
 
 <h3>วิธีใช้งาน</h3>
 
 <p>
-1 เข้าเกม Roblox ที่ต้องการใช้งานสคริปต์  
-2 เปิดโปรแกรม Executor ที่คุณใช้  
-3 กดปุ่ม Copy Script ด้านล่าง  
-4 วาง Script ลงใน Executor  
+1 เข้าเกม Roblox ที่ต้องการใช้สคริปต์  
+2 เปิดโปรแกรม Executor  
+3 กด Copy Script  
+4 นำ Script ไปวางใน Executor  
 5 กด Execute เพื่อเริ่มใช้งาน
 </p>
 
@@ -143,10 +125,6 @@ pointer-events:none;
 <br>
 
 <button onclick="copyScript()">Copy Script</button>
-
-<br>
-
-<a href="index.html">← กลับหน้า Scripts</a>
 
 </div>
 
@@ -160,71 +138,37 @@ pointer-events:none;
 
 const scripts={
 
-1:{
-title:"Blox Fruits Auto Farm",
-code:"print('Auto Farm Script')"
-},
-
-2:{
-title:"Blox Fruits Auto Raid",
-code:"print('Auto Raid Script')"
-},
-
-3:{
-title:"King Legacy Script",
-code:"print('King Legacy Script')"
-},
-
-4:{
-title:"Anime Fighters Script",
-code:"print('Anime Fighters Script')"
-},
-
-5:{
-title:"Pet Simulator Script",
-code:"print('Pet Simulator Script')"
-},
-
-6:{
-title:"Doors Script",
-code:"print('Doors Script')"
-}
+1:"print('Auto Farm')",
+2:"print('Auto Raid')",
+3:"print('King Legacy')",
+4:"print('Anime Fighters')",
+5:"print('Pet Simulator')",
+6:"print('Doors Script')",
+7:"print('Fast Farm')",
+8:"print('Anime Warriors')"
 
 }
-
-/* load script */
 
 const params=new URLSearchParams(window.location.search)
 
-let id=params.get("id") || 1
+let id=params.get("id")||1
 
-let data=scripts[id]
+document.getElementById("title").innerText="Script "+id
 
-document.getElementById("title").innerText=data.title
-document.getElementById("code").value=data.code
-
-/* copy */
+document.getElementById("code").value=scripts[id]
 
 function copyScript(){
 
-const text=document.getElementById("code")
+navigator.clipboard.writeText(document.getElementById("code").value)
 
-navigator.clipboard.writeText(text.value)
+let t=document.getElementById("toast")
 
-showToast()
-
-}
-
-/* toast */
-
-function showToast(){
-
-const toast=document.getElementById("toast")
-
-toast.classList.add("show")
+t.classList.add("show")
 
 setTimeout(()=>{
-toast.classList.remove("show")
+
+t.classList.remove("show")
+
 },2000)
 
 }
@@ -237,20 +181,25 @@ const ctx=canvas.getContext("2d")
 let snow=[]
 
 function resize(){
+
 canvas.width=window.innerWidth
 canvas.height=window.innerHeight
+
 }
 
 resize()
+
 window.addEventListener("resize",resize)
 
 for(let i=0;i<180;i++){
 
 snow.push({
+
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*3+1,
 speed:Math.random()*1+0.5
+
 })
 
 }
@@ -260,21 +209,28 @@ function draw(){
 ctx.clearRect(0,0,canvas.width,canvas.height)
 
 ctx.fillStyle="white"
+
 ctx.beginPath()
 
 snow.forEach(f=>{
+
 ctx.moveTo(f.x,f.y)
+
 ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+
 })
 
 ctx.fill()
 
 snow.forEach(f=>{
+
 f.y+=f.speed
 
 if(f.y>canvas.height){
+
 f.y=0
 f.x=Math.random()*canvas.width
+
 }
 
 })
