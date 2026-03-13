@@ -7,41 +7,120 @@
 
 <title>Copy Script</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#ffffff;
+color:#333;
+}
+
+.navbar{
+background:#d60000;
+color:white;
+padding:15px 40px;
+font-size:22px;
+font-weight:bold;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+}
+
+.box{
+background:#fff;
+border-radius:10px;
+padding:30px;
+box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
+h2{
+color:#d60000;
+}
+
+textarea{
+width:100%;
+height:200px;
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
+margin-top:10px;
+}
+
+button{
+background:#d60000;
+border:none;
+color:white;
+padding:12px 20px;
+border-radius:6px;
+margin-top:10px;
+cursor:pointer;
+}
+
+.back{
+display:inline-block;
+margin-top:20px;
+color:#d60000;
+text-decoration:none;
+}
+
+</style>
 
 </head>
 
 <body>
 
+<div class="navbar">
+🎄 Christmas Scripts
+</div>
+
 <div class="container">
 
-<h1>Blox Fruits Auto Farm Script</h1>
+<div class="box">
+
+<h2>Blox Fruits Auto Farm Script</h2>
+
+<h3>รายละเอียด</h3>
 
 <p>
-
-สคริปต์นี้ช่วยให้ตัวละครในเกม Blox Fruits
-สามารถโจมตีศัตรูและเก็บค่าประสบการณ์ได้อัตโนมัติ
-เหมาะสำหรับผู้เล่นที่ต้องการฟาร์มเลเวลอย่างรวดเร็ว
-
-ระบบจะช่วยให้ตัวละครของคุณ
-ทำการต่อสู้และเก็บเงินในเกมโดยอัตโนมัติ
-
-สคริปต์นี้สามารถใช้งานได้กับ executor หลายตัว
-และถูกออกแบบให้ใช้งานได้ง่ายสำหรับผู้เล่นทั่วไป
-
+สคริปต์นี้ถูกออกแบบมาสำหรับเกม Blox Fruits ใน Roblox  
+ช่วยให้ผู้เล่นสามารถฟาร์มเลเวลได้อัตโนมัติ  
+ระบบจะทำการโจมตีศัตรูและเก็บค่าประสบการณ์ให้เอง  
+เหมาะสำหรับผู้เล่นที่ต้องการเก็บเลเวลอย่างรวดเร็ว  
+และลดเวลาในการฟาร์มในเกมให้น้อยลง
 </p>
 
-<textarea id="code" style="width:100%;height:150px">
+<h3>วิธีใช้งาน</h3>
 
+<p>
+1. เปิดเกม Roblox และเข้าเกม Blox Fruits  
+2. เปิดโปรแกรม Executor ที่คุณใช้งาน  
+3. คัดลอก Script ด้านล่างไปวางใน Executor  
+4. กดปุ่ม Execute หรือ Run Script  
+5. ระบบจะเริ่มทำงานอัตโนมัติภายในเกม
+</p>
+
+<h3>Script</h3>
+
+<textarea id="code">
 loadstring(game:HttpGet("https://example.com/script.lua"))()
-
 </textarea>
 
-<br><br>
+<br>
 
-<button onclick="copy()">คัดลอก Script</button>
+<button onclick="copy()">Copy Script</button>
+
+<br>
+
+<a href="index.html" class="back">← กลับหน้า Scripts</a>
 
 </div>
+
+</div>
+
 
 <script>
 
@@ -50,10 +129,9 @@ function copy(){
 let text=document.getElementById("code");
 
 text.select();
+document.execCommand("copy");
 
-navigator.clipboard.writeText(text.value);
-
-alert("คัดลอก Script แล้ว");
+alert("Script Copied");
 
 }
 
