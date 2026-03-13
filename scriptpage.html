@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -14,15 +14,6 @@ margin:0;
 font-family:Arial;
 background:#020617;
 color:white;
-overflow-x:hidden;
-}
-
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-pointer-events:none;
 }
 
 .container{
@@ -31,17 +22,12 @@ margin:auto;
 padding:40px 20px;
 }
 
-/* CARD */
-
 .card{
 background:#0f172a;
 border:1px solid #ffffff;
 border-radius:16px;
 padding:30px;
-box-shadow:0 0 8px rgba(255,255,255,0.15);
 }
-
-/* TITLE */
 
 .title{
 font-size:28px;
@@ -49,21 +35,6 @@ color:#38bdf8;
 margin-bottom:15px;
 font-weight:bold;
 }
-
-/* DESCRIPTION */
-
-.description{
-background:#020617;
-padding:18px;
-border-radius:10px;
-margin-bottom:20px;
-line-height:1.7;
-color:#cbd5f5;
-border:1px solid #ffffff;
-box-shadow:0 0 6px rgba(255,255,255,0.12);
-}
-
-/* SCRIPT BOX */
 
 textarea{
 width:100%;
@@ -73,17 +44,9 @@ border:1px solid #ffffff;
 color:#38bdf8;
 padding:14px;
 border-radius:10px;
-font-size:14px;
 font-family:monospace;
 resize:none;
-overflow:auto;
-box-sizing:border-box;
-margin-top:10px;
-margin-bottom:10px;
-box-shadow:0 0 6px rgba(255,255,255,0.12);
 }
-
-/* BUTTON */
 
 button{
 margin-top:10px;
@@ -93,16 +56,8 @@ border:none;
 border-radius:8px;
 color:white;
 cursor:pointer;
-font-size:15px;
 font-weight:bold;
-transition:0.2s;
 }
-
-button:hover{
-background:#0284c7;
-}
-
-/* TOAST */
 
 .toast{
 position:fixed;
@@ -111,8 +66,6 @@ right:30px;
 background:#0ea5e9;
 padding:12px 22px;
 border-radius:8px;
-color:white;
-font-size:14px;
 opacity:0;
 transition:0.3s;
 }
@@ -121,53 +74,17 @@ transition:0.3s;
 opacity:1;
 }
 
-/* MOBILE */
-
-@media(max-width:600px){
-
-.container{
-padding:30px 15px;
-}
-
-textarea{
-height:180px;
-}
-
-}
-
 </style>
 
 </head>
 
 <body>
 
-<canvas id="particles"></canvas>
-
 <div class="container">
 
 <div class="card">
 
 <div class="title">📜 Copy Script</div>
-
-<div class="description">
-
-📝 <b>คำอธิบาย</b><br><br>
-
-🚀 Script นี้ช่วยเพิ่มความสะดวกในการเล่นเกม และปลดล็อกฟีเจอร์ต่าง ๆ ให้ใช้งานได้ง่ายขึ้น  
-⚡ รองรับ Executor หลายตัว ทั้ง PC และ Mobile  
-💡 คัดลอก Script แล้วนำไปวางใน Executor ได้ทันที  
-
-<br>
-
-📖 <b>วิธีใช้</b><br><br>
-
-1️⃣ กดปุ่ม Copy Script ด้านล่าง  
-2️⃣ เปิด Executor  
-3️⃣ วาง Script ลงในช่อง Script  
-4️⃣ กด Execute  
-5️⃣ กลับเข้าเกมแล้วใช้งานเมนู Script ได้ทันที 🎮
-
-</div>
 
 <textarea id="script" readonly></textarea>
 
@@ -181,20 +98,10 @@ height:180px;
 
 <script>
 
-/* SCRIPT LIST */
-
 const scripts={
 
 script1:'loadstring(game:HttpGet("SCRIPT_LINK_1"))()',
-script2:'loadstring(game:HttpGet("SCRIPT_LINK_2"))()',
-script3:'loadstring(game:HttpGet("SCRIPT_LINK_3"))()',
-script4:'loadstring(game:HttpGet("SCRIPT_LINK_4"))()',
-script5:'loadstring(game:HttpGet("SCRIPT_LINK_5"))()',
-script6:'loadstring(game:HttpGet("SCRIPT_LINK_6"))()',
-script7:'loadstring(game:HttpGet("SCRIPT_LINK_7"))()',
-script8:'loadstring(game:HttpGet("SCRIPT_LINK_8"))()',
-script9:'loadstring(game:HttpGet("SCRIPT_LINK_9"))()',
-script10:'loadstring(game:HttpGet("SCRIPT_LINK_10"))()'
+script2:'loadstring(game:HttpGet("SCRIPT_LINK_2"))()'
 
 };
 
@@ -208,8 +115,6 @@ box.value=scripts[scriptName];
 }else{
 box.value="Script not found";
 }
-
-/* COPY */
 
 function copyScript(){
 
@@ -225,71 +130,10 @@ toast.classList.remove("show");
 
 }
 
-/* PARTICLE BACKGROUND */
-
-const canvas=document.getElementById("particles");
-const ctx=canvas.getContext("2d");
-
-function resize(){
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-}
-
-resize();
-window.addEventListener("resize",resize);
-
-let particles=[];
-
-for(let i=0;i<120;i++){
-
-particles.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-size:Math.random()*2+1,
-speed:Math.random()*0.6+0.2
-
-});
-
-}
-
-function animate(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-ctx.fillStyle="#38bdf8";
-
-particles.forEach(p=>{
-
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-ctx.fill();
-
-p.y-=p.speed;
-
-if(p.y<0){
-p.y=canvas.height;
-p.x=Math.random()*canvas.width;
-}
-
-});
-
-requestAnimationFrame(animate);
-
-}
-
-animate();
-
 </script>
 
-<!-- POPUP ADS -->
-<script src="https://pl28900655.effectivegatecpm.com/48/6b/e9/486be951557a940606cb3f3d6ce342d3.js"></script>
-
-<script>
-document.addEventListener("click",function(){
-window.open(window.location.href);
-},{once:true});
-</script>
+<!-- SOCIAL BAR ADS -->
+<script src="https://pl28905385.effectivegatecpm.com/8b/f9/c2/8bf9c2a00d1d723faf2111b54b17a1bd.js"></script>
 
 </body>
 </html>
