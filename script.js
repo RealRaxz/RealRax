@@ -1,52 +1,136 @@
-const canvas=document.getElementById("snow")
-const ctx=canvas.getContext("2d")
+const scripts=[
 
-let snow=[]
+/* ===== เพิ่ม Script ใหม่ตรงนี้ ===== */
 
-function resize(){
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
-}
+{
+title:"Blox Fruits Auto Farm",
+img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
+badge:"HOT",
+id:1
+},
 
-resize()
+{
+title:"Anime Fighters Script",
+img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
+badge:"NEW",
+id:2
+},
 
-window.addEventListener("resize",resize)
+{
+title:"King Legacy Script",
+img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
+badge:"",
+id:3
+},
 
-for(let i=0;i<180;i++){
+{
+title:"Doors Script",
+img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
+badge:"",
+id:4
+},
 
-snow.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*3+1,
-speed:Math.random()*1+0.6
+{
+title:"Pet Simulator Script",
+img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
+badge:"",
+id:5
+},
+
+{
+title:"Anime Warriors Script",
+img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
+badge:"",
+id:6
+},
+
+{
+title:"Blade Ball Script",
+img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
+badge:"",
+id:7
+},
+
+{
+title:"Blox Fruits Raid Script",
+img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
+badge:"",
+id:8
+},
+
+/* เพิ่มต่อไปจน 30 การ์ดได้ */
+
+]
+
+let page=1
+const perPage=8
+
+function render(){
+
+const grid=document.getElementById("grid")
+
+const search=document.getElementById("search").value.toLowerCase()
+
+let filtered=scripts.filter(s=>s.title.toLowerCase().includes(search))
+
+let start=(page-1)*perPage
+
+let items=filtered.slice(start,start+perPage)
+
+grid.innerHTML=""
+
+items.forEach(s=>{
+
+grid.innerHTML+=`
+
+<div class="card">
+
+${s.badge?`<div class="badge">${s.badge}</div>`:""}
+
+<img src="${s.img}">
+
+<h3>${s.title}</h3>
+
+<a href="script1.html?id=${s.id}">Get Script</a>
+
+</div>
+
+`
+
 })
 
+renderPagination(filtered.length)
+
 }
 
-function draw(){
+function renderPagination(total){
 
-ctx.clearRect(0,0,canvas.width,canvas.height)
+const pages=Math.ceil(total/perPage)
 
-ctx.fillStyle="white"
-ctx.beginPath()
+let html=""
 
-snow.forEach(f=>{
-ctx.moveTo(f.x,f.y)
-ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+for(let i=1;i<=pages;i++){
+
+html+=`<button onclick="goPage(${i})">${i}</button>`
+
+}
+
+document.getElementById("pagination").innerHTML=html
+
+}
+
+function goPage(p){
+
+page=p
+render()
+
+}
+
+document.getElementById("search").addEventListener("input",()=>{
+
+page=1
+render()
+
 })
 
-ctx.fill()
-
-snow.forEach(f=>{
-f.y+=f.speed
-
-if(f.y>canvas.height){
-f.y=0
-f.x=Math.random()*canvas.width
-}
-
-})
-
-}
-
-setInterval(draw,30)
+render()
