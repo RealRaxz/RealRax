@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Christmas Scripts</title>
+<title>RealRax Scripts</title>
 
 <style>
 
@@ -16,13 +16,17 @@ background:white;
 color:#333;
 }
 
+/* navbar */
+
 .navbar{
 background:#d60000;
 color:white;
-padding:16px 40px;
+padding:18px 40px;
 font-size:22px;
 font-weight:bold;
 }
+
+/* hero */
 
 .hero{
 background:linear-gradient(#d60000,#ff4040);
@@ -31,23 +35,49 @@ text-align:center;
 padding:70px 20px;
 }
 
+.hero h1{
+margin:0;
+font-size:40px;
+}
+
+/* search */
+
+.search{
+text-align:center;
+margin:30px 0;
+}
+
+.search input{
+padding:12px;
+width:260px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+/* container */
+
 .container{
 max-width:1200px;
 margin:auto;
-padding:40px 20px;
+padding:20px;
 }
+
+/* grid */
 
 .grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 gap:25px;
 }
+
+/* card */
 
 .card{
 background:white;
 border-radius:10px;
 box-shadow:0 8px 18px rgba(0,0,0,0.15);
 overflow:hidden;
+position:relative;
 }
 
 .card img{
@@ -70,6 +100,36 @@ border-radius:6px;
 text-decoration:none;
 }
 
+/* badge */
+
+.badge{
+position:absolute;
+top:10px;
+left:10px;
+background:#ff0000;
+color:white;
+padding:4px 10px;
+font-size:12px;
+border-radius:5px;
+}
+
+/* pagination */
+
+.pagination{
+text-align:center;
+margin-top:30px;
+}
+
+.pagination button{
+padding:8px 14px;
+margin:4px;
+border:none;
+background:#d60000;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
 /* snow */
 
 #snow{
@@ -90,7 +150,7 @@ pointer-events:none;
 <canvas id="snow"></canvas>
 
 <div class="navbar">
-🎄 Christmas Scripts
+🎄 RealRax Scripts
 </div>
 
 <div class="hero">
@@ -98,66 +158,169 @@ pointer-events:none;
 <p>Free Roblox Scripts</p>
 </div>
 
+<div class="search">
+<input type="text" id="search" placeholder="Search script...">
+</div>
+
 <div class="container">
 
-<div class="grid">
+<div class="grid" id="grid"></div>
 
-<div class="card">
-<img src="https://picsum.photos/400/200?1">
-<h3>Blox Fruits Auto Farm</h3>
-<a href="script1.html?id=1">Get Script</a>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/200?2">
-<h3>Blox Fruits Auto Raid</h3>
-<a href="script1.html?id=2">Get Script</a>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/200?3">
-<h3>King Legacy Script</h3>
-<a href="script1.html?id=3">Get Script</a>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/200?4">
-<h3>Anime Fighters Script</h3>
-<a href="script1.html?id=4">Get Script</a>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/200?5">
-<h3>Pet Simulator Script</h3>
-<a href="script1.html?id=5">Get Script</a>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/200?6">
-<h3>Doors Script</h3>
-<a href="script1.html?id=6">Get Script</a>
-</div>
-
-</div>
+<div class="pagination" id="pagination"></div>
 
 </div>
 
 <script>
 
-/* snow fall down */
+/* scripts */
 
-const canvas=document.getElementById("snow");
-const ctx=canvas.getContext("2d");
+const scripts=[
 
-let snow=[];
+{
+title:"Blox Fruits Auto Farm",
+img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
+badge:"HOT",
+id:1
+},
 
-function resize(){
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+{
+title:"Blox Fruits Auto Raid",
+img:"https://picsum.photos/400/200?2",
+badge:"NEW",
+id:2
+},
+
+{
+title:"King Legacy Script",
+img:"https://picsum.photos/400/200?3",
+badge:"",
+id:3
+},
+
+{
+title:"Anime Fighters Script",
+img:"https://picsum.photos/400/200?4",
+badge:"HOT",
+id:4
+},
+
+{
+title:"Pet Simulator Script",
+img:"https://picsum.photos/400/200?5",
+badge:"",
+id:5
+},
+
+{
+title:"Doors Script",
+img:"https://picsum.photos/400/200?6",
+badge:"NEW",
+id:6
+},
+
+{
+title:"Blox Fruits Fast Farm",
+img:"https://picsum.photos/400/200?7",
+badge:"",
+id:7
+},
+
+{
+title:"Anime Warriors Script",
+img:"https://picsum.photos/400/200?8",
+badge:"",
+id:8
 }
 
-resize();
-window.addEventListener("resize",resize);
+]
+
+let page=1
+const perPage=6
+
+function render(){
+
+const grid=document.getElementById("grid")
+
+const search=document.getElementById("search").value.toLowerCase()
+
+let filtered=scripts.filter(s=>s.title.toLowerCase().includes(search))
+
+let start=(page-1)*perPage
+let items=filtered.slice(start,start+perPage)
+
+grid.innerHTML=""
+
+items.forEach(s=>{
+
+grid.innerHTML+=`
+
+<div class="card">
+
+${s.badge ? `<div class="badge">${s.badge}</div>` : ""}
+
+<img src="${s.img}">
+
+<h3>${s.title}</h3>
+
+<a href="script1.html?id=${s.id}">Get Script</a>
+
+</div>
+
+`
+
+})
+
+renderPagination(filtered.length)
+
+}
+
+/* pagination */
+
+function renderPagination(total){
+
+const pages=Math.ceil(total/perPage)
+
+let html=""
+
+for(let i=1;i<=pages;i++){
+
+html+=`<button onclick="goPage(${i})">${i}</button>`
+
+}
+
+document.getElementById("pagination").innerHTML=html
+
+}
+
+function goPage(p){
+page=p
+render()
+}
+
+document.getElementById("search").addEventListener("input",()=>{
+
+page=1
+render()
+
+})
+
+render()
+
+/* snow */
+
+const canvas=document.getElementById("snow")
+const ctx=canvas.getContext("2d")
+
+let snow=[]
+
+function resize(){
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+}
+
+resize()
+
+window.addEventListener("resize",resize)
 
 for(let i=0;i<180;i++){
 
@@ -186,10 +349,12 @@ ctx.fill()
 
 snow.forEach(f=>{
 f.y+=f.speed
+
 if(f.y>canvas.height){
 f.y=0
 f.x=Math.random()*canvas.width
 }
+
 })
 
 }
