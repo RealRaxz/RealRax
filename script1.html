@@ -13,24 +13,21 @@
 
 <body>
 
-<section class="latest">
+<div class="container">
 
 <h1>Blox Fruits Auto Farm Script</h1>
 
 <p>
 
-สคริปต์นี้เป็นสคริปต์สำหรับเกม Roblox Blox Fruits
-ที่ช่วยให้ผู้เล่นสามารถฟาร์มเลเวลได้อัตโนมัติ
+สคริปต์นี้ช่วยให้ตัวละครในเกม Blox Fruits
+สามารถโจมตีศัตรูและเก็บค่าประสบการณ์ได้อัตโนมัติ
+เหมาะสำหรับผู้เล่นที่ต้องการฟาร์มเลเวลอย่างรวดเร็ว
 
-ระบบของสคริปต์จะช่วยโจมตีศัตรู
-เก็บค่าประสบการณ์ และฟาร์มเงินในเกม
-โดยที่ผู้เล่นไม่ต้องทำเองทั้งหมด
-
-เหมาะสำหรับผู้เล่นที่ต้องการเพิ่มเลเวลอย่างรวดเร็ว
-และลดเวลาในการฟาร์มภายในเกม
+ระบบจะช่วยให้ตัวละครของคุณ
+ทำการต่อสู้และเก็บเงินในเกมโดยอัตโนมัติ
 
 สคริปต์นี้สามารถใช้งานได้กับ executor หลายตัว
-และถูกออกแบบให้ทำงานได้เสถียร
+และถูกออกแบบให้ใช้งานได้ง่ายสำหรับผู้เล่นทั่วไป
 
 </p>
 
@@ -42,21 +39,21 @@ loadstring(game:HttpGet("https://example.com/script.lua"))()
 
 <br><br>
 
-<button onclick="copyScript()">คัดลอก Script</button>
+<button onclick="copy()">คัดลอก Script</button>
 
-</section>
+</div>
 
 <script>
 
-function copyScript(){
+function copy(){
 
-let text=document.getElementById("code")
+let text=document.getElementById("code");
 
-text.select()
+text.select();
 
-navigator.clipboard.writeText(text.value)
+navigator.clipboard.writeText(text.value);
 
-alert("คัดลอก Script แล้ว")
+alert("คัดลอก Script แล้ว");
 
 }
 
