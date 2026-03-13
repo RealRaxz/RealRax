@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="th">
+<html>
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Copy Script</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <link rel="stylesheet" href="style.css">
+
+<title>Copy Script</title>
 
 </head>
 
@@ -19,72 +19,49 @@
 
 <div>🎄 RealRax Scripts</div>
 
-<div class="navlinks">
+<div class="nav-links">
 
 <a href="index.html">Home</a>
 
-<a href="download.html">Download</a>
-
 </div>
 
 </div>
 
-<div class="box">
+<div class="container">
 
-<h2 id="title"></h2>
+<div class="script-box">
 
-<h3>📜 รายละเอียด</h3>
+<h2>📜 Script</h2>
 
 <p>
-⚡ Script สำหรับเกม Roblox  
-🚀 ช่วยฟาร์มอัตโนมัติ  
+
+⚡ Script นี้ช่วยให้คุณใช้งานระบบอัตโนมัติใน Roblox  
+🚀 ช่วยฟาร์มเร็วขึ้นและลดเวลาการเล่น  
 🎮 รองรับ Executor หลายตัว  
-🔥 ใช้งานง่ายและรวดเร็ว  
-📋 เพียง Copy แล้ว Execute
+🔧 ใช้งานง่ายเพียง Copy แล้ว Execute  
+🛡 ใช้งานอย่างระมัดระวังในเกม
+
 </p>
 
-<h3>🛠 วิธีใช้</h3>
-
-<p>
-1️⃣ เปิดเกม Roblox  
-2️⃣ เปิด Executor  
-3️⃣ กด Copy Script  
-4️⃣ วาง Script  
-5️⃣ กด Execute
-</p>
-
-<textarea id="code" readonly></textarea>
+<textarea id="code" readonly>
+print("example script")
+</textarea>
 
 <br><br>
 
 <button onclick="copyScript()">📋 Copy Script</button>
 
-<button onclick="history.back()">🔙 Back</button>
+<br><br>
+
+<a href="index.html">🔙 ย้อนกลับ</a>
 
 </div>
 
-<div id="toast">คัดลอก Script สำเร็จ</div>
+</div>
+
+<div id="toast">คัดลอกสำเร็จ</div>
 
 <script>
-
-const scripts={
-1:"print('Script1')",
-2:"print('Script2')",
-3:"print('Script3')",
-4:"print('Script4')",
-5:"print('Script5')",
-6:"print('Script6')",
-7:"print('Script7')",
-8:"print('Script8')"
-}
-
-const params=new URLSearchParams(window.location.search)
-
-let id=params.get("id")||1
-
-document.getElementById("title").innerText="Script "+id
-
-document.getElementById("code").value=scripts[id]
 
 function copyScript(){
 
@@ -94,11 +71,7 @@ let t=document.getElementById("toast")
 
 t.classList.add("show")
 
-setTimeout(()=>{
-
-t.classList.remove("show")
-
-},2000)
+setTimeout(()=>{t.classList.remove("show")},2000)
 
 }
 
