@@ -1,142 +1,136 @@
 body{
-
 margin:0;
 font-family:Arial;
-background:#120000;
+background:#9c0000;
 color:white;
-text-align:center;
-
 }
 
-header{
-
-background:#b30000;
-padding:20px;
+.topbar{
+background:#b10000;
 display:flex;
 justify-content:space-between;
-align-items:center;
-
+padding:20px;
 }
 
 nav a{
-
 margin:10px;
 color:white;
 text-decoration:none;
-
 }
 
 .hero{
-
-padding:100px 20px;
-background:linear-gradient(#1b0000,#330000);
-
+display:flex;
+align-items:center;
+justify-content:center;
+background:#1c2330;
+padding:60px;
 }
 
-.mainbtn{
+.hero img{
+width:250px;
+border-radius:10px;
+}
 
+.hero-center{
+text-align:center;
+padding:40px;
+}
+
+.shopbtn{
 background:red;
 padding:15px 30px;
+border:none;
 color:white;
-text-decoration:none;
-border-radius:8px;
-
+font-size:18px;
+border-radius:10px;
 }
 
-.categories{
-
+.category{
 display:flex;
 justify-content:center;
 gap:30px;
-padding:50px;
-
+padding:40px;
+background:#f0e3c7;
+color:black;
 }
 
-.cat{
+.box{
+width:250px;
+text-align:center;
+}
 
-background:#2b0000;
-padding:25px;
+.box img{
+width:100%;
 border-radius:10px;
-width:200px;
+}
 
+.about{
+display:flex;
+justify-content:center;
+gap:40px;
+padding:60px;
+background:#f0e3c7;
+color:black;
+}
+
+.about img{
+width:350px;
+border-radius:10px;
 }
 
 .featured{
-
 padding:40px;
-
+text-align:center;
 }
 
 .cards{
-
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:20px;
-
+padding:20px;
 }
 
 .card{
-
-background:#1a0000;
-padding:15px;
+background:white;
+color:black;
 border-radius:10px;
-
+padding:10px;
 }
 
 .card img{
-
 width:100%;
-border-radius:6px;
-
+border-radius:8px;
 }
 
 .card a{
-
-display:inline-block;
-margin-top:10px;
+display:block;
 background:red;
-padding:10px 20px;
 color:white;
+padding:10px;
+margin-top:10px;
 text-decoration:none;
 border-radius:6px;
-
 }
 
-.thumb{
+.blog{
+background:#b10000;
+padding:40px;
+text-align:center;
+}
 
-width:500px;
-margin-top:30px;
+.blogcards{
+display:flex;
+justify-content:center;
+gap:30px;
+}
+
+.blogcard img{
+width:200px;
 border-radius:10px;
-
-}
-
-textarea{
-
-width:80%;
-height:200px;
-margin-top:20px;
-
-}
-
-.pagination{
-
-margin-top:30px;
-
 }
 
 footer{
-
-background:#b30000;
+background:#7c0000;
+text-align:center;
 padding:20px;
-margin-top:40px;
-
-}
-
-canvas{
-
-position:fixed;
-top:0;
-left:0;
-pointer-events:none;
-
 }
