@@ -13,17 +13,41 @@ body{
 margin:0;
 font-family:Arial;
 background:white;
-color:#333;
 }
 
 /* navbar */
 
 .navbar{
+
+position:sticky;
+top:0;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
 background:#d60000;
 color:white;
-padding:18px 40px;
-font-size:22px;
+
+padding:16px 30px;
+
+box-shadow:0 4px 12px rgba(0,0,0,0.2);
+
+z-index:1000;
+
+}
+
+.nav-links a{
+
+margin-left:20px;
+color:white;
+text-decoration:none;
 font-weight:bold;
+
+}
+
+.nav-links a:hover{
+opacity:0.8;
 }
 
 /* hero */
@@ -35,11 +59,6 @@ text-align:center;
 padding:70px 20px;
 }
 
-.hero h1{
-margin:0;
-font-size:40px;
-}
-
 /* search */
 
 .search{
@@ -48,13 +67,15 @@ margin:30px 0;
 }
 
 .search input{
+
 padding:12px;
 width:260px;
 border-radius:6px;
 border:1px solid #ccc;
+
 }
 
-/* container */
+/* grid */
 
 .container{
 max-width:1200px;
@@ -62,28 +83,32 @@ margin:auto;
 padding:20px;
 }
 
-/* grid */
-
 .grid{
+
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 gap:25px;
+
 }
 
 /* card */
 
 .card{
+
 background:white;
 border-radius:10px;
 box-shadow:0 8px 18px rgba(0,0,0,0.15);
 overflow:hidden;
 position:relative;
+
 }
 
 .card img{
+
 width:100%;
 height:160px;
 object-fit:cover;
+
 }
 
 .card h3{
@@ -91,43 +116,60 @@ margin:15px;
 }
 
 .card a{
+
 display:inline-block;
+
 background:#d60000;
 color:white;
+
 padding:10px 18px;
 margin:15px;
+
 border-radius:6px;
 text-decoration:none;
+
 }
 
 /* badge */
 
 .badge{
+
 position:absolute;
 top:10px;
 left:10px;
+
 background:#ff0000;
 color:white;
+
 padding:4px 10px;
-font-size:12px;
 border-radius:5px;
+font-size:12px;
+
 }
 
 /* pagination */
 
 .pagination{
+
 text-align:center;
 margin-top:30px;
+
 }
 
 .pagination button{
+
 padding:8px 14px;
 margin:4px;
+
 border:none;
+
 background:#d60000;
 color:white;
+
 border-radius:5px;
+
 cursor:pointer;
+
 }
 
 /* snow */
@@ -150,23 +192,41 @@ pointer-events:none;
 <canvas id="snow"></canvas>
 
 <div class="navbar">
+
+<div>
 🎄 RealRax Scripts
 </div>
 
+<div class="nav-links">
+
+<a href="download.html">Download</a>
+
+<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">
+YouTube
+</a>
+
+</div>
+
+</div>
+
 <div class="hero">
+
 <h1>Latest Scripts</h1>
 <p>Free Roblox Scripts</p>
+
 </div>
 
 <div class="search">
-<input type="text" id="search" placeholder="Search script...">
+
+<input id="search" placeholder="Search script...">
+
 </div>
 
 <div class="container">
 
-<div class="grid" id="grid"></div>
+<div id="grid" class="grid"></div>
 
-<div class="pagination" id="pagination"></div>
+<div id="pagination" class="pagination"></div>
 
 </div>
 
@@ -200,7 +260,7 @@ id:3
 {
 title:"Anime Fighters Script",
 img:"https://picsum.photos/400/200?4",
-badge:"",
+badge:"HOT",
 id:4
 },
 
@@ -214,22 +274,8 @@ id:5
 {
 title:"Doors Script",
 img:"https://picsum.photos/400/200?6",
-badge:"",
+badge:"NEW",
 id:6
-},
-
-{
-title:"Blox Fruits Fast Farm",
-img:"https://picsum.photos/400/200?7",
-badge:"",
-id:7
-},
-
-{
-title:"Anime Warriors Script",
-img:"https://picsum.photos/400/200?8",
-badge:"",
-id:8
 }
 
 ]
@@ -239,14 +285,16 @@ const perPage=6
 
 function render(){
 
-const grid=document.getElementById("grid")
-
 const search=document.getElementById("search").value.toLowerCase()
 
-let filtered=scripts.filter(s=>s.title.toLowerCase().includes(search))
+let filtered=scripts.filter(s=>
+s.title.toLowerCase().includes(search)
+)
 
 let start=(page-1)*perPage
 let items=filtered.slice(start,start+perPage)
+
+let grid=document.getElementById("grid")
 
 grid.innerHTML=""
 
@@ -256,7 +304,7 @@ grid.innerHTML+=`
 
 <div class="card">
 
-${s.badge ? `<div class="badge">${s.badge}</div>` : ""}
+${s.badge?`<div class="badge">${s.badge}</div>`:""}
 
 <img src="${s.img}">
 
@@ -274,11 +322,9 @@ renderPagination(filtered.length)
 
 }
 
-/* pagination */
-
 function renderPagination(total){
 
-const pages=Math.ceil(total/perPage)
+let pages=Math.ceil(total/perPage)
 
 let html=""
 
@@ -293,8 +339,10 @@ document.getElementById("pagination").innerHTML=html
 }
 
 function goPage(p){
+
 page=p
 render()
+
 }
 
 document.getElementById("search").addEventListener("input",()=>{
@@ -311,24 +359,20 @@ render()
 const canvas=document.getElementById("snow")
 const ctx=canvas.getContext("2d")
 
+canvas.width=innerWidth
+canvas.height=innerHeight
+
 let snow=[]
 
-function resize(){
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
-}
-
-resize()
-
-window.addEventListener("resize",resize)
-
-for(let i=0;i<180;i++){
+for(let i=0;i<150;i++){
 
 snow.push({
+
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*3+1,
 speed:Math.random()*1+0.5
+
 })
 
 }
@@ -340,19 +384,24 @@ ctx.clearRect(0,0,canvas.width,canvas.height)
 ctx.fillStyle="white"
 ctx.beginPath()
 
-snow.forEach(f=>{
-ctx.moveTo(f.x,f.y)
-ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+snow.forEach(s=>{
+
+ctx.moveTo(s.x,s.y)
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2)
+
 })
 
 ctx.fill()
 
-snow.forEach(f=>{
-f.y+=f.speed
+snow.forEach(s=>{
 
-if(f.y>canvas.height){
-f.y=0
-f.x=Math.random()*canvas.width
+s.y+=s.speed
+
+if(s.y>canvas.height){
+
+s.y=0
+s.x=Math.random()*canvas.width
+
 }
 
 })
