@@ -1,69 +1,52 @@
-const scripts = [
+const canvas=document.getElementById("snow")
+const ctx=canvas.getContext("2d")
 
-{title:"Auto Farm Script",img:"https://picsum.photos/400/250?1",link:"script1.html"},
-{title:"Fast Attack Script",img:"https://picsum.photos/400/250?2",link:"script2.html"},
-{title:"Auto Raid Script",img:"https://picsum.photos/400/250?3",link:"script3.html"},
-{title:"Auto Boss Script",img:"https://picsum.photos/400/250?4",link:"script4.html"},
-{title:"Auto Mastery Script",img:"https://picsum.photos/400/250?5",link:"script5.html"},
-{title:"Sea Event Script",img:"https://picsum.photos/400/250?6",link:"script6.html"},
-{title:"Auto Level Script",img:"https://picsum.photos/400/250?7",link:"script1.html"},
-{title:"Auto Quest Script",img:"https://picsum.photos/400/250?8",link:"script1.html"},
-{title:"Fruit Finder Script",img:"https://picsum.photos/400/250?9",link:"script1.html"}
+let snow=[]
 
-];
+function resize(){
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+}
 
-let page = 1;
-const perPage = 6;
+resize()
 
-function renderPage(){
+window.addEventListener("resize",resize)
 
-const grid = document.getElementById("scriptGrid");
-grid.innerHTML="";
+for(let i=0;i<180;i++){
 
-let start = (page-1)*perPage;
-let end = start+perPage;
-
-let items = scripts.slice(start,end);
-
-items.forEach(function(s){
-
-let card = document.createElement("a");
-card.className="card";
-card.href=s.link;
-
-card.innerHTML = `
-<img src="${s.img}">
-<h3>${s.title}</h3>
-`;
-
-grid.appendChild(card);
-
-});
-
-document.getElementById("pageNum").innerText = page;
+snow.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3+1,
+speed:Math.random()*1+0.6
+})
 
 }
 
-document.getElementById("nextBtn").onclick=function(){
+function draw(){
 
-if(page*perPage < scripts.length){
+ctx.clearRect(0,0,canvas.width,canvas.height)
 
-page++;
-renderPage();
+ctx.fillStyle="white"
+ctx.beginPath()
+
+snow.forEach(f=>{
+ctx.moveTo(f.x,f.y)
+ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+})
+
+ctx.fill()
+
+snow.forEach(f=>{
+f.y+=f.speed
+
+if(f.y>canvas.height){
+f.y=0
+f.x=Math.random()*canvas.width
+}
+
+})
 
 }
 
-}
-
-document.getElementById("prevBtn").onclick=function(){
-
-if(page>1){
-
-page--;
-renderPage();
-
-}
-
-}
-
-renderPage();
+setInterval(draw,30)
