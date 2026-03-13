@@ -10,76 +10,86 @@
 <style>
 
 body{
+
 margin:0;
 font-family:Arial;
+
 background:linear-gradient(#d60000,#ff4040);
-min-height:100vh;
+
 }
 
 .navbar{
+
+position:sticky;
+top:0;
+
 background:#b80000;
 color:white;
-padding:18px 40px;
-font-size:22px;
+
+padding:16px 30px;
+
 font-weight:bold;
+
 }
 
 .container{
+
 max-width:900px;
 margin:auto;
 padding:40px 20px;
+
 }
 
 .box{
+
 background:white;
-border-radius:10px;
+
 padding:30px;
+
+border-radius:10px;
+
 box-shadow:0 8px 18px rgba(0,0,0,0.2);
+
 }
 
 textarea{
+
 width:100%;
 height:200px;
-border:1px solid #ccc;
+
 border-radius:6px;
-padding:10px;
+
+border:1px solid #ccc;
+
 resize:none;
+
 }
 
 button{
+
 background:#d60000;
 border:none;
+
 color:white;
+
 padding:12px 20px;
+
 border-radius:6px;
-margin-top:10px;
+
 cursor:pointer;
+
+margin-top:10px;
+
 }
 
-#toast{
-position:fixed;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-background:#d60000;
-color:white;
-padding:12px 22px;
-border-radius:8px;
-opacity:0;
-transition:0.4s;
-}
+.back{
 
-#toast.show{
-opacity:1;
-}
+display:inline-block;
+margin-top:15px;
 
-#snow{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
+color:#d60000;
+text-decoration:none;
+
 }
 
 </style>
@@ -87,8 +97,6 @@ pointer-events:none;
 </head>
 
 <body>
-
-<canvas id="snow"></canvas>
 
 <div class="navbar">
 🎄 RealRax Scripts
@@ -100,41 +108,43 @@ pointer-events:none;
 
 <h2 id="title"></h2>
 
-<h3>รายละเอียด</h3>
+<h3>📄 รายละเอียด</h3>
 
 <p>
-สคริปต์นี้ถูกพัฒนาขึ้นเพื่อช่วยให้ผู้เล่น Roblox ใช้งานระบบต่างๆได้ง่ายขึ้น
-มีระบบอัตโนมัติที่ช่วยลดเวลาในการเล่นเกม
-เหมาะสำหรับผู้เล่นที่ต้องการฟาร์มไอเทมหรือเลเวลอย่างรวดเร็ว
-สามารถใช้งานร่วมกับ Executor ส่วนใหญ่ได้
-และถูกออกแบบมาให้ใช้งานได้ง่าย
+🎮 Script นี้ถูกสร้างขึ้นสำหรับเกม Roblox
+⚡ ช่วยให้ผู้เล่นใช้งานระบบอัตโนมัติได้ง่ายขึ้น
+🚀 ลดเวลาการฟาร์มและเพิ่มความสะดวกในการเล่น
+🛠 รองรับ Executor ส่วนใหญ่
+📱 ใช้งานได้ทั้งมือถือและคอม
 </p>
 
-<h3>วิธีใช้งาน</h3>
+<h3>🧑‍💻 วิธีใช้</h3>
 
 <p>
-1 เข้าเกม Roblox ที่ต้องการใช้สคริปต์  
-2 เปิดโปรแกรม Executor  
-3 กด Copy Script  
-4 นำ Script ไปวางใน Executor  
-5 กด Execute เพื่อเริ่มใช้งาน
+1️⃣ เปิดเกม Roblox ที่ต้องการ  
+2️⃣ เปิดโปรแกรม Executor  
+3️⃣ กดปุ่ม Copy Script ด้านล่าง  
+4️⃣ นำ Script ไปวางใน Executor  
+5️⃣ กด Execute เพื่อเริ่มใช้งาน
 </p>
 
 <textarea id="code" readonly></textarea>
 
 <br>
 
-<button onclick="copyScript()">Copy Script</button>
+<button onclick="copyScript()">📋 Copy Script</button>
+
+<br>
+
+<a class="back" href="index.html">
+⬅️ กลับหน้า Scripts
+</a>
 
 </div>
 
 </div>
-
-<div id="toast">คัดลอก Script สำเร็จ</div>
 
 <script>
-
-/* scripts */
 
 const scripts={
 
@@ -143,13 +153,11 @@ const scripts={
 3:"print('King Legacy')",
 4:"print('Anime Fighters')",
 5:"print('Pet Simulator')",
-6:"print('Doors Script')",
-7:"print('Fast Farm')",
-8:"print('Anime Warriors')"
+6:"print('Doors Script')"
 
 }
 
-const params=new URLSearchParams(window.location.search)
+const params=new URLSearchParams(location.search)
 
 let id=params.get("id")||1
 
@@ -159,85 +167,13 @@ document.getElementById("code").value=scripts[id]
 
 function copyScript(){
 
-navigator.clipboard.writeText(document.getElementById("code").value)
+navigator.clipboard.writeText(
+document.getElementById("code").value
+)
 
-let t=document.getElementById("toast")
-
-t.classList.add("show")
-
-setTimeout(()=>{
-
-t.classList.remove("show")
-
-},2000)
+alert("Script Copied")
 
 }
-
-/* snow */
-
-const canvas=document.getElementById("snow")
-const ctx=canvas.getContext("2d")
-
-let snow=[]
-
-function resize(){
-
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
-
-}
-
-resize()
-
-window.addEventListener("resize",resize)
-
-for(let i=0;i<180;i++){
-
-snow.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*3+1,
-speed:Math.random()*1+0.5
-
-})
-
-}
-
-function draw(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-ctx.fillStyle="white"
-
-ctx.beginPath()
-
-snow.forEach(f=>{
-
-ctx.moveTo(f.x,f.y)
-
-ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
-
-})
-
-ctx.fill()
-
-snow.forEach(f=>{
-
-f.y+=f.speed
-
-if(f.y>canvas.height){
-
-f.y=0
-f.x=Math.random()*canvas.width
-
-}
-
-})
-
-}
-
-setInterval(draw,30)
 
 </script>
 
