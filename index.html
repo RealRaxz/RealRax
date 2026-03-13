@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
 
 <meta charset="UTF-8">
@@ -23,13 +23,7 @@ color:#333;
 .navbar{
 background:#d60000;
 color:white;
-display:flex;
-justify-content:space-between;
-align-items:center;
 padding:15px 40px;
-}
-
-.logo{
 font-size:22px;
 font-weight:bold;
 }
@@ -41,10 +35,6 @@ background:linear-gradient(#d60000,#ff4040);
 color:white;
 text-align:center;
 padding:70px 20px;
-}
-
-.hero h1{
-margin:0;
 }
 
 /* CONTAINER */
@@ -68,8 +58,8 @@ gap:25px;
 .card{
 background:white;
 border-radius:10px;
-box-shadow:0 8px 18px rgba(0,0,0,0.15);
 overflow:hidden;
+box-shadow:0 8px 18px rgba(0,0,0,0.15);
 }
 
 .card img{
@@ -82,14 +72,14 @@ object-fit:cover;
 margin:15px;
 }
 
-.card button{
+.card a{
+display:inline-block;
 background:#d60000;
-border:none;
 color:white;
 padding:10px 18px;
 margin:15px;
 border-radius:6px;
-cursor:pointer;
+text-decoration:none;
 }
 
 /* PAGINATION */
@@ -109,23 +99,6 @@ border-radius:6px;
 cursor:pointer;
 }
 
-/* COPY PAGE */
-
-.copyPage{
-display:none;
-padding:40px;
-max-width:900px;
-margin:auto;
-}
-
-textarea{
-width:100%;
-height:200px;
-padding:10px;
-border-radius:6px;
-border:1px solid #ccc;
-}
-
 /* SNOW */
 
 #snow{
@@ -140,19 +113,11 @@ pointer-events:none;
 /* RESPONSIVE */
 
 @media(max-width:900px){
-
-.grid{
-grid-template-columns:repeat(2,1fr);
-}
-
+.grid{grid-template-columns:repeat(2,1fr);}
 }
 
 @media(max-width:500px){
-
-.grid{
-grid-template-columns:1fr;
-}
-
+.grid{grid-template-columns:1fr;}
 }
 
 </style>
@@ -164,19 +129,13 @@ grid-template-columns:1fr;
 <canvas id="snow"></canvas>
 
 <div class="navbar">
-
-<div class="logo">🎄 Christmas Scripts</div>
-
+🎄 Christmas Scripts
 </div>
-
-
-<div id="home">
 
 <div class="hero">
 
 <h1>Latest Scripts</h1>
-
-<p>Free Roblox Scripts</p>
+<p>Free Roblox Scripts Collection</p>
 
 </div>
 
@@ -189,28 +148,8 @@ grid-template-columns:1fr;
 
 <button onclick="page(1)">1</button>
 <button onclick="page(2)">2</button>
-<button onclick="page(3)">3</button>
 
 </div>
-
-</div>
-
-</div>
-
-
-<!-- COPY PAGE -->
-
-<div id="copyPage" class="copyPage">
-
-<h2>Copy Script</h2>
-
-<textarea id="scriptText"></textarea>
-
-<br><br>
-
-<button onclick="copyScript()">Copy Script</button>
-
-<button onclick="goHome()">Back</button>
 
 </div>
 
@@ -221,24 +160,23 @@ grid-template-columns:1fr;
 
 const data=[
 
-{title:"Blox Fruits Auto Farm",img:"https://picsum.photos/400/200?1",code:"print('Auto Farm')"},
-{title:"Blox Fruits Auto Raid",img:"https://picsum.photos/400/200?2",code:"print('Auto Raid')"},
-{title:"King Legacy Script",img:"https://picsum.photos/400/200?3",code:"print('King Legacy')"},
-{title:"Anime Fighters Script",img:"https://picsum.photos/400/200?4",code:"print('Anime Fighters')"},
-{title:"Pet Simulator Script",img:"https://picsum.photos/400/200?5",code:"print('Pet Simulator')"},
-{title:"Doors Script",img:"https://picsum.photos/400/200?6",code:"print('Doors Script')"},
+{title:"Blox Fruits Auto Farm",img:"https://picsum.photos/400/200?1",link:"script1.html"},
+{title:"Blox Fruits Auto Raid",img:"https://picsum.photos/400/200?2",link:"script1.html"},
+{title:"King Legacy Script",img:"https://picsum.photos/400/200?3",link:"script1.html"},
+{title:"Anime Fighters Script",img:"https://picsum.photos/400/200?4",link:"script1.html"},
+{title:"Pet Simulator Script",img:"https://picsum.photos/400/200?5",link:"script1.html"},
+{title:"Doors Script",img:"https://picsum.photos/400/200?6",link:"script1.html"},
 
-{title:"Blade Ball Script",img:"https://picsum.photos/400/200?7",code:"print('Blade Ball')"},
-{title:"Adopt Me Script",img:"https://picsum.photos/400/200?8",code:"print('Adopt Me')"},
-{title:"Arsenal Script",img:"https://picsum.photos/400/200?9",code:"print('Arsenal')"},
-{title:"Brookhaven Script",img:"https://picsum.photos/400/200?10",code:"print('Brookhaven')"},
-{title:"Tower Defense Script",img:"https://picsum.photos/400/200?11",code:"print('Tower Defense')"},
-{title:"MM2 Script",img:"https://picsum.photos/400/200?12",code:"print('MM2')"}
+{title:"Blade Ball Script",img:"https://picsum.photos/400/200?7",link:"script1.html"},
+{title:"Adopt Me Script",img:"https://picsum.photos/400/200?8",link:"script1.html"},
+{title:"Arsenal Script",img:"https://picsum.photos/400/200?9",link:"script1.html"},
+{title:"Brookhaven Script",img:"https://picsum.photos/400/200?10",link:"script1.html"},
+{title:"Tower Defense Script",img:"https://picsum.photos/400/200?11",link:"script1.html"},
+{title:"MM2 Script",img:"https://picsum.photos/400/200?12",link:"script1.html"}
 
 ];
 
-
-/* PAGE SYSTEM */
+/* PAGINATION */
 
 function page(num){
 
@@ -258,10 +196,9 @@ container.innerHTML+=`
 <div class="card">
 
 <img src="${script.img}">
-
 <h3>${script.title}</h3>
 
-<button onclick="openCopy(\`${script.code}\`)">Get Script</button>
+<a href="${script.link}">Get Script</a>
 
 </div>
 
@@ -274,38 +211,7 @@ container.innerHTML+=`
 page(1);
 
 
-/* COPY PAGE */
-
-function openCopy(code){
-
-document.getElementById("home").style.display="none";
-document.getElementById("copyPage").style.display="block";
-
-document.getElementById("scriptText").value=code;
-
-}
-
-function goHome(){
-
-document.getElementById("copyPage").style.display="none";
-document.getElementById("home").style.display="block";
-
-}
-
-function copyScript(){
-
-let text=document.getElementById("scriptText");
-
-text.select();
-
-document.execCommand("copy");
-
-alert("Script Copied");
-
-}
-
-
-/* SNOW FALL DOWN */
+/* SNOW */
 
 const canvas=document.getElementById("snow");
 const ctx=canvas.getContext("2d");
@@ -318,17 +224,16 @@ canvas.height=window.innerHeight;
 }
 
 window.addEventListener("resize",resize);
+
 resize();
 
-for(let i=0;i<200;i++){
+for(let i=0;i<180;i++){
 
 snow.push({
-
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*3+1,
 speed:Math.random()*1+0.5
-
 });
 
 }
@@ -338,15 +243,11 @@ function draw(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
 ctx.fillStyle="white";
-
 ctx.beginPath();
 
 snow.forEach(f=>{
-
 ctx.moveTo(f.x,f.y);
-
 ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
-
 });
 
 ctx.fill();
@@ -356,10 +257,8 @@ snow.forEach(f=>{
 f.y+=f.speed;
 
 if(f.y>canvas.height){
-
 f.y=0;
 f.x=Math.random()*canvas.width;
-
 }
 
 });
