@@ -45,11 +45,9 @@ width:100%;
 height:200px;
 border:1px solid #ccc;
 border-radius:6px;
-padding:12px;
+padding:10px;
 margin-top:10px;
-font-family:monospace;
 resize:none;
-background:#fafafa;
 }
 
 button{
@@ -74,24 +72,32 @@ color:#d60000;
 text-decoration:none;
 }
 
-/* notification */
-
-.toast{
+#toast{
 position:fixed;
-bottom:30px;
-right:30px;
+bottom:40px;
+left:50%;
+transform:translateX(-50%);
 background:#d60000;
 color:white;
-padding:14px 20px;
-border-radius:6px;
+padding:12px 22px;
+border-radius:8px;
 opacity:0;
-transform:translateY(20px);
 transition:0.4s;
 }
 
-.toast.show{
+#toast.show{
 opacity:1;
-transform:translateY(0);
+}
+
+/* snow */
+
+#snow{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
 }
 
 </style>
@@ -99,6 +105,8 @@ transform:translateY(0);
 </head>
 
 <body>
+
+<canvas id="snow"></canvas>
 
 <div class="navbar">
 🎄 Christmas Scripts
@@ -113,21 +121,21 @@ transform:translateY(0);
 <h3>รายละเอียด</h3>
 
 <p>
-สคริปต์นี้ถูกออกแบบมาสำหรับเกม Roblox เพื่อช่วยให้ผู้เล่นสามารถใช้งานระบบอัตโนมัติได้ง่ายขึ้น
-ระบบถูกปรับแต่งมาให้เหมาะสำหรับผู้เล่นทั่วไปและผู้เล่นระดับสูง
-ช่วยลดเวลาในการทำภารกิจภายในเกมและเพิ่มความสะดวกในการเล่น
-โค้ดถูกจัดรูปแบบให้ใช้งานง่ายและสามารถนำไปใช้กับ Executor ได้ทันที
-เหมาะสำหรับผู้ที่ต้องการเพิ่มประสิทธิภาพการเล่นเกม
+สคริปต์นี้ถูกพัฒนาขึ้นสำหรับเกม Roblox เพื่อช่วยให้ผู้เล่นสามารถใช้งานระบบต่างๆภายในเกมได้สะดวกมากยิ่งขึ้น
+ตัวสคริปต์มีฟังก์ชันอัตโนมัติหลายอย่างที่ช่วยลดขั้นตอนการเล่นเกม
+เหมาะสำหรับผู้เล่นที่ต้องการประหยัดเวลาในการฟาร์มหรือทำภารกิจ
+ระบบถูกออกแบบให้ใช้งานง่ายและสามารถเปิดใช้งานได้ทันที
+รองรับ Executor ส่วนใหญ่ที่ใช้ในปัจจุบัน
 </p>
 
 <h3>วิธีใช้งาน</h3>
 
 <p>
-1 เปิดเกม Roblox และเข้าเกมที่ต้องการใช้งานสคริปต์  
-2 เปิดโปรแกรม Executor ที่รองรับ Script  
+1 เข้าเกม Roblox ที่ต้องการใช้งานสคริปต์  
+2 เปิดโปรแกรม Executor ที่คุณใช้  
 3 กดปุ่ม Copy Script ด้านล่าง  
-4 นำ Script ไปวางในช่องของ Executor  
-5 กด Execute เพื่อเริ่มใช้งาน Script
+4 วาง Script ลงใน Executor  
+5 กด Execute เพื่อเริ่มใช้งาน
 </p>
 
 <textarea id="code" readonly></textarea>
@@ -144,9 +152,11 @@ transform:translateY(0);
 
 </div>
 
-<div id="toast" class="toast">คัดลอก Script เรียบร้อยแล้ว</div>
+<div id="toast">คัดลอก Script สำเร็จ</div>
 
 <script>
+
+/* scripts */
 
 const scripts={
 
@@ -182,6 +192,8 @@ code:"print('Doors Script')"
 
 }
 
+/* load script */
+
 const params=new URLSearchParams(window.location.search)
 
 let id=params.get("id") || 1
@@ -191,19 +203,23 @@ let data=scripts[id]
 document.getElementById("title").innerText=data.title
 document.getElementById("code").value=data.code
 
+/* copy */
+
 function copyScript(){
 
-let text=document.getElementById("code").value
+const text=document.getElementById("code")
 
-navigator.clipboard.writeText(text)
+navigator.clipboard.writeText(text.value)
 
 showToast()
 
 }
 
+/* toast */
+
 function showToast(){
 
-let toast=document.getElementById("toast")
+const toast=document.getElementById("toast")
 
 toast.classList.add("show")
 
@@ -212,6 +228,60 @@ toast.classList.remove("show")
 },2000)
 
 }
+
+/* snow */
+
+const canvas=document.getElementById("snow")
+const ctx=canvas.getContext("2d")
+
+let snow=[]
+
+function resize(){
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+}
+
+resize()
+window.addEventListener("resize",resize)
+
+for(let i=0;i<180;i++){
+
+snow.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3+1,
+speed:Math.random()*1+0.5
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+ctx.beginPath()
+
+snow.forEach(f=>{
+ctx.moveTo(f.x,f.y)
+ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+})
+
+ctx.fill()
+
+snow.forEach(f=>{
+f.y+=f.speed
+
+if(f.y>canvas.height){
+f.y=0
+f.x=Math.random()*canvas.width
+}
+
+})
+
+}
+
+setInterval(draw,30)
 
 </script>
 
