@@ -13,45 +13,27 @@
 
 <body>
 
+<div class="snow"></div>
+
 <section class="latest">
 
-<h2>Latest Scripts</h2>
+<h1>Latest Scripts</h1>
 
-<div class="grid">
+<div id="scriptGrid" class="grid"></div>
 
-<a class="card" href="script1.html">
-<img src="https://picsum.photos/400/250?1">
-<h3>Blox Fruits Auto Farm</h3>
-</a>
+<div class="pagination">
 
-<a class="card" href="script2.html">
-<img src="https://picsum.photos/400/250?2">
-<h3>Fast Attack Script</h3>
-</a>
+<button onclick="prevPage()">◀</button>
 
-<a class="card" href="script3.html">
-<img src="https://picsum.photos/400/250?3">
-<h3>Auto Raid Script</h3>
-</a>
+<span id="pageNum">1</span>
 
-<a class="card" href="script4.html">
-<img src="https://picsum.photos/400/250?4">
-<h3>Auto Boss Script</h3>
-</a>
-
-<a class="card" href="script5.html">
-<img src="https://picsum.photos/400/250?5">
-<h3>Auto Mastery Script</h3>
-</a>
-
-<a class="card" href="script6.html">
-<img src="https://picsum.photos/400/250?6">
-<h3>Auto Sea Event Script</h3>
-</a>
+<button onclick="nextPage()">▶</button>
 
 </div>
 
 </section>
+
+<script src="script.js"></script>
 
 </body>
 </html>
