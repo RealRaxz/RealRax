@@ -45,8 +45,11 @@ width:100%;
 height:200px;
 border:1px solid #ccc;
 border-radius:6px;
-padding:10px;
+padding:12px;
 margin-top:10px;
+font-family:monospace;
+resize:none;
+background:#fafafa;
 }
 
 button{
@@ -57,6 +60,11 @@ padding:12px 20px;
 border-radius:6px;
 margin-top:10px;
 cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#b80000;
 }
 
 a{
@@ -64,6 +72,26 @@ display:inline-block;
 margin-top:20px;
 color:#d60000;
 text-decoration:none;
+}
+
+/* notification */
+
+.toast{
+position:fixed;
+bottom:30px;
+right:30px;
+background:#d60000;
+color:white;
+padding:14px 20px;
+border-radius:6px;
+opacity:0;
+transform:translateY(20px);
+transition:0.4s;
+}
+
+.toast.show{
+opacity:1;
+transform:translateY(0);
 }
 
 </style>
@@ -85,28 +113,28 @@ text-decoration:none;
 <h3>รายละเอียด</h3>
 
 <p>
-สคริปต์นี้ถูกออกแบบมาสำหรับเกม Roblox
-ช่วยให้ผู้เล่นสามารถใช้งานฟังก์ชันต่างๆภายในเกมได้อัตโนมัติ
-ระบบถูกพัฒนาให้ใช้งานง่ายและเหมาะสำหรับผู้เล่นทั่วไป
-ผู้เล่นสามารถใช้เพื่อช่วยลดเวลาในการเล่นบางส่วน
-และทำให้การเล่นเกมสะดวกขึ้น
+สคริปต์นี้ถูกออกแบบมาสำหรับเกม Roblox เพื่อช่วยให้ผู้เล่นสามารถใช้งานระบบอัตโนมัติได้ง่ายขึ้น
+ระบบถูกปรับแต่งมาให้เหมาะสำหรับผู้เล่นทั่วไปและผู้เล่นระดับสูง
+ช่วยลดเวลาในการทำภารกิจภายในเกมและเพิ่มความสะดวกในการเล่น
+โค้ดถูกจัดรูปแบบให้ใช้งานง่ายและสามารถนำไปใช้กับ Executor ได้ทันที
+เหมาะสำหรับผู้ที่ต้องการเพิ่มประสิทธิภาพการเล่นเกม
 </p>
 
 <h3>วิธีใช้งาน</h3>
 
 <p>
-1 เปิดเกม Roblox และเข้าเกมที่ต้องการ  
-2 เปิดโปรแกรม Executor  
-3 คัดลอก Script ด้านล่าง  
-4 วาง Script ลงใน Executor  
-5 กด Execute เพื่อเริ่มใช้งาน
+1 เปิดเกม Roblox และเข้าเกมที่ต้องการใช้งานสคริปต์  
+2 เปิดโปรแกรม Executor ที่รองรับ Script  
+3 กดปุ่ม Copy Script ด้านล่าง  
+4 นำ Script ไปวางในช่องของ Executor  
+5 กด Execute เพื่อเริ่มใช้งาน Script
 </p>
 
-<textarea id="code"></textarea>
+<textarea id="code" readonly></textarea>
 
 <br>
 
-<button onclick="copy()">Copy Script</button>
+<button onclick="copyScript()">Copy Script</button>
 
 <br>
 
@@ -115,6 +143,8 @@ text-decoration:none;
 </div>
 
 </div>
+
+<div id="toast" class="toast">คัดลอก Script เรียบร้อยแล้ว</div>
 
 <script>
 
@@ -161,15 +191,25 @@ let data=scripts[id]
 document.getElementById("title").innerText=data.title
 document.getElementById("code").value=data.code
 
-function copy(){
+function copyScript(){
 
-let text=document.getElementById("code")
+let text=document.getElementById("code").value
 
-text.select()
+navigator.clipboard.writeText(text)
 
-document.execCommand("copy")
+showToast()
 
-alert("Script Copied")
+}
+
+function showToast(){
+
+let toast=document.getElementById("toast")
+
+toast.classList.add("show")
+
+setTimeout(()=>{
+toast.classList.remove("show")
+},2000)
 
 }
 
