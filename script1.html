@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Copy Script</title>
 
@@ -19,8 +19,9 @@ background:linear-gradient(#d60000,#ff4040);
 position:sticky;
 top:0;
 background:#b80000;
-padding:15px 40px;
 color:white;
+padding:15px 40px;
+font-size:20px;
 }
 
 .container{
@@ -31,42 +32,48 @@ padding:40px 20px;
 
 .box{
 background:white;
-padding:30px;
 border-radius:10px;
+padding:30px;
 box-shadow:0 8px 18px rgba(0,0,0,0.2);
 }
 
 textarea{
 width:100%;
 height:200px;
+border-radius:6px;
+border:1px solid #ccc;
+padding:10px;
 resize:none;
 }
 
 button{
 background:#d60000;
 color:white;
-padding:12px 20px;
 border:none;
+padding:12px 20px;
 border-radius:6px;
+margin-top:10px;
 cursor:pointer;
 }
 
 .back{
-margin-top:15px;
 display:inline-block;
+margin-top:15px;
+color:#d60000;
+text-decoration:none;
 }
 
 #toast{
 position:fixed;
-bottom:30px;
+bottom:40px;
 left:50%;
 transform:translateX(-50%);
 background:#d60000;
 color:white;
-padding:12px 20px;
-border-radius:6px;
+padding:12px 22px;
+border-radius:8px;
 opacity:0;
-transition:0.3s;
+transition:0.4s;
 }
 
 #toast.show{
@@ -90,41 +97,43 @@ pointer-events:none;
 
 <canvas id="snow"></canvas>
 
-<div class="navbar">🎄 RealRax Scripts</div>
+<div class="navbar">🎄 Copy Script</div>
 
 <div class="container">
 
 <div class="box">
 
-<h2>📜 Script</h2>
+<h2 id="title"></h2>
 
-<p>✨ รายละเอียด</p>
+<h3>📄 รายละเอียด</h3>
+
 <p>
-🎮 ใช้สำหรับ Roblox Auto Farm<br>
-⚡ ช่วยฟาร์มเร็วขึ้น<br>
-🧠 ใช้งานง่าย<br>
-🔒 ปลอดภัยระดับหนึ่ง<br>
-🚀 เพิ่มประสิทธิภาพการเล่น
+⚡ สคริปต์นี้ช่วยให้คุณเล่น Roblox ได้ง่ายขึ้น  
+🚀 มีระบบอัตโนมัติช่วยฟาร์มและทำภารกิจ  
+🧠 ออกแบบให้ใช้งานง่ายแม้เป็นมือใหม่  
+📦 รองรับ Executor ส่วนใหญ่  
+🎮 เหมาะสำหรับผู้เล่นที่ต้องการความสะดวก
 </p>
 
-<p>📌 วิธีใช้</p>
+<h3>🛠 วิธีใช้งาน</h3>
+
 <p>
-1️⃣ เปิด Roblox<br>
-2️⃣ เปิด Executor<br>
-3️⃣ กด Copy Script<br>
-4️⃣ วางใน Executor<br>
-5️⃣ กด Execute
+1️⃣ เข้าเกม Roblox ที่ต้องการใช้สคริปต์  
+2️⃣ เปิดโปรแกรม Executor  
+3️⃣ กดปุ่ม Copy Script ด้านล่าง  
+4️⃣ นำ Script ไปวางใน Executor  
+5️⃣ กด Execute เพื่อเริ่มใช้งาน
 </p>
 
-<textarea id="code" readonly>print("Example Script")</textarea>
-
-<br><br>
-
-<button onclick="copy()">Copy Script</button>
+<textarea id="code" readonly></textarea>
 
 <br>
 
-<a class="back" href="index.html">⬅ กลับหน้าแรก</a>
+<button onclick="copyScript()">📋 Copy Script</button>
+
+<br>
+
+<a href="index.html" class="back">⬅ กลับหน้าแรก</a>
 
 </div>
 
@@ -134,7 +143,24 @@ pointer-events:none;
 
 <script>
 
-function copy(){
+const scripts={
+1:"print('Auto Farm')",
+2:"print('Auto Raid')",
+3:"print('King Legacy')",
+4:"print('Anime Fighters')",
+5:"print('Pet Simulator')",
+6:"print('Doors Script')"
+}
+
+const params=new URLSearchParams(window.location.search)
+
+let id=params.get("id")||1
+
+document.getElementById("title").innerText="Script "+id
+
+document.getElementById("code").value=scripts[id]
+
+function copyScript(){
 
 navigator.clipboard.writeText(document.getElementById("code").value)
 
@@ -142,11 +168,7 @@ let t=document.getElementById("toast")
 
 t.classList.add("show")
 
-setTimeout(()=>{
-
-t.classList.remove("show")
-
-},2000)
+setTimeout(()=>{t.classList.remove("show")},2000)
 
 }
 
