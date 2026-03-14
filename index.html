@@ -127,18 +127,26 @@ font-size:12px;
 /* PAGINATION */
 
 .pagination{
-text-align:center;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
 margin-top:30px;
+font-weight:600;
 }
 
 .pagination button{
-padding:8px 14px;
-margin:4px;
+padding:10px 14px;
 border:none;
+border-radius:6px;
 background:#d60000;
 color:white;
-border-radius:5px;
 cursor:pointer;
+font-size:15px;
+}
+
+.pagination button.active{
+background:black;
 }
 
 /* SNOW */
@@ -167,9 +175,7 @@ pointer-events:none;
 
 <a href="download.html">Download</a>
 
-<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">
-YouTube
-</a>
+<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
 
 </div>
 
@@ -178,15 +184,12 @@ YouTube
 <div class="hero">
 
 <h1>Latest Scripts</h1>
-
 <p>Free Roblox Scripts</p>
 
 </div>
 
 <div class="search">
-
 <input id="search" placeholder="Search Script...">
-
 </div>
 
 <div class="container">
@@ -198,8 +201,6 @@ YouTube
 </div>
 
 <script>
-
-/* 12 SCRIPTS */
 
 const scripts=[
 
@@ -225,13 +226,11 @@ const perPage=6
 function render(){
 
 const grid=document.getElementById("grid")
-
 let search=document.getElementById("search").value.toLowerCase()
 
 let filtered=scripts.filter(s=>s.title.toLowerCase().includes(search))
 
 let start=(page-1)*perPage
-
 let items=filtered.slice(start,start+perPage)
 
 grid.innerHTML=""
@@ -242,7 +241,7 @@ grid.innerHTML+=`
 
 <div class="card">
 
-${s.badge ? `<div class="badge">${s.badge}</div>`:""}
+${s.badge?`<div class="badge">${s.badge}</div>`:""}
 
 <img src="${s.img}">
 
@@ -262,34 +261,44 @@ renderPagination(filtered.length)
 
 function renderPagination(total){
 
-let pages=Math.ceil(total/perPage)
+const pages=Math.ceil(total/perPage)
 
-let html=""
+let html=`<button onclick="prevPage()">◀</button>`
 
 for(let i=1;i<=pages;i++){
 
-html+=`<button onclick="goPage(${i})">${i}</button>`
+html+=`<button class="${i===page?'active':''}" onclick="goPage(${i})">${i}</button>`
 
 }
+
+html+=`<button onclick="nextPage()">▶</button>`
 
 document.getElementById("pagination").innerHTML=html
 
 }
 
 function goPage(p){
-
 page=p
-
 render()
+}
 
+function prevPage(){
+if(page>1){
+page--
+render()
+}
+}
+
+function nextPage(){
+if(page<Math.ceil(scripts.length/perPage)){
+page++
+render()
+}
 }
 
 document.getElementById("search").addEventListener("input",()=>{
-
 page=1
-
 render()
-
 })
 
 render()
@@ -299,28 +308,18 @@ render()
 const canvas=document.getElementById("snow")
 const ctx=canvas.getContext("2d")
 
-let snow=[]
-
-function resize(){
-
 canvas.width=window.innerWidth
 canvas.height=window.innerHeight
 
-}
+let snow=[]
 
-resize()
-
-window.addEventListener("resize",resize)
-
-for(let i=0;i<150;i++){
+for(let i=0;i<160;i++){
 
 snow.push({
-
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*3+1,
 speed:Math.random()*1
-
 })
 
 }
@@ -331,27 +330,16 @@ ctx.clearRect(0,0,canvas.width,canvas.height)
 
 ctx.fillStyle="white"
 
+snow.forEach(f=>{
+
 ctx.beginPath()
-
-snow.forEach(f=>{
-
-ctx.moveTo(f.x,f.y)
-
 ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
-
-})
-
 ctx.fill()
-
-snow.forEach(f=>{
 
 f.y+=f.speed
 
 if(f.y>canvas.height){
-
 f.y=0
-f.x=Math.random()*canvas.width
-
 }
 
 })
