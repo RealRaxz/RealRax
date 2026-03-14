@@ -12,15 +12,8 @@
 body{
 margin:0;
 font-family:Segoe UI;
-background:linear-gradient(#d60000,#ff4040);
-}
-
-.navbar{
-position:sticky;
-top:0;
-background:#b80000;
+background:linear-gradient(135deg,#ff3b3b,#d60000);
 color:white;
-padding:15px 40px;
 }
 
 .container{
@@ -31,9 +24,10 @@ padding:40px 20px;
 
 .box{
 background:white;
-border-radius:10px;
+color:#333;
+border-radius:12px;
 padding:30px;
-box-shadow:0 10px 22px rgba(0,0,0,0.2);
+box-shadow:0 12px 25px rgba(0,0,0,0.25);
 }
 
 textarea{
@@ -60,23 +54,16 @@ display:inline-block;
 margin-top:15px;
 color:#d60000;
 text-decoration:none;
+font-weight:600;
 }
 
-#toast{
+#snow{
 position:fixed;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-background:#d60000;
-color:white;
-padding:12px 22px;
-border-radius:8px;
-opacity:0;
-transition:0.4s;
-}
-
-#toast.show{
-opacity:1;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
 }
 
 </style>
@@ -85,7 +72,7 @@ opacity:1;
 
 <body>
 
-<div class="navbar">🎄 Copy Script</div>
+<canvas id="snow"></canvas>
 
 <div class="container">
 
@@ -96,10 +83,10 @@ opacity:1;
 <h3>📄 รายละเอียด</h3>
 
 <p>
-⚡ Script นี้ช่วยให้เล่น Roblox ง่ายขึ้น  
-🚀 มีระบบออโต้หลายอย่าง  
-📦 ใช้งานกับ Executor ได้  
-🧠 เหมาะกับมือใหม่  
+⚡ Script สำหรับ Roblox  
+🚀 ช่วย Auto Farm และระบบอัตโนมัติ  
+🧠 ใช้งานง่าย  
+📦 รองรับ Executor  
 🎮 เพิ่มความสะดวกในการเล่น
 </p>
 
@@ -108,9 +95,9 @@ opacity:1;
 <p>
 1️⃣ เปิด Roblox  
 2️⃣ เปิด Executor  
-3️⃣ กด Copy Script  
-4️⃣ วางใน Executor  
-5️⃣ กด Execute
+3️⃣ Copy Script  
+4️⃣ วาง Script  
+5️⃣ Execute
 </p>
 
 <textarea id="code" readonly></textarea>
@@ -127,12 +114,9 @@ opacity:1;
 
 </div>
 
-<div id="toast">คัดลอก Script สำเร็จ</div>
-
 <script>
 
 const scripts={
-
 1:"print('Auto Farm')",
 2:"print('Auto Raid')",
 3:"print('King Legacy')",
@@ -145,7 +129,6 @@ const scripts={
 10:"print('Blade Ball')",
 11:"print('Brookhaven')",
 12:"print('Arsenal')"
-
 }
 
 const params=new URLSearchParams(window.location.search)
@@ -157,19 +140,7 @@ document.getElementById("title").innerText="Script "+id
 document.getElementById("code").value=scripts[id]
 
 function copyScript(){
-
 navigator.clipboard.writeText(document.getElementById("code").value)
-
-let t=document.getElementById("toast")
-
-t.classList.add("show")
-
-setTimeout(()=>{
-
-t.classList.remove("show")
-
-},2000)
-
 }
 
 </script>
