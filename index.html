@@ -11,8 +11,8 @@
 
 body{
 margin:0;
-font-family:Arial;
-background:white;
+font-family:Segoe UI,Arial;
+background:#f5f5f5;
 color:#333;
 }
 
@@ -26,16 +26,16 @@ color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:15px 40px;
+padding:16px 40px;
 z-index:1000;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
+box-shadow:0 4px 12px rgba(0,0,0,0.25);
 }
 
 .nav-links a{
 color:white;
 margin-left:20px;
 text-decoration:none;
-font-weight:bold;
+font-weight:600;
 }
 
 /* HERO */
@@ -49,7 +49,7 @@ padding:70px 20px;
 
 .hero h1{
 margin:0;
-font-size:40px;
+font-size:42px;
 }
 
 /* SEARCH */
@@ -61,7 +61,7 @@ margin:30px 0;
 
 .search input{
 padding:12px;
-width:260px;
+width:280px;
 border-radius:6px;
 border:1px solid #ccc;
 }
@@ -76,16 +76,21 @@ padding:20px;
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:25px;
 }
 
 .card{
 background:white;
-border-radius:10px;
-box-shadow:0 8px 18px rgba(0,0,0,0.15);
+border-radius:12px;
+box-shadow:0 10px 22px rgba(0,0,0,0.15);
 overflow:hidden;
 position:relative;
+transition:0.2s;
+}
+
+.card:hover{
+transform:translateY(-4px);
 }
 
 .card img{
@@ -112,10 +117,10 @@ text-decoration:none;
 position:absolute;
 top:10px;
 left:10px;
-background:red;
+background:#ff0000;
 color:white;
 padding:4px 10px;
-border-radius:5px;
+border-radius:6px;
 font-size:12px;
 }
 
@@ -148,7 +153,6 @@ pointer-events:none;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -163,7 +167,9 @@ pointer-events:none;
 
 <a href="download.html">Download</a>
 
-<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
+<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">
+YouTube
+</a>
 
 </div>
 
@@ -193,49 +199,23 @@ pointer-events:none;
 
 <script>
 
+/* 12 SCRIPTS */
+
 const scripts=[
 
-{
-title:"Blox Fruits Auto Farm",
-img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
-badge:"HOT",
-id:1
-},
+{title:"Blox Fruits Auto Farm",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",badge:"HOT",id:1},
+{title:"Blox Fruits Auto Raid",img:"https://picsum.photos/400/200?2",badge:"NEW",id:2},
+{title:"King Legacy Script",img:"https://picsum.photos/400/200?3",badge:"",id:3},
+{title:"Anime Fighters Script",img:"https://picsum.photos/400/200?4",badge:"HOT",id:4},
+{title:"Pet Simulator Script",img:"https://picsum.photos/400/200?5",badge:"",id:5},
+{title:"Doors Script",img:"https://picsum.photos/400/200?6",badge:"NEW",id:6},
 
-{
-title:"Blox Fruits Auto Raid",
-img:"https://picsum.photos/400/200?2",
-badge:"NEW",
-id:2
-},
-
-{
-title:"King Legacy Script",
-img:"https://picsum.photos/400/200?3",
-badge:"",
-id:3
-},
-
-{
-title:"Anime Fighters Script",
-img:"https://picsum.photos/400/200?4",
-badge:"",
-id:4
-},
-
-{
-title:"Pet Simulator Script",
-img:"https://picsum.photos/400/200?5",
-badge:"",
-id:5
-},
-
-{
-title:"Doors Script",
-img:"https://picsum.photos/400/200?6",
-badge:"",
-id:6
-}
+{title:"Blox Fruits Fast Farm",img:"https://picsum.photos/400/200?7",badge:"",id:7},
+{title:"Anime Warriors Script",img:"https://picsum.photos/400/200?8",badge:"HOT",id:8},
+{title:"Shindo Life Script",img:"https://picsum.photos/400/200?9",badge:"",id:9},
+{title:"Blade Ball Script",img:"https://picsum.photos/400/200?10",badge:"NEW",id:10},
+{title:"Brookhaven Script",img:"https://picsum.photos/400/200?11",badge:"",id:11},
+{title:"Arsenal Script",img:"https://picsum.photos/400/200?12",badge:"HOT",id:12}
 
 ]
 
@@ -317,7 +297,6 @@ render()
 /* SNOW */
 
 const canvas=document.getElementById("snow")
-
 const ctx=canvas.getContext("2d")
 
 let snow=[]
@@ -325,7 +304,6 @@ let snow=[]
 function resize(){
 
 canvas.width=window.innerWidth
-
 canvas.height=window.innerHeight
 
 }
@@ -339,12 +317,9 @@ for(let i=0;i<150;i++){
 snow.push({
 
 x:Math.random()*canvas.width,
-
 y:Math.random()*canvas.height,
-
 r:Math.random()*3+1,
-
-speed:Math.random()*1+0.5
+speed:Math.random()*1
 
 })
 
@@ -375,7 +350,6 @@ f.y+=f.speed
 if(f.y>canvas.height){
 
 f.y=0
-
 f.x=Math.random()*canvas.width
 
 }
