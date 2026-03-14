@@ -1,51 +1,74 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download Executor</title>
+<title>Download</title>
 
 <style>
 
 body{
 margin:0;
-font-family:Segoe UI;
-background:linear-gradient(135deg,#ff3b3b,#d60000);
+font-family:Segoe UI,Arial;
+background:linear-gradient(#d60000,#ff4040);
+min-height:100vh;
+}
+
+.hero{
+position:relative;
+text-align:center;
+padding:60px 20px;
 color:white;
+overflow:hidden;
+}
+
+#snow{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
 }
 
 .container{
 max-width:900px;
 margin:auto;
-padding:40px 20px;
+padding:20px;
 }
 
 .box{
+
 background:white;
-color:#333;
 border-radius:12px;
-padding:30px;
-box-shadow:0 12px 25px rgba(0,0,0,0.25);
+padding:35px;
+box-shadow:0 12px 28px rgba(0,0,0,0.25);
+
 }
 
 .download{
+
 display:inline-block;
 background:#d60000;
 color:white;
-padding:14px 22px;
+padding:14px 24px;
 border-radius:6px;
 text-decoration:none;
-margin-top:10px;
+margin-top:12px;
+
 }
 
 .back{
+
 display:inline-block;
-margin-top:15px;
+margin-top:20px;
 color:#d60000;
 text-decoration:none;
 font-weight:600;
+
 }
 
 </style>
@@ -54,18 +77,42 @@ font-weight:600;
 
 <body>
 
+<div class="hero">
+
+<canvas id="snow"></canvas>
+
+<h1>📥 Download Executor</h1>
+
+</div>
+
 <div class="container">
 
 <div class="box">
 
-<h2>📥 Download Delta Executor</h2>
+<h2>⚡ Delta Executor</h2>
+
+<h3>📄 รายละเอียด</h3>
 
 <p>
-⚡ โปรแกรมรัน Script Roblox  
-🚀 รองรับ Script จำนวนมาก  
-📦 ขนาดเล็ก  
-🧠 ใช้งานง่าย  
-🎮 รองรับ Android
+
+🚀 โปรแกรมสำหรับรัน Roblox Script<br>
+📦 รองรับ Script จำนวนมาก<br>
+🧠 ใช้งานง่ายสำหรับมือใหม่<br>
+⚡ โหลดเร็ว<br>
+📱 รองรับ Android
+
+</p>
+
+<h3>🛠 วิธีติดตั้ง</h3>
+
+<p>
+
+1️⃣ กดปุ่ม Download<br>
+2️⃣ ดาวน์โหลดไฟล์ APK<br>
+3️⃣ เปิดไฟล์เพื่อติดตั้ง<br>
+4️⃣ อนุญาต Unknown Sources<br>
+5️⃣ เปิดแอปและใช้งานได้
+
 </p>
 
 <a class="download"
@@ -83,6 +130,70 @@ target="_blank">
 </div>
 
 </div>
+
+<script>
+
+/* SNOW */
+
+const canvas=document.getElementById("snow")
+const ctx=canvas.getContext("2d")
+
+function resize(){
+
+canvas.width=canvas.parentElement.offsetWidth
+canvas.height=canvas.parentElement.offsetHeight
+
+}
+
+resize()
+
+window.addEventListener("resize",resize)
+
+let snow=[]
+
+for(let i=0;i<120;i++){
+
+snow.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3,
+speed:Math.random()*1
+
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+snow.forEach(f=>{
+
+ctx.beginPath()
+ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+ctx.fill()
+
+f.y+=f.speed
+
+if(f.y>canvas.height){
+
+f.y=0
+f.x=Math.random()*canvas.width
+
+}
+
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
+</script>
 
 </body>
 </html>
