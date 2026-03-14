@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,37 +10,49 @@
 <style>
 
 body{
+margin:0;
 font-family:Arial;
-background:white;
-padding:40px;
+background:linear-gradient(#d60000,#ff4040);
+}
+
+.navbar{
+background:#b80000;
+color:white;
+padding:16px 30px;
+position:sticky;
+top:0;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
 }
 
 .box{
-max-width:700px;
-margin:auto;
 background:white;
-padding:40px;
+padding:30px;
 border-radius:10px;
-box-shadow:0 10px 30px rgba(0,0,0,.1);
-text-align:center;
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
-h1{
-color:#e60023;
-}
-
-.btn{
-display:inline-block;
-margin-top:20px;
-padding:15px 30px;
-background:#e60023;
+button{
+background:#d60000;
 color:white;
-border-radius:8px;
-text-decoration:none;
+border:none;
+padding:12px 20px;
+border-radius:6px;
+cursor:pointer;
+margin-top:10px;
 }
 
-.btn:hover{
-transform:translateY(-3px);
+#snow{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
 }
 
 </style>
@@ -48,23 +61,35 @@ transform:translateY(-3px);
 
 <body>
 
+<canvas id="snow"></canvas>
+
+<div class="navbar">🎄 RealRax Scripts</div>
+
+<div class="container">
+
 <div class="box">
+
+<h2>📥 Download Delta Executor</h2>
+
+<p>
+🚀 Executor สำหรับรัน Roblox Script  
+⚡ รองรับสคริปต์จำนวนมาก  
+🔒 ใช้งานง่ายและเสถียร  
+📱 สำหรับ Android  
+⭐ เวอร์ชันล่าสุด
+</p>
+
+<a href="https://www.mediafire.com/file/g2n0ans81o4lb87/Delta-2.711.876.apk/file">
+
+<button>Download APK</button>
+
+</a>
+
+<br><br>
 
 <button onclick="history.back()">⬅ ย้อนกลับ</button>
 
-<h1>Download Executor</h1>
-
-<p>
-ดาวน์โหลด Delta Executor เวอร์ชันล่าสุด
-รองรับการรัน Script Roblox
-ติดตั้งง่ายและใช้งานสะดวก
-เหมาะสำหรับผู้เล่นที่ต้องการใช้ Script
-รองรับหลายอุปกรณ์
-</p>
-
-<a class="btn" href="https://www.mediafire.com/file/g2n0ans81o4lb87/Delta-2.711.876.apk/file" target="_blank">
-Download APK
-</a>
+</div>
 
 </div>
 
