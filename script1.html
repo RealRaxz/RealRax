@@ -11,7 +11,7 @@
 
 body{
 margin:0;
-font-family:Arial;
+font-family:Segoe UI;
 background:linear-gradient(#d60000,#ff4040);
 }
 
@@ -21,7 +21,6 @@ top:0;
 background:#b80000;
 color:white;
 padding:15px 40px;
-font-size:20px;
 }
 
 .container{
@@ -34,15 +33,15 @@ padding:40px 20px;
 background:white;
 border-radius:10px;
 padding:30px;
-box-shadow:0 8px 18px rgba(0,0,0,0.2);
+box-shadow:0 10px 22px rgba(0,0,0,0.2);
 }
 
 textarea{
 width:100%;
 height:200px;
+padding:10px;
 border-radius:6px;
 border:1px solid #ccc;
-padding:10px;
 resize:none;
 }
 
@@ -80,22 +79,11 @@ transition:0.4s;
 opacity:1;
 }
 
-#snow{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-}
-
 </style>
 
 </head>
 
 <body>
-
-<canvas id="snow"></canvas>
 
 <div class="navbar">🎄 Copy Script</div>
 
@@ -108,21 +96,21 @@ pointer-events:none;
 <h3>📄 รายละเอียด</h3>
 
 <p>
-⚡ สคริปต์นี้ช่วยให้คุณเล่น Roblox ได้ง่ายขึ้น  
-🚀 มีระบบอัตโนมัติช่วยฟาร์มและทำภารกิจ  
-🧠 ออกแบบให้ใช้งานง่ายแม้เป็นมือใหม่  
-📦 รองรับ Executor ส่วนใหญ่  
-🎮 เหมาะสำหรับผู้เล่นที่ต้องการความสะดวก
+⚡ Script นี้ช่วยให้เล่น Roblox ง่ายขึ้น  
+🚀 มีระบบออโต้หลายอย่าง  
+📦 ใช้งานกับ Executor ได้  
+🧠 เหมาะกับมือใหม่  
+🎮 เพิ่มความสะดวกในการเล่น
 </p>
 
-<h3>🛠 วิธีใช้งาน</h3>
+<h3>🛠 วิธีใช้</h3>
 
 <p>
-1️⃣ เข้าเกม Roblox ที่ต้องการใช้สคริปต์  
-2️⃣ เปิดโปรแกรม Executor  
-3️⃣ กดปุ่ม Copy Script ด้านล่าง  
-4️⃣ นำ Script ไปวางใน Executor  
-5️⃣ กด Execute เพื่อเริ่มใช้งาน
+1️⃣ เปิด Roblox  
+2️⃣ เปิด Executor  
+3️⃣ กด Copy Script  
+4️⃣ วางใน Executor  
+5️⃣ กด Execute
 </p>
 
 <textarea id="code" readonly></textarea>
@@ -144,12 +132,20 @@ pointer-events:none;
 <script>
 
 const scripts={
+
 1:"print('Auto Farm')",
 2:"print('Auto Raid')",
 3:"print('King Legacy')",
 4:"print('Anime Fighters')",
 5:"print('Pet Simulator')",
-6:"print('Doors Script')"
+6:"print('Doors')",
+7:"print('Fast Farm')",
+8:"print('Anime Warriors')",
+9:"print('Shindo Life')",
+10:"print('Blade Ball')",
+11:"print('Brookhaven')",
+12:"print('Arsenal')"
+
 }
 
 const params=new URLSearchParams(window.location.search)
@@ -168,7 +164,11 @@ let t=document.getElementById("toast")
 
 t.classList.add("show")
 
-setTimeout(()=>{t.classList.remove("show")},2000)
+setTimeout(()=>{
+
+t.classList.remove("show")
+
+},2000)
 
 }
 
