@@ -6,46 +6,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download</title>
+<title>Download Executor</title>
 
 <style>
 
 body{
-margin:0;
-font-family:Segoe UI,Arial;
-background:linear-gradient(#d60000,#ff4040);
-min-height:100vh;
-}
 
-.hero{
-position:relative;
-text-align:center;
-padding:60px 20px;
-color:white;
-overflow:hidden;
+margin:0;
+font-family:Segoe UI;
+background:linear-gradient(180deg,#ff3c3c,#b30000);
+min-height:100vh;
+
 }
 
 #snow{
-position:absolute;
+
+position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-pointer-events:none;
+z-index:0;
+
+}
+
+.navbar{
+
+position:sticky;
+top:0;
+background:#b80000;
+color:white;
+padding:15px 40px;
+z-index:2;
+
 }
 
 .container{
+
 max-width:900px;
 margin:auto;
-padding:20px;
+padding:40px 20px;
+position:relative;
+z-index:2;
+
 }
 
 .box{
 
 background:white;
-border-radius:12px;
-padding:35px;
-box-shadow:0 12px 28px rgba(0,0,0,0.25);
+border-radius:14px;
+padding:30px;
+box-shadow:0 12px 25px rgba(0,0,0,0.25);
 
 }
 
@@ -54,64 +65,44 @@ box-shadow:0 12px 28px rgba(0,0,0,0.25);
 display:inline-block;
 background:#d60000;
 color:white;
-padding:14px 24px;
+padding:14px 22px;
 border-radius:6px;
 text-decoration:none;
-margin-top:12px;
+margin-top:10px;
 
 }
 
 .back{
 
 display:inline-block;
-margin-top:20px;
+margin-top:15px;
 color:#d60000;
 text-decoration:none;
-font-weight:600;
 
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="hero">
-
 <canvas id="snow"></canvas>
 
-<h1>📥 Download Executor</h1>
-
-</div>
+<div class="navbar">🎄 Download</div>
 
 <div class="container">
 
 <div class="box">
 
-<h2>⚡ Delta Executor</h2>
-
-<h3>📄 รายละเอียด</h3>
+<h2>📥 Download Delta Executor</h2>
 
 <p>
 
-🚀 โปรแกรมสำหรับรัน Roblox Script<br>
-📦 รองรับ Script จำนวนมาก<br>
-🧠 ใช้งานง่ายสำหรับมือใหม่<br>
-⚡ โหลดเร็ว<br>
-📱 รองรับ Android
-
-</p>
-
-<h3>🛠 วิธีติดตั้ง</h3>
-
-<p>
-
-1️⃣ กดปุ่ม Download<br>
-2️⃣ ดาวน์โหลดไฟล์ APK<br>
-3️⃣ เปิดไฟล์เพื่อติดตั้ง<br>
-4️⃣ อนุญาต Unknown Sources<br>
-5️⃣ เปิดแอปและใช้งานได้
+⚡ โปรแกรมสำหรับรัน Roblox Script  
+🚀 รองรับ Script จำนวนมาก  
+📦 ขนาดเล็ก  
+🧠 ใช้งานง่าย  
+🎮 รองรับ Android
 
 </p>
 
@@ -133,15 +124,18 @@ target="_blank">
 
 <script>
 
-/* SNOW */
+/* snow */
 
-const canvas=document.getElementById("snow")
+const canvas=document.createElement("canvas")
+canvas.id="snow"
+document.body.appendChild(canvas)
+
 const ctx=canvas.getContext("2d")
 
 function resize(){
 
-canvas.width=canvas.parentElement.offsetWidth
-canvas.height=canvas.parentElement.offsetHeight
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
 
 }
 
@@ -151,14 +145,14 @@ window.addEventListener("resize",resize)
 
 let snow=[]
 
-for(let i=0;i<120;i++){
+for(let i=0;i<160;i++){
 
 snow.push({
 
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*3,
-speed:Math.random()*1
+speed:Math.random()*1.2
 
 })
 
