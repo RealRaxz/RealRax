@@ -11,53 +11,70 @@
 <style>
 
 body{
+
 margin:0;
 font-family:Segoe UI,Arial;
-background:linear-gradient(#d60000,#ff4040);
+background:linear-gradient(180deg,#ff3c3c,#b30000);
 min-height:100vh;
+
 }
 
-.hero{
-position:relative;
-text-align:center;
-padding:60px 20px;
-color:white;
-overflow:hidden;
-}
+/* snow layer */
 
 #snow{
-position:absolute;
+
+position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-pointer-events:none;
+z-index:0;
+
 }
+
+/* navbar */
+
+.navbar{
+
+position:sticky;
+top:0;
+background:#b80000;
+color:white;
+padding:15px 40px;
+z-index:2;
+
+}
+
+/* container */
 
 .container{
+
 max-width:900px;
 margin:auto;
-padding:20px;
+padding:40px 20px;
+position:relative;
+z-index:2;
+
 }
+
+/* box */
 
 .box{
-background:white;
-border-radius:12px;
-padding:35px;
-box-shadow:0 12px 28px rgba(0,0,0,0.25);
-}
 
-h2{
-margin-top:0;
+background:white;
+border-radius:14px;
+padding:30px;
+box-shadow:0 12px 25px rgba(0,0,0,0.25);
+
 }
 
 textarea{
 
 width:100%;
 height:200px;
-border-radius:8px;
-border:1px solid #ccc;
 padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
 resize:none;
 
 }
@@ -69,20 +86,21 @@ color:white;
 border:none;
 padding:12px 20px;
 border-radius:6px;
+margin-top:10px;
 cursor:pointer;
-margin-top:12px;
 
 }
 
 .back{
 
 display:inline-block;
-margin-top:18px;
+margin-top:15px;
 color:#d60000;
 text-decoration:none;
-font-weight:600;
 
 }
+
+/* toast */
 
 #toast{
 
@@ -96,26 +114,24 @@ padding:12px 22px;
 border-radius:8px;
 opacity:0;
 transition:.4s;
+z-index:3;
 
 }
 
 #toast.show{
+
 opacity:1;
+
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="hero">
-
 <canvas id="snow"></canvas>
 
-<h1>📋 Copy Script</h1>
-
-</div>
+<div class="navbar">🎄 Copy Script</div>
 
 <div class="container">
 
@@ -127,10 +143,10 @@ opacity:1;
 
 <p>
 
-⚡ Script นี้ช่วยให้คุณเล่น Roblox ได้ง่ายขึ้น<br>
-🚀 มีระบบอัตโนมัติหลายอย่าง<br>
-📦 ใช้งานกับ Executor ได้<br>
-🧠 เหมาะสำหรับมือใหม่<br>
+⚡ Script นี้ช่วยให้เล่น Roblox ง่ายขึ้น  
+🚀 มีระบบอัตโนมัติหลายอย่าง  
+📦 รองรับ Executor หลายตัว  
+🧠 ใช้งานง่ายแม้มือใหม่  
 🎮 เพิ่มความสะดวกในการเล่น
 
 </p>
@@ -139,10 +155,10 @@ opacity:1;
 
 <p>
 
-1️⃣ เปิด Roblox<br>
-2️⃣ เปิด Executor<br>
-3️⃣ กด Copy Script<br>
-4️⃣ วาง Script ลงใน Executor<br>
+1️⃣ เข้าเกม Roblox  
+2️⃣ เปิด Executor  
+3️⃣ กด Copy Script  
+4️⃣ วาง Script ใน Executor  
 5️⃣ กด Execute
 
 </p>
@@ -165,6 +181,8 @@ opacity:1;
 
 <script>
 
+/* scripts */
+
 const scripts={
 
 1:"print('Auto Farm')",
@@ -172,7 +190,7 @@ const scripts={
 3:"print('King Legacy')",
 4:"print('Anime Fighters')",
 5:"print('Pet Simulator')",
-6:"print('Doors Script')",
+6:"print('Doors')",
 7:"print('Fast Farm')",
 8:"print('Anime Warriors')",
 9:"print('Shindo Life')",
@@ -194,27 +212,27 @@ function copyScript(){
 
 navigator.clipboard.writeText(document.getElementById("code").value)
 
-let toast=document.getElementById("toast")
+let t=document.getElementById("toast")
 
-toast.classList.add("show")
+t.classList.add("show")
 
 setTimeout(()=>{
 
-toast.classList.remove("show")
+t.classList.remove("show")
 
 },2000)
 
 }
 
-/* SNOW */
+/* snow */
 
 const canvas=document.getElementById("snow")
 const ctx=canvas.getContext("2d")
 
 function resize(){
 
-canvas.width=canvas.parentElement.offsetWidth
-canvas.height=canvas.parentElement.offsetHeight
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
 
 }
 
@@ -224,14 +242,14 @@ window.addEventListener("resize",resize)
 
 let snow=[]
 
-for(let i=0;i<120;i++){
+for(let i=0;i<160;i++){
 
 snow.push({
 
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*3,
-speed:Math.random()*1
+speed:Math.random()*1.2
 
 })
 
