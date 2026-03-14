@@ -1,167 +1,157 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>RealRax Scripts</title>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial;
-}
-
 body{
-background:#fff;
+margin:0;
+font-family:Arial;
+background:white;
 color:#333;
-overflow-x:hidden;
 }
 
-/* NAVBAR */
+/* navbar */
 
-nav{
+.navbar{
 position:sticky;
 top:0;
-background:white;
-border-bottom:2px solid #eee;
+background:#d60000;
+color:white;
+padding:16px 30px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:15px 40px;
-z-index:1000;
+z-index:999;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
-nav h1{
-color:#e60023;
-}
-
-nav a{
-text-decoration:none;
+.nav-links a{
+color:white;
 margin-left:20px;
-color:#333;
-font-weight:bold;
+text-decoration:none;
+padding:8px 14px;
+border-radius:6px;
 position:relative;
-transition:.3s;
+overflow:hidden;
 }
 
-nav a:hover{
-transform:translateY(-3px);
+/* button animation */
+
+.nav-links a:hover{
+transform:translateY(-2px);
 }
 
-/* HERO */
+.nav-links a:active{
+transform:scale(0.95);
+}
+
+/* hero */
 
 .hero{
+background:linear-gradient(#d60000,#ff4040);
+color:white;
 text-align:center;
-padding:80px 20px;
-background:linear-gradient(#fff,#ffeaea);
+padding:60px 20px;
 }
 
-.hero h2{
-font-size:40px;
-color:#e60023;
+/* search */
+
+.search{
+text-align:center;
+margin:30px;
 }
 
-.hero p{
-margin-top:10px;
-color:#555;
+.search input{
+padding:12px;
+width:260px;
+border-radius:6px;
+border:1px solid #ccc;
 }
 
-/* GRID */
+/* grid */
 
-.grid{
+.container{
 max-width:1200px;
 margin:auto;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-padding:40px 20px;
+padding:20px;
 }
 
-/* CARD */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
 
 .card{
 background:white;
-border-radius:12px;
+border-radius:10px;
+box-shadow:0 8px 18px rgba(0,0,0,0.15);
 overflow:hidden;
-box-shadow:0 5px 20px rgba(0,0,0,.08);
-transition:.3s;
 position:relative;
+transition:0.3s;
 }
 
 .card:hover{
-transform:translateY(-8px);
+transform:translateY(-5px);
 }
 
 .card img{
 width:100%;
-display:block;
+height:160px;
+object-fit:cover;
 }
 
 .card h3{
-padding:15px;
+margin:15px;
 }
 
-/* BUTTON */
-
-.btn{
-display:block;
-margin:10px 15px 20px;
-padding:12px;
-background:#e60023;
+.card a{
+display:inline-block;
+background:#d60000;
 color:white;
-text-align:center;
-border-radius:8px;
+padding:10px 18px;
+margin:15px;
+border-radius:6px;
 text-decoration:none;
-font-weight:bold;
-position:relative;
-overflow:hidden;
+transition:0.3s;
 }
 
-.btn:after{
-content:'';
-position:absolute;
-top:0;
-left:-100%;
-width:100%;
-height:100%;
-background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);
-transition:.6s;
-}
-
-.btn:hover:after{
-left:100%;
-}
-
-.btn:hover{
+.card a:hover{
 transform:translateY(-2px);
 }
 
-/* BADGE */
+.card a:active{
+transform:scale(0.95);
+}
+
+/* badge */
 
 .badge{
 position:absolute;
 top:10px;
 left:10px;
-background:red;
+background:#ff0000;
 color:white;
-padding:5px 10px;
+padding:4px 10px;
 font-size:12px;
-border-radius:20px;
+border-radius:5px;
 }
 
-/* SNOW */
+/* snow */
 
-.snow{
+#snow{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
 pointer-events:none;
-z-index:9999;
 }
 
 </style>
@@ -169,65 +159,61 @@ z-index:9999;
 
 <body>
 
-<div class="snow" id="snow"></div>
+<canvas id="snow"></canvas>
 
-<nav>
-<h1>RealRax</h1>
-<div>
-<a href="#">Scripts</a>
+<div class="navbar">
+
+<div><b>🎄 RealRax Scripts</b></div>
+
+<div class="nav-links">
 <a href="download.html">Download</a>
 <a href="https://www.youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
 </div>
-</nav>
 
-<section class="hero">
-<h2>Latest Scripts</h2>
-<p>Roblox Script Collection</p>
-</section>
+</div>
 
-<section class="grid" id="grid"></section>
+<div class="hero">
+<h1>Latest Scripts</h1>
+<p>Free Roblox Scripts</p>
+</div>
+
+<div class="search">
+<input type="text" id="search" placeholder="Search script...">
+</div>
+
+<div class="container">
+<div class="grid" id="grid"></div>
+</div>
 
 <script>
 
-/* SCRIPT DATA (เพิ่มตรงนี้) */
+/* scripts */
 
 const scripts=[
-
-{title:"Script 1",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",badge:"NEW",id:1},
-{title:"Script 2",img:"https://picsum.photos/400/200?2",badge:"HOT",id:2},
-{title:"Script 3",img:"https://picsum.photos/400/200?3",badge:"",id:3},
-{title:"Script 4",img:"https://picsum.photos/400/200?4",badge:"",id:4},
-{title:"Script 5",img:"https://picsum.photos/400/200?5",badge:"",id:5},
-{title:"Script 6",img:"https://picsum.photos/400/200?6",badge:"",id:6},
-{title:"Script 7",img:"https://picsum.photos/400/200?7",badge:"",id:7},
-{title:"Script 8",img:"https://picsum.photos/400/200?8",badge:"",id:8},
-{title:"Script 9",img:"https://picsum.photos/400/200?9",badge:"",id:9},
-{title:"Script 10",img:"https://picsum.photos/400/200?10",badge:"",id:10},
-{title:"Script 11",img:"https://picsum.photos/400/200?11",badge:"",id:11},
-{title:"Script 12",img:"https://picsum.photos/400/200?12",badge:"",id:12},
-{title:"Script 13",img:"https://picsum.photos/400/200?13",badge:"",id:13},
-{title:"Script 14",img:"https://picsum.photos/400/200?14",badge:"",id:14},
-{title:"Script 15",img:"https://picsum.photos/400/200?15",badge:"",id:15},
-{title:"Script 16",img:"https://picsum.photos/400/200?16",badge:"",id:16},
-{title:"Script 17",img:"https://picsum.photos/400/200?17",badge:"",id:17},
-{title:"Script 18",img:"https://picsum.photos/400/200?18",badge:"",id:18},
-{title:"Script 19",img:"https://picsum.photos/400/200?19",badge:"",id:19},
-{title:"Script 20",img:"https://picsum.photos/400/200?20",badge:"",id:20}
-
+{title:"Blox Fruits Auto Farm",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",badge:"HOT",id:1},
+{title:"Blox Fruits Auto Raid",img:"https://picsum.photos/400/200?2",badge:"NEW",id:2},
+{title:"King Legacy Script",img:"https://picsum.photos/400/200?3",badge:"",id:3},
+{title:"Anime Fighters Script",img:"https://picsum.photos/400/200?4",badge:"HOT",id:4},
+{title:"Pet Simulator Script",img:"https://picsum.photos/400/200?5",badge:"",id:5},
+{title:"Doors Script",img:"https://picsum.photos/400/200?6",badge:"NEW",id:6},
+{title:"Fast Farm Blox Fruits",img:"https://picsum.photos/400/200?7",badge:"",id:7},
+{title:"Anime Warriors Script",img:"https://picsum.photos/400/200?8",badge:"",id:8}
 ]
 
-let perLoad=8
-let current=0
+let loaded=6
 
-function load(){
+function render(){
 
-let grid=document.getElementById("grid")
+const grid=document.getElementById("grid")
 
-for(let i=current;i<current+perLoad;i++){
+let search=document.getElementById("search").value.toLowerCase()
 
-if(!scripts[i]) return
+grid.innerHTML=""
 
-let s=scripts[i]
+scripts
+.filter(s=>s.title.toLowerCase().includes(search))
+.slice(0,loaded)
+.forEach(s=>{
 
 grid.innerHTML+=`
 
@@ -239,66 +225,91 @@ ${s.badge?`<div class="badge">${s.badge}</div>`:""}
 
 <h3>${s.title}</h3>
 
-<a class="btn" href="script1.html?id=${s.id}">
-Copy Script
-</a>
+<a href="script1.html?id=${s.id}">Get Script</a>
 
 </div>
 
 `
 
-}
-
-current+=perLoad
+})
 
 }
 
-load()
+render()
+
+document.getElementById("search").addEventListener("input",render)
+
+/* infinite scroll */
 
 window.addEventListener("scroll",()=>{
 
 if(window.innerHeight+window.scrollY>=document.body.offsetHeight-200){
 
-load()
+loaded+=2
+render()
 
 }
 
 })
 
-/* SNOW */
+/* snow */
 
-const snow=document.getElementById("snow")
+const canvas=document.getElementById("snow")
+const ctx=canvas.getContext("2d")
 
-for(let i=0;i<50;i++){
+let snow=[]
 
-let s=document.createElement("div")
+function resize(){
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+}
 
-s.style.position="absolute"
-s.style.top="-10px"
-s.style.left=Math.random()*100+"%"
-s.style.width="5px"
-s.style.height="5px"
-s.style.background="white"
-s.style.borderRadius="50%"
-s.style.opacity=Math.random()
+resize()
 
-let fall=5+Math.random()*10
+window.addEventListener("resize",resize)
 
-s.animate([
+for(let i=0;i<180;i++){
 
-{transform:"translateY(0)"},
-{transform:"translateY(110vh)"}
+snow.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3+1,
+speed:Math.random()*1+0.5
+})
 
-],{
+}
 
-duration:fall*1000,
-iterations:Infinity
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+ctx.beginPath()
+
+snow.forEach(f=>{
+ctx.moveTo(f.x,f.y)
+ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+})
+
+ctx.fill()
+
+snow.forEach(f=>{
+
+f.y+=f.speed
+
+if(f.y>canvas.height){
+
+f.y=0
+f.x=Math.random()*canvas.width
+
+}
 
 })
 
-snow.appendChild(s)
-
 }
+
+setInterval(draw,30)
 
 </script>
 
