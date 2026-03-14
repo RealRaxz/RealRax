@@ -1,95 +1,116 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Copy Script</title>
 
 <style>
 
 body{
+margin:0;
 font-family:Arial;
-background:#fff;
-padding:40px;
+background:linear-gradient(#d60000,#ff4040);
+}
+
+.navbar{
+position:sticky;
+top:0;
+background:#b80000;
+color:white;
+padding:16px 30px;
 }
 
 .container{
-max-width:800px;
+max-width:900px;
 margin:auto;
+padding:40px 20px;
+}
+
+.box{
 background:white;
-padding:40px;
+padding:30px;
 border-radius:10px;
-box-shadow:0 10px 30px rgba(0,0,0,.1);
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
-h1{
-color:#e60023;
-margin-bottom:20px;
-}
-
-pre{
-background:#111;
-color:#0f0;
-padding:20px;
-border-radius:8px;
-overflow:auto;
+textarea{
+width:100%;
+height:200px;
+border-radius:6px;
+padding:10px;
+resize:none;
 }
 
 button{
-margin-top:15px;
-padding:12px 20px;
-background:#e60023;
+background:#d60000;
 color:white;
 border:none;
+padding:12px 20px;
 border-radius:6px;
 cursor:pointer;
+margin-top:10px;
 }
 
 button:hover{
 transform:translateY(-2px);
 }
 
-.desc{
-margin-top:20px;
-line-height:1.6;
+button:active{
+transform:scale(0.95);
+}
+
+#snow{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
 }
 
 </style>
+
 </head>
 
 <body>
 
+<canvas id="snow"></canvas>
+
+<div class="navbar">🎄 RealRax Scripts</div>
+
 <div class="container">
 
-<button onclick="history.back()">⬅ ย้อนกลับ</button>
+<div class="box">
 
-<h1>Script</h1>
+<h2>📜 Script</h2>
 
-<pre id="code"></pre>
+<p>
+⚡ Script นี้ช่วยให้ผู้เล่น Roblox ฟาร์มได้เร็วขึ้น  
+🔥 รองรับ Executor ส่วนใหญ่  
+🎮 ใช้งานง่ายมาก  
+⏱ ลดเวลาในการเล่นเกม  
+🚀 เหมาะสำหรับผู้เล่นทุกระดับ
+</p>
+
+<h3>🛠 วิธีใช้</h3>
+
+<p>
+1️⃣ เข้าเกม Roblox ที่ต้องการ  
+2️⃣ เปิด Executor  
+3️⃣ กด Copy Script  
+4️⃣ วาง Script ลงใน Executor  
+5️⃣ กด Execute
+</p>
+
+<textarea readonly id="code">print("RealRax Script")</textarea>
+
+<br>
 
 <button onclick="copy()">Copy Script</button>
-
-<div class="desc">
-
-<h3>📄 รายละเอียด</h3>
-
-<p>
-สคริปต์นี้ใช้สำหรับช่วยเล่น Roblox ให้สะดวกขึ้น
-สามารถใช้งานกับ Executor ได้หลายตัว
-เหมาะสำหรับผู้เล่นที่ต้องการฟาร์มอัตโนมัติ
-รองรับหลายแมพและหลายโหมด
-อัปเดตตามเวอร์ชันเกมใหม่เสมอ
-</p>
-
-<h3>⚙️ วิธีใช้</h3>
-
-<p>
-1. เปิด Executor<br>
-2. เข้าเกม Roblox<br>
-3. วาง Script ลงใน Executor<br>
-4. กด Execute<br>
-5. เมนู Script จะปรากฏในเกม
-</p>
+<button onclick="history.back()">⬅ ย้อนกลับ</button>
 
 </div>
 
@@ -97,56 +118,63 @@ line-height:1.6;
 
 <script>
 
-const scripts={
-1:`print("Script1")`,
-2:`print("Script2")`,
-3:`print("Script3")`,
-4:`print("Script4")`,
-5:`print("Script5")`,
-6:`print("Script6")`,
-7:`print("Script7")`,
-8:`print("Script8")`,
-9:`print("Script9")`,
-10:`print("Script10")`,
-11:`print("Script11")`,
-12:`print("Script12")`,
-13:`print("Script13")`,
-14:`print("Script14")`,
-15:`print("Script15")`,
-16:`print("Script16")`,
-17:`print("Script17")`,
-18:`print("Script18")`,
-19:`print("Script19")`,
-20:`print("Script20")`
-}
-
-const url=new URLSearchParams(location.search)
-const id=url.get("id")
-
-document.getElementById("code").textContent=scripts[id]
-
 function copy(){
 
-navigator.clipboard.writeText(scripts[id])
+navigator.clipboard.writeText(
+document.getElementById("code").value
+)
 
-let msg=document.createElement("div")
-
-msg.innerText="คัดลอกสคริปต์แล้ว"
-
-msg.style.position="fixed"
-msg.style.bottom="20px"
-msg.style.left="50%"
-msg.style.transform="translateX(-50%)"
-msg.style.background="#e60023"
-msg.style.color="white"
-msg.style.padding="10px 20px"
-msg.style.borderRadius="6px"
-
-document.body.appendChild(msg)
-
-setTimeout(()=>msg.remove(),2000)
+alert("Copied!")
 
 }
+
+/* snow */
+
+const canvas=document.getElementById("snow")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let snow=[]
+
+for(let i=0;i<150;i++){
+
+snow.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3+1,
+s:Math.random()*1+0.5
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+snow.forEach(f=>{
+
+ctx.beginPath()
+ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+ctx.fill()
+
+f.y+=f.s
+
+if(f.y>canvas.height){
+
+f.y=0
+f.x=Math.random()*canvas.width
+
+}
+
+})
+
+}
+
+setInterval(draw,30)
 
 </script>
 
