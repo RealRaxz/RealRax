@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Download</title>
 
@@ -16,11 +16,11 @@ background:linear-gradient(#d60000,#ff4040);
 }
 
 .navbar{
-background:#b80000;
-color:white;
-padding:16px 30px;
 position:sticky;
 top:0;
+background:#b80000;
+padding:15px 40px;
+color:white;
 }
 
 .container{
@@ -33,26 +33,16 @@ padding:40px 20px;
 background:white;
 padding:30px;
 border-radius:10px;
-box-shadow:0 10px 20px rgba(0,0,0,0.2);
+box-shadow:0 8px 18px rgba(0,0,0,0.2);
 }
 
-button{
+.download{
+display:inline-block;
 background:#d60000;
 color:white;
-border:none;
 padding:12px 20px;
 border-radius:6px;
-cursor:pointer;
-margin-top:10px;
-}
-
-#snow{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
+text-decoration:none;
 }
 
 </style>
@@ -61,33 +51,29 @@ pointer-events:none;
 
 <body>
 
-<canvas id="snow"></canvas>
-
 <div class="navbar">🎄 RealRax Scripts</div>
 
 <div class="container">
 
 <div class="box">
 
-<h2>📥 Download Delta Executor</h2>
+<h2>⬇️ Download Executor</h2>
 
 <p>
-🚀 Executor สำหรับรัน Roblox Script  
-⚡ รองรับสคริปต์จำนวนมาก  
-🔒 ใช้งานง่ายและเสถียร  
-📱 สำหรับ Android  
-⭐ เวอร์ชันล่าสุด
+📦 ดาวน์โหลด Executor สำหรับรัน Script Roblox<br>
+⚡ รองรับหลายเกม<br>
+🔧 ติดตั้งง่าย<br>
+📱 ใช้งานบนมือถือ Android<br>
+🚀 เวอร์ชันล่าสุด
 </p>
 
-<a href="https://www.mediafire.com/file/g2n0ans81o4lb87/Delta-2.711.876.apk/file">
-
-<button>Download APK</button>
-
+<a class="download" href="https://www.mediafire.com/file/g2n0ans81o4lb87/Delta-2.711.876.apk/file" target="_blank">
+Download File
 </a>
 
 <br><br>
 
-<button onclick="history.back()">⬅ ย้อนกลับ</button>
+<a href="index.html">⬅ กลับหน้าแรก</a>
 
 </div>
 
