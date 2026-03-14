@@ -7,100 +7,77 @@
 
 <style>
 
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
 font-family:Arial;
-background:#ffffff;
+}
+
+body{
+background:#fff;
+color:#333;
 overflow-x:hidden;
 }
 
 /* NAVBAR */
 
-.navbar{
-position:fixed;
+nav{
+position:sticky;
 top:0;
-width:100%;
-background:#ffffffee;
-backdrop-filter:blur(10px);
+background:white;
+border-bottom:2px solid #eee;
 display:flex;
-justify-content:center;
-gap:20px;
-padding:14px;
-z-index:999;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
+justify-content:space-between;
+align-items:center;
+padding:15px 40px;
+z-index:1000;
 }
 
-.navbtn{
-padding:10px 20px;
-border-radius:8px;
-background:#ff2d2d;
-color:white;
+nav h1{
+color:#e60023;
+}
+
+nav a{
 text-decoration:none;
+margin-left:20px;
+color:#333;
 font-weight:bold;
 position:relative;
-overflow:hidden;
-transition:.2s;
+transition:.3s;
 }
 
-.navbtn:hover{
+nav a:hover{
 transform:translateY(-3px);
 }
 
-.navbtn:active{
-transform:scale(.95);
-}
+/* HERO */
 
-/* BUTTON SHINE */
-
-.navbtn::before{
-content:'';
-position:absolute;
-top:0;
-left:-100%;
-width:100%;
-height:100%;
-background:linear-gradient(120deg,transparent,rgba(255,255,255,.7),transparent);
-transition:.6s;
-}
-
-.navbtn:hover::before{
-left:100%;
-}
-
-/* HEADER */
-
-header{
+.hero{
 text-align:center;
-padding-top:90px;
-font-size:28px;
-font-weight:bold;
-color:#d60000;
+padding:80px 20px;
+background:linear-gradient(#fff,#ffeaea);
 }
 
-/* SEARCH */
-
-.search{
-display:flex;
-justify-content:center;
-margin:20px;
+.hero h2{
+font-size:40px;
+color:#e60023;
 }
 
-.search input{
-width:300px;
-padding:10px;
-border-radius:8px;
-border:2px solid #ff2d2d;
+.hero p{
+margin-top:10px;
+color:#555;
 }
 
 /* GRID */
 
 .grid{
-max-width:1100px;
+max-width:1200px;
 margin:auto;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:20px;
-padding:20px;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+padding:40px 20px;
 }
 
 /* CARD */
@@ -109,25 +86,60 @@ padding:20px;
 background:white;
 border-radius:12px;
 overflow:hidden;
-box-shadow:0 5px 15px rgba(0,0,0,.15);
-transition:.25s;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+transition:.3s;
 position:relative;
 }
 
 .card:hover{
-transform:translateY(-6px);
+transform:translateY(-8px);
 }
 
 .card img{
 width:100%;
-height:140px;
-object-fit:cover;
+display:block;
 }
 
 .card h3{
-padding:10px;
-margin:0;
+padding:15px;
 }
+
+/* BUTTON */
+
+.btn{
+display:block;
+margin:10px 15px 20px;
+padding:12px;
+background:#e60023;
+color:white;
+text-align:center;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+position:relative;
+overflow:hidden;
+}
+
+.btn:after{
+content:'';
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);
+transition:.6s;
+}
+
+.btn:hover:after{
+left:100%;
+}
+
+.btn:hover{
+transform:translateY(-2px);
+}
+
+/* BADGE */
 
 .badge{
 position:absolute;
@@ -135,57 +147,21 @@ top:10px;
 left:10px;
 background:red;
 color:white;
-padding:4px 8px;
+padding:5px 10px;
 font-size:12px;
-border-radius:6px;
-}
-
-.card a{
-display:block;
-background:#ff2d2d;
-color:white;
-text-align:center;
-padding:10px;
-text-decoration:none;
-font-weight:bold;
-position:relative;
-overflow:hidden;
-}
-
-.card a:hover{
-background:#e30000;
-}
-
-.card a::before{
-content:'';
-position:absolute;
-top:0;
-left:-100%;
-width:100%;
-height:100%;
-background:linear-gradient(120deg,transparent,rgba(255,255,255,.7),transparent);
-transition:.6s;
-}
-
-.card a:hover::before{
-left:100%;
+border-radius:20px;
 }
 
 /* SNOW */
 
-canvas{
+.snow{
 position:fixed;
 top:0;
 left:0;
+width:100%;
+height:100%;
 pointer-events:none;
-}
-
-/* FOOTER */
-
-footer{
-text-align:center;
-padding:40px;
-color:#888;
+z-index:9999;
 }
 
 </style>
@@ -193,80 +169,87 @@ color:#888;
 
 <body>
 
-<div class="navbar">
-<a class="navbtn" href="index.html">Home</a>
-<a class="navbtn" href="download.html">Download</a>
-<a class="navbtn" target="_blank"
-href="https://www.youtube.com/@RealRaxScripts">YouTube</a>
+<div class="snow" id="snow"></div>
+
+<nav>
+<h1>RealRax</h1>
+<div>
+<a href="#">Scripts</a>
+<a href="download.html">Download</a>
+<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
 </div>
+</nav>
 
-<header>Latest Scripts</header>
+<section class="hero">
+<h2>Latest Scripts</h2>
+<p>Roblox Script Collection</p>
+</section>
 
-<div class="search">
-<input id="search" placeholder="Search script...">
-</div>
-
-<div class="grid" id="grid"></div>
-
-<footer>RealRax Scripts</footer>
-
-<canvas id="snow"></canvas>
+<section class="grid" id="grid"></section>
 
 <script>
 
-/* DATA (เพิ่มการ์ดตรงนี้) */
+/* SCRIPT DATA (เพิ่มตรงนี้) */
 
 const scripts=[
-{title:"Blox Fruits Script",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",badge:"HOT",id:1},
-{title:"Auto Farm Script",img:"https://picsum.photos/400?1",badge:"NEW",id:2},
-{title:"Auto Level Script",img:"https://picsum.photos/400?2",badge:"",id:3},
-{title:"Teleport Script",img:"https://picsum.photos/400?3",badge:"",id:4},
-{title:"Boss Farm Script",img:"https://picsum.photos/400?4",badge:"",id:5},
-{title:"Raid Script",img:"https://picsum.photos/400?5",badge:"",id:6},
-{title:"Script 7",img:"https://picsum.photos/400?6",badge:"",id:7},
-{title:"Script 8",img:"https://picsum.photos/400?7",badge:"",id:8},
-{title:"Script 9",img:"https://picsum.photos/400?8",badge:"",id:9},
-{title:"Script 10",img:"https://picsum.photos/400?9",badge:"",id:10},
-{title:"Script 11",img:"https://picsum.photos/400?10",badge:"",id:11},
-{title:"Script 12",img:"https://picsum.photos/400?11",badge:"",id:12},
-{title:"Script 13",img:"https://picsum.photos/400?12",badge:"",id:13},
-{title:"Script 14",img:"https://picsum.photos/400?13",badge:"",id:14},
-{title:"Script 15",img:"https://picsum.photos/400?14",badge:"",id:15},
-{title:"Script 16",img:"https://picsum.photos/400?15",badge:"",id:16},
-{title:"Script 17",img:"https://picsum.photos/400?16",badge:"",id:17},
-{title:"Script 18",img:"https://picsum.photos/400?17",badge:"",id:18},
-{title:"Script 19",img:"https://picsum.photos/400?18",badge:"",id:19},
-{title:"Script 20",img:"https://picsum.photos/400?19",badge:"",id:20}
+
+{title:"Script 1",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",badge:"NEW",id:1},
+{title:"Script 2",img:"https://picsum.photos/400/200?2",badge:"HOT",id:2},
+{title:"Script 3",img:"https://picsum.photos/400/200?3",badge:"",id:3},
+{title:"Script 4",img:"https://picsum.photos/400/200?4",badge:"",id:4},
+{title:"Script 5",img:"https://picsum.photos/400/200?5",badge:"",id:5},
+{title:"Script 6",img:"https://picsum.photos/400/200?6",badge:"",id:6},
+{title:"Script 7",img:"https://picsum.photos/400/200?7",badge:"",id:7},
+{title:"Script 8",img:"https://picsum.photos/400/200?8",badge:"",id:8},
+{title:"Script 9",img:"https://picsum.photos/400/200?9",badge:"",id:9},
+{title:"Script 10",img:"https://picsum.photos/400/200?10",badge:"",id:10},
+{title:"Script 11",img:"https://picsum.photos/400/200?11",badge:"",id:11},
+{title:"Script 12",img:"https://picsum.photos/400/200?12",badge:"",id:12},
+{title:"Script 13",img:"https://picsum.photos/400/200?13",badge:"",id:13},
+{title:"Script 14",img:"https://picsum.photos/400/200?14",badge:"",id:14},
+{title:"Script 15",img:"https://picsum.photos/400/200?15",badge:"",id:15},
+{title:"Script 16",img:"https://picsum.photos/400/200?16",badge:"",id:16},
+{title:"Script 17",img:"https://picsum.photos/400/200?17",badge:"",id:17},
+{title:"Script 18",img:"https://picsum.photos/400/200?18",badge:"",id:18},
+{title:"Script 19",img:"https://picsum.photos/400/200?19",badge:"",id:19},
+{title:"Script 20",img:"https://picsum.photos/400/200?20",badge:"",id:20}
+
 ]
 
-let page=0
-let perPage=8
-let grid=document.getElementById("grid")
+let perLoad=8
+let current=0
 
 function load(){
 
-let start=page*perPage
-let end=start+perPage
+let grid=document.getElementById("grid")
 
-scripts.slice(start,end).forEach(s=>{
+for(let i=current;i<current+perLoad;i++){
+
+if(!scripts[i]) return
+
+let s=scripts[i]
 
 grid.innerHTML+=`
+
 <div class="card">
 
-${s.badge?`<div class="badge">${s.badge}</div>`:''}
+${s.badge?`<div class="badge">${s.badge}</div>`:""}
 
 <img src="${s.img}">
 
 <h3>${s.title}</h3>
 
-<a href="script1.html?id=${s.id}">Copy Script</a>
+<a class="btn" href="script1.html?id=${s.id}">
+Copy Script
+</a>
 
 </div>
+
 `
 
-})
+}
 
-page++
+current+=perLoad
 
 }
 
@@ -276,100 +259,46 @@ window.addEventListener("scroll",()=>{
 
 if(window.innerHeight+window.scrollY>=document.body.offsetHeight-200){
 
-if(page*perPage<scripts.length){
-
 load()
 
 }
 
-}
-
 })
-
-/* SEARCH */
-
-document.getElementById("search").oninput=function(){
-
-let val=this.value.toLowerCase()
-
-grid.innerHTML=''
-
-scripts.filter(s=>s.title.toLowerCase().includes(val))
-.forEach(s=>{
-
-grid.innerHTML+=`
-<div class="card">
-<img src="${s.img}">
-<h3>${s.title}</h3>
-<a href="script1.html?id=${s.id}">Copy Script</a>
-</div>`
-
-})
-
-}
 
 /* SNOW */
 
-const canvas=document.getElementById("snow")
-const ctx=canvas.getContext("2d")
+const snow=document.getElementById("snow")
 
-let w=canvas.width=window.innerWidth
-let h=canvas.height=window.innerHeight
+for(let i=0;i<50;i++){
 
-let snow=[]
+let s=document.createElement("div")
 
-for(let i=0;i<120;i++){
+s.style.position="absolute"
+s.style.top="-10px"
+s.style.left=Math.random()*100+"%"
+s.style.width="5px"
+s.style.height="5px"
+s.style.background="white"
+s.style.borderRadius="50%"
+s.style.opacity=Math.random()
 
-snow.push({
-x:Math.random()*w,
-y:Math.random()*h,
-r:Math.random()*3+1,
-d:Math.random()+1
+let fall=5+Math.random()*10
+
+s.animate([
+
+{transform:"translateY(0)"},
+{transform:"translateY(110vh)"}
+
+],{
+
+duration:fall*1000,
+iterations:Infinity
+
 })
 
-}
-
-function draw(){
-
-ctx.clearRect(0,0,w,h)
-
-ctx.fillStyle="white"
-
-ctx.beginPath()
-
-for(let i of snow){
-
-ctx.moveTo(i.x,i.y)
-
-ctx.arc(i.x,i.y,i.r,0,Math.PI*2,true)
+snow.appendChild(s)
 
 }
-
-ctx.fill()
-
-update()
-
-}
-
-function update(){
-
-for(let i of snow){
-
-i.y+=i.d
-
-if(i.y>h){
-
-i.y=0
-
-i.x=Math.random()*w
-
-}
-
-}
-
-}
-
-setInterval(draw,33)
 
 </script>
 
