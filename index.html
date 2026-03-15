@@ -1,332 +1,200 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Script Hub</title>
+<title>Christmas Scripts</title>
 
 <style>
 
 body{
 margin:0;
-font-family:Segoe UI;
-background:#f2f2f2;
+font-family:Arial;
+background:white;
+color:#333;
 }
-
-/* NAVBAR */
 
 .navbar{
-background:#c40000;
+background:#d60000;
 color:white;
-padding:14px 40px;
-display:flex;
-justify-content:space-between;
-align-items:center;
+padding:16px 40px;
+font-size:22px;
+font-weight:bold;
 }
-
-.navbar a{
-color:white;
-text-decoration:none;
-margin-left:15px;
-padding:6px 12px;
-border-radius:6px;
-transition:.2s;
-}
-
-.navbar a:hover{
-transform:translateY(-3px);
-}
-
-.navbar a:active{
-transform:scale(.9);
-}
-
-/* HERO */
 
 .hero{
-background:#c40000;
-padding:60px;
-text-align:center;
+background:linear-gradient(#d60000,#ff4040);
 color:white;
-}
-
-.hero h1{
-margin:0;
-}
-
-/* SEARCH */
-
-.search{
 text-align:center;
-margin:30px;
+padding:70px 20px;
 }
-
-.search input{
-
-padding:10px;
-width:300px;
-border-radius:6px;
-border:1px solid #ccc;
-
-}
-
-/* GRID */
 
 .container{
 max-width:1200px;
 margin:auto;
-padding:20px;
+padding:40px 20px;
 }
 
 .grid{
-
 display:grid;
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:repeat(3,1fr);
 gap:25px;
-
 }
 
-/* CARD */
-
 .card{
-
 background:white;
-border-radius:12px;
+border-radius:10px;
+box-shadow:0 8px 18px rgba(0,0,0,0.15);
 overflow:hidden;
-box-shadow:0 8px 20px rgba(0,0,0,.15);
-
 }
 
 .card img{
-
 width:100%;
-height:150px;
+height:160px;
 object-fit:cover;
-
 }
 
 .card h3{
-padding:10px;
-margin:0;
+margin:15px;
 }
 
-.btn{
-
+.card a{
 display:inline-block;
 background:#d60000;
 color:white;
-padding:10px 16px;
-margin:10px;
+padding:10px 18px;
+margin:15px;
 border-radius:6px;
 text-decoration:none;
-transition:.2s;
-
 }
 
-.btn:hover{
+/* snow */
 
-transform:translateY(-4px);
-box-shadow:0 6px 12px rgba(0,0,0,.3);
-
-}
-
-.btn:active{
-
-transform:scale(.9);
-
-}
-
-/* PAGINATION */
-
-.pagination{
-
-text-align:center;
-margin:30px;
-
-}
-
-.page-btn{
-
-background:#d60000;
-color:white;
-padding:8px 14px;
-margin:4px;
-border-radius:6px;
-cursor:pointer;
-display:inline-block;
-transition:.2s;
-
-}
-
-.page-btn:hover{
-transform:translateY(-3px);
-}
-
-.page-btn:active{
-transform:scale(.9);
+#snow{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
 }
 
 </style>
+
 </head>
 
 <body>
 
+<canvas id="snow"></canvas>
+
 <div class="navbar">
-
-<div>🔥 Script Hub</div>
-
-<div>
-<a href="download.html">Download</a>
-<a href="https://youtube.com" target="_blank">YouTube</a>
-</div>
-
+🎄 Christmas Scripts
 </div>
 
 <div class="hero">
-
-<h1>Roblox Script Hub</h1>
-
-</div>
-
-<div class="search">
-
-<input type="text" id="search" placeholder="Search Script..." onkeyup="searchScript()">
-
+<h1>Latest Scripts</h1>
+<p>Free Roblox Scripts</p>
 </div>
 
 <div class="container">
 
-<div id="cards" class="grid"></div>
+<div class="grid">
 
-<div id="pagination" class="pagination"></div>
+<div class="card">
+<img src="https://picsum.photos/400/200?1">
+<h3>Blox Fruits Auto Farm</h3>
+<a href="script1.html?id=1">Get Script</a>
+</div>
+
+<div class="card">
+<img src="https://picsum.photos/400/200?2">
+<h3>Blox Fruits Auto Raid</h3>
+<a href="script1.html?id=2">Get Script</a>
+</div>
+
+<div class="card">
+<img src="https://picsum.photos/400/200?3">
+<h3>King Legacy Script</h3>
+<a href="script1.html?id=3">Get Script</a>
+</div>
+
+<div class="card">
+<img src="https://picsum.photos/400/200?4">
+<h3>Anime Fighters Script</h3>
+<a href="script1.html?id=4">Get Script</a>
+</div>
+
+<div class="card">
+<img src="https://picsum.photos/400/200?5">
+<h3>Pet Simulator Script</h3>
+<a href="script1.html?id=5">Get Script</a>
+</div>
+
+<div class="card">
+<img src="https://picsum.photos/400/200?6">
+<h3>Doors Script</h3>
+<a href="script1.html?id=6">Get Script</a>
+</div>
+
+</div>
 
 </div>
 
 <script>
 
-/* ====================
-เพิ่ม Script การ์ดตรงนี้
-==================== */
+/* snow fall down */
 
-let cards=[
+const canvas=document.getElementById("snow");
+const ctx=canvas.getContext("2d");
 
-{title:"Blox Fruits Auto Farm",img:"https://picsum.photos/400/200?1",id:1},
+let snow=[];
 
-{title:"Blox Fruits Auto Raid",img:"https://picsum.photos/400/200?2",id:2},
+function resize(){
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+}
 
-{title:"King Legacy Script",img:"https://picsum.photos/400/200?3",id:3},
+resize();
+window.addEventListener("resize",resize);
 
-{title:"Anime Fighters Script",img:"https://picsum.photos/400/200?4",id:4},
+for(let i=0;i<180;i++){
 
-{title:"Pet Simulator Script",img:"https://picsum.photos/400/200?5",id:5},
-
-{title:"Doors Script",img:"https://picsum.photos/400/200?6",id:6},
-
-{title:"Blade Ball Script",img:"https://picsum.photos/400/200?7",id:7},
-
-{title:"Brookhaven Script",img:"https://picsum.photos/400/200?8",id:8},
-
-{title:"Shindo Life Script",img:"https://picsum.photos/400/200?9",id:9},
-
-{title:"Arsenal Script",img:"https://picsum.photos/400/200?10",id:10}
-
-]
-
-let filtered=[...cards]
-
-const perPage=8
-let page=1
-
-function render(){
-
-let start=(page-1)*perPage
-let end=start+perPage
-
-let show=filtered.slice(start,end)
-
-let html=""
-
-show.forEach(c=>{
-
-html+=`
-
-<div class="card">
-
-<img src="${c.img}">
-
-<h3>${c.title}</h3>
-
-<a class="btn" href="script.html?id=${c.id}">Get Script</a>
-
-</div>
-
-`
-
+snow.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3+1,
+speed:Math.random()*1+0.5
 })
 
-document.getElementById("cards").innerHTML=html
+}
 
-pagination()
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+ctx.beginPath()
+
+snow.forEach(f=>{
+ctx.moveTo(f.x,f.y)
+ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+})
+
+ctx.fill()
+
+snow.forEach(f=>{
+f.y+=f.speed
+if(f.y>canvas.height){
+f.y=0
+f.x=Math.random()*canvas.width
+}
+})
 
 }
 
-function pagination(){
-
-let total=Math.ceil(filtered.length/perPage)
-
-let html=`<span class="page-btn" onclick="prev()">Prev</span>`
-
-for(let i=1;i<=total;i++){
-
-html+=`<span class="page-btn" onclick="go(${i})">${i}</span>`
-
-}
-
-html+=`<span class="page-btn" onclick="next()">Next</span>`
-
-document.getElementById("pagination").innerHTML=html
-
-}
-
-function go(p){
-
-page=p
-render()
-
-}
-
-function next(){
-
-if(page<Math.ceil(filtered.length/perPage)){
-page++
-render()
-}
-
-}
-
-function prev(){
-
-if(page>1){
-page--
-render()
-}
-
-}
-
-function searchScript(){
-
-let q=document.getElementById("search").value.toLowerCase()
-
-filtered=cards.filter(c=>c.title.toLowerCase().includes(q))
-
-page=1
-
-render()
-
-}
-
-render()
+setInterval(draw,30)
 
 </script>
 
