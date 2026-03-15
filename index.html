@@ -12,7 +12,7 @@
 body{
 margin:0;
 font-family:Arial;
-background:#f5f5f5;
+background:#f2f2f2;
 }
 
 .navbar{
@@ -35,16 +35,17 @@ overflow:hidden;
 }
 
 .hero h1{
+margin:0;
+font-size:42px;
 position:relative;
 z-index:2;
-margin:0;
-font-size:40px;
 }
 
 .hero p{
+margin-top:10px;
+font-size:18px;
 position:relative;
 z-index:2;
-margin-top:10px;
 }
 
 #snowHero{
@@ -130,8 +131,8 @@ margin:15px;
 
 .status{
 margin-left:15px;
-font-size:13px;
 color:green;
+font-size:14px;
 }
 
 .card a{
@@ -161,21 +162,15 @@ border-radius:5px;
 cursor:pointer;
 }
 
-footer{
-margin-top:60px;
-background:#222;
-color:#ddd;
-text-align:center;
-padding:30px;
-}
-
 </style>
 
 </head>
 
 <body>
 
-<div class="navbar">🎄 RealRax Scripts</div>
+<div class="navbar">
+🎄 RealRax Scripts
+</div>
 
 <div class="hero">
 
@@ -211,27 +206,31 @@ padding:30px;
 
 </div>
 
-<footer>
-
-RealRax Scripts<br>
-Free Roblox Script Library<br><br>
-YouTube : RealRax<br>
-© 2026 RealRax
-
-</footer>
-
 <script>
 
-/* DATABASE */
+/* SCRIPT DATABASE */
 
 const scripts=[
 
-{id:1,title:"Blox Fruits Auto Farm",cat:"blox",img:"https://picsum.photos/400/200?1",code:"print('Auto Farm')"},
-{id:2,title:"Blox Fruits Auto Raid",cat:"blox",img:"https://picsum.photos/400/200?2",code:"print('Auto Raid')"},
-{id:3,title:"Anime Fighters Script",cat:"anime",img:"https://picsum.photos/400/200?3",code:"print('Anime Fighters')"},
-{id:4,title:"King Legacy Script",cat:"anime",img:"https://picsum.photos/400/200?4",code:"print('King Legacy')"},
-{id:5,title:"Pet Simulator Script",cat:"sim",img:"https://picsum.photos/400/200?5",code:"print('Pet Simulator')"},
-{id:6,title:"Doors Script",cat:"sim",img:"https://picsum.photos/400/200?6",code:"print('Doors')"}
+{title:"New Ultimate Farm Script",cat:"blox",img:"https://picsum.photos/400/200?21"},
+{title:"Auto Mastery Script",cat:"blox",img:"https://picsum.photos/400/200?22"},
+{title:"Auto Quest Script",cat:"blox",img:"https://picsum.photos/400/200?23"},
+{title:"Auto Boss Farm",cat:"blox",img:"https://picsum.photos/400/200?24"},
+{title:"Fast Level Script",cat:"blox",img:"https://picsum.photos/400/200?25"},
+{title:"Auto Dungeon Script",cat:"anime",img:"https://picsum.photos/400/200?26"},
+{title:"Auto Gem Farm",cat:"anime",img:"https://picsum.photos/400/200?27"},
+{title:"Auto Damage Script",cat:"anime",img:"https://picsum.photos/400/200?28"},
+{title:"Auto Click Script",cat:"sim",img:"https://picsum.photos/400/200?29"},
+{title:"Auto Rebirth Script",cat:"sim",img:"https://picsum.photos/400/200?30"},
+{title:"Auto Hatch Script",cat:"sim",img:"https://picsum.photos/400/200?31"},
+{title:"Auto Collect Script",cat:"sim",img:"https://picsum.photos/400/200?32"},
+
+{title:"Blox Fruits Auto Farm",cat:"blox",img:"https://picsum.photos/400/200?1"},
+{title:"Blox Fruits Auto Raid",cat:"blox",img:"https://picsum.photos/400/200?2"},
+{title:"Anime Fighters Script",cat:"anime",img:"https://picsum.photos/400/200?3"},
+{title:"King Legacy Script",cat:"anime",img:"https://picsum.photos/400/200?4"},
+{title:"Pet Simulator Script",cat:"sim",img:"https://picsum.photos/400/200?5"},
+{title:"Doors Script",cat:"sim",img:"https://picsum.photos/400/200?6"}
 
 ]
 
@@ -239,22 +238,15 @@ const scripts=[
 
 const trending=document.getElementById("trending")
 
-scripts.slice(0,3).forEach(s=>{
+scripts.slice(0,3).forEach((s,i)=>{
 
 trending.innerHTML+=`
 
 <div class="card">
-
 <img src="${s.img}">
-
 <h3>${s.title}</h3>
-
 <div class="status">🟢 Working</div>
-
-<a href="script1.html?id=${s.id}">
-📜 Get Script
-</a>
-
+<a href="script1.html?id=${i+1}">📜 Get Script</a>
 </div>
 
 `
@@ -264,7 +256,7 @@ trending.innerHTML+=`
 /* PAGINATION SYSTEM */
 
 let currentPage=1
-const perPage=6
+let perPage=6
 let filtered=[...scripts]
 
 function render(){
@@ -272,28 +264,21 @@ function render(){
 let start=(currentPage-1)*perPage
 let end=start+perPage
 
-let data=filtered.slice(start,end)
+let pageData=filtered.slice(start,end)
 
-const grid=document.getElementById("grid")
+let grid=document.getElementById("grid")
 
 grid.innerHTML=""
 
-data.forEach(s=>{
+pageData.forEach((s)=>{
 
 grid.innerHTML+=`
 
 <div class="card">
-
 <img src="${s.img}">
-
 <h3>${s.title}</h3>
-
 <div class="status">🟢 Working</div>
-
-<a href="script1.html?id=${s.id}">
-📜 Get Script
-</a>
-
+<a href="script1.html?id=${scripts.indexOf(s)+1}">📜 Get Script</a>
 </div>
 
 `
@@ -306,7 +291,7 @@ renderPagination()
 
 function renderPagination(){
 
-const pages=Math.ceil(filtered.length/perPage)
+let pages=Math.ceil(filtered.length/perPage)
 
 let html=""
 
@@ -334,7 +319,6 @@ let text=e.target.value.toLowerCase()
 filtered=scripts.filter(s=>s.title.toLowerCase().includes(text))
 
 currentPage=1
-
 render()
 
 })
@@ -355,58 +339,6 @@ render()
 }
 
 render()
-
-/* HERO SNOW */
-
-const canvas=document.getElementById("snowHero")
-const ctx=canvas.getContext("2d")
-
-let snow=[]
-
-function resize(){
-canvas.width=canvas.offsetWidth
-canvas.height=canvas.offsetHeight
-}
-
-resize()
-
-for(let i=0;i<120;i++){
-
-snow.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*3+1,
-speed:Math.random()*1+0.5
-})
-
-}
-
-function draw(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-ctx.fillStyle="white"
-
-snow.forEach(f=>{
-
-ctx.beginPath()
-ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
-ctx.fill()
-
-f.y+=f.speed
-
-if(f.y>canvas.height){
-f.y=0
-f.x=Math.random()*canvas.width
-}
-
-})
-
-requestAnimationFrame(draw)
-
-}
-
-draw()
 
 </script>
 
