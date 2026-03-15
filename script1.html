@@ -15,62 +15,28 @@ font-family:Arial;
 background:#f5f5f5;
 }
 
+/* NAVBAR */
+
 .navbar{
+position:sticky;
+top:0;
 background:#d60000;
 color:white;
-padding:16px 40px;
-font-size:22px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 30px;
+z-index:1000;
+}
+
+.navbar a{
+color:white;
+text-decoration:none;
+margin-left:15px;
 font-weight:bold;
 }
 
-.container{
-max-width:900px;
-margin:auto;
-padding:40px 20px;
-}
-
-.box{
-background:white;
-padding:30px;
-border-radius:10px;
-box-shadow:0 8px 20px rgba(0,0,0,0.15);
-}
-
-textarea{
-width:100%;
-height:220px;
-padding:10px;
-border-radius:6px;
-border:1px solid #ccc;
-resize:none;
-}
-
-button{
-margin-top:12px;
-background:#d60000;
-color:white;
-border:none;
-padding:12px 20px;
-border-radius:6px;
-cursor:pointer;
-}
-
-#toast{
-position:fixed;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-background:#d60000;
-color:white;
-padding:12px 20px;
-border-radius:8px;
-opacity:0;
-transition:0.4s;
-}
-
-#toast.show{
-opacity:1;
-}
+/* SNOW */
 
 #snow{
 position:fixed;
@@ -78,7 +44,166 @@ top:0;
 left:0;
 width:100%;
 height:100%;
+z-index:0;
 pointer-events:none;
+}
+
+/* PAGE */
+
+.container{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+position:relative;
+z-index:1;
+}
+
+/* SCRIPT BOX */
+
+.script-box{
+
+background:linear-gradient(180deg,#ffffff,#f3f3f3);
+padding:30px;
+border-radius:14px;
+
+box-shadow:
+0 12px 28px rgba(0,0,0,0.15),
+0 0 0 2px rgba(214,0,0,0.08);
+
+transition:.3s;
+
+}
+
+.script-box:hover{
+
+box-shadow:
+0 14px 34px rgba(0,0,0,0.2),
+0 0 0 2px rgba(214,0,0,0.15);
+
+}
+
+.title{
+font-size:26px;
+margin-bottom:10px;
+}
+
+/* STATUS */
+
+.status{
+color:green;
+font-size:14px;
+margin-bottom:20px;
+}
+
+/* TEXT */
+
+.section{
+margin-top:25px;
+}
+
+.section h3{
+margin-bottom:10px;
+}
+
+/* TEXTAREA */
+
+textarea{
+
+width:100%;
+height:220px;
+
+padding:12px;
+
+border-radius:8px;
+border:1px solid #ccc;
+
+font-family:monospace;
+
+resize:none;
+
+}
+
+/* BUTTON */
+
+.copy-btn{
+
+margin-top:14px;
+
+background:#d60000;
+color:white;
+
+border:none;
+
+padding:12px 22px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-size:15px;
+
+}
+
+.copy-btn:hover{
+background:#b80000;
+}
+
+/* TOAST */
+
+#toast{
+
+position:fixed;
+
+bottom:40px;
+left:50%;
+
+transform:translateX(-50%);
+
+background:#d60000;
+color:white;
+
+padding:12px 20px;
+
+border-radius:8px;
+
+opacity:0;
+
+transition:.4s;
+
+z-index:999;
+
+}
+
+#toast.show{
+opacity:1;
+}
+
+/* BACK BUTTON */
+
+.back{
+
+display:inline-block;
+
+margin-top:20px;
+
+color:#d60000;
+text-decoration:none;
+font-weight:bold;
+
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+.title{
+font-size:22px;
+}
+
+textarea{
+height:180px;
+}
+
 }
 
 </style>
@@ -89,45 +214,71 @@ pointer-events:none;
 
 <canvas id="snow"></canvas>
 
+<!-- NAVBAR -->
+
 <div class="navbar">
-🎄 RealRax Scripts
+
+<div><b>🎄 RealRax Scripts</b></div>
+
+<div>
+<a href="index.html">Home</a>
+<a href="index.html#scripts">Download</a>
+<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
+</div>
+
 </div>
 
 <div class="container">
 
-<div class="box">
+<div class="script-box">
 
-<h2 id="title"></h2>
+<div class="title" id="title"></div>
+
+<div class="status">🟢 Script Status : Working</div>
+
+<div class="section">
 
 <h3>รายละเอียด</h3>
 
 <p>
-สคริปต์นี้พัฒนาสำหรับผู้เล่น Roblox ที่ต้องการเพิ่มความสะดวกในการเล่นเกม
-ตัวสคริปต์มีระบบอัตโนมัติหลายอย่างช่วยลดเวลาการเล่น
-ผู้เล่นสามารถใช้เพื่อฟาร์มไอเทมหรือทำภารกิจได้ง่ายขึ้น
-ระบบถูกออกแบบให้ใช้งานง่ายและรองรับ Executor ส่วนใหญ่
-สามารถคัดลอกและใช้งานได้ทันที
+
+สคริปต์นี้ถูกพัฒนาเพื่อช่วยเพิ่มความสะดวกในการเล่นเกม Roblox  
+ระบบภายในจะช่วยทำงานอัตโนมัติ เช่น ฟาร์มไอเทม ฟาร์มเลเวล หรือช่วยทำเควสต่าง ๆ  
+ตัวสคริปต์ถูกออกแบบให้รองรับ Executor หลายประเภท  
+ผู้ใช้สามารถคัดลอกสคริปต์ไปใช้งานได้ทันทีโดยไม่ต้องแก้ไขโค้ด  
+เหมาะสำหรับผู้เล่นที่ต้องการลดเวลาในการเล่นและเพิ่มประสิทธิภาพ
+
 </p>
+
+</div>
+
+<div class="section">
 
 <h3>วิธีใช้งาน</h3>
 
 <p>
-1 เข้าเกม Roblox ที่ต้องการ  
-2 เปิดโปรแกรม Executor  
-3 กด Copy Script ด้านล่าง  
-4 วางใน Executor  
-5 กด Execute เพื่อเริ่มใช้งาน
+
+1. เข้าเกม Roblox ที่ต้องการ  
+2. เปิดโปรแกรม Executor  
+3. กดปุ่ม Copy Script ด้านล่าง  
+4. นำสคริปต์ไปวางใน Executor  
+5. กด Execute เพื่อเริ่มใช้งาน
+
 </p>
 
-<textarea id="code" readonly></textarea>
+</div>
+
+<textarea id="script" readonly></textarea>
 
 <br>
 
-<button onclick="copyScript()">📜 Copy Script</button>
+<button class="copy-btn" onclick="copyScript()">
+📜 Copy Script
+</button>
 
-<br><br>
+<br>
 
-<a href="index.html">← กลับหน้า Scripts</a>
+<a class="back" href="index.html">← กลับหน้า Scripts</a>
 
 </div>
 
@@ -137,14 +288,30 @@ pointer-events:none;
 
 <script>
 
+/* SCRIPT DATABASE */
+
 const scripts=[
 
-"print('Auto Farm Script')",
-"print('Auto Raid Script')",
+"print('Blox Fruits Auto Farm')",
+"print('Blox Fruits Auto Raid')",
 "print('Anime Fighters Script')",
 "print('King Legacy Script')",
 "print('Pet Simulator Script')",
-"print('Doors Script')"
+"print('Doors Script')",
+
+"print('Blox Fruits Auto Level')",
+"print('Blox Fruits Auto Quest')",
+"print('Anime Souls Script')",
+"print('Anime Warriors Script')",
+"print('Pet Simulator Auto Farm')",
+"print('Pet Simulator Dupe Script')",
+
+"print('Blox Fruits Boss Farm')",
+"print('Fruit Finder Script')",
+"print('Anime Adventure Script')",
+"print('Anime Defense Script')",
+"print('Simulator X Script')",
+"print('Doors ESP Script')"
 
 ]
 
@@ -155,50 +322,79 @@ const titles=[
 "Anime Fighters Script",
 "King Legacy Script",
 "Pet Simulator Script",
-"Doors Script"
+"Doors Script",
+
+"Blox Fruits Auto Level",
+"Blox Fruits Auto Quest",
+"Anime Souls Script",
+"Anime Warriors Script",
+"Pet Simulator Auto Farm",
+"Pet Simulator Dupe",
+
+"Blox Fruits Boss Farm",
+"Fruit Finder Script",
+"Anime Adventure Script",
+"Anime Defense Script",
+"Simulator X Script",
+"Doors ESP Script"
 
 ]
+
+/* GET ID */
 
 const params=new URLSearchParams(window.location.search)
 
 let id=params.get("id")||1
 
-document.getElementById("code").value=scripts[id-1]
+document.getElementById("script").value=scripts[id-1]
+
 document.getElementById("title").innerText=titles[id-1]
+
+/* COPY */
 
 function copyScript(){
 
-navigator.clipboard.writeText(document.getElementById("code").value)
+navigator.clipboard.writeText(
+document.getElementById("script").value
+)
 
-let t=document.getElementById("toast")
+let toast=document.getElementById("toast")
 
-t.classList.add("show")
+toast.classList.add("show")
 
-setTimeout(()=>{t.classList.remove("show")},2000)
+setTimeout(()=>{
+toast.classList.remove("show")
+},2000)
 
 }
 
-/* snow */
+/* SNOW */
 
 const canvas=document.getElementById("snow")
 const ctx=canvas.getContext("2d")
 
-let snow=[]
-
 function resize(){
+
 canvas.width=window.innerWidth
 canvas.height=window.innerHeight
+
 }
 
 resize()
 
-for(let i=0;i<180;i++){
+window.addEventListener("resize",resize)
+
+let snow=[]
+
+for(let i=0;i<160;i++){
 
 snow.push({
+
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*3+1,
 speed:Math.random()*1+0.7
+
 })
 
 }
@@ -212,14 +408,18 @@ ctx.fillStyle="white"
 snow.forEach(f=>{
 
 ctx.beginPath()
+
 ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+
 ctx.fill()
 
 f.y+=f.speed
 
 if(f.y>canvas.height){
+
 f.y=0
 f.x=Math.random()*canvas.width
+
 }
 
 })
