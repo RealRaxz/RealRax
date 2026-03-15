@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>RealRax Scripts</title>
+<title>RealRax Script Library</title>
 
 <style>
 
@@ -15,71 +15,11 @@ font-family:Arial;
 background:#f5f5f5;
 }
 
-/* NAVBAR */
-
-.navbar{
-position:sticky;
-top:0;
-background:#d60000;
-color:white;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:12px 30px;
-z-index:1000;
-}
-
-.nav-links a{
-color:white;
-text-decoration:none;
-margin-left:18px;
-font-weight:bold;
-}
-
-/* HERO */
-
-.hero{
-position:relative;
-background:linear-gradient(#d60000,#ff4040);
-color:white;
-text-align:center;
-padding:90px 20px;
-overflow:hidden;
-}
-
-.hero h1{
-margin:0;
-font-size:40px;
-z-index:2;
-position:relative;
-}
-
-.hero p{
-z-index:2;
-position:relative;
-}
-
-#snowHero{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-}
-
-/* CONTAINER */
-
-.container{
-max-width:1200px;
-margin:auto;
-padding:30px;
-}
-
 /* SEARCH */
 
 .search{
 text-align:center;
-margin-bottom:25px;
+margin-top:40px;
 }
 
 .search input{
@@ -91,114 +31,161 @@ border:1px solid #ccc;
 
 /* CATEGORY */
 
-.categories{
+.category{
 text-align:center;
-margin-bottom:25px;
+margin:20px 0;
 }
 
-.categories button{
-margin:5px;
-padding:8px 14px;
-border:none;
+.category button{
+
 background:#d60000;
 color:white;
+
+border:none;
+padding:8px 16px;
+
 border-radius:6px;
+
+margin:5px;
+
 cursor:pointer;
+
 }
 
 /* GRID */
 
-.grid{
+.cards{
+
+max-width:1200px;
+margin:auto;
+
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:25px;
+
+/* แก้ตรงนี้ */
+
+grid-template-columns:repeat(4,1fr);
+
+gap:30px;
+
+padding:20px;
+
 }
 
 /* CARD */
 
 .card{
-background:white;
-border-radius:12px;
-box-shadow:0 8px 20px rgba(0,0,0,0.1);
-overflow:hidden;
-transition:.3s;
-}
 
-.card:hover{
-transform:translateY(-6px);
-box-shadow:0 12px 28px rgba(0,0,0,0.2);
+background:white;
+
+border-radius:12px;
+
+overflow:hidden;
+
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
 }
 
 .card img{
+
 width:100%;
-height:150px;
+height:170px;
+
 object-fit:cover;
+
 }
 
-.card h3{
-margin:15px;
+.card-body{
+
+padding:15px;
+
+}
+
+.card-title{
+
+font-size:18px;
+font-weight:bold;
+
+margin-bottom:8px;
+
 }
 
 .status{
-margin-left:15px;
+
 color:green;
-font-size:13px;
+font-size:14px;
+
 }
 
-.card a{
-display:inline-block;
-margin:15px;
+.get{
+
+margin-top:12px;
+
 background:#d60000;
 color:white;
-padding:10px 16px;
+
+border:none;
+
+padding:8px 14px;
+
 border-radius:6px;
-text-decoration:none;
+
+cursor:pointer;
+
 }
 
 /* PAGINATION */
 
 .pagination{
+
 text-align:center;
-margin-top:40px;
+
+margin:30px 0;
+
 }
 
 .pagination button{
-margin:4px;
-padding:8px 12px;
-border:none;
+
 background:#d60000;
 color:white;
-border-radius:5px;
+
+border:none;
+
+padding:8px 12px;
+
+margin:4px;
+
+border-radius:6px;
+
 cursor:pointer;
+
 }
 
 .pagination button.active{
-background:#990000;
-}
-
-/* TRENDING */
-
-.section-title{
-font-size:22px;
-margin-bottom:20px;
-}
-
-/* FOOTER */
-
-footer{
-margin-top:60px;
-background:#222;
-color:#ddd;
-text-align:center;
-padding:30px;
+background:#8a0000;
 }
 
 /* MOBILE */
 
+@media(max-width:1000px){
+
+.cards{
+grid-template-columns:repeat(3,1fr);
+}
+
+}
+
 @media(max-width:700px){
 
-.hero h1{
-font-size:28px;
+.cards{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:450px){
+
+.cards{
+grid-template-columns:1fr;
 }
 
 }
@@ -209,280 +196,199 @@ font-size:28px;
 
 <body>
 
-<!-- NAVBAR -->
-
-<div class="navbar">
-
-<div><b>🎄 RealRax Scripts</b></div>
-
-<div class="nav-links">
-<a href="index.html">Home</a>
-<a href="#scripts">Download</a>
-<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
-</div>
-
-</div>
-
-<!-- HERO -->
-
-<div class="hero">
-
-<canvas id="snowHero"></canvas>
-
-<h1>RealRax Script Library</h1>
-<p>Free Roblox Scripts</p>
-
-</div>
-
-<div class="container">
-
-<!-- TRENDING -->
-
-<div class="section-title">🔥 Trending Scripts</div>
-
-<div class="grid" id="trending"></div>
-
-<br>
-
-<!-- SEARCH -->
-
 <div class="search">
-<input id="search" placeholder="🔎 Search Script">
-</div>
 
-<!-- CATEGORY -->
-
-<div class="categories">
-<button onclick="filterCategory('all')">All</button>
-<button onclick="filterCategory('blox')">Blox Fruits</button>
-<button onclick="filterCategory('anime')">Anime</button>
-<button onclick="filterCategory('sim')">Simulator</button>
-</div>
-
-<!-- SCRIPT GRID -->
-
-<div id="scripts" class="grid"></div>
-
-<div id="pagination" class="pagination"></div>
+<input placeholder="🔎 Search Script">
 
 </div>
 
-<footer>
+<div class="category">
 
-RealRax Scripts<br>
-Free Roblox Script Library<br><br>
-© 2026 RealRax
+<button>All</button>
+<button>Blox Fruits</button>
+<button>Anime</button>
+<button>Simulator</button>
 
-</footer>
-
-<script>
-
-/* DATABASE */
-
-const scripts=[
-
-{title:"Blox Fruits Auto Farm",cat:"blox",img:"https://picsum.photos/400/200?1"},
-{title:"Blox Fruits Auto Raid",cat:"blox",img:"https://picsum.photos/400/200?2"},
-{title:"Anime Fighters Script",cat:"anime",img:"https://picsum.photos/400/200?3"},
-{title:"King Legacy Script",cat:"anime",img:"https://picsum.photos/400/200?4"},
-{title:"Pet Simulator Script",cat:"sim",img:"https://picsum.photos/400/200?5"},
-{title:"Doors Script",cat:"sim",img:"https://picsum.photos/400/200?6"},
-
-{title:"Blox Fruits Auto Level",cat:"blox",img:"https://picsum.photos/400/200?7"},
-{title:"Blox Fruits Auto Quest",cat:"blox",img:"https://picsum.photos/400/200?8"},
-{title:"Anime Souls Script",cat:"anime",img:"https://picsum.photos/400/200?9"},
-{title:"Anime Warriors Script",cat:"anime",img:"https://picsum.photos/400/200?10"},
-{title:"Pet Simulator Auto Farm",cat:"sim",img:"https://picsum.photos/400/200?11"},
-{title:"Pet Simulator Dupe",cat:"sim",img:"https://picsum.photos/400/200?12"},
-
-{title:"Blox Fruits Boss Farm",cat:"blox",img:"https://picsum.photos/400/200?13"},
-{title:"Fruit Finder Script",cat:"blox",img:"https://picsum.photos/400/200?14"},
-{title:"Anime Adventure Script",cat:"anime",img:"https://picsum.photos/400/200?15"},
-{title:"Anime Defense Script",cat:"anime",img:"https://picsum.photos/400/200?16"},
-{title:"Simulator X Script",cat:"sim",img:"https://picsum.photos/400/200?17"},
-{title:"Doors ESP Script",cat:"sim",img:"https://picsum.photos/400/200?18"}
-
-]
-
-/* TRENDING */
-
-let trending=document.getElementById("trending")
-
-scripts.slice(0,3).forEach((s,i)=>{
-
-trending.innerHTML+=`
-<div class="card">
-<img src="${s.img}">
-<h3>${s.title}</h3>
-<div class="status">🟢 Working</div>
-<a href="script1.html?id=${i+1}">📜 Get Script</a>
 </div>
-`
 
-})
+<div class="cards">
 
-/* PAGINATION */
-
-let perPage=6
-let currentPage=1
-let filtered=[...scripts]
-
-function render(){
-
-let start=(currentPage-1)*perPage
-let end=start+perPage
-
-let pageData=filtered.slice(start,end)
-
-let grid=document.getElementById("scripts")
-grid.innerHTML=""
-
-pageData.forEach(s=>{
-
-grid.innerHTML+=`
+<!-- CARD 1 -->
 
 <div class="card">
 
-<img src="${s.img}">
+<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
 
-<h3>${s.title}</h3>
+<div class="card-body">
+
+<div class="card-title">Blox Fruits Auto Farm</div>
 
 <div class="status">🟢 Working</div>
 
-<a href="script1.html?id=${scripts.indexOf(s)+1}">
+<button class="get"
+onclick="location.href='script1.html?id=1'">
 📜 Get Script
-</a>
+</button>
+
+</div>
+</div>
+
+<!-- CARD 2 -->
+
+<div class="card">
+
+<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+
+<div class="card-body">
+
+<div class="card-title">Blox Fruits Auto Raid</div>
+
+<div class="status">🟢 Working</div>
+
+<button class="get"
+onclick="location.href='script1.html?id=2'">
+📜 Get Script
+</button>
+
+</div>
+</div>
+
+<!-- CARD 3 -->
+
+<div class="card">
+
+<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+
+<div class="card-body">
+
+<div class="card-title">Anime Fighters Script</div>
+
+<div class="status">🟢 Working</div>
+
+<button class="get"
+onclick="location.href='script1.html?id=3'">
+📜 Get Script
+</button>
+
+</div>
+</div>
+
+<!-- CARD 4 -->
+
+<div class="card">
+
+<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+
+<div class="card-body">
+
+<div class="card-title">King Legacy Script</div>
+
+<div class="status">🟢 Working</div>
+
+<button class="get"
+onclick="location.href='script1.html?id=4'">
+📜 Get Script
+</button>
+
+</div>
+</div>
+
+<!-- CARD 5 -->
+
+<div class="card">
+
+<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+
+<div class="card-body">
+
+<div class="card-title">Pet Simulator Script</div>
+
+<div class="status">🟢 Working</div>
+
+<button class="get"
+onclick="location.href='script1.html?id=5'">
+📜 Get Script
+</button>
+
+</div>
+</div>
+
+<!-- CARD 6 -->
+
+<div class="card">
+
+<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+
+<div class="card-body">
+
+<div class="card-title">Doors Script</div>
+
+<div class="status">🟢 Working</div>
+
+<button class="get"
+onclick="location.href='script1.html?id=6'">
+📜 Get Script
+</button>
+
+</div>
+</div>
+
+<!-- CARD 7 -->
+
+<div class="card">
+
+<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+
+<div class="card-body">
+
+<div class="card-title">Anime Souls Script</div>
+
+<div class="status">🟢 Working</div>
+
+<button class="get"
+onclick="location.href='script1.html?id=7'">
+📜 Get Script
+</button>
+
+</div>
+</div>
+
+<!-- CARD 8 -->
+
+<div class="card">
+
+<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+
+<div class="card-body">
+
+<div class="card-title">Pet Simulator Auto Farm</div>
+
+<div class="status">🟢 Working</div>
+
+<button class="get"
+onclick="location.href='script1.html?id=8'">
+📜 Get Script
+</button>
+
+</div>
+</div>
 
 </div>
 
-`
+<div class="pagination">
 
-})
+<button>«</button>
+<button>‹</button>
 
-renderPagination()
+<button class="active">1</button>
+<button>2</button>
+<button>3</button>
+<button>4</button>
 
-}
+<button>›</button>
+<button>»</button>
 
-function renderPagination(){
-
-let pages=Math.ceil(filtered.length/perPage)
-
-let html=""
-
-html+=`<button onclick="goPage(1)">«</button>`
-html+=`<button onclick="goPage(currentPage-1)">‹</button>`
-
-for(let i=1;i<=pages;i++){
-
-html+=`<button class="${i==currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`
-
-}
-
-html+=`<button onclick="goPage(currentPage+1)">›</button>`
-html+=`<button onclick="goPage(${pages})">»</button>`
-
-document.getElementById("pagination").innerHTML=html
-
-}
-
-function goPage(p){
-
-let pages=Math.ceil(filtered.length/perPage)
-
-if(p<1)p=1
-if(p>pages)p=pages
-
-currentPage=p
-
-render()
-
-}
-
-/* SEARCH */
-
-document.getElementById("search").addEventListener("input",e=>{
-
-let t=e.target.value.toLowerCase()
-
-filtered=scripts.filter(s=>s.title.toLowerCase().includes(t))
-
-currentPage=1
-
-render()
-
-})
-
-/* CATEGORY */
-
-function filterCategory(cat){
-
-if(cat=="all"){
-filtered=[...scripts]
-}else{
-filtered=scripts.filter(s=>s.cat==cat)
-}
-
-currentPage=1
-render()
-
-}
-
-render()
-
-/* HERO SNOW */
-
-const canvas=document.getElementById("snowHero")
-const ctx=canvas.getContext("2d")
-
-function resize(){
-canvas.width=canvas.offsetWidth
-canvas.height=canvas.offsetHeight
-}
-
-resize()
-window.addEventListener("resize",resize)
-
-let snow=[]
-
-for(let i=0;i<120;i++){
-
-snow.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*3+1,
-speed:Math.random()*1+0.5
-})
-
-}
-
-function draw(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-ctx.fillStyle="white"
-
-snow.forEach(f=>{
-
-ctx.beginPath()
-ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
-ctx.fill()
-
-f.y+=f.speed
-
-if(f.y>canvas.height){
-f.y=0
-f.x=Math.random()*canvas.width
-}
-
-})
-
-requestAnimationFrame(draw)
-
-}
-
-draw()
-
-</script>
+</div>
 
 </body>
 </html>
