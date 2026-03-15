@@ -1,127 +1,48 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Copy Script</title>
 
 <style>
 
 body{
-
 margin:0;
-font-family:Segoe UI,Arial;
-background:linear-gradient(180deg,#ff3c3c,#b30000);
+font-family:Segoe UI;
+background:linear-gradient(#ff3c3c,#a10000);
 min-height:100vh;
-
 }
-
-/* snow layer */
-
-#snow{
-
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:0;
-
-}
-
-/* navbar */
-
-.navbar{
-
-position:sticky;
-top:0;
-background:#b80000;
-color:white;
-padding:15px 40px;
-z-index:2;
-
-}
-
-/* container */
-
-.container{
-
-max-width:900px;
-margin:auto;
-padding:40px 20px;
-position:relative;
-z-index:2;
-
-}
-
-/* box */
 
 .box{
-
+max-width:900px;
+margin:auto;
 background:white;
-border-radius:14px;
 padding:30px;
-box-shadow:0 12px 25px rgba(0,0,0,0.25);
-
+border-radius:12px;
+margin-top:60px;
 }
 
 textarea{
-
 width:100%;
 height:200px;
-padding:10px;
-border-radius:6px;
-border:1px solid #ccc;
-resize:none;
-
 }
 
-button{
-
+.btn{
 background:#d60000;
 color:white;
+padding:10px 16px;
 border:none;
-padding:12px 20px;
 border-radius:6px;
-margin-top:10px;
 cursor:pointer;
-
+transition:0.2s;
 }
 
-.back{
-
-display:inline-block;
-margin-top:15px;
-color:#d60000;
-text-decoration:none;
-
+.btn:hover{
+transform:translateY(-4px);
 }
 
-/* toast */
-
-#toast{
-
-position:fixed;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-background:#d60000;
-color:white;
-padding:12px 22px;
-border-radius:8px;
-opacity:0;
-transition:.4s;
-z-index:3;
-
-}
-
-#toast.show{
-
-opacity:1;
-
+.btn:active{
+transform:scale(0.9);
 }
 
 </style>
@@ -129,160 +50,116 @@ opacity:1;
 
 <body>
 
-<canvas id="snow"></canvas>
-
-<div class="navbar">🎄 Copy Script</div>
-
-<div class="container">
-
 <div class="box">
 
 <h2 id="title"></h2>
 
-<h3>📄 รายละเอียด</h3>
+<h3>📄 คำอธิบาย</h3>
+<p id="desc"></p>
+
+<h3>🛠 วิธีใช้</h3>
 
 <p>
-
-⚡ Script นี้ช่วยให้เล่น Roblox ง่ายขึ้น  
-🚀 มีระบบอัตโนมัติหลายอย่าง  
-📦 รองรับ Executor หลายตัว  
-🧠 ใช้งานง่ายแม้มือใหม่  
-🎮 เพิ่มความสะดวกในการเล่น
-
-</p>
-
-<h3>🛠 วิธีใช้งาน</h3>
-
-<p>
-
-1️⃣ เข้าเกม Roblox  
-2️⃣ เปิด Executor  
-3️⃣ กด Copy Script  
-4️⃣ วาง Script ใน Executor  
-5️⃣ กด Execute
-
+1 เปิด Roblox  
+2 เปิด Executor  
+3 Copy Script  
+4 Paste ลง Executor  
+5 กด Execute
 </p>
 
 <textarea id="code" readonly></textarea>
 
-<br>
+<br><br>
 
-<button onclick="copyScript()">📋 Copy Script</button>
+<button class="btn" onclick="copy()">Copy Script</button>
 
-<br>
-
-<a href="index.html" class="back">⬅ กลับหน้าแรก</a>
+<a class="btn" href="download.html">Download Executor</a>
 
 </div>
-
-</div>
-
-<div id="toast">คัดลอก Script สำเร็จ</div>
 
 <script>
 
-/* scripts */
+/* เพิ่ม script ตรงนี้ */
 
 const scripts={
 
-1:"print('Auto Farm')",
-2:"print('Auto Raid')",
-3:"print('King Legacy')",
-4:"print('Anime Fighters')",
-5:"print('Pet Simulator')",
-6:"print('Doors')",
-7:"print('Fast Farm')",
-8:"print('Anime Warriors')",
-9:"print('Shindo Life')",
-10:"print('Blade Ball')",
-11:"print('Brookhaven')",
-12:"print('Arsenal')"
+1:{
+title:"Blox Fruits Auto Farm",
+desc:"ฟาร์มเลเวลอัตโนมัติ",
+code:"print('Auto Farm')"
+},
+
+2:{
+title:"Blox Fruits Raid",
+desc:"ลง Raid อัตโนมัติ",
+code:"print('Auto Raid')"
+},
+
+3:{
+title:"King Legacy",
+desc:"ฟาร์มเงินอัตโนมัติ",
+code:"print('King Legacy')"
+},
+
+4:{
+title:"Anime Fighters",
+desc:"Auto fight",
+code:"print('Anime Fighters')"
+},
+
+5:{
+title:"Pet Simulator",
+desc:"Auto collect coins",
+code:"print('Pet Sim')"
+},
+
+6:{
+title:"Doors",
+desc:"ESP ประตู",
+code:"print('Doors')"
+},
+
+7:{
+title:"Blade Ball",
+desc:"Auto parry",
+code:"print('Blade Ball')"
+},
+
+8:{
+title:"Brookhaven",
+desc:"Admin menu",
+code:"print('Brookhaven')"
+},
+
+9:{
+title:"Shindo Life",
+desc:"Auto farm boss",
+code:"print('Shindo')"
+},
+
+10:{
+title:"Arsenal",
+desc:"Aimbot",
+code:"print('Arsenal')"
+}
 
 }
 
-const params=new URLSearchParams(window.location.search)
+const params=new URLSearchParams(location.search)
+let id=params.get("id")
 
-let id=params.get("id")||1
+let s=scripts[id]
 
-document.getElementById("title").innerText="Script "+id
+document.getElementById("title").innerText=s.title
+document.getElementById("desc").innerText=s.desc
+document.getElementById("code").value=s.code
 
-document.getElementById("code").value=scripts[id]
+function copy(){
 
-function copyScript(){
-
-navigator.clipboard.writeText(document.getElementById("code").value)
-
-let t=document.getElementById("toast")
-
-t.classList.add("show")
-
-setTimeout(()=>{
-
-t.classList.remove("show")
-
-},2000)
+navigator.clipboard.writeText(s.code)
+alert("Copied!")
 
 }
-
-/* snow */
-
-const canvas=document.getElementById("snow")
-const ctx=canvas.getContext("2d")
-
-function resize(){
-
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
-
-}
-
-resize()
-
-window.addEventListener("resize",resize)
-
-let snow=[]
-
-for(let i=0;i<160;i++){
-
-snow.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*3,
-speed:Math.random()*1.2
-
-})
-
-}
-
-function draw(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-ctx.fillStyle="white"
-
-snow.forEach(f=>{
-
-ctx.beginPath()
-ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
-ctx.fill()
-
-f.y+=f.speed
-
-if(f.y>canvas.height){
-
-f.y=0
-f.x=Math.random()*canvas.width
-
-}
-
-})
-
-requestAnimationFrame(draw)
-
-}
-
-draw()
 
 </script>
 
