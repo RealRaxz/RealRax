@@ -114,6 +114,16 @@ grid-template-columns:repeat(4,1fr);
 gap:25px;
 }
 
+/* TRENDING CENTER */
+
+#trending{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+max-width:900px;
+margin:auto;
+gap:25px;
+}
+
 /* CARD */
 
 .card{
@@ -176,11 +186,12 @@ cursor:pointer;
 background:#990000;
 }
 
-/* TRENDING */
+/* TITLES */
 
 .section-title{
 font-size:22px;
 margin-bottom:20px;
+text-align:center;
 }
 
 /* FOOTER */
@@ -196,23 +207,18 @@ padding:30px;
 /* RESPONSIVE */
 
 @media(max-width:1000px){
-
 .grid{
 grid-template-columns:repeat(3,1fr);
 }
-
 }
 
 @media(max-width:700px){
-
 .grid{
 grid-template-columns:repeat(2,1fr);
 }
-
 .hero h1{
 font-size:28px;
 }
-
 }
 
 </style>
@@ -246,7 +252,7 @@ font-size:28px;
 
 <div class="section-title">🔥 Trending Scripts</div>
 
-<div class="grid" id="trending"></div>
+<div id="trending"></div>
 
 <br>
 
@@ -277,15 +283,15 @@ Free Roblox Script Library<br><br>
 
 <script>
 
-/* YOUTUBE THUMBNAIL */
+/* DEFAULT THUMB */
 
-const thumb="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"
+const defaultThumb="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"
 
 /* DATABASE */
 
 const scripts=[
 
-{title:"Blox Fruits Auto Farm",cat:"blox"},
+{title:"Blox Fruits Auto Farm",cat:"blox",thumb:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
 {title:"Blox Fruits Auto Raid",cat:"blox"},
 {title:"Anime Fighters Script",cat:"anime"},
 {title:"King Legacy Script",cat:"anime"},
@@ -297,63 +303,7 @@ const scripts=[
 {title:"Anime Souls Script",cat:"anime"},
 {title:"Anime Warriors Script",cat:"anime"},
 {title:"Pet Simulator Auto Farm",cat:"sim"},
-{title:"Pet Simulator Dupe",cat:"sim"},
-
-{title:"Blox Fruits Boss Farm",cat:"blox"},
-{title:"Fruit Finder Script",cat:"blox"},
-{title:"Anime Adventure Script",cat:"anime"},
-{title:"Anime Defense Script",cat:"anime"},
-{title:"Simulator X Script",cat:"sim"},
-{title:"Doors ESP Script",cat:"sim"},
-  
-{title:"Doors กด Script",cat:"sim"},
-{title:"Doors P Script",cat:"sim"}, 
-{title:"Doors ดสเด Script",cat:"sim"},
-{title:"Doors ่เาเ Script",cat:"sim"},
-{title:"Doors yuio Script",cat:"sim"},
-{title:"Doors tyu Script",cat:"sim"},
-{title:"Doors uuu Script",cat:"sim"},
-{title:"Fruits Boss Farm",cat:"blox"},
-  
-{title:"Finder Script",cat:"blox"},
-{title:"Adventure Script",cat:"anime"},
-{title:"Defense Script",cat:"anime"},
-{title:"X Script",cat:"sim"},
-{title:"ors ESP Script",cat:"sim"},
-{title:"Blox Fruits Auto Level",cat:"blox"},
-{title:"Blox Fruits Auto Quest",cat:"blox"},
-{title:"Anime Souls Script",cat:"anime"},
-  
-{title:"Anime Warriors Script",cat:"anime"},
-{title:"Pet Simulator Auto Farm",cat:"sim"},
-{title:"Pet Simulator Dupe",cat:"sim"},
-{title:"Blox Fruits Auto Level",cat:"blox"},
-{title:"Blox Fruits Auto Quest",cat:"blox"},
-{title:"Anime Souls Script",cat:"anime"},
-{title:"Anime Warriors Script",cat:"anime"},
-{title:"Pet Simulator Auto Farm",cat:"sim"},
-
-{title:"Pet Simulator Dupe",cat:"sim"},
-{title:"Blox Fruits Auto Level",cat:"blox"},
-{title:"Blox Fruits Auto Quest",cat:"blox"},
-{title:"Anime Souls Script",cat:"anime"},
-{title:"Anime Warriors Script",cat:"anime"},
-{title:"Pet Simulator Auto Farm",cat:"sim"},
-{title:"Pet Simulator Dupe",cat:"sim"},
-{title:"Blox Fruits Auto Level",cat:"blox"},
-  
-{title:"Blox Fruits Auto Quest",cat:"blox"},
-{title:"Anime Souls Script",cat:"anime"},
-{title:"Anime Warriors Script",cat:"anime"},
-{title:"Pet Simulator Auto Farm",cat:"sim"},
-{title:"Pet Simulator Dupe",cat:"sim"},
-{title:"Blox Fruits Auto Level",cat:"blox"},
-{title:"Blox Fruits Auto Quest",cat:"blox"},
-{title:"Anime Souls Script",cat:"anime"},
-  
-{title:"Anime Warriors Script",cat:"anime"},
-{title:"Pet Simulator Auto Farm",cat:"sim"},
-{title:"Pet Simulator Dupe",cat:"sim"},
+{title:"Pet Simulator Dupe",cat:"sim"}
 
 ]
 
@@ -364,6 +314,8 @@ scripts.reverse()
 let trending=document.getElementById("trending")
 
 scripts.slice(0,3).forEach((s,i)=>{
+
+let thumb=s.thumb || defaultThumb
 
 trending.innerHTML+=`
 <div class="card">
@@ -394,6 +346,8 @@ grid.innerHTML=""
 
 pageData.forEach(s=>{
 
+let thumb=s.thumb || defaultThumb
+
 grid.innerHTML+=`
 
 <div class="card">
@@ -418,6 +372,8 @@ renderPagination()
 
 }
 
+/* SMART PAGINATION */
+
 function renderPagination(){
 
 let pages=Math.ceil(filtered.length/perPage)
@@ -425,15 +381,18 @@ let pages=Math.ceil(filtered.length/perPage)
 let html=""
 
 html+=`<button onclick="goPage(1)">«</button>`
-html+=`<button onclick="goPage(currentPage-1)">‹</button>`
+html+=`<button onclick="goPage(${currentPage-1})">‹</button>`
 
-for(let i=1;i<=pages;i++){
+let start=Math.max(1,currentPage-3)
+let end=Math.min(pages,currentPage+3)
+
+for(let i=start;i<=end;i++){
 
 html+=`<button class="${i==currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`
 
 }
 
-html+=`<button onclick="goPage(currentPage+1)">›</button>`
+html+=`<button onclick="goPage(${currentPage+1})">›</button>`
 html+=`<button onclick="goPage(${pages})">»</button>`
 
 document.getElementById("pagination").innerHTML=html
@@ -448,7 +407,6 @@ if(p<1)p=1
 if(p>pages)p=pages
 
 currentPage=p
-
 render()
 
 }
