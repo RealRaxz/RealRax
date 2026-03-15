@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>RealRax Script Library</title>
 
@@ -12,41 +12,62 @@
 body{
 margin:0;
 font-family:Arial;
-background:#f5f5f5;
+background:#f4f4f4;
+}
+
+/* NAVBAR */
+
+.navbar{
+position:sticky;
+top:0;
+background:#d60000;
+color:white;
+padding:14px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:1000;
+}
+
+.navbar a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+font-weight:bold;
 }
 
 /* SEARCH */
 
 .search{
 text-align:center;
-margin-top:40px;
+margin:30px;
 }
 
 .search input{
-width:300px;
-padding:10px;
-border-radius:6px;
+padding:12px;
+width:260px;
+border-radius:8px;
 border:1px solid #ccc;
 }
 
-/* CATEGORY */
+/* FILTER */
 
-.category{
+.filters{
 text-align:center;
-margin:20px 0;
+margin-bottom:20px;
 }
 
-.category button{
+.filters button{
 
 background:#d60000;
 color:white;
-
 border:none;
+
 padding:8px 16px;
 
-border-radius:6px;
-
 margin:5px;
+
+border-radius:6px;
 
 cursor:pointer;
 
@@ -54,18 +75,19 @@ cursor:pointer;
 
 /* GRID */
 
-.cards{
+.grid{
 
-max-width:1200px;
+max-width:1100px;
+
 margin:auto;
 
 display:grid;
 
-/* แก้ตรงนี้ */
+/* 4 การ์ดต่อแถว */
 
 grid-template-columns:repeat(4,1fr);
 
-gap:30px;
+gap:25px;
 
 padding:20px;
 
@@ -81,55 +103,60 @@ border-radius:12px;
 
 overflow:hidden;
 
-box-shadow:0 8px 20px rgba(0,0,0,0.15);
+box-shadow:0 8px 18px rgba(0,0,0,0.15);
+
+transition:.25s;
+
+}
+
+.card:hover{
+
+transform:translateY(-6px);
+
+box-shadow:0 12px 24px rgba(0,0,0,0.2);
 
 }
 
 .card img{
 
 width:100%;
-height:170px;
+height:150px;
 
 object-fit:cover;
 
 }
 
-.card-body{
+.card-content{
 
 padding:15px;
-
-}
-
-.card-title{
-
-font-size:18px;
-font-weight:bold;
-
-margin-bottom:8px;
 
 }
 
 .status{
 
 color:green;
-font-size:14px;
+
+font-size:13px;
+
+margin:6px 0;
 
 }
 
-.get{
+.btn{
 
-margin-top:12px;
+display:inline-block;
 
 background:#d60000;
-color:white;
 
-border:none;
+color:white;
 
 padding:8px 14px;
 
 border-radius:6px;
 
-cursor:pointer;
+text-decoration:none;
+
+margin-top:8px;
 
 }
 
@@ -139,53 +166,46 @@ cursor:pointer;
 
 text-align:center;
 
-margin:30px 0;
+margin:30px;
 
 }
 
 .pagination button{
 
 background:#d60000;
+
 color:white;
 
 border:none;
 
 padding:8px 12px;
 
-margin:4px;
+margin:3px;
 
-border-radius:6px;
+border-radius:5px;
 
 cursor:pointer;
 
 }
 
-.pagination button.active{
-background:#8a0000;
-}
-
 /* MOBILE */
 
-@media(max-width:1000px){
+@media(max-width:900px){
 
-.cards{
-grid-template-columns:repeat(3,1fr);
-}
+.grid{
 
-}
-
-@media(max-width:700px){
-
-.cards{
 grid-template-columns:repeat(2,1fr);
-}
 
 }
 
-@media(max-width:450px){
+}
 
-.cards{
+@media(max-width:500px){
+
+.grid{
+
 grid-template-columns:1fr;
+
 }
 
 }
@@ -196,13 +216,25 @@ grid-template-columns:1fr;
 
 <body>
 
+<div class="navbar">
+
+<div><b>RealRax Script Library</b></div>
+
+<div>
+<a href="#">Home</a>
+<a href="#">Download</a>
+<a href="https://www.youtube.com/@RealRaxScripts">YouTube</a>
+</div>
+
+</div>
+
 <div class="search">
 
 <input placeholder="🔎 Search Script">
 
 </div>
 
-<div class="category">
+<div class="filters">
 
 <button>All</button>
 <button>Blox Fruits</button>
@@ -211,166 +243,136 @@ grid-template-columns:1fr;
 
 </div>
 
-<div class="cards">
+<div class="grid">
 
-<!-- CARD 1 -->
-
-<div class="card">
-
-<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
-
-<div class="card-body">
-
-<div class="card-title">Blox Fruits Auto Farm</div>
-
-<div class="status">🟢 Working</div>
-
-<button class="get"
-onclick="location.href='script1.html?id=1'">
-📜 Get Script
-</button>
-
-</div>
-</div>
-
-<!-- CARD 2 -->
+<!-- CARD -->
 
 <div class="card">
 
 <img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
 
-<div class="card-body">
+<div class="card-content">
 
-<div class="card-title">Blox Fruits Auto Raid</div>
+<h3>Blox Fruits Auto Farm</h3>
 
-<div class="status">🟢 Working</div>
+<div class="status">● Working</div>
 
-<button class="get"
-onclick="location.href='script1.html?id=2'">
-📜 Get Script
-</button>
+<a class="btn" href="script1.html?id=1">📜 Get Script</a>
 
 </div>
-</div>
 
-<!-- CARD 3 -->
+</div>
 
 <div class="card">
 
 <img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
 
-<div class="card-body">
+<div class="card-content">
 
-<div class="card-title">Anime Fighters Script</div>
+<h3>Blox Fruits Auto Raid</h3>
 
-<div class="status">🟢 Working</div>
+<div class="status">● Working</div>
 
-<button class="get"
-onclick="location.href='script1.html?id=3'">
-📜 Get Script
-</button>
+<a class="btn" href="script1.html?id=2">📜 Get Script</a>
 
 </div>
-</div>
 
-<!-- CARD 4 -->
+</div>
 
 <div class="card">
 
 <img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
 
-<div class="card-body">
+<div class="card-content">
 
-<div class="card-title">King Legacy Script</div>
+<h3>Anime Fighters Script</h3>
 
-<div class="status">🟢 Working</div>
+<div class="status">● Working</div>
 
-<button class="get"
-onclick="location.href='script1.html?id=4'">
-📜 Get Script
-</button>
+<a class="btn" href="script1.html?id=3">📜 Get Script</a>
 
 </div>
-</div>
 
-<!-- CARD 5 -->
+</div>
 
 <div class="card">
 
 <img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
 
-<div class="card-body">
+<div class="card-content">
 
-<div class="card-title">Pet Simulator Script</div>
+<h3>King Legacy Script</h3>
 
-<div class="status">🟢 Working</div>
+<div class="status">● Working</div>
 
-<button class="get"
-onclick="location.href='script1.html?id=5'">
-📜 Get Script
-</button>
+<a class="btn" href="script1.html?id=4">📜 Get Script</a>
 
 </div>
-</div>
 
-<!-- CARD 6 -->
+</div>
 
 <div class="card">
 
 <img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
 
-<div class="card-body">
+<div class="card-content">
 
-<div class="card-title">Doors Script</div>
+<h3>Pet Simulator Script</h3>
 
-<div class="status">🟢 Working</div>
+<div class="status">● Working</div>
 
-<button class="get"
-onclick="location.href='script1.html?id=6'">
-📜 Get Script
-</button>
+<a class="btn" href="script1.html?id=5">📜 Get Script</a>
 
 </div>
-</div>
 
-<!-- CARD 7 -->
+</div>
 
 <div class="card">
 
 <img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
 
-<div class="card-body">
+<div class="card-content">
 
-<div class="card-title">Anime Souls Script</div>
+<h3>Doors Script</h3>
 
-<div class="status">🟢 Working</div>
+<div class="status">● Working</div>
 
-<button class="get"
-onclick="location.href='script1.html?id=7'">
-📜 Get Script
-</button>
+<a class="btn" href="script1.html?id=6">📜 Get Script</a>
 
 </div>
-</div>
 
-<!-- CARD 8 -->
+</div>
 
 <div class="card">
 
 <img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
 
-<div class="card-body">
+<div class="card-content">
 
-<div class="card-title">Pet Simulator Auto Farm</div>
+<h3>Blox Fruits Auto Level</h3>
 
-<div class="status">🟢 Working</div>
+<div class="status">● Working</div>
 
-<button class="get"
-onclick="location.href='script1.html?id=8'">
-📜 Get Script
-</button>
+<a class="btn" href="script1.html?id=7">📜 Get Script</a>
 
 </div>
+
+</div>
+
+<div class="card">
+
+<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+
+<div class="card-content">
+
+<h3>Anime Warriors Script</h3>
+
+<div class="status">● Working</div>
+
+<a class="btn" href="script1.html?id=8">📜 Get Script</a>
+
+</div>
+
 </div>
 
 </div>
@@ -380,10 +382,9 @@ onclick="location.href='script1.html?id=8'">
 <button>«</button>
 <button>‹</button>
 
-<button class="active">1</button>
+<button>1</button>
 <button>2</button>
 <button>3</button>
-<button>4</button>
 
 <button>›</button>
 <button>»</button>
