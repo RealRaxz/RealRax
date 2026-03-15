@@ -50,13 +50,13 @@ overflow:hidden;
 .hero h1{
 margin:0;
 font-size:40px;
-z-index:2;
 position:relative;
+z-index:2;
 }
 
 .hero p{
-z-index:2;
 position:relative;
+z-index:2;
 }
 
 #snowHero{
@@ -110,7 +110,7 @@ cursor:pointer;
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+grid-template-columns:repeat(4,1fr);
 gap:25px;
 }
 
@@ -193,9 +193,21 @@ text-align:center;
 padding:30px;
 }
 
-/* MOBILE */
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+.grid{
+grid-template-columns:repeat(3,1fr);
+}
+
+}
 
 @media(max-width:700px){
+
+.grid{
+grid-template-columns:repeat(2,1fr);
+}
 
 .hero h1{
 font-size:28px;
@@ -209,8 +221,6 @@ font-size:28px;
 
 <body>
 
-<!-- NAVBAR -->
-
 <div class="navbar">
 
 <div><b>🎄 RealRax Scripts</b></div>
@@ -223,8 +233,6 @@ font-size:28px;
 
 </div>
 
-<!-- HERO -->
-
 <div class="hero">
 
 <canvas id="snowHero"></canvas>
@@ -236,21 +244,15 @@ font-size:28px;
 
 <div class="container">
 
-<!-- TRENDING -->
-
 <div class="section-title">🔥 Trending Scripts</div>
 
 <div class="grid" id="trending"></div>
 
 <br>
 
-<!-- SEARCH -->
-
 <div class="search">
 <input id="search" placeholder="🔎 Search Script">
 </div>
-
-<!-- CATEGORY -->
 
 <div class="categories">
 <button onclick="filterCategory('all')">All</button>
@@ -258,8 +260,6 @@ font-size:28px;
 <button onclick="filterCategory('anime')">Anime</button>
 <button onclick="filterCategory('sim')">Simulator</button>
 </div>
-
-<!-- SCRIPT GRID -->
 
 <div id="scripts" class="grid"></div>
 
@@ -277,30 +277,34 @@ Free Roblox Script Library<br><br>
 
 <script>
 
+/* YOUTUBE THUMBNAIL */
+
+const thumb="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"
+
 /* DATABASE */
 
 const scripts=[
 
-{title:"Blox Fruits Auto Farm",cat:"blox",img:"https://picsum.photos/400/200?1"},
-{title:"Blox Fruits Auto Raid",cat:"blox",img:"https://picsum.photos/400/200?2"},
-{title:"Anime Fighters Script",cat:"anime",img:"https://picsum.photos/400/200?3"},
-{title:"King Legacy Script",cat:"anime",img:"https://picsum.photos/400/200?4"},
-{title:"Pet Simulator Script",cat:"sim",img:"https://picsum.photos/400/200?5"},
-{title:"Doors Script",cat:"sim",img:"https://picsum.photos/400/200?6"},
+{title:"Blox Fruits Auto Farm",cat:"blox"},
+{title:"Blox Fruits Auto Raid",cat:"blox"},
+{title:"Anime Fighters Script",cat:"anime"},
+{title:"King Legacy Script",cat:"anime"},
+{title:"Pet Simulator Script",cat:"sim"},
+{title:"Doors Script",cat:"sim"},
 
-{title:"Blox Fruits Auto Level",cat:"blox",img:"https://picsum.photos/400/200?7"},
-{title:"Blox Fruits Auto Quest",cat:"blox",img:"https://picsum.photos/400/200?8"},
-{title:"Anime Souls Script",cat:"anime",img:"https://picsum.photos/400/200?9"},
-{title:"Anime Warriors Script",cat:"anime",img:"https://picsum.photos/400/200?10"},
-{title:"Pet Simulator Auto Farm",cat:"sim",img:"https://picsum.photos/400/200?11"},
-{title:"Pet Simulator Dupe",cat:"sim",img:"https://picsum.photos/400/200?12"},
+{title:"Blox Fruits Auto Level",cat:"blox"},
+{title:"Blox Fruits Auto Quest",cat:"blox"},
+{title:"Anime Souls Script",cat:"anime"},
+{title:"Anime Warriors Script",cat:"anime"},
+{title:"Pet Simulator Auto Farm",cat:"sim"},
+{title:"Pet Simulator Dupe",cat:"sim"},
 
-{title:"Blox Fruits Boss Farm",cat:"blox",img:"https://picsum.photos/400/200?13"},
-{title:"Fruit Finder Script",cat:"blox",img:"https://picsum.photos/400/200?14"},
-{title:"Anime Adventure Script",cat:"anime",img:"https://picsum.photos/400/200?15"},
-{title:"Anime Defense Script",cat:"anime",img:"https://picsum.photos/400/200?16"},
-{title:"Simulator X Script",cat:"sim",img:"https://picsum.photos/400/200?17"},
-{title:"Doors ESP Script",cat:"sim",img:"https://picsum.photos/400/200?18"}
+{title:"Blox Fruits Boss Farm",cat:"blox"},
+{title:"Fruit Finder Script",cat:"blox"},
+{title:"Anime Adventure Script",cat:"anime"},
+{title:"Anime Defense Script",cat:"anime"},
+{title:"Simulator X Script",cat:"sim"},
+{title:"Doors ESP Script",cat:"sim"}
 
 ]
 
@@ -312,7 +316,7 @@ scripts.slice(0,3).forEach((s,i)=>{
 
 trending.innerHTML+=`
 <div class="card">
-<img src="${s.img}">
+<img src="${thumb}">
 <h3>${s.title}</h3>
 <div class="status">🟢 Working</div>
 <a href="script1.html?id=${i+1}">📜 Get Script</a>
@@ -323,7 +327,7 @@ trending.innerHTML+=`
 
 /* PAGINATION */
 
-let perPage=6
+let perPage=8
 let currentPage=1
 let filtered=[...scripts]
 
@@ -343,7 +347,7 @@ grid.innerHTML+=`
 
 <div class="card">
 
-<img src="${s.img}">
+<img src="${thumb}">
 
 <h3>${s.title}</h3>
 
