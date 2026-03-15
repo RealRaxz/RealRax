@@ -13,28 +13,53 @@ background:linear-gradient(#ff3c3c,#a10000);
 min-height:100vh;
 }
 
+/* NAVBAR */
+
+.navbar{
+background:#b80000;
+padding:14px 40px;
+display:flex;
+justify-content:space-between;
+color:white;
+}
+
+.navbar a{
+color:white;
+text-decoration:none;
+margin-left:15px;
+}
+
+/* BOX */
+
 .box{
+
 max-width:900px;
 margin:auto;
+margin-top:60px;
 background:white;
 padding:30px;
 border-radius:12px;
-margin-top:60px;
+
 }
 
 textarea{
+
 width:100%;
 height:200px;
+resize:none;
+
 }
 
 .btn{
+
 background:#d60000;
 color:white;
 padding:10px 16px;
 border:none;
 border-radius:6px;
 cursor:pointer;
-transition:0.2s;
+transition:.2s;
+
 }
 
 .btn:hover{
@@ -42,7 +67,28 @@ transform:translateY(-4px);
 }
 
 .btn:active{
-transform:scale(0.9);
+transform:scale(.9);
+}
+
+/* TOAST */
+
+.toast{
+
+position:fixed;
+bottom:40px;
+left:50%;
+transform:translateX(-50%);
+background:#d60000;
+color:white;
+padding:10px 20px;
+border-radius:8px;
+opacity:0;
+transition:.3s;
+
+}
+
+.toast.show{
+opacity:1;
 }
 
 </style>
@@ -50,21 +96,35 @@ transform:scale(0.9);
 
 <body>
 
+<div class="navbar">
+
+<div>Script Hub</div>
+
+<div>
+<a href="index.html">Home</a>
+<a href="download.html">Download</a>
+<a href="https://youtube.com">YouTube</a>
+</div>
+
+</div>
+
 <div class="box">
 
 <h2 id="title"></h2>
 
-<h3>📄 คำอธิบาย</h3>
+<h3>📄 Description</h3>
 <p id="desc"></p>
 
 <h3>🛠 วิธีใช้</h3>
 
 <p>
+
 1 เปิด Roblox  
 2 เปิด Executor  
 3 Copy Script  
-4 Paste ลง Executor  
-5 กด Execute
+4 Paste ใน Executor  
+5 Execute
+
 </p>
 
 <textarea id="code" readonly></textarea>
@@ -77,76 +137,46 @@ transform:scale(0.9);
 
 </div>
 
+<div id="toast" class="toast">Copied!</div>
+
 <script>
 
-/* เพิ่ม script ตรงนี้ */
+/* ===================
+เพิ่ม script ตรงนี้
+=================== */
 
 const scripts={
 
-1:{
-title:"Blox Fruits Auto Farm",
-desc:"ฟาร์มเลเวลอัตโนมัติ",
-code:"print('Auto Farm')"
-},
+1:{title:"Blox Fruits Auto Farm",desc:"ฟาร์มเลเวลอัตโนมัติ",code:"print('Auto Farm')"},
 
-2:{
-title:"Blox Fruits Raid",
-desc:"ลง Raid อัตโนมัติ",
-code:"print('Auto Raid')"
-},
+2:{title:"Blox Fruits Auto Raid",desc:"ลง Raid อัตโนมัติ",code:"print('Auto Raid')"},
 
-3:{
-title:"King Legacy",
-desc:"ฟาร์มเงินอัตโนมัติ",
-code:"print('King Legacy')"
-},
+3:{title:"King Legacy Script",desc:"ฟาร์มเงิน",code:"print('King Legacy')"},
 
-4:{
-title:"Anime Fighters",
-desc:"Auto fight",
-code:"print('Anime Fighters')"
-},
+4:{title:"Anime Fighters Script",desc:"Auto fight",code:"print('Anime Fighters')"},
 
-5:{
-title:"Pet Simulator",
-desc:"Auto collect coins",
-code:"print('Pet Sim')"
-},
+5:{title:"Pet Simulator Script",desc:"Auto coins",code:"print('Pet Simulator')"},
 
-6:{
-title:"Doors",
-desc:"ESP ประตู",
-code:"print('Doors')"
-},
+6:{title:"Doors Script",desc:"ESP Doors",code:"print('Doors')"},
 
-7:{
-title:"Blade Ball",
-desc:"Auto parry",
-code:"print('Blade Ball')"
-},
+7:{title:"Blade Ball Script",desc:"Auto parry",code:"print('Blade Ball')"},
 
-8:{
-title:"Brookhaven",
-desc:"Admin menu",
-code:"print('Brookhaven')"
-},
+8:{title:"Brookhaven Script",desc:"Admin menu",code:"print('Brookhaven')"},
 
-9:{
-title:"Shindo Life",
-desc:"Auto farm boss",
-code:"print('Shindo')"
-},
+9:{title:"Shindo Life Script",desc:"Boss farm",code:"print('Shindo')"},
 
-10:{
-title:"Arsenal",
-desc:"Aimbot",
-code:"print('Arsenal')"
-}
+10:{title:"Arsenal Script",desc:"Aimbot",code:"print('Arsenal')"}
 
 }
+
+/* FIX BUG */
 
 const params=new URLSearchParams(location.search)
-let id=params.get("id")
+let id=parseInt(params.get("id"))
+
+if(!scripts[id]){
+id=1
+}
 
 let s=scripts[id]
 
@@ -157,7 +187,16 @@ document.getElementById("code").value=s.code
 function copy(){
 
 navigator.clipboard.writeText(s.code)
-alert("Copied!")
+
+let t=document.getElementById("toast")
+
+t.classList.add("show")
+
+setTimeout(()=>{
+
+t.classList.remove("show")
+
+},2000)
 
 }
 
