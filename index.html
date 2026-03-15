@@ -3,13 +3,11 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>RealRax Scripts</title>
 
 <style>
-
-*{box-sizing:border-box}
 
 body{
 margin:0;
@@ -20,20 +18,22 @@ background:#f5f5f5;
 /* NAVBAR */
 
 .navbar{
+position:sticky;
+top:0;
 background:#d60000;
 color:white;
-padding:14px 30px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-flex-wrap:wrap;
+padding:12px 30px;
+z-index:1000;
 }
 
-.navlinks a{
+.nav-links a{
 color:white;
-margin:0 10px;
 text-decoration:none;
-font-size:14px;
+margin-left:18px;
+font-weight:bold;
 }
 
 /* HERO */
@@ -41,14 +41,23 @@ font-size:14px;
 .hero{
 position:relative;
 background:linear-gradient(#d60000,#ff4040);
-text-align:center;
 color:white;
-padding:70px 20px;
+text-align:center;
+padding:90px 20px;
 overflow:hidden;
 }
 
-.hero h1{margin:0;font-size:38px;z-index:2;position:relative}
-.hero p{z-index:2;position:relative}
+.hero h1{
+margin:0;
+font-size:40px;
+z-index:2;
+position:relative;
+}
+
+.hero p{
+z-index:2;
+position:relative;
+}
 
 #snowHero{
 position:absolute;
@@ -63,16 +72,18 @@ height:100%;
 .container{
 max-width:1200px;
 margin:auto;
-padding:25px;
+padding:30px;
 }
 
 /* SEARCH */
 
-.search{text-align:center;margin-bottom:25px}
+.search{
+text-align:center;
+margin-bottom:25px;
+}
 
 .search input{
-width:320px;
-max-width:90%;
+width:300px;
 padding:10px;
 border-radius:6px;
 border:1px solid #ccc;
@@ -80,14 +91,17 @@ border:1px solid #ccc;
 
 /* CATEGORY */
 
-.categories{text-align:center;margin-bottom:20px}
+.categories{
+text-align:center;
+margin-bottom:25px;
+}
 
 .categories button{
-background:#d60000;
-border:none;
-color:white;
-margin:4px;
+margin:5px;
 padding:8px 14px;
+border:none;
+background:#d60000;
+color:white;
 border-radius:6px;
 cursor:pointer;
 }
@@ -96,30 +110,22 @@ cursor:pointer;
 
 .grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:25px;
-}
-
-@media(max-width:900px){
-.grid{grid-template-columns:repeat(2,1fr)}
-}
-
-@media(max-width:600px){
-.grid{grid-template-columns:1fr}
 }
 
 /* CARD */
 
 .card{
 background:white;
-border-radius:10px;
-overflow:hidden;
+border-radius:12px;
 box-shadow:0 8px 20px rgba(0,0,0,0.1);
+overflow:hidden;
 transition:.3s;
 }
 
 .card:hover{
-transform:translateY(-5px);
+transform:translateY(-6px);
 box-shadow:0 12px 28px rgba(0,0,0,0.2);
 }
 
@@ -129,12 +135,14 @@ height:150px;
 object-fit:cover;
 }
 
-.card h3{margin:15px}
+.card h3{
+margin:15px;
+}
 
 .status{
 margin-left:15px;
-font-size:13px;
 color:green;
+font-size:13px;
 }
 
 .card a{
@@ -142,46 +150,57 @@ display:inline-block;
 margin:15px;
 background:#d60000;
 color:white;
-padding:10px 15px;
+padding:10px 16px;
 border-radius:6px;
 text-decoration:none;
-}
-
-/* TRENDING */
-
-.sectionTitle{
-font-size:20px;
-margin:20px 0;
 }
 
 /* PAGINATION */
 
 .pagination{
 text-align:center;
-margin-top:35px;
+margin-top:40px;
 }
 
 .pagination button{
-background:#1f78b4;
-color:white;
+margin:4px;
+padding:8px 12px;
 border:none;
-margin:3px;
-padding:7px 12px;
+background:#d60000;
+color:white;
+border-radius:5px;
 cursor:pointer;
 }
 
 .pagination button.active{
-background:#999;
+background:#990000;
+}
+
+/* TRENDING */
+
+.section-title{
+font-size:22px;
+margin-bottom:20px;
 }
 
 /* FOOTER */
 
 footer{
+margin-top:60px;
 background:#222;
-color:#ccc;
+color:#ddd;
 text-align:center;
 padding:30px;
-margin-top:50px;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+.hero h1{
+font-size:28px;
+}
+
 }
 
 </style>
@@ -190,18 +209,21 @@ margin-top:50px;
 
 <body>
 
+<!-- NAVBAR -->
+
 <div class="navbar">
 
 <div><b>🎄 RealRax Scripts</b></div>
 
-<div class="navlinks">
-<a href="#">Home</a>
-<a href="#">Scripts</a>
-<a href="#">About</a>
-<a href="#">Contact</a>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="#scripts">Download</a>
+<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
 </div>
 
 </div>
+
+<!-- HERO -->
 
 <div class="hero">
 
@@ -214,15 +236,21 @@ margin-top:50px;
 
 <div class="container">
 
-<div class="sectionTitle">🔥 Trending Scripts</div>
+<!-- TRENDING -->
 
-<div id="trending" class="grid"></div>
+<div class="section-title">🔥 Trending Scripts</div>
+
+<div class="grid" id="trending"></div>
 
 <br>
+
+<!-- SEARCH -->
 
 <div class="search">
 <input id="search" placeholder="🔎 Search Script">
 </div>
+
+<!-- CATEGORY -->
 
 <div class="categories">
 <button onclick="filterCategory('all')">All</button>
@@ -231,7 +259,9 @@ margin-top:50px;
 <button onclick="filterCategory('sim')">Simulator</button>
 </div>
 
-<div id="grid" class="grid"></div>
+<!-- SCRIPT GRID -->
+
+<div id="scripts" class="grid"></div>
 
 <div id="pagination" class="pagination"></div>
 
@@ -240,8 +270,8 @@ margin-top:50px;
 <footer>
 
 RealRax Scripts<br>
-Free Roblox Script Library<br>
-© 2026
+Free Roblox Script Library<br><br>
+© 2026 RealRax
 
 </footer>
 
@@ -250,23 +280,33 @@ Free Roblox Script Library<br>
 /* DATABASE */
 
 const scripts=[
+
 {title:"Blox Fruits Auto Farm",cat:"blox",img:"https://picsum.photos/400/200?1"},
 {title:"Blox Fruits Auto Raid",cat:"blox",img:"https://picsum.photos/400/200?2"},
 {title:"Anime Fighters Script",cat:"anime",img:"https://picsum.photos/400/200?3"},
 {title:"King Legacy Script",cat:"anime",img:"https://picsum.photos/400/200?4"},
 {title:"Pet Simulator Script",cat:"sim",img:"https://picsum.photos/400/200?5"},
 {title:"Doors Script",cat:"sim",img:"https://picsum.photos/400/200?6"},
-{title:"Auto Level",cat:"blox",img:"https://picsum.photos/400/200?7"},
-{title:"Fruit Finder",cat:"blox",img:"https://picsum.photos/400/200?8"},
-{title:"Anime Souls",cat:"anime",img:"https://picsum.photos/400/200?9"},
-{title:"Anime Defense",cat:"anime",img:"https://picsum.photos/400/200?10"},
-{title:"Simulator X",cat:"sim",img:"https://picsum.photos/400/200?11"},
-{title:"Doors ESP",cat:"sim",img:"https://picsum.photos/400/200?12"}
+
+{title:"Blox Fruits Auto Level",cat:"blox",img:"https://picsum.photos/400/200?7"},
+{title:"Blox Fruits Auto Quest",cat:"blox",img:"https://picsum.photos/400/200?8"},
+{title:"Anime Souls Script",cat:"anime",img:"https://picsum.photos/400/200?9"},
+{title:"Anime Warriors Script",cat:"anime",img:"https://picsum.photos/400/200?10"},
+{title:"Pet Simulator Auto Farm",cat:"sim",img:"https://picsum.photos/400/200?11"},
+{title:"Pet Simulator Dupe",cat:"sim",img:"https://picsum.photos/400/200?12"},
+
+{title:"Blox Fruits Boss Farm",cat:"blox",img:"https://picsum.photos/400/200?13"},
+{title:"Fruit Finder Script",cat:"blox",img:"https://picsum.photos/400/200?14"},
+{title:"Anime Adventure Script",cat:"anime",img:"https://picsum.photos/400/200?15"},
+{title:"Anime Defense Script",cat:"anime",img:"https://picsum.photos/400/200?16"},
+{title:"Simulator X Script",cat:"sim",img:"https://picsum.photos/400/200?17"},
+{title:"Doors ESP Script",cat:"sim",img:"https://picsum.photos/400/200?18"}
+
 ]
 
 /* TRENDING */
 
-const trending=document.getElementById("trending")
+let trending=document.getElementById("trending")
 
 scripts.slice(0,3).forEach((s,i)=>{
 
@@ -283,8 +323,8 @@ trending.innerHTML+=`
 
 /* PAGINATION */
 
-let currentPage=1
 let perPage=6
+let currentPage=1
 let filtered=[...scripts]
 
 function render(){
@@ -294,11 +334,10 @@ let end=start+perPage
 
 let pageData=filtered.slice(start,end)
 
-const grid=document.getElementById("grid")
-
+let grid=document.getElementById("scripts")
 grid.innerHTML=""
 
-pageData.forEach((s,i)=>{
+pageData.forEach(s=>{
 
 grid.innerHTML+=`
 
@@ -331,13 +370,15 @@ let pages=Math.ceil(filtered.length/perPage)
 let html=""
 
 html+=`<button onclick="goPage(1)">«</button>`
-html+=`<button onclick="goPage(${Math.max(1,currentPage-1)})"><</button>`
+html+=`<button onclick="goPage(currentPage-1)">‹</button>`
 
 for(let i=1;i<=pages;i++){
+
 html+=`<button class="${i==currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`
+
 }
 
-html+=`<button onclick="goPage(${Math.min(pages,currentPage+1)})">></button>`
+html+=`<button onclick="goPage(currentPage+1)">›</button>`
 html+=`<button onclick="goPage(${pages})">»</button>`
 
 document.getElementById("pagination").innerHTML=html
@@ -345,27 +386,41 @@ document.getElementById("pagination").innerHTML=html
 }
 
 function goPage(p){
+
+let pages=Math.ceil(filtered.length/perPage)
+
+if(p<1)p=1
+if(p>pages)p=pages
+
 currentPage=p
+
 render()
+
 }
 
 /* SEARCH */
 
 document.getElementById("search").addEventListener("input",e=>{
 
-let text=e.target.value.toLowerCase()
+let t=e.target.value.toLowerCase()
 
-filtered=scripts.filter(s=>s.title.toLowerCase().includes(text))
+filtered=scripts.filter(s=>s.title.toLowerCase().includes(t))
 
 currentPage=1
+
 render()
 
 })
 
+/* CATEGORY */
+
 function filterCategory(cat){
 
-if(cat=="all") filtered=[...scripts]
-else filtered=scripts.filter(s=>s.cat==cat)
+if(cat=="all"){
+filtered=[...scripts]
+}else{
+filtered=scripts.filter(s=>s.cat==cat)
+}
 
 currentPage=1
 render()
