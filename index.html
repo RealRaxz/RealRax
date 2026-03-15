@@ -3,17 +3,16 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Christmas Scripts</title>
+<title>RealRax Scripts</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial;
-background:white;
-color:#333;
+background:#f5f5f5;
 }
 
 .navbar{
@@ -31,28 +30,71 @@ text-align:center;
 padding:70px 20px;
 }
 
+.hero h1{
+margin:0;
+font-size:40px;
+}
+
+.hero p{
+margin-top:10px;
+font-size:18px;
+}
+
 .container{
 max-width:1200px;
 margin:auto;
-padding:40px 20px;
+padding:30px;
+}
+
+.search{
+text-align:center;
+margin-bottom:30px;
+}
+
+.search input{
+width:300px;
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+.categories{
+text-align:center;
+margin-bottom:25px;
+}
+
+.categories button{
+margin:5px;
+padding:8px 14px;
+border:none;
+background:#d60000;
+color:white;
+border-radius:6px;
+cursor:pointer;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:25px;
 }
 
 .card{
 background:white;
 border-radius:10px;
-box-shadow:0 8px 18px rgba(0,0,0,0.15);
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
 overflow:hidden;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 12px 28px rgba(0,0,0,0.2);
 }
 
 .card img{
 width:100%;
-height:160px;
+height:150px;
 object-fit:cover;
 }
 
@@ -60,17 +102,44 @@ object-fit:cover;
 margin:15px;
 }
 
+.views{
+margin-left:15px;
+color:#777;
+font-size:14px;
+}
+
 .card a{
 display:inline-block;
+margin:15px;
 background:#d60000;
 color:white;
-padding:10px 18px;
-margin:15px;
+padding:10px 16px;
 border-radius:6px;
 text-decoration:none;
 }
 
-/* snow */
+.pagination{
+text-align:center;
+margin-top:40px;
+}
+
+.pagination button{
+margin:4px;
+padding:8px 12px;
+border:none;
+background:#d60000;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+footer{
+margin-top:60px;
+background:#222;
+color:#ddd;
+text-align:center;
+padding:30px;
+}
 
 #snow{
 position:fixed;
@@ -90,84 +159,168 @@ pointer-events:none;
 <canvas id="snow"></canvas>
 
 <div class="navbar">
-🎄 Christmas Scripts
+🎄 RealRax Scripts
 </div>
 
 <div class="hero">
-<h1>Latest Scripts</h1>
+
+<h1>RealRax Script Library</h1>
 <p>Free Roblox Scripts</p>
+
 </div>
 
 <div class="container">
 
-<div class="grid">
-
-<div class="card">
-<img src="https://picsum.photos/400/200?1">
-<h3>Blox Fruits Auto Farm</h3>
-<a href="script1.html?id=1">Get Script</a>
+<div class="search">
+<input id="search" placeholder="🔎 Search Script">
 </div>
 
-<div class="card">
-<img src="https://picsum.photos/400/200?2">
-<h3>Blox Fruits Auto Raid</h3>
-<a href="script1.html?id=2">Get Script</a>
+<div class="categories">
+<button onclick="filterCategory('all')">All</button>
+<button onclick="filterCategory('blox')">Blox Fruits</button>
+<button onclick="filterCategory('anime')">Anime</button>
+<button onclick="filterCategory('sim')">Simulator</button>
 </div>
 
-<div class="card">
-<img src="https://picsum.photos/400/200?3">
-<h3>King Legacy Script</h3>
-<a href="script1.html?id=3">Get Script</a>
-</div>
+<div id="grid" class="grid"></div>
 
-<div class="card">
-<img src="https://picsum.photos/400/200?4">
-<h3>Anime Fighters Script</h3>
-<a href="script1.html?id=4">Get Script</a>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/200?5">
-<h3>Pet Simulator Script</h3>
-<a href="script1.html?id=5">Get Script</a>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/400/200?6">
-<h3>Doors Script</h3>
-<a href="script1.html?id=6">Get Script</a>
-</div>
+<div class="pagination" id="pagination"></div>
 
 </div>
 
-</div>
+<footer>
+
+RealRax Scripts<br>
+Free Roblox Script Library<br><br>
+
+YouTube : RealRax<br>
+© 2026 RealRax
+
+</footer>
 
 <script>
 
-/* snow fall down */
+const scripts=[
 
-const canvas=document.getElementById("snow");
-const ctx=canvas.getContext("2d");
+{title:"Blox Fruits Auto Farm",cat:"blox",views:12234,img:"https://picsum.photos/400/200?1"},
+{title:"Blox Fruits Auto Raid",cat:"blox",views:9853,img:"https://picsum.photos/400/200?2"},
+{title:"Anime Fighters Script",cat:"anime",views:8233,img:"https://picsum.photos/400/200?3"},
+{title:"King Legacy Script",cat:"anime",views:7511,img:"https://picsum.photos/400/200?4"},
+{title:"Pet Simulator Script",cat:"sim",views:6622,img:"https://picsum.photos/400/200?5"},
+{title:"Doors Script",cat:"sim",views:5122,img:"https://picsum.photos/400/200?6"}
 
-let snow=[];
+]
 
-function resize(){
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+let currentPage=1
+let perPage=6
+let filtered=[...scripts]
+
+function render(){
+
+let start=(currentPage-1)*perPage
+let end=start+perPage
+
+let pageData=filtered.slice(start,end)
+
+let grid=document.getElementById("grid")
+grid.innerHTML=""
+
+pageData.forEach((s,i)=>{
+
+grid.innerHTML+=`
+
+<div class="card">
+
+<img src="${s.img}">
+
+<h3>${s.title}</h3>
+
+<div class="views">👁 ${s.views} Views</div>
+
+<a href="script1.html?id=${scripts.indexOf(s)+1}">
+📜 Get Script
+</a>
+
+</div>
+
+`
+
+})
+
+renderPagination()
+
 }
 
-resize();
-window.addEventListener("resize",resize);
+function renderPagination(){
+
+let pages=Math.ceil(filtered.length/perPage)
+
+let html=""
+
+for(let i=1;i<=pages;i++){
+
+html+=`<button onclick="goPage(${i})">${i}</button>`
+
+}
+
+document.getElementById("pagination").innerHTML=html
+
+}
+
+function goPage(p){
+currentPage=p
+render()
+}
+
+document.getElementById("search").addEventListener("input",e=>{
+
+let text=e.target.value.toLowerCase()
+
+filtered=scripts.filter(s=>s.title.toLowerCase().includes(text))
+
+currentPage=1
+
+render()
+
+})
+
+function filterCategory(cat){
+
+if(cat=="all"){
+filtered=[...scripts]
+}else{
+filtered=scripts.filter(s=>s.cat==cat)
+}
+
+currentPage=1
+render()
+
+}
+
+render()
+
+/* snow */
+
+const canvas=document.getElementById("snow")
+const ctx=canvas.getContext("2d")
+
+let snow=[]
+
+function resize(){
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+}
+
+resize()
+window.addEventListener("resize",resize)
 
 for(let i=0;i<180;i++){
-
 snow.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*3+1,
-speed:Math.random()*1+0.5
+speed:Math.random()*1+0.7
 })
-
 }
 
 function draw(){
@@ -175,26 +328,26 @@ function draw(){
 ctx.clearRect(0,0,canvas.width,canvas.height)
 
 ctx.fillStyle="white"
-ctx.beginPath()
 
 snow.forEach(f=>{
-ctx.moveTo(f.x,f.y)
+ctx.beginPath()
 ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
-})
-
 ctx.fill()
 
-snow.forEach(f=>{
 f.y+=f.speed
+
 if(f.y>canvas.height){
 f.y=0
 f.x=Math.random()*canvas.width
 }
+
 })
+
+requestAnimationFrame(draw)
 
 }
 
-setInterval(draw,30)
+draw()
 
 </script>
 
