@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
 
 <meta charset="UTF-8">
@@ -10,86 +10,26 @@
 <style>
 
 body{
-margin:0;
 font-family:Arial;
-background:#f4f4f4;
-}
-
-/* NAVBAR */
-
-.navbar{
-position:sticky;
-top:0;
-background:#d60000;
-color:white;
-padding:14px 30px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-z-index:1000;
-}
-
-.navbar a{
-color:white;
-text-decoration:none;
-margin-left:20px;
-font-weight:bold;
-}
-
-/* SEARCH */
-
-.search{
-text-align:center;
-margin:30px;
-}
-
-.search input{
-padding:12px;
-width:260px;
-border-radius:8px;
-border:1px solid #ccc;
-}
-
-/* FILTER */
-
-.filters{
-text-align:center;
-margin-bottom:20px;
-}
-
-.filters button{
-
-background:#d60000;
-color:white;
-border:none;
-
-padding:8px 16px;
-
-margin:5px;
-
-border-radius:6px;
-
-cursor:pointer;
-
+margin:0;
+background:#f3f3f3;
 }
 
 /* GRID */
 
-.grid{
-
-max-width:1100px;
-
-margin:auto;
+.script-grid{
 
 display:grid;
-
-/* 4 การ์ดต่อแถว */
 
 grid-template-columns:repeat(4,1fr);
 
 gap:25px;
 
-padding:20px;
+max-width:1200px;
+
+margin:auto;
+
+padding:40px;
 
 }
 
@@ -103,7 +43,7 @@ border-radius:12px;
 
 overflow:hidden;
 
-box-shadow:0 8px 18px rgba(0,0,0,0.15);
+box-shadow:0 6px 16px rgba(0,0,0,0.15);
 
 transition:.25s;
 
@@ -113,22 +53,31 @@ transition:.25s;
 
 transform:translateY(-6px);
 
-box-shadow:0 12px 24px rgba(0,0,0,0.2);
-
 }
 
 .card img{
 
 width:100%;
-height:150px;
+
+height:160px;
 
 object-fit:cover;
 
 }
 
-.card-content{
+/* CARD BODY */
 
-padding:15px;
+.card-body{
+
+padding:18px;
+
+}
+
+.title{
+
+font-weight:bold;
+
+margin-bottom:8px;
 
 }
 
@@ -136,27 +85,33 @@ padding:15px;
 
 color:green;
 
-font-size:13px;
+font-size:14px;
 
-margin:6px 0;
+margin-bottom:14px;
 
 }
 
-.btn{
+/* BUTTON */
 
-display:inline-block;
+.btn{
 
 background:#d60000;
 
 color:white;
 
-padding:8px 14px;
+border:none;
+
+padding:10px 16px;
 
 border-radius:6px;
 
-text-decoration:none;
+cursor:pointer;
 
-margin-top:8px;
+}
+
+.btn:hover{
+
+background:#b80000;
 
 }
 
@@ -166,7 +121,7 @@ margin-top:8px;
 
 text-align:center;
 
-margin:30px;
+padding-bottom:40px;
 
 }
 
@@ -182,7 +137,7 @@ padding:8px 12px;
 
 margin:3px;
 
-border-radius:5px;
+border-radius:4px;
 
 cursor:pointer;
 
@@ -192,7 +147,7 @@ cursor:pointer;
 
 @media(max-width:900px){
 
-.grid{
+.script-grid{
 
 grid-template-columns:repeat(2,1fr);
 
@@ -202,7 +157,7 @@ grid-template-columns:repeat(2,1fr);
 
 @media(max-width:500px){
 
-.grid{
+.script-grid{
 
 grid-template-columns:1fr;
 
@@ -216,180 +171,110 @@ grid-template-columns:1fr;
 
 <body>
 
-<div class="navbar">
+<div class="script-grid" id="grid"></div>
 
-<div><b>RealRax Script Library</b></div>
+<div class="pagination" id="pages"></div>
 
-<div>
-<a href="#">Home</a>
-<a href="#">Download</a>
-<a href="https://www.youtube.com/@RealRaxScripts">YouTube</a>
-</div>
+<script>
 
-</div>
+/* DATA */
 
-<div class="search">
+const scripts=[
 
-<input placeholder="🔎 Search Script">
+{title:"Blox Fruits Auto Farm",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
+{title:"Blox Fruits Auto Raid",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
+{title:"Anime Fighters Script",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
+{title:"King Legacy Script",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
 
-</div>
+{title:"Pet Simulator Script",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
+{title:"Doors Script",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
+{title:"Anime Warriors Script",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
+{title:"Anime Souls Script",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
 
-<div class="filters">
+{title:"Pet Simulator X Script",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
+{title:"Blox Fruits Boss Farm",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
+{title:"Fruit Finder Script",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
+{title:"Anime Adventure Script",img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"}
 
-<button>All</button>
-<button>Blox Fruits</button>
-<button>Anime</button>
-<button>Simulator</button>
+]
 
-</div>
+/* PAGINATION */
 
-<div class="grid">
+const perPage=8
 
-<!-- CARD -->
+let page=1
 
-<div class="card">
+function render(){
 
-<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+let start=(page-1)*perPage
 
-<div class="card-content">
+let end=start+perPage
 
-<h3>Blox Fruits Auto Farm</h3>
+let items=scripts.slice(start,end)
 
-<div class="status">● Working</div>
+let grid=document.getElementById("grid")
 
-<a class="btn" href="script1.html?id=1">📜 Get Script</a>
+grid.innerHTML=""
 
-</div>
+items.forEach((s,i)=>{
 
-</div>
-
-<div class="card">
-
-<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
-
-<div class="card-content">
-
-<h3>Blox Fruits Auto Raid</h3>
-
-<div class="status">● Working</div>
-
-<a class="btn" href="script1.html?id=2">📜 Get Script</a>
-
-</div>
-
-</div>
+grid.innerHTML+=`
 
 <div class="card">
 
-<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+<img src="${s.img}">
 
-<div class="card-content">
+<div class="card-body">
 
-<h3>Anime Fighters Script</h3>
+<div class="title">${s.title}</div>
 
-<div class="status">● Working</div>
+<div class="status">🟢 Working</div>
 
-<a class="btn" href="script1.html?id=3">📜 Get Script</a>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
-
-<div class="card-content">
-
-<h3>King Legacy Script</h3>
-
-<div class="status">● Working</div>
-
-<a class="btn" href="script1.html?id=4">📜 Get Script</a>
+<a href="script1.html?id=${start+i+1}">
+<button class="btn">📜 Get Script</button>
+</a>
 
 </div>
 
 </div>
 
-<div class="card">
+`
 
-<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+})
 
-<div class="card-content">
+renderPages()
 
-<h3>Pet Simulator Script</h3>
+}
 
-<div class="status">● Working</div>
+function renderPages(){
 
-<a class="btn" href="script1.html?id=5">📜 Get Script</a>
+let pages=Math.ceil(scripts.length/perPage)
 
-</div>
+let container=document.getElementById("pages")
 
-</div>
+container.innerHTML=""
 
-<div class="card">
+for(let i=1;i<=pages;i++){
 
-<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
+container.innerHTML+=`
+<button onclick="go(${i})">${i}</button>
+`
 
-<div class="card-content">
+}
 
-<h3>Doors Script</h3>
+}
 
-<div class="status">● Working</div>
+function go(p){
 
-<a class="btn" href="script1.html?id=6">📜 Get Script</a>
+page=p
 
-</div>
+render()
 
-</div>
+}
 
-<div class="card">
+render()
 
-<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
-
-<div class="card-content">
-
-<h3>Blox Fruits Auto Level</h3>
-
-<div class="status">● Working</div>
-
-<a class="btn" href="script1.html?id=7">📜 Get Script</a>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg">
-
-<div class="card-content">
-
-<h3>Anime Warriors Script</h3>
-
-<div class="status">● Working</div>
-
-<a class="btn" href="script1.html?id=8">📜 Get Script</a>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="pagination">
-
-<button>«</button>
-<button>‹</button>
-
-<button>1</button>
-<button>2</button>
-<button>3</button>
-
-<button>›</button>
-<button>»</button>
-
-</div>
+</script>
 
 </body>
 </html>
