@@ -1,212 +1,139 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Script Hub</title>
 
 <style>
 
 body{
 margin:0;
-font-family:Segoe UI,Arial;
-background:#f4f4f4;
+font-family:Segoe UI;
+background:#f2f2f2;
 }
 
-/* HERO */
+/* hero */
 
 .hero{
-background:linear-gradient(90deg,#ff2e2e,#b30000);
-padding:60px 20px;
+background:#c40000;
+padding:70px 20px;
 text-align:center;
 color:white;
 position:relative;
 overflow:hidden;
 }
 
-.search-box{
-
-margin-top:20px;
-
+.hero h1{
+margin:0;
+font-size:38px;
 }
 
-.search-box input{
+/* snow */
 
-padding:12px 18px;
-width:280px;
-border-radius:8px;
-border:none;
-outline:none;
-
+canvas{
+position:absolute;
+top:0;
+left:0;
+pointer-events:none;
 }
 
-/* CARD GRID */
+/* grid */
 
 .container{
-
 max-width:1200px;
 margin:auto;
 padding:40px 20px;
-
 }
 
 .grid{
-
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:repeat(4,1fr);
 gap:25px;
-
 }
 
-.card{
+/* card */
 
+.card{
 background:white;
 border-radius:12px;
 overflow:hidden;
 box-shadow:0 8px 20px rgba(0,0,0,0.15);
-transition:.25s;
-
-}
-
-.card:hover{
-
-transform:translateY(-6px);
-
+transition:0.3s;
 }
 
 .card img{
-
 width:100%;
 height:150px;
 object-fit:cover;
-
 }
 
-.card-content{
-
-padding:18px;
-
+.card h3{
+padding:10px;
+margin:0;
 }
-
-.card-title{
-
-font-weight:bold;
-margin-bottom:10px;
-
-}
-
-/* BUTTON */
 
 .btn{
-
-background:#e60000;
+display:inline-block;
+background:#d60000;
 color:white;
-border:none;
 padding:10px 16px;
+margin:10px;
 border-radius:6px;
-cursor:pointer;
-transition:.15s;
-
+text-decoration:none;
+transition:0.2s;
 }
 
+/* button animation */
+
 .btn:hover{
-
-transform:translateY(-3px);
-box-shadow:0 5px 10px rgba(0,0,0,0.25);
-
+transform:translateY(-4px);
+box-shadow:0 6px 12px rgba(0,0,0,0.3);
 }
 
 .btn:active{
-
-transform:scale(.92);
-
+transform:scale(0.92);
 }
 
-/* BADGE */
-
-.badge{
-
-position:absolute;
-top:10px;
-left:10px;
-background:red;
-color:white;
-font-size:12px;
-padding:4px 8px;
-border-radius:6px;
-
-}
-
-.card-wrap{
-
-position:relative;
-
-}
-
-/* PAGINATION */
+/* pagination */
 
 .pagination{
-
 text-align:center;
-margin-top:40px;
-
+margin-top:30px;
 }
 
 .page-btn{
-
-background:#e60000;
+background:#d60000;
 color:white;
-border:none;
+padding:8px 14px;
 margin:4px;
-padding:10px 14px;
 border-radius:6px;
 cursor:pointer;
-transition:.15s;
-
+display:inline-block;
+transition:0.2s;
 }
 
 .page-btn:hover{
-
 transform:translateY(-3px);
-
 }
 
 .page-btn:active{
-
-transform:scale(.9);
-
-}
-
-.active{
-
-background:#800000;
-
+transform:scale(0.9);
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div class="hero">
-
-<h1>Roblox Script Hub</h1>
-
-<div class="search-box">
-
-<input type="text" id="search" placeholder="Search Script...">
-
-</div>
-
+<h1>🔥 Roblox Script Hub</h1>
+<canvas id="snow"></canvas>
 </div>
 
 <div class="container">
 
-<div class="grid" id="grid"></div>
+<div id="cardContainer" class="grid"></div>
 
 <div class="pagination" id="pagination"></div>
 
@@ -214,128 +141,107 @@ background:#800000;
 
 <script>
 
-/* SCRIPT DATA */
+/* ==========================
+   เพิ่มการ์ดตรงนี้
+========================== */
 
-let scripts=[
+const cards=[
 
 {
 title:"Blox Fruits Auto Farm",
-img:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
-tag:"HOT"
+img:"https://picsum.photos/400/200?1",
+id:1
 },
 
 {
 title:"Blox Fruits Auto Raid",
-img:"https://picsum.photos/400/200?1",
-tag:"NEW"
+img:"https://picsum.photos/400/200?2",
+id:2
 },
 
 {
 title:"King Legacy Script",
-img:"https://picsum.photos/400/200?2"
+img:"https://picsum.photos/400/200?3",
+id:3
 },
 
 {
 title:"Anime Fighters Script",
-img:"https://picsum.photos/400/200?3",
-tag:"HOT"
+img:"https://picsum.photos/400/200?4",
+id:4
 },
 
 {
 title:"Pet Simulator Script",
-img:"https://picsum.photos/400/200?4"
+img:"https://picsum.photos/400/200?5",
+id:5
 },
 
 {
 title:"Doors Script",
-img:"https://picsum.photos/400/200?5",
-tag:"NEW"
-},
-
-{
-title:"Shindo Life Script",
-img:"https://picsum.photos/400/200?6"
+img:"https://picsum.photos/400/200?6",
+id:6
 },
 
 {
 title:"Blade Ball Script",
-img:"https://picsum.photos/400/200?7"
+img:"https://picsum.photos/400/200?7",
+id:7
 },
 
 {
 title:"Brookhaven Script",
-img:"https://picsum.photos/400/200?8"
+img:"https://picsum.photos/400/200?8",
+id:8
+},
+
+{
+title:"Shindo Life Script",
+img:"https://picsum.photos/400/200?9",
+id:9
 },
 
 {
 title:"Arsenal Script",
-img:"https://picsum.photos/400/200?9"
-},
-
-{
-title:"Anime Warriors Script",
-img:"https://picsum.photos/400/200?10"
-},
-
-{
-title:"Blox Fruits Fast Farm",
-img:"https://picsum.photos/400/200?11"
+img:"https://picsum.photos/400/200?10",
+id:10
 }
 
 ]
 
-/* ใหม่สุดอยู่บน */
+/* ========================== */
 
-scripts.reverse()
+const perPage=8
+let page=1
 
-let currentPage=1
-let perPage=8
+function render(){
 
-const grid=document.getElementById("grid")
-const pagination=document.getElementById("pagination")
-
-function display(){
-
-grid.innerHTML=""
-
-let start=(currentPage-1)*perPage
+let start=(page-1)*perPage
 let end=start+perPage
 
-let pageItems=scripts.slice(start,end)
+let show=cards.slice(start,end)
 
-pageItems.forEach((s,i)=>{
+let html=""
 
-let id=start+i+1
+show.forEach(c=>{
 
-grid.innerHTML+=`
-
+html+=`
 <div class="card">
 
-<div class="card-wrap">
+<img src="${c.img}">
 
-${s.tag?`<div class="badge">${s.tag}</div>`:""}
+<h3>${c.title}</h3>
 
-<img src="${s.img}">
-
-</div>
-
-<div class="card-content">
-
-<div class="card-title">${s.title}</div>
-
-<button class="btn" onclick="openScript(${id})">
-
+<a class="btn" href="script.html?id=${c.id}">
 Get Script
-
-</button>
-
-</div>
+</a>
 
 </div>
-
 `
 
 })
+
+document.getElementById("cardContainer").innerHTML=html
 
 renderPagination()
 
@@ -343,92 +249,94 @@ renderPagination()
 
 function renderPagination(){
 
-pagination.innerHTML=""
+let total=Math.ceil(cards.length/perPage)
 
-let pages=Math.ceil(scripts.length/perPage)
+let html=""
 
-pagination.innerHTML+=`
+html+=`<span class="page-btn" onclick="prev()">Prev</span>`
 
-<button class="page-btn" onclick="prevPage()">◀</button>
+for(let i=1;i<=total;i++){
 
-`
-
-for(let i=1;i<=pages;i++){
-
-pagination.innerHTML+=`
-
-<button class="page-btn ${i==currentPage?"active":""}"
-
-onclick="goPage(${i})">
-
-${i}
-
-</button>
-
-`
+html+=`<span class="page-btn" onclick="go(${i})">${i}</span>`
 
 }
 
-pagination.innerHTML+=`
+html+=`<span class="page-btn" onclick="next()">Next</span>`
 
-<button class="page-btn" onclick="nextPage()">▶</button>
-
-`
+document.getElementById("pagination").innerHTML=html
 
 }
 
-function goPage(p){
+function go(p){
 
-currentPage=p
-display()
-
-}
-
-function prevPage(){
-
-if(currentPage>1){
-
-currentPage--
-display()
+page=p
+render()
 
 }
 
-}
+function next(){
 
-function nextPage(){
-
-let pages=Math.ceil(scripts.length/perPage)
-
-if(currentPage<pages){
-
-currentPage++
-display()
+page++
+render()
 
 }
 
+function prev(){
+
+page--
+if(page<1)page=1
+render()
+
 }
 
-function openScript(id){
+render()
 
-window.location="script1.html?id="+id
+/* snow */
 
-}
+const canvas=document.getElementById("snow")
+const ctx=canvas.getContext("2d")
 
-/* SEARCH */
+canvas.width=window.innerWidth
+canvas.height=200
 
-document.getElementById("search").addEventListener("input",function(){
+let snow=[]
 
-let value=this.value.toLowerCase()
+for(let i=0;i<80;i++){
 
-scripts=scripts.filter(s=>s.title.toLowerCase().includes(value))
+snow.push({
 
-currentPage=1
-
-display()
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3,
+s:Math.random()
 
 })
 
-display()
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+snow.forEach(f=>{
+
+ctx.beginPath()
+ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+ctx.fill()
+
+f.y+=f.s
+
+if(f.y>200)f.y=0
+
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
 
 </script>
 
