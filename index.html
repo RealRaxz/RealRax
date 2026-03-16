@@ -317,14 +317,20 @@ scripts.slice(0,3).forEach((s,i)=>{
 
 let thumb=s.thumb || defaultThumb
 
-trending.innerHTML+=`
+grid.innerHTML+=`
+
 <div class="card">
+
 <img src="${thumb}">
+
 <h3>${s.title}</h3>
+
 <div class="status">🟢 Working</div>
-<a href="#" onclick="openPage(${i+1})">
+
+<button onclick="openPage(${scripts.indexOf(s)+1})">
 📜 Get Script
-</a>
+</button>
+
 </div>
 `
 
