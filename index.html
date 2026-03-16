@@ -344,7 +344,7 @@ let pageData=filtered.slice(start,end)
 let grid=document.getElementById("scripts")
 grid.innerHTML=""
 
-pageData.forEach(s=>{
+pageData.forEach((s,i)=>{
 
 let thumb=s.thumb || defaultThumb
 
@@ -365,6 +365,22 @@ grid.innerHTML+=`
 </div>
 
 `
+
+/* ADS EVERY 8 SCRIPTS */
+
+if((i+1)%8===0){
+
+grid.innerHTML+=`
+
+<div class="card" style="display:flex;align-items:center;justify-content:center;height:200px;background:#fafafa">
+
+<b>Advertisement</b>
+
+</div>
+
+`
+
+}
 
 })
 
