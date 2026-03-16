@@ -155,14 +155,17 @@ color:green;
 font-size:13px;
 }
 
-.card a{
+/* ปุ่ม Get Script */
+
+.card button{
 display:inline-block;
 margin:15px;
 background:#d60000;
 color:white;
 padding:10px 16px;
 border-radius:6px;
-text-decoration:none;
+border:none;
+cursor:pointer;
 }
 
 /* PAGINATION */
@@ -317,7 +320,7 @@ scripts.slice(0,3).forEach((s,i)=>{
 
 let thumb=s.thumb || defaultThumb
 
-grid.innerHTML+=`
+trending.innerHTML+=`
 
 <div class="card">
 
@@ -366,9 +369,9 @@ grid.innerHTML+=`
 
 <div class="status">🟢 Working</div>
 
-<a href="script1.html?id=${scripts.indexOf(s)+1}">
+<button onclick="openPage(${scripts.indexOf(s)+1})">
 📜 Get Script
-</a>
+</button>
 
 </div>
 
@@ -379,8 +382,6 @@ grid.innerHTML+=`
 renderPagination()
 
 }
-
-/* SMART PAGINATION */
 
 function renderPagination(){
 
@@ -419,8 +420,6 @@ render()
 
 }
 
-/* SEARCH */
-
 document.getElementById("search").addEventListener("input",e=>{
 
 let t=e.target.value.toLowerCase()
@@ -432,8 +431,6 @@ currentPage=1
 render()
 
 })
-
-/* CATEGORY */
 
 function filterCategory(cat){
 
@@ -450,85 +447,11 @@ render()
 
 render()
 
-/* HERO SNOW */
-
-const canvas=document.getElementById("snowHero")
-const ctx=canvas.getContext("2d")
-
-function resize(){
-canvas.width=canvas.offsetWidth
-canvas.height=canvas.offsetHeight
-}
-
-resize()
-window.addEventListener("resize",resize)
-
-let snow=[]
-
-for(let i=0;i<120;i++){
-
-snow.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*3+1,
-speed:Math.random()*1+0.5
-})
-
-}
-
-function draw(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-ctx.fillStyle="white"
-
-snow.forEach(f=>{
-
-ctx.beginPath()
-ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
-ctx.fill()
-
-f.y+=f.speed
-
-if(f.y>canvas.height){
-f.y=0
-f.x=Math.random()*canvas.width
-}
-
-})
-
-requestAnimationFrame(draw)
-
-}
-
-draw()
-
 </script>
 
-<script src="ads.js"></script>  
+<script src="ads.js"></script>
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
-
-<script>
-
-function goSmart(id){
-
-// เปิด Smartlink
-window.open(
-"https://airconditionstrodefist.com/xexd2an06?key=8b286cd67ff1ac791222566d220cda9d",
-"_blank"
-);
-
-// เข้าเว็บ Script หลังจากนั้น
-setTimeout(function(){
-
-window.location.href="script1.html?id="+id
-
-},500)
-
-}
-
-</script>
 
 </body>
 </html>
