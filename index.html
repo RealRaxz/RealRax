@@ -522,7 +522,7 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🎄 GOD POPUP SYSTEM -->
+<!-- 🎄 GOD CHRISTMAS GATE -->
 
 <div id="gate">
 
@@ -530,21 +530,19 @@ draw()
 
 <h2>🎄 Secure Access</h2>
 
-<p id="step">Step 1/2 : Watch Ads</p>
+<p id="step">Progress 0/2</p>
 
-<div class="actions">
+<div class="btns">
 
-<button id="adsBtn" onclick="openAds()">🎬 Watch Ads</button>
-<button id="enterBtn" disabled onclick="enterSite()">🚀 Enter Website</button>
+<button id="adBtn" onclick="stepAd()">🎬 Watch Ad</button>
+<button id="likeBtn" onclick="stepLike()">❤️ Like</button>
 
 </div>
 
-<div class="cooldown">
-<span id="count">0</span>
-</div>
+<div id="done"></div>
 
 <div class="bar">
-<div id="barFill"></div>
+<div id="fill"></div>
 </div>
 
 </div>
@@ -553,35 +551,33 @@ draw()
 
 <style>
 
-/* 🔥 BACKGROUND BLUR */
 #gate{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-backdrop-filter:blur(10px);
-background:rgba(0,0,0,0.4);
+inset:0;
+background:linear-gradient(135deg,#ffffff,#ffe5e5);
 display:flex;
 justify-content:center;
 align-items:center;
-z-index:9999;
+z-index:99999;
+font-family:Arial;
 }
 
-/* 🎄 BOX */
+/* BOX */
+
 .box{
-background:white;
-border-radius:20px;
+background:#fff;
+border-radius:18px;
 padding:30px;
 width:320px;
 text-align:center;
-box-shadow:0 15px 40px rgba(0,0,0,0.3);
+box-shadow:0 20px 60px rgba(0,0,0,0.15);
+border:2px solid #ffdede;
 animation:pop .4s ease;
 }
 
 @keyframes pop{
-from{transform:scale(.8);opacity:0;}
-to{transform:scale(1);opacity:1;}
+from{transform:scale(.8);opacity:0}
+to{transform:scale(1);opacity:1}
 }
 
 h2{
@@ -589,45 +585,62 @@ color:#d60000;
 margin-bottom:10px;
 }
 
-/* BUTTON */
+#step{
+font-weight:bold;
+color:#333;
+}
+
+/* BUTTONS */
+
+.btns{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-top:15px;
+}
+
 button{
-margin:10px;
-padding:12px 20px;
+padding:12px;
 border:none;
-border-radius:12px;
+border-radius:10px;
 background:#d60000;
 color:white;
+font-weight:bold;
 cursor:pointer;
-transition:.25s;
+transition:.2s;
 }
 
 button:hover{
-transform:translateY(-5px);
-box-shadow:0 10px 20px rgba(0,0,0,.3);
+transform:translateY(-4px);
+box-shadow:0 8px 20px rgba(214,0,0,.3);
 }
 
 button:active{
-transform:scale(.9);
+transform:scale(.92);
 }
 
-button:disabled{
-background:#aaa;
-cursor:not-allowed;
+/* DONE TEXT */
+
+#done{
+margin-top:10px;
+color:green;
+font-weight:bold;
 }
 
-/* 🍬 PROGRESS */
+/* PROGRESS BAR */
+
 .bar{
+margin-top:15px;
 width:100%;
 height:12px;
 background:#eee;
 border-radius:10px;
 overflow:hidden;
-margin-top:15px;
 }
 
-#barFill{
-width:0%;
+#fill{
 height:100%;
+width:0%;
 background:repeating-linear-gradient(
 45deg,
 #ff3c3c,
@@ -635,114 +648,89 @@ background:repeating-linear-gradient(
 #fff 10px,
 #fff 20px
 );
-animation:flow 1s linear infinite;
+transition:width 5s linear;
 }
 
-@keyframes flow{
-0%{background-position:0 0;}
-100%{background-position:40px 0;}
-}
+/* MOBILE */
 
-/* COOLDOWN */
-.cooldown{
-margin-top:10px;
-font-size:18px;
-color:#333;
+@media(max-width:500px){
+.box{
+width:90%;
+padding:25px;
+}
 }
 
 </style>
 
 <script>
 
-// 🔒 RESET ทุกครั้ง
-localStorage.removeItem("done");
+let step = 0;
+let lock = false;
 
-let step = 1;
-let adOpened = false;
-let returned = false;
-let timer = null;
+// รีเซ็ตทุกครั้ง
+localStorage.removeItem("gate_done");
 
-// 🎬 เปิด Ads
-function openAds(){
+/* STEP 1 */
+function stepAd(){
 
-if(adOpened) return;
+if(lock || step >=1) return;
+lock = true;
 
-adOpened = true;
-
+// ยิง ads
 window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
 
-// 👀 ตรวจว่ากลับมาหน้าเว็บ
-document.addEventListener("visibilitychange", ()=>{
-
-if(document.visibilityState === "visible" && adOpened){
-returned = true;
-startCooldown();
-}
-
-});
+// delay 2 วิจริง
+setTimeout(()=>{
+step++;
+lock=false;
+update();
+},2000);
 
 }
 
-// ⏳ เริ่ม cooldown
-function startCooldown(){
+/* STEP 2 */
+function stepLike(){
 
-if(!returned) return;
+if(lock || step >=2) return;
+lock=true;
 
-document.getElementById("step").innerText = "Step 2/2 : Verifying...";
-document.getElementById("adsBtn").disabled = true;
+window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41","_blank");
 
-let time = 5;
-let bar = document.getElementById("barFill");
-
-bar.style.width = "100%";
-
-document.getElementById("count").innerText = time;
-
-timer = setInterval(()=>{
-
-// ❌ กัน AFK (ถ้า tab ไม่ active = reset)
-if(document.visibilityState !== "visible"){
-resetGate();
-return;
-}
-
-time--;
-document.getElementById("count").innerText = time;
-
-if(time <= 0){
-
-clearInterval(timer);
-
-document.getElementById("step").innerText = "✅ Completed";
-document.getElementById("enterBtn").disabled = false;
+step++;
+lock=false;
+update();
 
 }
 
-},1000);
+/* UPDATE UI */
+function update(){
+
+document.getElementById("step").innerText="Progress "+step+"/2";
+
+if(step===2){
+
+document.getElementById("done").innerText="✅ Completed";
+
+startBar();
 
 }
 
-// 🚀 เข้าเว็บ (กดเอง)
-function enterSite(){
+}
 
+/* PROGRESS */
+function startBar(){
+
+let bar=document.getElementById("fill");
+
+// เริ่มไหลเนียน
+setTimeout(()=>{
+bar.style.width="100%";
+},100);
+
+// 5 วิ เข้าเว็บ
+setTimeout(()=>{
 document.getElementById("gate").style.display="none";
-
-}
-
-// 🔁 รีเซ็ตกันโกง
-function resetGate(){
-
-clearInterval(timer);
-
-step = 1;
-adOpened = false;
-returned = false;
-
-document.getElementById("step").innerText = "Step 1/2 : Watch Ads";
-document.getElementById("adsBtn").disabled = false;
-document.getElementById("enterBtn").disabled = true;
-document.getElementById("count").innerText = "0";
-document.getElementById("barFill").style.width = "0%";
+},5000);
 
 }
 
