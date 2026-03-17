@@ -71,33 +71,16 @@ pointer-events:none;
 max-width:900px;
 margin:auto;
 padding:30px;
-position:relative;
 }
 
 /* CARD */
 
 .card{
-
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(15px);
--webkit-backdrop-filter:blur(15px);
-
-border-radius:16px;
-border:1px solid rgba(255,255,255,0.25);
-
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
-
+background:white;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
 padding:35px;
 text-align:center;
-
-}
-
-  .card h2{
-color:#fff;
-}
-
-.card .info{
-color:#eee;
 }
 
 /* DOWNLOAD BUTTON */
@@ -239,7 +222,9 @@ Auto Farm, Auto Level, Auto Raid และ Script อื่น ๆ ใน Roblox
 
 <!-- DOWNLOAD BUTTON -->
 
-<a class="download-btn" href="#" onclick="startDownload()">
+<a class="download-btn"
+href="https://delta.filenetwork.vip/file/Delta-2.711.876-02.apk"
+target="_blank">
 
 ⬇️ Download Delta Executor
 
@@ -313,30 +298,6 @@ requestAnimationFrame(draw)
 }
 
 draw()
-
-<script>
-
-/* SMARTLINK DOWNLOAD */
-
-function startDownload(){
-
-// 🔴 ใส่ Smartlink ของคุณตรงนี้
-let smartlink = "https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165"
-
-// 🔵 ลิงก์ไฟล์จริง
-let realDownload = "https://delta.filenetwork.vip/file/Delta-2.711.876-02.apk"
-
-// เปิด Smartlink ก่อน
-window.open(smartlink, "_blank")
-
-// หน่วงเวลา 3 วิ แล้วโหลดไฟล์จริง
-setTimeout(()=>{
-window.open(realDownload, "_blank")
-},3000)
-
-}
-
-</script>
 
 </script>
 
