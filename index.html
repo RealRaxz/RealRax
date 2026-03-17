@@ -237,6 +237,29 @@ font-size:28px;
 }
 }
 
+/* 🍬 SMOOTH CANDY BAR */
+#bar{
+width:0%;
+height:100%;
+background:repeating-linear-gradient(
+45deg,
+#ff4d4d,
+#ff4d4d 10px,
+#ffffff 10px,
+#ffffff 20px
+);
+}
+
+/* ✅ ตัวที่ทำให้ "ลื่น" */
+#bar.run{
+animation:loadBar 5s linear forwards;
+}
+
+@keyframes loadBar{
+from{width:0%;}
+to{width:100%;}
+}
+   
 </style>
 
 </head>
