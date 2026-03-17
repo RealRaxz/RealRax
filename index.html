@@ -522,108 +522,81 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🔥 FUTURISTIC PREMIUM GATE -->
+<!-- 🎄 CLEAN GLASS GATE -->
 <style>
 #gateOverlay{
-  position:fixed; inset:0;
-  background:radial-gradient(circle at 30% 20%,#2a0000,#000 70%);
-  backdrop-filter:blur(14px);
-  display:flex; align-items:center; justify-content:center;
+  position:fixed;
+  inset:0;
+  backdrop-filter:blur(12px);
+  background:rgba(255,255,255,0.15);
   z-index:99999;
-  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-/* 🌌 particle light */
-#gateOverlay::before{
-  content:"";
-  position:absolute;
-  width:200%; height:200%;
-  background:
-    radial-gradient(circle,#ff000033 1px,transparent 1px);
-  background-size:40px 40px;
-  animation:moveBg 20s linear infinite;
-}
-@keyframes moveBg{
-  from{transform:translate(0,0);}
-  to{transform:translate(-200px,-200px);}
-}
-
-/* 🧊 glass card */
+/* กล่อง */
 #gateBox{
-  position:relative;
-  width:92%; max-width:420px;
-  padding:30px;
-  border-radius:28px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.2);
+  width:92%;
+  max-width:420px;
+  padding:28px;
+  border-radius:24px;
+  background:#ffffff;
   box-shadow:
-    0 0 60px rgba(255,0,0,0.25),
-    inset 0 0 40px rgba(255,255,255,0.05);
+    0 25px 60px rgba(0,0,0,0.15),
+    0 10px 20px rgba(255,0,0,0.1);
   text-align:center;
-  color:#fff;
-  animation:fade .6s ease;
+  animation:fade .4s ease;
 }
 
 @keyframes fade{
-  from{opacity:0; transform:translateY(40px) scale(.9);}
+  from{opacity:0; transform:translateY(30px);}
   to{opacity:1;}
 }
 
 h2{
+  color:#d60000;
   font-weight:700;
-  letter-spacing:.5px;
 }
 
-/* status */
 #status{
   font-size:14px;
-  opacity:.8;
-  margin-bottom:10px;
+  color:#666;
+  margin-top:5px;
 }
 
-/* 🔘 ปุ่ม neon */
+/* ปุ่ม */
 .btn{
   width:100%;
   padding:14px;
-  margin-top:12px;
+  margin-top:14px;
   border:none;
-  border-radius:16px;
-  background:linear-gradient(135deg,#ff0000,#990000);
+  border-radius:14px;
+  background:linear-gradient(135deg,#ff1a1a,#cc0000);
   color:#fff;
   font-size:15px;
   cursor:pointer;
-  transition:.25s;
-  position:relative;
-  overflow:hidden;
+  transition:.2s;
 }
 
 .btn:hover{
   transform:translateY(-5px);
-  box-shadow:0 0 25px #ff0000;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
 .btn:active{
-  transform:scale(.92);
+  transform:scale(.95);
 }
 
-/* glow wave */
-.btn::after{
-  content:"";
-  position:absolute;
-  width:120%;
-  height:100%;
-  left:-120%;
-  top:0;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,.6),transparent);
-  transition:.5s;
-}
-.btn:hover::after{
-  left:100%;
+.lock{
+  background:#ddd;
+  color:#888;
+  pointer-events:none;
 }
 
-.lock{background:#444; pointer-events:none;}
-.success{background:#00ff88; color:#000;}
+.success{
+  background:#00b33c;
+}
 
 /* 🍬 progress */
 #progressBox{
@@ -632,83 +605,80 @@ h2{
 }
 
 .bar{
-  height:18px;
+  height:16px;
   border-radius:20px;
-  background:#111;
+  background:#eee;
   overflow:hidden;
-  box-shadow:inset 0 0 10px rgba(0,0,0,.8);
 }
 
 .fill{
   height:100%;
   width:0%;
-  background:
-    repeating-linear-gradient(
-      45deg,
-      #ff0000,
-      #ff0000 10px,
-      #ffffff 10px,
-      #ffffff 20px
-    );
-  box-shadow:0 0 15px #ff0000;
-  animation:candyMove 1s linear infinite;
-}
-
-@keyframes candyMove{
-  from{background-position:0 0;}
-  to{background-position:40px 0;}
+  background:repeating-linear-gradient(
+    45deg,
+    #ff0000,
+    #ff0000 10px,
+    #fff 10px,
+    #fff 20px
+  );
 }
 
 #cooldownText{
-  margin-top:8px;
+  margin-top:6px;
   font-size:13px;
-  opacity:.8;
+  color:#555;
 }
 
 #enterBtn{
   display:none;
   margin-top:15px;
-  background:linear-gradient(135deg,#00c6ff,#0072ff);
+  background:#007bff;
 }
 </style>
 
 <div id="gateOverlay">
   <div id="gateBox">
-    <h2>🎄 Secure Access</h2>
+    <h2>🎄 เข้าสู่เว็บไซต์</h2>
     <div id="status">Action 0/2</div>
 
-    <button id="adsBtn" class="btn">Unlock Ads</button>
-    <button id="ytBtn" class="btn lock">Watch Video</button>
+    <button id="adsBtn" class="btn">ดูโฆษณา</button>
+    <button id="ytBtn" class="btn lock">ดูวิดีโอ</button>
 
     <div id="progressBox">
       <div class="bar"><div class="fill" id="fill"></div></div>
-      <div id="cooldownText">Initializing...</div>
+      <div id="cooldownText">กำลังโหลด...</div>
     </div>
 
-    <button id="enterBtn" class="btn">Enter Website</button>
+    <button id="enterBtn" class="btn">เข้าสู่เว็บไซต์</button>
   </div>
 </div>
 
 <script>
-let step=0, adsDone=false, ytDone=false, progressStart=false;
+let step=0, adsDone=false, ytDone=false, progressRun=false;
 
 function update(){
   status.innerText=`Action ${step}/2`;
 }
 
-/* ตรวจจริง */
+/* 🔐 ตรวจจริง */
 function verify(url, success){
-  let start=Date.now(), left=false;
+  let start=Date.now();
+  let left=false;
 
-  function blur(){left=true;}
+  function blur(){ left=true; }
+
   function focus(){
     let t=(Date.now()-start)/1000;
+
     if(left && t>=2){
-      cleanup(); success();
+      cleanup();
+      success();
     }else{
-      start=Date.now(); left=false;
+      start=Date.now();
+      left=false;
     }
   }
+
   function cleanup(){
     removeEventListener("blur",blur);
     removeEventListener("focus",focus);
@@ -720,32 +690,34 @@ function verify(url, success){
   window.open(url,"_blank");
 }
 
-/* ads */
+/* ADS */
 adsBtn.onclick=()=>{
   if(adsDone) return;
+
   verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
     adsDone=true; step++; update();
-    adsBtn.innerText="✔ Completed";
+    adsBtn.innerText="✅ สำเร็จ";
     adsBtn.classList.add("success");
     ytBtn.classList.remove("lock");
   });
 };
 
-/* yt */
+/* YT */
 ytBtn.onclick=()=>{
   if(!adsDone||ytDone) return;
+
   verify("https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV",()=>{
     ytDone=true; step++; update();
-    ytBtn.innerText="✔ Completed";
+    ytBtn.innerText="✅ สำเร็จ";
     ytBtn.classList.add("success");
     startProgress();
   });
 };
 
-/* progress */
+/* 🍬 progress FIX */
 function startProgress(){
-  if(progressStart) return;
-  progressStart=true;
+  if(progressRun) return;
+  progressRun=true;
 
   progressBox.style.display="block";
 
@@ -753,20 +725,24 @@ function startProgress(){
   const start=performance.now();
 
   function frame(now){
-    let p=Math.min((now-start)/duration,1);
+    let elapsed=now-start;
+    let p=Math.min(elapsed/duration,1);
+
     fill.style.width=(p*100)+"%";
-    cooldownText.innerText="Wait "+Math.ceil((duration-(now-start))/1000)+"s";
+    cooldownText.innerText="รอ "+Math.max(0,Math.ceil((duration-elapsed)/1000))+" วิ";
 
     if(p<1){
       requestAnimationFrame(frame);
     }else{
-      cooldownText.innerText="Ready!";
+      cooldownText.innerText="พร้อมแล้ว!";
       enterBtn.style.display="block";
     }
   }
+
   requestAnimationFrame(frame);
 }
 
+/* เข้าเว็บ */
 enterBtn.onclick=()=>{
   gateOverlay.remove();
   document.body.style.overflow="auto";
@@ -774,6 +750,7 @@ enterBtn.onclick=()=>{
 
 update();
 </script>
+<!-- END -->
    
 </body>
 </html>
