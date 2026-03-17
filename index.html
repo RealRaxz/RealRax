@@ -522,131 +522,129 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🔒 ACCESS GATE PRO -->
+<!-- 🎄 PREMIUM ACCESS GATE -->
 <style>
-#gateOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(8px);
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#gateOverlay{
+  position:fixed; inset:0;
+  background:radial-gradient(circle at top,#330000,#000);
+  backdrop-filter:blur(10px);
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-#gateBox {
-  width: 92%;
-  max-width: 420px;
-  background: #fff;
-  border-radius: 22px;
-  padding: 25px;
-  text-align: center;
-  box-shadow: 0 25px 70px rgba(255,0,0,0.35);
-  animation: fadeUp .5s ease;
+/* 🎁 กล่องหลัก */
+#gateBox{
+  width:92%;
+  max-width:420px;
+  padding:28px;
+  border-radius:24px;
+  background:rgba(255,255,255,0.95);
+  box-shadow:0 30px 80px rgba(255,0,0,0.35);
+  text-align:center;
+  animation:pop .5s ease;
 }
 
-@keyframes fadeUp {
-  from {opacity:0; transform: translateY(40px) scale(.9);}
-  to {opacity:1; transform: translateY(0) scale(1);}
+@keyframes pop{
+  from{opacity:0; transform:scale(.9) translateY(30px);}
+  to{opacity:1; transform:scale(1) translateY(0);}
 }
 
-#gateBox h2 {
-  color: #e60000;
-  margin-bottom: 8px;
+h2{
+  color:#e00000;
+  margin-bottom:5px;
 }
 
-.step {
-  margin-top: 15px;
+#status{
+  font-size:14px;
+  color:#666;
+  margin-bottom:10px;
 }
 
-.btn {
-  width: 100%;
-  padding: 13px;
-  border: none;
-  border-radius: 14px;
-  background: linear-gradient(135deg,#ff0000,#c40000);
-  color: #fff;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all .2s ease;
+/* 🔘 ปุ่ม */
+.btn{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(135deg,#ff0000,#c40000);
+  color:#fff;
+  font-size:15px;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.btn:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0,0,0,.3);
+.btn:hover{
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 15px 30px rgba(0,0,0,.3);
 }
 
-.btn:active {
-  transform: scale(.95);
+.btn:active{
+  transform:scale(.94);
 }
 
-.btn.success {
-  background: #00b33c;
+.lock{
+  background:#ccc;
+  pointer-events:none;
 }
 
-.btn.lock {
-  background: #bbb;
-  pointer-events: none;
+.success{
+  background:#00b33c;
 }
 
 /* 🍬 progress */
-#progressBox {
-  display: none;
-  margin-top: 18px;
+#progressBox{
+  display:none;
+  margin-top:20px;
 }
 
-.bar {
-  height: 18px;
-  border-radius: 20px;
-  background: #eee;
-  overflow: hidden;
+.bar{
+  height:20px;
+  border-radius:20px;
+  background:#eee;
+  overflow:hidden;
 }
 
-.fill {
-  height: 100%;
-  width: 0%;
-  background: repeating-linear-gradient(
+.fill{
+  height:100%;
+  width:0%;
+  background:repeating-linear-gradient(
     45deg,
     #ff0000,
     #ff0000 10px,
     #fff 10px,
     #fff 20px
   );
-  animation: candy 1s linear infinite;
-  transition: width .3s ease;
+  animation:candy 1s linear infinite;
 }
 
-@keyframes candy {
-  from {background-position:0 0;}
-  to {background-position:40px 0;}
+@keyframes candy{
+  from{background-position:0 0;}
+  to{background-position:40px 0;}
 }
 
-#enterBtn {
-  display: none;
-  margin-top: 15px;
-  background: #007bff;
+#enterBtn{
+  display:none;
+  margin-top:15px;
+  background:#007bff;
 }
 </style>
 
 <div id="gateOverlay">
   <div id="gateBox">
-    <h2>🎄 เข้าสู่เว็บไซต์</h2>
-    <p id="status">Action 0/2</p>
+    <h2>🎄 Unlock Website</h2>
+    <div id="status">Action 0/2</div>
 
-    <div class="step">
-      <button id="adsBtn" class="btn">ดูโฆษณา</button>
-    </div>
-
-    <div class="step">
-      <button id="ytBtn" class="btn lock">ดู YouTube</button>
-    </div>
+    <button id="adsBtn" class="btn">ดูโฆษณา</button>
+    <button id="ytBtn" class="btn lock">ดู YouTube</button>
 
     <div id="progressBox">
-      <p id="cooldownText">กำลังเตรียมระบบ...</p>
       <div class="bar">
         <div class="fill" id="fill"></div>
       </div>
+      <div id="cooldownText">กำลังโหลด...</div>
     </div>
 
     <button id="enterBtn" class="btn">เข้าสู่เว็บไซต์</button>
@@ -655,111 +653,123 @@ draw()
 
 <script>
 let step = 0;
-let adsOpened = false;
-let ytOpened = false;
+let adsDone = false;
+let ytDone = false;
 
-/* 🔄 update UI */
-function updateStatus() {
-  document.getElementById("status").innerText = "Action " + step + "/2";
+/* 🔄 update */
+function update(){
+  document.getElementById("status").innerText = `Action ${step}/2`;
+}
+
+/* 🧠 ตรวจออกจริง */
+function verifyAction(url, successCallback){
+  let startTime = Date.now();
+  let leftPage = false;
+
+  function handleBlur(){
+    leftPage = true;
+  }
+
+  function handleFocus(){
+    let duration = (Date.now() - startTime)/1000;
+
+    if(leftPage && duration >= 2){
+      cleanup();
+      successCallback();
+    }else{
+      // ❌ ไม่ผ่าน
+      startTime = Date.now();
+      leftPage = false;
+    }
+  }
+
+  function cleanup(){
+    window.removeEventListener("blur", handleBlur);
+    window.removeEventListener("focus", handleFocus);
+  }
+
+  window.addEventListener("blur", handleBlur);
+  window.addEventListener("focus", handleFocus);
+
+  window.open(url,"_blank");
 }
 
 /* 🚀 ADS */
-document.getElementById("adsBtn").onclick = () => {
-  if (adsOpened) return;
+document.getElementById("adsBtn").onclick = function(){
+  if(adsDone) return;
 
-  adsOpened = true;
-  let start = Date.now();
-
-  window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6","_blank");
-
-  let check = () => {
-    let stay = (Date.now() - start) / 1000;
-
-    if (document.hasFocus() && stay >= 2) {
-      step++;
-      updateStatus();
+  verifyAction(
+    "https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",
+    ()=>{
+      adsDone = true;
+      step++; update();
 
       let btn = document.getElementById("adsBtn");
       btn.innerText = "✅ สำเร็จ";
       btn.classList.add("success");
 
       document.getElementById("ytBtn").classList.remove("lock");
-
-    } else {
-      setTimeout(check, 300);
     }
-  };
-  setTimeout(check, 300);
+  );
 };
 
 /* ▶️ YOUTUBE */
-document.getElementById("ytBtn").onclick = () => {
-  if (!adsOpened || ytOpened) return;
+document.getElementById("ytBtn").onclick = function(){
+  if(!adsDone || ytDone) return;
 
-  ytOpened = true;
-  let start = Date.now();
-
-  window.open("https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV","_blank");
-
-  let check = () => {
-    let stay = (Date.now() - start) / 1000;
-
-    if (document.hasFocus() && stay >= 2) {
-      step++;
-      updateStatus();
+  verifyAction(
+    "https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV",
+    ()=>{
+      ytDone = true;
+      step++; update();
 
       let btn = document.getElementById("ytBtn");
       btn.innerText = "✅ สำเร็จ";
       btn.classList.add("success");
 
       startProgress();
-    } else {
-      setTimeout(check, 300);
     }
-  };
-  setTimeout(check, 300);
+  );
 };
 
-/* 🍬 progress */
-function startProgress() {
+/* 🍬 progress + cooldown จริง */
+function startProgress(){
   let box = document.getElementById("progressBox");
   let fill = document.getElementById("fill");
   let text = document.getElementById("cooldownText");
 
-  box.style.display = "block";
+  box.style.display="block";
 
-  let width = 0;
-  let time = 5;
+  let duration = 5000;
+  let start = Date.now();
 
-  let bar = setInterval(() => {
-    width += 20;
-    fill.style.width = width + "%";
-  }, 500);
+  function animate(){
+    let now = Date.now();
+    let progress = Math.min((now-start)/duration,1);
 
-  let cd = setInterval(() => {
-    time--;
-    text.innerText = "รอ " + time + " วินาที...";
+    fill.style.width = (progress*100)+"%";
+    text.innerText = "รอ " + Math.ceil((duration-(now-start))/1000) + " วิ";
 
-    if (time <= 0) {
-      clearInterval(cd);
-      clearInterval(bar);
-
-      text.innerText = "พร้อมแล้ว!";
-      document.getElementById("enterBtn").style.display = "block";
+    if(progress < 1){
+      requestAnimationFrame(animate);
+    }else{
+      text.innerText="พร้อมแล้ว!";
+      document.getElementById("enterBtn").style.display="block";
     }
-  }, 1000);
+  }
+
+  animate();
 }
 
 /* 🚀 เข้าเว็บ */
-document.getElementById("enterBtn").onclick = () => {
+document.getElementById("enterBtn").onclick = ()=>{
   document.getElementById("gateOverlay").remove();
-  document.body.style.overflow = "auto";
+  document.body.style.overflow="auto";
 };
 
-/* init */
-updateStatus();
+update();
 </script>
-<!-- 🔒 END -->
+<!-- END -->
    
 </body>
 </html>
