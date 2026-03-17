@@ -522,290 +522,164 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🎄 REALRAX PRO GATE -->
-
-<div id="gate">
-
-<div class="overlay"></div>
-
-<div class="box">
-
-<h2>🎄 Secure Access</h2>
-<p class="sub">Complete steps to continue</p>
-
-<div class="steps">
-<div id="step1" class="step">Verify</div>
-<div id="step2" class="step">Engage</div>
-</div>
-
-<div class="actions">
-<button onclick="stepAd()">Verify Access</button>
-<button onclick="stepYT()">Continue</button>
-</div>
-
-<div id="status">0 / 2 Completed</div>
-
-<div class="progress-wrap">
-<div id="bar"></div>
-</div>
-
-<div id="cooldown"></div>
-
-<button id="enterBtn" onclick="enterSite()">Enter Website</button>
-
-</div>
-</div>
-
-<style>
-
-#gate{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:9999;
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
-/* 🔥 BLUR BACKGROUND */
-.overlay{
-position:absolute;
-width:100%;
-height:100%;
-backdrop-filter:blur(8px);
-background:rgba(0,0,0,0.4);
-}
-
-/* 🎁 POPUP */
-.box{
-position:relative;
-background:#fff;
-padding:30px;
-border-radius:18px;
-width:340px;
-text-align:center;
-box-shadow:0 20px 50px rgba(0,0,0,0.4);
-animation:pop .4s ease;
-}
-
-@keyframes pop{
-from{transform:scale(.8);opacity:0}
-to{transform:scale(1);opacity:1}
-}
-
-h2{
-color:#d60000;
-margin:0;
-}
-
-.sub{
-color:#666;
-font-size:14px;
-margin-bottom:10px;
-}
-
-/* STEP */
-.steps{
-display:flex;
-gap:10px;
-margin:15px 0;
-}
-
-.step{
-flex:1;
-padding:8px;
-border-radius:8px;
-background:#eee;
-font-size:12px;
-}
-
-.step.active{
-background:#d60000;
-color:#fff;
-}
-
-/* BUTTON */
-.actions button{
-margin:6px;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#d60000;
-color:white;
-cursor:pointer;
-transition:.25s;
-}
-
-.actions button:hover{
-transform:translateY(-5px);
-box-shadow:0 8px 20px rgba(0,0,0,0.3);
-}
-
-.actions button:active{
-transform:scale(.9);
-}
-
-/* STATUS */
-#status{
-margin-top:10px;
-font-size:14px;
-}
-
-/* 🍬 CANDY PROGRESS */
-.progress-wrap{
-margin-top:15px;
-height:10px;
-background:#eee;
-border-radius:10px;
-overflow:hidden;
-}
-
-#bar{
-width:0%;
-height:100%;
-background:repeating-linear-gradient(
-45deg,
-#ff3c3c,
-#ff3c3c 10px,
-#ffffff 10px,
-#ffffff 20px
-);
-}
-
-/* ⏳ COOLDOWN */
-#cooldown{
-margin-top:10px;
-font-size:13px;
-color:#888;
-}
-
-/* ENTER BUTTON */
-#enterBtn{
-margin-top:10px;
-padding:12px;
-width:100%;
-border:none;
-border-radius:10px;
-background:#0b8f3a;
-color:white;
-display:none;
-cursor:pointer;
-transition:.2s;
-}
-
-#enterBtn:hover{
-transform:translateY(-3px);
-}
-
-#enterBtn:active{
-transform:scale(.9);
-}
-
-/* 📱 RESPONSIVE */
-@media(max-width:500px){
-.box{
-width:90%;
-padding:25px;
-}
-}
-
-</style>
-
 <script>
 
-let done = 0;
-let activeTime = Date.now();
+let step = 0;
+let timerActive = false;
 
-// 🔥 กัน AFK (ต้องมี interaction)
-document.addEventListener("mousemove", ()=>activeTime=Date.now());
-document.addEventListener("click", ()=>activeTime=Date.now());
+/* =========================
+   🔥 AFK SYSTEM (FIXED)
+========================= */
 
+let lastActive = Date.now();
+
+// interaction
+document.addEventListener("mousemove",()=> lastActive=Date.now());
+document.addEventListener("click",()=> lastActive=Date.now());
+document.addEventListener("touchstart",()=> lastActive=Date.now());
+
+// ✅ FIX: กลับมาจากแท็บอื่น
+document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) lastActive = Date.now();
+});
+
+window.addEventListener("focus", () => {
+    lastActive = Date.now();
+});
+
+// เช็ค AFK
 setInterval(()=>{
-if(Date.now() - activeTime > 8000){
-resetGate();
-}
-},3000);
+    if(Date.now() - lastActive > 15000){
+        resetAll();
+    }
+},2000);
 
-// 🔄 รีเซ็ต
-function resetGate(){
-done = 0;
+
+/* =========================
+   🔄 RESET
+========================= */
+
+function resetAll(){
+
+step = 0;
+timerActive = false;
+
 document.getElementById("status").innerText="0 / 2 Completed";
+document.getElementById("status").classList.remove("done");
+
+document.getElementById("bar").classList.remove("run");
+document.getElementById("countdown").innerText="";
+
+document.getElementById("enterBtn").disabled=true;
+document.getElementById("enterBtn").classList.remove("active");
+
 document.getElementById("step1").classList.remove("active");
 document.getElementById("step2").classList.remove("active");
-document.getElementById("bar").style.width="0%";
-document.getElementById("enterBtn").style.display="none";
-document.getElementById("cooldown").innerText="⚠ Restarted (AFK detected)";
+
 }
 
-// STEP 1
-function stepAd(){
 
-if(done>=1) return;
+/* =========================
+   STEP 1 (ADS)
+========================= */
+
+function runAd(){
+
+if(step >= 1) return;
 
 window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
 
 setTimeout(()=>{
-done++;
-update();
+step=1;
 document.getElementById("step1").classList.add("active");
+updateUI();
 },2000);
 
 }
 
-// STEP 2
-function stepYT(){
 
-if(done<1 || done>=2) return;
+/* =========================
+   STEP 2 (YOUTUBE)
+========================= */
+
+function runYT(){
+
+if(step < 1 || step >= 2) return;
 
 window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41","_blank");
 
-done++;
-update();
+step=2;
 document.getElementById("step2").classList.add("active");
 
+updateUI();
+
 }
 
-// UPDATE
-function update(){
 
-let status = document.getElementById("status");
+/* =========================
+   UPDATE UI
+========================= */
 
-status.innerText = done + " / 2 Completed";
+function updateUI(){
 
-if(done==2){
-status.innerHTML = "<span style='color:green'>✔ Completed</span>";
+document.getElementById("status").innerText = step+" / 2 Completed";
+
+if(step==2){
+
+document.getElementById("status").innerText="✅ Completed";
+document.getElementById("status").classList.add("done");
+
 startCooldown();
-}
 
 }
 
-// ⏳ COOLDOWN + LOADING
+}
+
+
+/* =========================
+   🍬 SMOOTH PROGRESS BAR
+========================= */
+
 function startCooldown(){
 
+if(timerActive) return;
+timerActive=true;
+
 let bar = document.getElementById("bar");
-let cd = document.getElementById("cooldown");
+
+// 👉 รีเริ่ม animation
+bar.classList.remove("run");
+void bar.offsetWidth; // force reflow
+bar.classList.add("run");
 
 let time = 5;
 
 let interval = setInterval(()=>{
-cd.innerText = "Loading... " + time + "s";
+
 time--;
+document.getElementById("countdown").innerText="Loading "+time+"s";
 
-bar.style.width = (100 - (time*20)) + "%";
+if(time<=0){
 
-if(time<0){
 clearInterval(interval);
-cd.innerText = "✅ Ready";
-document.getElementById("enterBtn").style.display="block";
+
+document.getElementById("countdown").innerText="Ready!";
+
+let btn = document.getElementById("enterBtn");
+btn.disabled=false;
+btn.classList.add("active");
+
 }
+
 },1000);
 
 }
 
-// 🚀 เข้าเว็บ
+
+/* =========================
+   ENTER
+========================= */
+
 function enterSite(){
 document.getElementById("gate").style.display="none";
 }
