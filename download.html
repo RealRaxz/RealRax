@@ -26,7 +26,6 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:12px 20px;
-flex-wrap:wrap;
 }
 
 .logo{
@@ -37,8 +36,8 @@ font-weight:bold;
 }
 
 .logo img{
-width:36px;
-height:36px;
+width:34px;
+height:34px;
 border-radius:50%;
 object-fit:cover;
 }
@@ -63,29 +62,25 @@ overflow:hidden;
 
 .hero h1{
 margin:0;
-font-size:32px;
+font-size:34px;
+z-index:2;
+position:relative;
 }
 
-.hero canvas{
+.hero p{
+z-index:2;
+position:relative;
+}
+
+/* SNOW CANVAS */
+
+#snowHero{
 position:absolute;
 top:0;
 left:0;
 width:100%;
 height:100%;
-pointer-events:none;
-}
-
-/* BACK BUTTON */
-
-.back-btn{
-display:inline-block;
-margin-top:15px;
-background:white;
-color:#d60000;
-padding:8px 16px;
-border-radius:6px;
-text-decoration:none;
-font-weight:bold;
+z-index:1;
 }
 
 /* CONTAINER */
@@ -106,14 +101,14 @@ padding:25px;
 text-align:center;
 }
 
-/* DOWNLOAD BUTTON */
+/* BUTTON */
 
 .download-btn{
 display:inline-block;
 margin-top:20px;
 background:#d60000;
 color:white;
-padding:14px 26px;
+padding:14px 24px;
 font-size:18px;
 border-radius:8px;
 text-decoration:none;
@@ -126,20 +121,30 @@ background:#a80000;
 transform:scale(1.05);
 }
 
+/* BACK BUTTON */
+
+.back-btn{
+display:inline-block;
+margin-bottom:15px;
+text-decoration:none;
+color:#d60000;
+font-weight:bold;
+}
+
 /* INFO */
 
 .info{
 text-align:left;
-line-height:1.8;
+line-height:1.7;
 color:#444;
-margin-top:20px;
+margin-top:15px;
 }
 
 /* MOBILE */
 
 @media(max-width:600px){
 .hero h1{
-font-size:24px;
+font-size:26px;
 }
 }
 
@@ -148,6 +153,8 @@ font-size:24px;
 </head>
 
 <body>
+
+<!-- NAVBAR -->
 
 <div class="navbar">
 
@@ -164,18 +171,22 @@ font-size:24px;
 
 </div>
 
+<!-- HERO -->
+
 <div class="hero">
 
 <canvas id="snowHero"></canvas>
 
 <h1>❄️ Delta Executor Download</h1>
-<p>Download Executor for Roblox Scripts ⚡</p>
-
-<a class="back-btn" href="index.html">⬅️ Back</a>
+<p>Fast • Free • Powerful Roblox Executor 🚀</p>
 
 </div>
 
+<!-- CONTENT -->
+
 <div class="container">
+
+<a href="index.html" class="back-btn">⬅️ Back to Home</a>
 
 <div class="card">
 
@@ -183,44 +194,50 @@ font-size:24px;
 
 <div class="info">
 
-<p><b>🇹🇭 ภาษาไทย</b></p>
-
 <p>
-Delta Executor คือโปรแกรมสำหรับรันสคริปต์ในเกม Roblox 🎮  
-ช่วยให้ผู้เล่นสามารถใช้งานระบบอัตโนมัติ เช่น ฟาร์มเลเวล ฟาร์มไอเทม หรือทำเควสต่าง ๆ ได้ง่ายขึ้น ⚡  
-ตัวโปรแกรมถูกออกแบบมาให้ใช้งานง่าย เหมาะทั้งมือใหม่และผู้เล่นระดับสูง 💡  
+🔥 <b>Delta Executor</b> is one of the most powerful Roblox script executors available right now.
+It allows you to run scripts smoothly with high performance and stability.
 </p>
 
 <p>
-✅ รองรับ Android 📱  
-✅ ใช้งานง่าย ไม่ซับซ้อน  
-✅ รันสคริปต์ได้รวดเร็ว ⚡  
-</p>
-
-<p><b>🇬🇧 English</b></p>
-
-<p>
-Delta Executor is a powerful Roblox script executor 🎮  
-It allows players to run scripts such as auto farming, quest automation, and more ⚡  
-The executor is designed to be simple, fast, and user-friendly 💡  
-Perfect for both beginners and advanced users 🚀  
+📱 <b>Supported Devices:</b><br>
+• Android ✅<br>
+• iOS (Limited Support) ⚠️<br>
+• PC (Emulator Required) 💻
 </p>
 
 <p>
-✅ Supports Android devices 📱  
-✅ Fast execution speed ⚡  
-✅ Easy to use interface  
+⚡ <b>Features:</b><br>
+• Auto Execute Scripts 🚀<br>
+• Fast Injection ⚡<br>
+• Clean UI & Easy to Use 🎯<br>
+• Supports Most Roblox Scripts 📜
+</p>
+
+<p>
+🔒 <b>Safety Notice:</b><br>
+Always download from trusted sources and use at your own risk.
+</p>
+
+<p>
+💡 This executor is perfect for farming, leveling, and using advanced scripts in Roblox games.
 </p>
 
 </div>
 
-<a class="download-btn" href="https://airconditionstrodefist.com/xexd2an06?key=8b286cd67ff1ac791222566d220cda9d" target="_blank">
-💰 Get Download Link
+<!-- SMARTLINK DOWNLOAD -->
+
+<a class="download-btn"
+href="https://airconditionstrodefist.com/xexd2an06?key=8b286cd67ff1ac791222566d220cda9d"
+target="_blank">
+⬇️ Download Now
 </a>
 
 </div>
 
 </div>
+
+<!-- SNOW SCRIPT -->
 
 <script>
 
@@ -251,6 +268,7 @@ speed:Math.random()*1+0.5
 function draw(){
 
 ctx.clearRect(0,0,canvas.width,canvas.height)
+
 ctx.fillStyle="white"
 
 snow.forEach(f=>{
