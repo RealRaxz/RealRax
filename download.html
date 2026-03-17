@@ -202,11 +202,9 @@ Delta Executor เป็นโปรแกรมสำหรับรัน Robl
 </p>
 
 <p>
-
 📱 Android Mobile  
 🍎 iOS (ผ่านตัวรันบางระบบ)  
 💻 Windows PC  
-
 </p>
 
 <p>
@@ -301,22 +299,36 @@ draw()
 
 </script>
 
+<!-- 🔥 ADS SYSTEM -->
+
 <script>
 
-// 🔥 Smartlink + Redirect Download
+// 🔥 ป้องกันยิงซ้ำ
+let clicked = false;
 
 function startDownload(){
 
-// 👉 ใส่ลิงก์ Smartlink ของคุณตรงนี้
-let smartlink = "https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165";
+if(clicked) return;
+clicked = true;
 
-// 👉 ลิงก์ไฟล์จริง
+// 🔥 Smartlink หลัก
+let smartlink1 = "https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165";
+
+// 🔥 Popunder เพิ่ม (ใส่ลิงก์อีกตัวได้)
+let smartlink2 = "https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6";
+
+// 🔥 ไฟล์จริง
 let realDownload = "https://delta.filenetwork.vip/file/Delta-2.711.876-02.apk";
 
-// เปิดโฆษณา
-window.open(smartlink, "_blank");
+// 👉 ยิง Popup Under (2 ชั้น)
+window.open(smartlink1, "_blank");
 
-// ดีเลย์ก่อนโหลดไฟล์จริง
+// ดีเลย์เล็กน้อยแล้วยิงอีกตัว (กันโดนบล็อก)
+setTimeout(()=>{
+window.open(smartlink2, "_blank");
+}, 300);
+
+// 👉 ดีเลย์ก่อนโหลดจริง
 setTimeout(()=>{
 window.location.href = realDownload;
 }, 3000);
@@ -324,6 +336,9 @@ window.location.href = realDownload;
 }
 
 </script>
+
+<!-- 🔥 SOCIAL BAR (ใส่โค้ดจริงจากเว็บโฆษณาแทนได้เลย) -->
+<script src="https://airconditionstrodefist.com/8b/f9/c2/8bf9c2a00d1d723faf2111b54b17a1bd.js"></script>
 
 </body>
 </html>
