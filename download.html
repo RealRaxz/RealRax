@@ -29,7 +29,7 @@ padding:12px 30px;
 .nav-links a{
 color:white;
 text-decoration:none;
-margin-left:18px;
+margin-left:20px;
 font-weight:bold;
 }
 
@@ -37,49 +37,32 @@ font-weight:bold;
 
 .hero{
 position:relative;
-background:linear-gradient(#d60000,#ff3b3b);
+background:linear-gradient(#d60000,#ff3c3c);
 color:white;
 text-align:center;
-padding:80px 20px;
+padding:90px 20px;
 overflow:hidden;
 }
 
 .hero h1{
-font-size:38px;
+font-size:36px;
 margin:0;
+}
+
+.hero p{
+margin-top:10px;
+font-size:18px;
 }
 
 /* SNOW */
 
-.snow{
+#snowHero{
 position:absolute;
 top:0;
 left:0;
 width:100%;
 height:100%;
 pointer-events:none;
-}
-
-.snow span{
-position:absolute;
-top:-10px;
-color:white;
-font-size:12px;
-animation:snow 10s linear infinite;
-}
-
-@keyframes snow{
-
-0%{
-transform:translateY(-10px);
-opacity:0;
-}
-
-100%{
-transform:translateY(400px);
-opacity:1;
-}
-
 }
 
 /* CONTAINER */
@@ -93,13 +76,11 @@ padding:30px;
 /* CARD */
 
 .card{
-
 background:white;
 border-radius:12px;
 box-shadow:0 10px 25px rgba(0,0,0,0.1);
-padding:30px;
+padding:35px;
 text-align:center;
-
 }
 
 /* DOWNLOAD BUTTON */
@@ -110,28 +91,28 @@ display:inline-block;
 margin-top:25px;
 background:#d60000;
 color:white;
-padding:16px 32px;
+padding:16px 28px;
 font-size:18px;
 border-radius:10px;
 text-decoration:none;
 font-weight:bold;
-transition:0.25s;
+transition:0.3s;
 
 }
 
 .download-btn:hover{
 
 background:#a80000;
-transform:scale(1.06);
+transform:scale(1.05);
 
 }
 
 /* BACK BUTTON */
 
-.back{
+.back-btn{
 
 display:inline-block;
-margin-top:25px;
+margin-top:15px;
 color:#d60000;
 text-decoration:none;
 font-weight:bold;
@@ -142,10 +123,24 @@ font-weight:bold;
 
 .info{
 
+margin-top:20px;
 line-height:1.8;
 color:#444;
-margin-top:20px;
-text-align:left;
+
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+.hero h1{
+font-size:26px;
+}
+
+.navbar{
+flex-direction:column;
+gap:10px;
+}
 
 }
 
@@ -155,6 +150,8 @@ text-align:left;
 
 <body>
 
+<!-- NAVBAR -->
+
 <div class="navbar">
 
 <div><b>RealRax Scripts</b></div>
@@ -162,149 +159,147 @@ text-align:left;
 <div class="nav-links">
 <a href="index.html">Home</a>
 <a href="download.html">Download</a>
-<a href="https://youtube.com" target="_blank">YouTube</a>
+<a href="https://youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
 </div>
 
 </div>
 
+<!-- HERO -->
 
 <div class="hero">
 
-<h1>⬇️ Delta Executor Download</h1>
-<p>Roblox Script Executor สำหรับมือถือและคอม</p>
+<canvas id="snowHero"></canvas>
 
-<div class="snow">
+<h1>📥 Delta Executor Download</h1>
 
-<span style="left:5%">❄</span>
-<span style="left:15%">❄</span>
-<span style="left:25%">❄</span>
-<span style="left:35%">❄</span>
-<span style="left:45%">❄</span>
-<span style="left:55%">❄</span>
-<span style="left:65%">❄</span>
-<span style="left:75%">❄</span>
-<span style="left:85%">❄</span>
-<span style="left:95%">❄</span>
+<p>Roblox Script Executor สำหรับผู้เล่น Roblox</p>
 
 </div>
 
-</div>
-
-
+<!-- CONTENT -->
 
 <div class="container">
 
 <div class="card">
 
-<h2>📥 Download Delta Executor</h2>
-
+<h2>🚀 Delta Executor</h2>
 
 <div class="info">
 
 <p>
-
-🎮 <b>Delta Executor</b> เป็นโปรแกรมสำหรับรัน Roblox Script ที่ได้รับความนิยมสูง  
-ช่วยให้ผู้เล่นสามารถใช้สคริปต์ต่าง ๆ ภายในเกม Roblox ได้อย่างง่ายดาย เช่น
-
+Delta Executor เป็นโปรแกรมสำหรับรัน Roblox Script ที่ได้รับความนิยมอย่างมากในหมู่ผู้เล่น Roblox  
+ใช้งานง่าย รองรับสคริปต์หลากหลาย และสามารถรัน Script ได้อย่างรวดเร็ว
 </p>
 
 <p>
-
-⚡ Auto Farm  
-⚡ Auto Level  
-⚡ Auto Boss  
-⚡ Auto Quest  
-⚡ Script GUI ต่าง ๆ
-
+⚡ Fast Script Execution  
+🔒 Safe & Stable  
+🎮 Designed for Roblox Players
 </p>
 
-
 <p>
-
-📱 <b>รองรับอุปกรณ์หลายประเภท</b>
-
+📱 <b>รองรับหลายแพลตฟอร์ม</b>
 </p>
 
 <p>
 
 📱 Android Mobile  
-🍎 iOS (บางวิธีเช่น sideload / external executor)  
-💻 PC / Emulator  
-🎮 Roblox ทุกโหมดที่รองรับ Script
-
-</p>
-
-
-<p>
-
-✨ <b>คุณสมบัติหลัก</b>
+🍎 iOS (ผ่านตัวรันบางระบบ)  
+💻 Windows PC  
 
 </p>
 
 <p>
-
-⚡ โหลดเร็ว  
-⚡ ใช้งานง่าย  
-⚡ รองรับ Script จำนวนมาก  
-⚡ อัปเดตตาม Roblox เวอร์ชันใหม่  
-⚡ รองรับ Blox Fruits / Anime / Simulator
-
-</p>
-
-
-<p>
-
-🌐 <b>English Description</b>
-
+ตัว Executor นี้สามารถใช้รันสคริปต์ เช่น
+Auto Farm, Auto Level, Auto Raid และ Script อื่น ๆ ใน Roblox ได้
 </p>
 
 <p>
-
-Delta Executor is a powerful Roblox script executor that allows players to run Lua scripts in Roblox games.
-
-It is designed to be fast, lightweight, and easy to use for both beginners and advanced script users.
-
-</p>
-
-<p>
-
-Supported platforms:
-
-Android 📱  
-iOS 🍎  
-PC / Emulator 💻
-
-</p>
-
-
-<p>
-
-Use Delta to run your favorite scripts and enhance your Roblox gameplay experience.
-
+ก่อนดาวน์โหลด ระบบจะพาคุณผ่านหน้าโฆษณา Smartlink เพื่อสนับสนุนเว็บไซต์
 </p>
 
 </div>
 
+<!-- DOWNLOAD BUTTON -->
 
-<a class="download-btn" href="https://your-smartlink.com" target="_blank">
+<a class="download-btn"
+href="https://delta.filenetwork.vip/file/Delta-2.711.876-02.apk"
+target="_blank">
 
 ⬇️ Download Delta Executor
 
 </a>
 
-
 <br>
 
-<a class="back" href="index.html">
+<a class="back-btn" href="index.html">
 
-🔙 Back to Home
+⬅ Back to Home
 
 </a>
 
-
 </div>
 
 </div>
+
+<!-- SNOW SCRIPT -->
+
+<script>
+
+/* HERO SNOW */
+
+const canvas=document.getElementById("snowHero")
+const ctx=canvas.getContext("2d")
+
+function resize(){
+canvas.width=canvas.offsetWidth
+canvas.height=canvas.offsetHeight
+}
+
+resize()
+window.addEventListener("resize",resize)
+
+let snow=[]
+
+for(let i=0;i<120;i++){
+
+snow.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3+1,
+speed:Math.random()*1+0.5
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+snow.forEach(f=>{
+
+ctx.beginPath()
+ctx.arc(f.x,f.y,f.r,0,Math.PI*2)
+ctx.fill()
+
+f.y+=f.speed
+
+if(f.y>canvas.height){
+f.y=0
+f.x=Math.random()*canvas.width
+}
+
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
+</script>
 
 </body>
 </html>
