@@ -522,21 +522,21 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🎄 REALRAX PRO ACCESS GATE -->
+<!-- 🎄 ACCESS GATE PRO -->
 
 <div id="gate">
   <div class="popup">
 
     <h2>🎄 Secure Access</h2>
-    <p class="sub">Complete steps to unlock download</p>
+    <p class="sub">Complete steps to unlock</p>
 
     <div class="steps">
-      <div class="step" id="step1">Verify</div>
-      <div class="step" id="step2">Continue</div>
+      <div class="step" id="step1">Step 1</div>
+      <div class="step" id="step2">Step 2</div>
     </div>
 
     <div class="actions">
-      <button id="btn1" onclick="runAd()">Verify Access</button>
+      <button id="btn1" onclick="runAd()">Verify</button>
       <button id="btn2" onclick="runYT()">Continue</button>
     </div>
 
@@ -555,15 +555,15 @@ draw()
 
 <style>
 
-/* 🔥 BLUR BACKGROUND */
+/* 🔒 BLUR LOCK */
 #gate{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-backdrop-filter:blur(8px);
-background:rgba(0,0,0,0.6);
+background:rgba(0,0,0,0.65);
+backdrop-filter:blur(10px);
 display:flex;
 justify-content:center;
 align-items:center;
@@ -573,12 +573,13 @@ z-index:9999;
 /* POPUP */
 .popup{
 background:#fff;
-padding:30px;
+padding:28px;
 border-radius:18px;
-width:340px;
+width:350px;
+max-width:90%;
 text-align:center;
-box-shadow:0 20px 50px rgba(0,0,0,.4);
-animation:fade .4s ease;
+box-shadow:0 25px 60px rgba(0,0,0,.5);
+animation:fade .35s ease;
 }
 
 @keyframes fade{
@@ -592,9 +593,9 @@ margin:0;
 }
 
 .sub{
-color:#666;
+color:#777;
 font-size:14px;
-margin-bottom:15px;
+margin-bottom:12px;
 }
 
 /* STEPS */
@@ -610,6 +611,7 @@ padding:8px;
 background:#eee;
 border-radius:8px;
 font-size:12px;
+transition:.3s;
 }
 
 .step.active{
@@ -626,13 +628,13 @@ border-radius:10px;
 background:#d60000;
 color:#fff;
 cursor:pointer;
-transition:.25s;
+transition:.2s;
 width:90%;
 }
 
 button:hover{
 transform:translateY(-4px);
-box-shadow:0 6px 15px rgba(0,0,0,.3);
+box-shadow:0 8px 20px rgba(0,0,0,.3);
 }
 
 button:active{
@@ -646,11 +648,11 @@ font-size:14px;
 }
 
 .done{
-color:#28a745;
+color:#1faa00;
 font-weight:bold;
 }
 
-/* 🍬 CANDY PROGRESS (SMOOTH) */
+/* 🍬 PROGRESS BAR SMOOTH */
 .progress-wrap{
 margin-top:15px;
 height:10px;
@@ -671,7 +673,7 @@ background:repeating-linear-gradient(
 );
 }
 
-/* ENTER BTN */
+/* ENTER */
 #enterBtn{
 margin-top:15px;
 background:#28a745;
@@ -688,41 +690,37 @@ cursor:pointer;
 
 <script>
 
+// ===== STATE =====
 let step = 0;
-let timerActive = false;
-let progressRunning = false;
-
+let running = false;
 let lastActive = Date.now();
 
-// ✅ USER ACTIVITY
-["mousemove","click","touchstart","keydown"].forEach(evt=>{
-document.addEventListener(evt,()=> lastActive=Date.now());
+// ===== ACTIVITY TRACK (FIX AFK BUG) =====
+["mousemove","click","touchstart","keydown"].forEach(e=>{
+document.addEventListener(e,()=> lastActive = Date.now());
 });
 
-// ✅ FIX: สลับแท็บไม่รีเซ็ต
+// 🔥 FIX: กลับจาก ads / เปลี่ยนแท็บ
 document.addEventListener("visibilitychange",()=>{
-if(!document.hidden){
-lastActive = Date.now();
-}
+if(!document.hidden) lastActive = Date.now();
 });
 
 window.addEventListener("focus",()=>{
 lastActive = Date.now();
 });
 
-// 🔥 AFK CHECK (เสถียรขึ้น)
+// ===== AFK CHECK =====
 setInterval(()=>{
-if(Date.now() - lastActive > 20000){ // 20 วิ กันพลาด
+if(Date.now() - lastActive > 20000){ // 20 วิ กันพลาดจริง
 resetAll();
 }
 },3000);
 
-// 🔁 RESET
+// ===== RESET =====
 function resetAll(){
 
 step = 0;
-timerActive = false;
-progressRunning = false;
+running = false;
 
 document.getElementById("status").innerText="0 / 2 Completed";
 document.getElementById("status").classList.remove("done");
@@ -737,84 +735,93 @@ document.getElementById("step2").classList.remove("active");
 
 }
 
-// STEP 1 ADS
+// ===== STEP 1 =====
 function runAd(){
 
-if(step >= 1) return;
+if(step !== 0) return;
 
 window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
 
-// delay กันกดหลอก
+document.getElementById("btn1").disabled=true;
+
+// delay กัน spam
 setTimeout(()=>{
-step=1;
-document.getElementById("step1").classList.add("active");
+step = 1;
 updateUI();
+document.getElementById("step1").classList.add("active");
 },2000);
 
 }
 
-// STEP 2 YT
+// ===== STEP 2 =====
 function runYT(){
 
-if(step < 1 || step >= 2) return;
+if(step !== 1) return;
 
 window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41","_blank");
 
-step=2;
-document.getElementById("step2").classList.add("active");
+document.getElementById("btn2").disabled=true;
+
+step = 2;
 updateUI();
+document.getElementById("step2").classList.add("active");
 
 }
 
-// UPDATE UI
+// ===== UPDATE =====
 function updateUI(){
 
 document.getElementById("status").innerText = step+" / 2 Completed";
 
-if(step==2){
-
+if(step === 2){
 document.getElementById("status").innerText="✅ Completed";
 document.getElementById("status").classList.add("done");
-
-startSmoothProgress();
-
+startProgress();
 }
 
 }
 
-// 🍬 SMOOTH PROGRESS (ไม่ผูกเวลา)
-function startSmoothProgress(){
+// ===== SMOOTH PROGRESS (REAL 5s) =====
+function startProgress(){
 
-if(progressRunning) return;
-progressRunning = true;
+if(running) return;
+running = true;
 
+let start = null;
+let duration = 5000; // 5 วิ
 let bar = document.getElementById("bar");
-let width = 0;
 
-function animate(){
+function animate(timestamp){
 
-// ความเร็ว random นิดๆ กันจับ pattern
-width += Math.random()*1.5;
+if(!start) start = timestamp;
 
-if(width >= 100){
-width = 100;
+let progress = timestamp - start;
+let percent = Math.min(progress / duration * 100, 100);
 
-document.getElementById("enterBtn").disabled=false;
-document.getElementById("enterBtn").classList.add("active");
+bar.style.width = percent + "%";
 
-return;
+if(progress < duration){
+requestAnimationFrame(animate);
+}else{
+unlockEnter();
 }
 
-bar.style.width = width + "%";
+}
 
 requestAnimationFrame(animate);
-}
-
-animate();
 
 }
 
-// ENTER
+// ===== ENABLE BUTTON =====
+function unlockEnter(){
+
+let btn = document.getElementById("enterBtn");
+btn.disabled=false;
+btn.classList.add("active");
+
+}
+
+// ===== ENTER =====
 function enterSite(){
 document.getElementById("gate").style.display="none";
 }
