@@ -522,5 +522,174 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
+<style>
+/* 🎄 POPUP CHRISTMAS */
+#gate{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:linear-gradient(#ffffff,#ffecec);
+z-index:9999;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:Arial;
+}
+
+.box{
+background:white;
+padding:30px;
+border-radius:15px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+width:320px;
+}
+
+.btn{
+background:#d60000;
+color:white;
+padding:12px 20px;
+border:none;
+border-radius:8px;
+margin:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.btn:disabled{
+background:#aaa;
+cursor:not-allowed;
+}
+
+/* 🍬 Progress Bar */
+.progress{
+margin-top:20px;
+width:100%;
+height:20px;
+background:#eee;
+border-radius:20px;
+overflow:hidden;
+display:none;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:repeating-linear-gradient(
+45deg,
+#ff0000,
+#ff0000 10px,
+#ffffff 10px,
+#ffffff 20px
+);
+transition:width 0.2s;
+}
+</style>
+
+<div id="gate">
+<div class="box">
+
+<h2>🎄 เข้าสู่เว็บไซต์</h2>
+<p>ทำตามเงื่อนไขเพื่อปลดล็อก</p>
+
+<p id="status">Action: 0/2</p>
+
+<button class="btn" id="adsBtn">📢 ดูโฆษณา</button>
+<button class="btn" id="ytBtn">👍 ไลก์ & คอมเมนต์</button>
+
+<div class="progress" id="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+
+let done1=false
+let done2=false
+let adOpened=false
+let adStart=0
+let focusOK=false
+
+const smartlink="https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165"
+const youtube="https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41"
+
+const status=document.getElementById("status")
+const adsBtn=document.getElementById("adsBtn")
+const ytBtn=document.getElementById("ytBtn")
+
+function update(){
+let count=(done1?1:0)+(done2?1:0)
+status.innerText="Action: "+count+"/2"
+
+if(count===2){
+startProgress()
+}
+}
+
+// 🎯 ปุ่มโฆษณา
+adsBtn.onclick=()=>{
+
+if(adOpened) return
+
+window.open(smartlink,"_blank")
+
+adOpened=true
+adStart=Date.now()
+focusOK=false
+
+}
+
+// 🎯 ตรวจ focus (กันโกง)
+window.addEventListener("focus",()=>{
+if(adOpened && !done1){
+
+let time=(Date.now()-adStart)/1000
+
+if(time>=2){
+done1=true
+update()
+}
+
+}
+})
+
+// 🎯 ปุ่ม YouTube
+ytBtn.onclick=()=>{
+
+window.open(youtube,"_blank")
+
+setTimeout(()=>{
+done2=true
+update()
+},2000)
+
+}
+
+// 🍬 Progress bar
+function startProgress(){
+
+document.getElementById("progress").style.display="block"
+
+let bar=document.getElementById("bar")
+let width=0
+
+let interval=setInterval(()=>{
+
+width+=2
+bar.style.width=width+"%"
+
+if(width>=100){
+clearInterval(interval)
+document.getElementById("gate").style.display="none"
+}
+
+},100)
+
+}
+
+</script>
+
 </body>
 </html>
