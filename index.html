@@ -522,30 +522,29 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🎄 PRO CHRISTMAS GATE -->
+<!-- 🎄 GOD CHRISTMAS POPUP SYSTEM -->
 
 <div id="gate">
 
-<div class="gate-box">
+<div class="popup">
 
-<h2>🎄 Christmas Access</h2>
+<h2>🎄 Christmas Access 🎄</h2>
 
-<p class="desc">Complete all steps to continue</p>
+<p id="progressText">Progress: 0/2</p>
 
-<div class="steps">
-<button id="adBtn" onclick="stepAd()">🎬 Watch Ad</button>
-<button id="ytBtn" onclick="stepYT()">👍 Support</button>
+<div class="btns">
+
+<button id="adBtn">🎬 Watch Ad</button>
+<button id="ytBtn">👍 Support</button>
+
 </div>
 
-<div class="status">Progress: <span id="count">0</span>/2</div>
-
-<div class="cooldown" id="cooldown">Waiting...</div>
-
-<div class="bar">
-<div id="barFill"></div>
+<div id="cooldownBox">
+<div id="bar"></div>
+<span id="time">5.0s</span>
 </div>
 
-<button id="enterBtn" disabled onclick="enterSite()">Enter Website</button>
+<button id="enterBtn" disabled>🚀 Enter Website</button>
 
 </div>
 
@@ -553,47 +552,44 @@ draw()
 
 <style>
 
-/* BLUR BACKGROUND */
 #gate{
 position:fixed;
 inset:0;
 backdrop-filter:blur(8px);
-background:rgba(0,0,0,0.5);
+background:rgba(0,0,0,0.4);
 display:flex;
 justify-content:center;
 align-items:center;
-z-index:9999;
+z-index:99999;
 }
 
-/* POPUP */
-.gate-box{
-background:linear-gradient(135deg,#b30000,#006400);
-padding:30px;
-border-radius:18px;
-width:320px;
+.popup{
+width:90%;
+max-width:340px;
+background:linear-gradient(#d60000,#0b6623);
+padding:25px;
+border-radius:16px;
 text-align:center;
 color:white;
-box-shadow:0 20px 40px rgba(0,0,0,0.4);
-animation:pop .4s ease;
+box-shadow:0 15px 40px rgba(0,0,0,0.4);
+animation:fade .4s;
 }
 
-@keyframes pop{
-from{transform:scale(.8);opacity:0;}
-to{transform:scale(1);opacity:1;}
+@keyframes fade{
+from{opacity:0;transform:scale(.9)}
+to{opacity:1;transform:scale(1)}
 }
 
-.desc{
-opacity:.8;
-margin-bottom:15px;
+.btns{
+margin:15px 0;
 }
 
-/* BUTTONS */
 button{
 margin:8px;
-padding:12px 18px;
+padding:12px 16px;
 border:none;
-border-radius:12px;
-background:#fff;
+border-radius:10px;
+background:white;
 color:#d60000;
 font-weight:bold;
 cursor:pointer;
@@ -601,155 +597,165 @@ transition:.2s;
 }
 
 button:hover{
-transform:translateY(-5px);
-box-shadow:0 8px 20px rgba(0,0,0,0.3);
+transform:translateY(-4px);
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
 button:active{
-transform:scale(.85);
+transform:scale(.9);
 }
 
-/* STATUS */
-.status{
-margin-top:10px;
-font-size:15px;
-}
-
-/* COOLDOWN */
-.cooldown{
-margin-top:10px;
-font-size:14px;
-color:#ffd700;
-}
-
-/* BAR */
-.bar{
-margin-top:12px;
-height:10px;
-background:#eee;
+#cooldownBox{
+width:100%;
+height:12px;
+background:#fff3;
 border-radius:10px;
 overflow:hidden;
+margin-top:10px;
+position:relative;
 }
 
-#barFill{
+#bar{
 width:0%;
 height:100%;
 background:repeating-linear-gradient(
 45deg,
-#ff4d4d,
-#ff4d4d 10px,
-#ffffff 10px,
-#ffffff 20px
+#ff3c3c,
+#ff3c3c 10px,
+#fff 10px,
+#fff 20px
 );
-transition:width .1s linear;
+transition:width linear;
 }
 
-/* ENTER BUTTON */
+#time{
+position:absolute;
+top:-20px;
+right:0;
+font-size:12px;
+}
+
 #enterBtn{
-margin-top:15px;
 width:100%;
-background:#00ff88;
+margin-top:15px;
+background:#00ff99;
 color:black;
-opacity:.5;
 }
 
-#enterBtn.active{
-opacity:1;
+#enterBtn:disabled{
+background:#aaa;
+cursor:not-allowed;
 }
 
 </style>
 
 <script>
 
-let step = 0;
-let interacted = false;
+let progress = 0;
+let adDone = false;
+let ytDone = false;
+let cooldownDone = false;
+let running = false;
 
-// 🔄 รีเซ็ตทุกครั้ง (กัน bypass)
-sessionStorage.removeItem("done");
+// 🔄 reset ทุกครั้ง (กัน bypass)
+localStorage.removeItem("gate_pass");
 
-// 🎬 STEP 1
-function stepAd(){
+// 🎬 WATCH AD (กัน spam + ต้องอยู่หน้า)
+document.getElementById("adBtn").onclick = () => {
 
-if(step >= 1) return;
+if(adDone) return;
 
-window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
+let w = window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165");
 
-setTimeout(()=>{
-step++;
-update();
-},2000);
+let start = Date.now();
 
+// 👇 ตรวจว่าผู้ใช้ยังอยู่หน้า (กัน AFK)
+let check = setInterval(()=>{
+
+if(document.hidden){
+clearInterval(check);
+return;
 }
 
-// 👍 STEP 2
-function stepYT(){
-
-if(step >= 2) return;
-
-window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41","_blank");
-
-step++;
+// ครบ 2 วิจริง
+if(Date.now() - start > 2000){
+adDone = true;
+progress++;
 update();
-
+clearInterval(check);
 }
 
-// 🧠 ต้องมี interaction กัน AFK
-document.addEventListener("mousemove",()=> interacted=true);
-document.addEventListener("click",()=> interacted=true);
+},200);
 
-// 🔄 UPDATE UI
+};
+
+// 👍 YOUTUBE (ต้องเปิดจริง)
+document.getElementById("ytBtn").onclick = () => {
+
+if(ytDone) return;
+
+window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41");
+
+ytDone = true;
+progress++;
+update();
+
+};
+
+// 🔄 UPDATE STATUS
 function update(){
 
-document.getElementById("count").innerText = step;
+document.getElementById("progressText").innerText =
+"Progress: " + progress + "/2";
 
-if(step === 2){
+if(progress === 2){
 startCooldown();
 }
 
 }
 
-// ⏳ COOLDOWN + BAR
+// ⏳ COOLDOWN (smooth จริง)
 function startCooldown(){
 
-let time = 5;
-let bar = document.getElementById("barFill");
-let cd = document.getElementById("cooldown");
+if(running) return;
+running = true;
 
-let interval = setInterval(()=>{
+let bar = document.getElementById("bar");
+let timeText = document.getElementById("time");
 
-if(!interacted){
-cd.innerText = "⚠️ Move or click to continue";
-return;
+let duration = 5000;
+let start = performance.now();
+
+function animate(now){
+
+let elapsed = now - start;
+let percent = Math.min(elapsed / duration, 1);
+
+bar.style.width = (percent * 100) + "%";
+timeText.innerText = (5 - percent*5).toFixed(1) + "s";
+
+if(percent < 1){
+requestAnimationFrame(animate);
+}else{
+cooldownDone = true;
+document.getElementById("enterBtn").disabled = false;
+timeText.innerText = "Completed";
 }
-
-time--;
-cd.innerText = "Please wait " + time + "s";
-
-let percent = (5-time)/5*100;
-bar.style.width = percent + "%";
-
-if(time <= 0){
-
-clearInterval(interval);
-
-cd.innerText = "✅ Completed";
-
-let btn = document.getElementById("enterBtn");
-btn.disabled = false;
-btn.classList.add("active");
-
-}
-
-},1000);
 
 }
 
-// 🚀 ENTER
-function enterSite(){
+requestAnimationFrame(animate);
+
+}
+
+// 🚀 ENTER (ไม่ auto ตามที่ขอ)
+document.getElementById("enterBtn").onclick = () => {
+
+if(!cooldownDone) return;
 
 document.getElementById("gate").style.display="none";
 
-}
+};
 
 </script>
 
