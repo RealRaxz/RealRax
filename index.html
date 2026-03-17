@@ -524,9 +524,9 @@ draw()
 
 <style>
 :root{
-  --red:#ff0000;
-  --black:#000;
-  --gray:#666;
+  --red:#ff1a1a;
+  --black:#111;
+  --gray:#9ca3af;
 }
 
 /* overlay */
@@ -534,96 +534,97 @@ draw()
   position:fixed;
   inset:0;
   backdrop-filter:blur(10px);
-  background:rgba(255,255,255,0.55);
+  background:rgba(0,0,0,0.3);
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:99999;
 }
 
-/* popup FIX SIZE */
+/* card */
 #gateBox{
   width:340px;
-  height:322.38px;
-  background:linear-gradient(#ffffff,#f7f7f7);
-  border-radius:16px;
+  height:360px;
+  background:#1a1a1a;
+  border-radius:18px;
   padding:20px;
-  box-shadow:0 12px 30px rgba(0,0,0,0.12);
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
 
-  /* 🔥 แก้หลัก: ใช้ GRID */
-  display:grid;
-  grid-template-rows: auto 1fr auto auto;
+  display:flex;
+  flex-direction:column;
 }
 
-/* 🧠 TOP (ข้อความ) */
+/* HEADER */
 #top{
   text-align:center;
+  margin-bottom:12px;
 }
 
-h2{
-  margin:0;
-  font-size:17px;
-  color:#000;
+#title{
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
 }
 
-#desc{
-  font-size:12px;
+#sub{
   color:var(--gray);
+  font-size:12px;
   margin-top:4px;
 }
 
-#status{
-  font-size:12px;
-  color:var(--gray);
-  margin-top:6px;
-}
-
-/* 🔘 ACTION */
+/* BUTTON GROUP */
 #actions{
   display:flex;
   flex-direction:column;
-  justify-content:center; /* 🔥 ดันปุ่มไปกลาง */
-  gap:8px;
+  gap:10px;
+  margin-top:6px;
 }
 
 /* buttons */
 .btn{
-  height:40px;
-  border-radius:10px;
+  height:42px;
+  border-radius:12px;
   border:none;
+  background:var(--red);
+  color:#fff;
   font-size:13px;
   cursor:pointer;
   transition:.15s;
 }
 
-.primary{
-  background:var(--red);
-  color:#fff;
-}
-.primary:hover{transform:translateY(-1px)}
-.primary:active{transform:scale(.96)}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:scale(.96)}
 
 .lock{
-  background:#eee;
+  background:#444;
   color:#aaa;
   pointer-events:none;
 }
 
 .success{
   background:#16a34a;
-  color:#fff;
 }
 
-/* 🍬 progress */
-#progressBox{
-  display:none;
+/* 🔥 PUSH ACTION TO BOTTOM ZONE */
+#bottom{
+  margin-top:auto;
 }
 
+/* status */
+#status{
+  text-align:center;
+  color:var(--gray);
+  font-size:12px;
+  margin-top:12px;
+}
+
+/* progress */
 .bar{
-  height:10px;
+  height:6px;
+  background:#333;
   border-radius:999px;
   overflow:hidden;
-  background:#eee;
+  margin-top:8px;
 }
 
 .fill{
@@ -638,22 +639,22 @@ h2{
   );
 }
 
-#cooldownText{
-  font-size:11px;
-  text-align:center;
-  color:var(--gray);
-  margin-top:4px;
+/* unlock */
+#enterBtn{
+  width:100%;
+  height:44px;
+  border-radius:12px;
+  border:none;
+  background:#555;
+  color:#ccc;
+  margin-top:12px;
+  font-size:14px;
 }
 
-/* 🔘 ENTER */
-#enterBtn{
-  height:40px;
-  border-radius:10px;
-  border:none;
+#enterBtn.active{
   background:#000;
   color:#fff;
-  font-size:13px;
-  display:none;
+  cursor:pointer;
 }
 </style>
 
@@ -662,38 +663,40 @@ h2{
 
     <!-- TOP -->
     <div id="top">
-      <h2>Secure Access</h2>
-      <div id="desc">ทำตามขั้นตอนก่อนเข้าใช้งาน</div>
-      <div id="status">Action 0/2</div>
+      <div id="title">แจกสคริป Blox Fruits</div>
+      <div id="sub">YouTube : RealRax</div>
     </div>
 
     <!-- ACTION -->
     <div id="actions">
-      <button id="adsBtn" class="btn primary">ดูโฆษณา</button>
-      <button id="ytBtn" class="btn lock">ดูวิดีโอ</button>
+      <button id="b1" class="btn">Subscribe to channel</button>
+      <button id="b2" class="btn lock">Like & Comment video</button>
+      <button id="b3" class="btn lock">Like video</button>
     </div>
 
-    <!-- PROGRESS -->
-    <div id="progressBox">
+    <!-- BOTTOM (สำคัญ) -->
+    <div id="bottom">
+      <div id="status">0/3 actions completed</div>
+
       <div class="bar">
         <div id="fill" class="fill"></div>
       </div>
-      <div id="cooldownText">กำลังโหลด...</div>
-    </div>
 
-    <!-- ENTER -->
-    <button id="enterBtn">เข้าสู่เว็บไซต์</button>
+      <button id="enterBtn">🔒 Unlock content</button>
+    </div>
 
   </div>
 </div>
 
 <script>
-let step=0,adsDone=false,ytDone=false,running=false,verifying=false;
+let step=0,run=false,verifying=false;
 
+/* update */
 function update(){
-  status.innerText="Action "+step+"/2";
+  status.innerText = step + "/3 actions completed";
 }
 
+/* verify */
 function verify(url,cb){
   if(verifying) return;
   verifying=true;
@@ -703,7 +706,8 @@ function verify(url,cb){
   function blur(){left=true;}
   function focus(){
     let diff=Date.now()-start;
-    if(left&&diff>=2000&&!valid){
+
+    if(left && diff>=2000 && !valid){
       valid=true;
       cleanup();
       verifying=false;
@@ -713,6 +717,7 @@ function verify(url,cb){
       left=false;
     }
   }
+
   function cleanup(){
     removeEventListener("blur",blur);
     removeEventListener("focus",focus);
@@ -724,49 +729,63 @@ function verify(url,cb){
   window.open(url,"_blank");
 }
 
-adsBtn.onclick=function(){
-  if(adsDone) return;
-  verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
-    adsDone=true;step++;update();
-    this.innerText="✓ สำเร็จ";
+/* STEP 1 */
+b1.onclick=function(){
+  verify("https://youtube.com",()=>{
+    step++; update();
     this.classList.add("success");
-    ytBtn.classList.remove("lock");
+    this.innerText="✓ Done";
+    b2.classList.remove("lock");
   });
-};
+}
 
-ytBtn.onclick=function(){
-  if(!adsDone||ytDone) return;
-  verify("https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV",()=>{
-    ytDone=true;step++;update();
-    this.innerText="✓ สำเร็จ";
+/* STEP 2 */
+b2.onclick=function(){
+  verify("https://youtube.com",()=>{
+    step++; update();
     this.classList.add("success");
+    this.innerText="✓ Done";
+    b3.classList.remove("lock");
+  });
+}
+
+/* STEP 3 */
+b3.onclick=function(){
+  verify("https://youtube.com",()=>{
+    step++; update();
+    this.classList.add("success");
+    this.innerText="✓ Done";
     startProgress();
   });
-};
+}
 
+/* progress */
 function startProgress(){
-  if(running) return;
-  running=true;
-
-  progressBox.style.display="block";
+  if(run) return;
+  run=true;
 
   let start=performance.now(),d=5000;
 
   function frame(n){
     let e=n-start,p=Math.min(e/d,1);
     fill.style.width=(p*100)+"%";
-    cooldownText.innerText="รอ "+Math.ceil((d-e)/1000)+" วิ";
 
-    if(p<1) requestAnimationFrame(frame);
-    else{
-      cooldownText.innerText="พร้อมแล้ว";
-      enterBtn.style.display="block";
+    if(p<1){
+      requestAnimationFrame(frame);
+    }else{
+      enterBtn.classList.add("active");
+      enterBtn.innerText="Unlock content";
     }
   }
+
   requestAnimationFrame(frame);
 }
 
-enterBtn.onclick=()=>gateOverlay.remove();
+/* enter */
+enterBtn.onclick=function(){
+  if(!this.classList.contains("active")) return;
+  gateOverlay.remove();
+}
 
 update();
 </script>
