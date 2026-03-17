@@ -529,7 +529,7 @@ draw()
   --gray:#666;
 }
 
-/* 🔒 overlay */
+/* overlay */
 #gateOverlay{
   position:fixed;
   inset:0;
@@ -541,24 +541,23 @@ draw()
   z-index:99999;
 }
 
-/* 📦 popup FIX SIZE + gradient border feel */
+/* popup FIX SIZE */
 #gateBox{
   width:340px;
   height:322.38px;
   background:linear-gradient(#ffffff,#f7f7f7);
   border-radius:16px;
-  padding:18px;
+  padding:20px;
   box-shadow:0 12px 30px rgba(0,0,0,0.12);
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
+
+  /* 🔥 แก้หลัก: ใช้ GRID */
+  display:grid;
+  grid-template-rows: auto 1fr auto auto;
 }
 
-/* 🧠 header */
+/* 🧠 TOP (ข้อความ) */
 #top{
-  display:flex;
-  flex-direction:column;
-  gap:4px;
+  text-align:center;
 }
 
 h2{
@@ -570,21 +569,24 @@ h2{
 #desc{
   font-size:12px;
   color:var(--gray);
+  margin-top:4px;
 }
 
 #status{
   font-size:12px;
   color:var(--gray);
-}
-
-/* 🔘 button zone */
-#actions{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
   margin-top:6px;
 }
 
+/* 🔘 ACTION */
+#actions{
+  display:flex;
+  flex-direction:column;
+  justify-content:center; /* 🔥 ดันปุ่มไปกลาง */
+  gap:8px;
+}
+
+/* buttons */
 .btn{
   height:40px;
   border-radius:10px;
@@ -594,7 +596,6 @@ h2{
   transition:.15s;
 }
 
-/* red */
 .primary{
   background:var(--red);
   color:#fff;
@@ -602,14 +603,12 @@ h2{
 .primary:hover{transform:translateY(-1px)}
 .primary:active{transform:scale(.96)}
 
-/* lock */
 .lock{
   background:#eee;
   color:#aaa;
   pointer-events:none;
 }
 
-/* success */
 .success{
   background:#16a34a;
   color:#fff;
@@ -639,7 +638,6 @@ h2{
   );
 }
 
-/* text */
 #cooldownText{
   font-size:11px;
   text-align:center;
@@ -647,7 +645,7 @@ h2{
   margin-top:4px;
 }
 
-/* 🔘 enter */
+/* 🔘 ENTER */
 #enterBtn{
   height:40px;
   border-radius:10px;
@@ -662,7 +660,7 @@ h2{
 <div id="gateOverlay">
   <div id="gateBox">
 
-    <!-- HEADER -->
+    <!-- TOP -->
     <div id="top">
       <h2>Secure Access</h2>
       <div id="desc">ทำตามขั้นตอนก่อนเข้าใช้งาน</div>
@@ -690,125 +688,86 @@ h2{
 </div>
 
 <script>
-let step=0;
-let adsDone=false;
-let ytDone=false;
-let running=false;
-let verifying=false;
+let step=0,adsDone=false,ytDone=false,running=false,verifying=false;
 
-/* update */
 function update(){
-  document.getElementById("status").innerText="Action "+step+"/2";
+  status.innerText="Action "+step+"/2";
 }
 
-/* 🔥 verify FIX HARD */
-function verify(url, cb){
+function verify(url,cb){
   if(verifying) return;
-  verifying = true;
+  verifying=true;
 
-  let start = Date.now();
-  let left = false;
-  let valid = false;
+  let start=Date.now(),left=false,valid=false;
 
-  function blur(){
-    left = true;
-  }
-
+  function blur(){left=true;}
   function focus(){
-    let diff = Date.now() - start;
-
-    if(left && diff >= 2000 && !valid){
-      valid = true;
+    let diff=Date.now()-start;
+    if(left&&diff>=2000&&!valid){
+      valid=true;
       cleanup();
-      verifying = false;
+      verifying=false;
       cb();
     }else{
-      start = Date.now();
-      left = false;
+      start=Date.now();
+      left=false;
     }
   }
-
   function cleanup(){
-    window.removeEventListener("blur", blur);
-    window.removeEventListener("focus", focus);
+    removeEventListener("blur",blur);
+    removeEventListener("focus",focus);
   }
 
-  window.addEventListener("blur", blur);
-  window.addEventListener("focus", focus);
+  addEventListener("blur",blur);
+  addEventListener("focus",focus);
 
   window.open(url,"_blank");
 }
 
-/* ADS */
 adsBtn.onclick=function(){
   if(adsDone) return;
-
   verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
-    adsDone=true;
-    step++;
-    update();
-
+    adsDone=true;step++;update();
     this.innerText="✓ สำเร็จ";
     this.classList.add("success");
-
     ytBtn.classList.remove("lock");
   });
-}
+};
 
-/* YT */
 ytBtn.onclick=function(){
-  if(!adsDone || ytDone) return;
-
+  if(!adsDone||ytDone) return;
   verify("https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV",()=>{
-    ytDone=true;
-    step++;
-    update();
-
+    ytDone=true;step++;update();
     this.innerText="✓ สำเร็จ";
     this.classList.add("success");
-
     startProgress();
   });
-}
+};
 
-/* 🍬 progress FIX */
 function startProgress(){
   if(running) return;
-  running = true;
+  running=true;
 
-  let fill = document.getElementById("fill");
-  let text = document.getElementById("cooldownText");
-  let box = document.getElementById("progressBox");
+  progressBox.style.display="block";
 
-  box.style.display="block";
+  let start=performance.now(),d=5000;
 
-  let duration=5000;
-  let start=performance.now();
-
-  function frame(now){
-    let elapsed=now-start;
-    let p=Math.min(elapsed/duration,1);
-
+  function frame(n){
+    let e=n-start,p=Math.min(e/d,1);
     fill.style.width=(p*100)+"%";
-    text.innerText="รอ "+Math.ceil((duration-elapsed)/1000)+" วิ";
+    cooldownText.innerText="รอ "+Math.ceil((d-e)/1000)+" วิ";
 
-    if(p<1){
-      requestAnimationFrame(frame);
-    }else{
-      text.innerText="พร้อมแล้ว";
-      document.getElementById("enterBtn").style.display="block";
+    if(p<1) requestAnimationFrame(frame);
+    else{
+      cooldownText.innerText="พร้อมแล้ว";
+      enterBtn.style.display="block";
     }
   }
-
   requestAnimationFrame(frame);
 }
 
-/* ENTER */
-enterBtn.onclick=function(){
-  document.getElementById("gateOverlay").remove();
-}
+enterBtn.onclick=()=>gateOverlay.remove();
 
-/* init */
 update();
 </script>
    
