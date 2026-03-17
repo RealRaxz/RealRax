@@ -527,7 +527,6 @@ draw()
   --red:#ff0000;
   --black:#000;
   --gray:#666;
-  --border:#e5e5e5;
 }
 
 /* 🔒 overlay */
@@ -535,31 +534,36 @@ draw()
   position:fixed;
   inset:0;
   backdrop-filter:blur(10px);
-  background:rgba(255,255,255,0.6);
+  background:rgba(255,255,255,0.55);
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:99999;
 }
 
-/* 📦 popup FIX SIZE */
+/* 📦 popup FIX SIZE + gradient border feel */
 #gateBox{
   width:340px;
   height:322.38px;
-  background:#fff;
+  background:linear-gradient(#ffffff,#f7f7f7);
   border-radius:16px;
-  padding:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.12);
-  border:1px solid var(--border);
+  padding:18px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.12);
   display:flex;
   flex-direction:column;
   justify-content:space-between;
 }
 
-/* text */
+/* 🧠 header */
+#top{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
 h2{
   margin:0;
-  font-size:18px;
+  font-size:17px;
   color:#000;
 }
 
@@ -571,13 +575,18 @@ h2{
 #status{
   font-size:12px;
   color:var(--gray);
-  margin:6px 0 10px;
 }
 
-/* 🔘 buttons */
+/* 🔘 button zone */
+#actions{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-top:6px;
+}
+
 .btn{
-  width:100%;
-  padding:11px;
+  height:40px;
   border-radius:10px;
   border:none;
   font-size:13px;
@@ -593,7 +602,7 @@ h2{
 .primary:hover{transform:translateY(-1px)}
 .primary:active{transform:scale(.96)}
 
-/* disabled */
+/* lock */
 .lock{
   background:#eee;
   color:#aaa;
@@ -606,56 +615,67 @@ h2{
   color:#fff;
 }
 
-/* enter (BLACK) */
-.enter{
-  background:#000;
-  color:#fff;
-}
-
-/* progress */
+/* 🍬 progress */
 #progressBox{
   display:none;
 }
 
 .bar{
   height:10px;
-  background:#eee;
   border-radius:999px;
   overflow:hidden;
+  background:#eee;
 }
 
 .fill{
   height:100%;
   width:0%;
-  background:#ff0000; /* ❌ no candy */
+  background:repeating-linear-gradient(
+    45deg,
+    #ff0000,
+    #ff0000 10px,
+    #ffffff 10px,
+    #ffffff 20px
+  );
 }
 
+/* text */
 #cooldownText{
   font-size:11px;
-  color:var(--gray);
   text-align:center;
-  margin-top:5px;
+  color:var(--gray);
+  margin-top:4px;
 }
 
+/* 🔘 enter */
 #enterBtn{
+  height:40px;
+  border-radius:10px;
+  border:none;
+  background:#000;
+  color:#fff;
+  font-size:13px;
   display:none;
 }
 </style>
 
 <div id="gateOverlay">
   <div id="gateBox">
-    
-    <div>
+
+    <!-- HEADER -->
+    <div id="top">
       <h2>Secure Access</h2>
       <div id="desc">ทำตามขั้นตอนก่อนเข้าใช้งาน</div>
       <div id="status">Action 0/2</div>
     </div>
 
-    <div>
+    <!-- ACTION -->
+    <div id="actions">
       <button id="adsBtn" class="btn primary">ดูโฆษณา</button>
       <button id="ytBtn" class="btn lock">ดูวิดีโอ</button>
     </div>
 
+    <!-- PROGRESS -->
     <div id="progressBox">
       <div class="bar">
         <div id="fill" class="fill"></div>
@@ -663,7 +683,8 @@ h2{
       <div id="cooldownText">กำลังโหลด...</div>
     </div>
 
-    <button id="enterBtn" class="btn enter">เข้าสู่เว็บไซต์</button>
+    <!-- ENTER -->
+    <button id="enterBtn">เข้าสู่เว็บไซต์</button>
 
   </div>
 </div>
@@ -673,14 +694,18 @@ let step=0;
 let adsDone=false;
 let ytDone=false;
 let running=false;
+let verifying=false;
 
 /* update */
 function update(){
-  document.getElementById("status").innerText = "Action "+step+"/2";
+  document.getElementById("status").innerText="Action "+step+"/2";
 }
 
-/* 🔥 verify FIX */
-function verify(url, callback){
+/* 🔥 verify FIX HARD */
+function verify(url, cb){
+  if(verifying) return;
+  verifying = true;
+
   let start = Date.now();
   let left = false;
   let valid = false;
@@ -695,9 +720,9 @@ function verify(url, callback){
     if(left && diff >= 2000 && !valid){
       valid = true;
       cleanup();
-      callback();
+      verifying = false;
+      cb();
     }else{
-      // reset if fail
       start = Date.now();
       left = false;
     }
@@ -711,44 +736,42 @@ function verify(url, callback){
   window.addEventListener("blur", blur);
   window.addEventListener("focus", focus);
 
-  window.open(url, "_blank");
+  window.open(url,"_blank");
 }
 
 /* ADS */
-document.getElementById("adsBtn").onclick = function(){
+adsBtn.onclick=function(){
   if(adsDone) return;
 
-  verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6", ()=>{
-    adsDone = true;
+  verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
+    adsDone=true;
     step++;
     update();
 
-    let btn=this;
-    btn.innerText="✓ สำเร็จ";
-    btn.classList.add("success");
+    this.innerText="✓ สำเร็จ";
+    this.classList.add("success");
 
-    document.getElementById("ytBtn").classList.remove("lock");
+    ytBtn.classList.remove("lock");
   });
-};
+}
 
 /* YT */
-document.getElementById("ytBtn").onclick = function(){
+ytBtn.onclick=function(){
   if(!adsDone || ytDone) return;
 
-  verify("https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV", ()=>{
-    ytDone = true;
+  verify("https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV",()=>{
+    ytDone=true;
     step++;
     update();
 
-    let btn=this;
-    btn.innerText="✓ สำเร็จ";
-    btn.classList.add("success");
+    this.innerText="✓ สำเร็จ";
+    this.classList.add("success");
 
     startProgress();
   });
-};
+}
 
-/* progress FIX */
+/* 🍬 progress FIX */
 function startProgress(){
   if(running) return;
   running = true;
@@ -759,15 +782,15 @@ function startProgress(){
 
   box.style.display="block";
 
-  let duration = 5000;
-  let start = performance.now();
+  let duration=5000;
+  let start=performance.now();
 
   function frame(now){
-    let elapsed = now - start;
-    let p = Math.min(elapsed/duration,1);
+    let elapsed=now-start;
+    let p=Math.min(elapsed/duration,1);
 
-    fill.style.width = (p*100)+"%";
-    text.innerText = "รอ "+Math.ceil((duration-elapsed)/1000)+" วิ";
+    fill.style.width=(p*100)+"%";
+    text.innerText="รอ "+Math.ceil((duration-elapsed)/1000)+" วิ";
 
     if(p<1){
       requestAnimationFrame(frame);
@@ -781,10 +804,11 @@ function startProgress(){
 }
 
 /* ENTER */
-document.getElementById("enterBtn").onclick = function(){
+enterBtn.onclick=function(){
   document.getElementById("gateOverlay").remove();
-};
+}
 
+/* init */
 update();
 </script>
    
