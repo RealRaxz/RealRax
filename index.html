@@ -522,93 +522,141 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🎄 CLEAN GLASS GATE -->
+<!-- 💎 LUXURY GLASS GATE -->
 <style>
 #gateOverlay{
-  position:fixed;
-  inset:0;
-  backdrop-filter:blur(12px);
-  background:rgba(255,255,255,0.15);
+  position:fixed; inset:0;
+  backdrop-filter:blur(14px);
+  background:rgba(255,255,255,0.25);
+  display:flex; align-items:center; justify-content:center;
   z-index:99999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
-/* กล่อง */
+/* ✨ card */
 #gateBox{
-  width:92%;
-  max-width:420px;
-  padding:28px;
-  border-radius:24px;
-  background:#ffffff;
+  width:92%; max-width:430px;
+  padding:32px;
+  border-radius:28px;
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(25px);
   box-shadow:
-    0 25px 60px rgba(0,0,0,0.15),
-    0 10px 20px rgba(255,0,0,0.1);
-  text-align:center;
-  animation:fade .4s ease;
+    0 30px 80px rgba(0,0,0,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  position:relative;
+  overflow:hidden;
+  animation:fade .5s ease;
+}
+
+/* light sweep */
+#gateBox::before{
+  content:"";
+  position:absolute;
+  top:-100%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);
+  transform:rotate(25deg);
+  animation:shine 6s infinite;
+}
+@keyframes shine{
+  0%{top:-100%;}
+  100%{top:200%;}
 }
 
 @keyframes fade{
-  from{opacity:0; transform:translateY(30px);}
+  from{opacity:0; transform:translateY(40px) scale(.92);}
   to{opacity:1;}
 }
 
 h2{
+  font-size:22px;
   color:#d60000;
   font-weight:700;
+  letter-spacing:.3px;
 }
 
 #status{
+  margin-top:6px;
   font-size:14px;
-  color:#666;
-  margin-top:5px;
+  color:#555;
 }
 
-/* ปุ่ม */
+/* 🔘 button premium */
 .btn{
   width:100%;
-  padding:14px;
-  margin-top:14px;
+  padding:15px;
+  margin-top:16px;
   border:none;
-  border-radius:14px;
-  background:linear-gradient(135deg,#ff1a1a,#cc0000);
-  color:#fff;
+  border-radius:18px;
   font-size:15px;
   cursor:pointer;
-  transition:.2s;
+  transition:.25s;
+  position:relative;
+  overflow:hidden;
 }
 
+/* red main */
+.primary{
+  background:linear-gradient(135deg,#ff2a2a,#b80000);
+  color:#fff;
+}
+
+/* blue enter */
+.enter{
+  background:linear-gradient(135deg,#4facfe,#007bff);
+  color:#fff;
+}
+
+/* hover */
 .btn:hover{
-  transform:translateY(-5px);
-  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 15px 35px rgba(0,0,0,0.25);
 }
 
+/* click */
 .btn:active{
-  transform:scale(.95);
+  transform:scale(.93);
 }
 
+/* shimmer */
+.btn::after{
+  content:"";
+  position:absolute;
+  left:-120%;
+  top:0;
+  width:120%;
+  height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.7),transparent);
+  transition:.5s;
+}
+.btn:hover::after{
+  left:100%;
+}
+
+/* states */
 .lock{
-  background:#ddd;
-  color:#888;
+  background:#eee;
+  color:#aaa;
   pointer-events:none;
 }
-
 .success{
-  background:#00b33c;
+  background:#00c851;
+  color:#fff;
 }
 
 /* 🍬 progress */
 #progressBox{
   display:none;
-  margin-top:20px;
+  margin-top:22px;
 }
 
 .bar{
   height:16px;
   border-radius:20px;
-  background:#eee;
+  background:#f0f0f0;
   overflow:hidden;
+  position:relative;
 }
 
 .fill{
@@ -616,69 +664,76 @@ h2{
   width:0%;
   background:repeating-linear-gradient(
     45deg,
-    #ff0000,
-    #ff0000 10px,
+    #ff3b3b,
+    #ff3b3b 10px,
     #fff 10px,
     #fff 20px
   );
+  box-shadow:0 0 12px rgba(255,0,0,.4);
+  transition:width .1s linear;
+}
+
+/* glow pulse */
+.bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle,rgba(255,0,0,.15),transparent);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:.3;}
+  50%{opacity:.8;}
 }
 
 #cooldownText{
-  margin-top:6px;
+  margin-top:8px;
   font-size:13px;
-  color:#555;
+  color:#666;
 }
 
 #enterBtn{
   display:none;
-  margin-top:15px;
-  background:#007bff;
 }
 </style>
 
 <div id="gateOverlay">
   <div id="gateBox">
-    <h2>🎄 เข้าสู่เว็บไซต์</h2>
+    <h2>🎄 Premium Access</h2>
     <div id="status">Action 0/2</div>
 
-    <button id="adsBtn" class="btn">ดูโฆษณา</button>
-    <button id="ytBtn" class="btn lock">ดูวิดีโอ</button>
+    <button id="adsBtn" class="btn primary">ดูโฆษณา</button>
+    <button id="ytBtn" class="btn primary lock">ดูวิดีโอ</button>
 
     <div id="progressBox">
       <div class="bar"><div class="fill" id="fill"></div></div>
-      <div id="cooldownText">กำลังโหลด...</div>
+      <div id="cooldownText">Preparing...</div>
     </div>
 
-    <button id="enterBtn" class="btn">เข้าสู่เว็บไซต์</button>
+    <button id="enterBtn" class="btn enter">เข้าสู่เว็บไซต์</button>
   </div>
 </div>
 
 <script>
-let step=0, adsDone=false, ytDone=false, progressRun=false;
+let step=0, adsDone=false, ytDone=false, running=false;
 
 function update(){
   status.innerText=`Action ${step}/2`;
 }
 
-/* 🔐 ตรวจจริง */
-function verify(url, success){
-  let start=Date.now();
-  let left=false;
+/* verify */
+function verify(url, done){
+  let start=Date.now(), left=false;
 
-  function blur(){ left=true; }
-
+  function blur(){left=true;}
   function focus(){
     let t=(Date.now()-start)/1000;
-
     if(left && t>=2){
-      cleanup();
-      success();
+      cleanup(); done();
     }else{
-      start=Date.now();
-      left=false;
+      start=Date.now(); left=false;
     }
   }
-
   function cleanup(){
     removeEventListener("blur",blur);
     removeEventListener("focus",focus);
@@ -690,59 +745,56 @@ function verify(url, success){
   window.open(url,"_blank");
 }
 
-/* ADS */
+/* ads */
 adsBtn.onclick=()=>{
   if(adsDone) return;
-
   verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
     adsDone=true; step++; update();
-    adsBtn.innerText="✅ สำเร็จ";
+    adsBtn.innerText="✔ สำเร็จ";
     adsBtn.classList.add("success");
     ytBtn.classList.remove("lock");
   });
 };
 
-/* YT */
+/* yt */
 ytBtn.onclick=()=>{
   if(!adsDone||ytDone) return;
-
   verify("https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV",()=>{
     ytDone=true; step++; update();
-    ytBtn.innerText="✅ สำเร็จ";
+    ytBtn.innerText="✔ สำเร็จ";
     ytBtn.classList.add("success");
     startProgress();
   });
 };
 
-/* 🍬 progress FIX */
+/* 🍬 smooth progress */
 function startProgress(){
-  if(progressRun) return;
-  progressRun=true;
+  if(running) return;
+  running=true;
 
   progressBox.style.display="block";
 
   const duration=5000;
   const start=performance.now();
 
-  function frame(now){
-    let elapsed=now-start;
-    let p=Math.min(elapsed/duration,1);
+  function loop(now){
+    let p=Math.min((now-start)/duration,1);
 
     fill.style.width=(p*100)+"%";
-    cooldownText.innerText="รอ "+Math.max(0,Math.ceil((duration-elapsed)/1000))+" วิ";
+    cooldownText.innerText="รอ "+Math.ceil((duration-(now-start))/1000)+" วิ";
 
     if(p<1){
-      requestAnimationFrame(frame);
+      requestAnimationFrame(loop);
     }else{
       cooldownText.innerText="พร้อมแล้ว!";
       enterBtn.style.display="block";
     }
   }
 
-  requestAnimationFrame(frame);
+  requestAnimationFrame(loop);
 }
 
-/* เข้าเว็บ */
+/* enter */
 enterBtn.onclick=()=>{
   gateOverlay.remove();
   document.body.style.overflow="auto";
@@ -750,7 +802,6 @@ enterBtn.onclick=()=>{
 
 update();
 </script>
-<!-- END -->
    
 </body>
 </html>
