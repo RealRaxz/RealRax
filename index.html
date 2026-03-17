@@ -522,27 +522,31 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🎄 CHRISTMAS POPUP SYSTEM -->
+<!-- 🎄 REALRAX ACCESS GATE -->
 
-<div id="xmasGate">
+<div id="gate">
 
-<div class="popup">
+<div class="gate-box">
 
-<h2>🎄 Christmas Access 🎄</h2>
+<h2>🔒 Secure Access</h2>
+<p class="sub">Please complete the steps to continue</p>
 
-<p id="status">Progress: 0/2</p>
+<div class="steps">
+<div class="step" id="s1">1. Verify Access</div>
+<div class="step" id="s2">2. Continue</div>
+</div>
 
 <div class="actions">
 
-<button onclick="watchAd()">🎬 Watch Ad</button>
-<button onclick="doLike()">👍 Like</button>
+<button onclick="stepAd()">Verify</button>
+<button onclick="stepYT()">Continue</button>
 
 </div>
 
-<div id="doneText"></div>
+<div id="status">0 / 2 Completed</div>
 
-<div class="progress-bar">
-<div id="progress"></div>
+<div class="loader">
+<div id="bar"></div>
 </div>
 
 </div>
@@ -551,146 +555,178 @@ draw()
 
 <style>
 
-#xmasGate{
+#gate{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:linear-gradient(#d60000,#0b6623);
+background:linear-gradient(135deg,#d60000,#1a1a1a);
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 z-index:9999;
 }
 
-.popup{
-background:white;
-padding:30px;
-border-radius:15px;
+.gate-box{
+background:#fff;
+padding:35px;
+border-radius:16px;
 text-align:center;
-width:300px;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
-animation:fadeIn .5s;
+width:320px;
+box-shadow:0 15px 40px rgba(0,0,0,0.4);
+animation:pop .4s ease;
 }
 
-@keyframes fadeIn{
-from{transform:scale(0.8);opacity:0;}
-to{transform:scale(1);opacity:1;}
+@keyframes pop{
+from{transform:scale(.8);opacity:0}
+to{transform:scale(1);opacity:1}
 }
 
-button{
-margin:10px;
+h2{
+margin:0;
+color:#d60000;
+}
+
+.sub{
+font-size:14px;
+color:#666;
+margin-bottom:15px;
+}
+
+.steps{
+display:flex;
+justify-content:space-between;
+margin:15px 0;
+}
+
+.step{
+background:#eee;
+padding:8px;
+border-radius:6px;
+font-size:12px;
+width:48%;
+}
+
+.step.active{
+background:#d60000;
+color:#fff;
+}
+
+.actions button{
+margin:8px;
 padding:12px 18px;
 border:none;
 border-radius:10px;
 background:#d60000;
-color:white;
+color:#fff;
 cursor:pointer;
 transition:.2s;
 }
 
-button:hover{
-transform:translateY(-5px);
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
+.actions button:hover{
+transform:translateY(-4px);
+box-shadow:0 5px 15px rgba(0,0,0,.3);
 }
 
-button:active{
-transform:scale(0.9);
+.actions button:active{
+transform:scale(.9);
 }
 
-.progress-bar{
-width:100%;
-height:10px;
+#status{
+margin-top:10px;
+font-size:14px;
+color:#333;
+}
+
+.loader{
+margin-top:15px;
+height:8px;
 background:#eee;
 border-radius:10px;
-margin-top:15px;
 overflow:hidden;
 }
 
-#progress{
+#bar{
 width:0%;
 height:100%;
-background:repeating-linear-gradient(
-45deg,
-#ff4d4d,
-#ff4d4d 10px,
-#fff 10px,
-#fff 20px
+background:linear-gradient(
+90deg,
+#ff3c3c,
+#ffffff,
+#ff3c3c
 );
 transition:width 5s linear;
-}
-
-#doneText{
-color:green;
-margin-top:10px;
-font-weight:bold;
 }
 
 </style>
 
 <script>
 
-let progressCount = 0;
+let done = 0;
 
-// 🔄 รีเซ็ตทุกครั้งที่เข้า
-localStorage.removeItem("xmas_done");
+// รีเซ็ตทุกครั้ง (กันข้าม)
+localStorage.removeItem("gate_done");
 
-// 🎬 STEP 1: ดู Ads
-function watchAd(){
+// STEP 1
+function stepAd(){
 
-if(progressCount >= 1) return;
+if(done >= 1) return;
 
+// ยิงโฆษณา
 window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
 
+// หน่วง 2 วิ
 setTimeout(()=>{
-progressCount++;
-updateStatus();
+done++;
+update();
+document.getElementById("s1").classList.add("active");
 },2000);
 
 }
 
-// 👍 STEP 2: Like (เปิด YouTube)
-function doLike(){
+// STEP 2
+function stepYT(){
 
-if(progressCount >= 2) return;
+if(done < 1) return;
+if(done >= 2) return;
 
+// เปิด YouTube
 window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41","_blank");
 
-progressCount++;
-updateStatus();
+done++;
+update();
+document.getElementById("s2").classList.add("active");
 
 }
 
-// 🔄 อัปเดตสถานะ
-function updateStatus(){
+// อัปเดต
+function update(){
 
-document.getElementById("status").innerText = "Progress: " + progressCount + "/2";
+document.getElementById("status").innerText = done + " / 2 Completed";
 
-if(progressCount == 2){
+if(done == 2){
 
-document.getElementById("doneText").innerText = "✅ Completed!";
+document.getElementById("status").innerText = "✅ Completed";
 
-startLoading();
-
-}
+startLoad();
 
 }
 
-// 🚀 โหลดเข้าเว็บ
-function startLoading(){
+}
 
-let bar = document.getElementById("progress");
+// โหลดเข้าเว็บ
+function startLoad(){
+
+let bar = document.getElementById("bar");
 
 setTimeout(()=>{
-bar.style.width="100%";
+bar.style.width = "100%";
 },100);
 
-// ⏳ 5 วิ แล้วเข้าเว็บ
+// 5 วิ
 setTimeout(()=>{
-
-document.getElementById("xmasGate").style.display="none";
-
+document.getElementById("gate").style.display="none";
 },5000);
 
 }
