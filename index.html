@@ -522,26 +522,289 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
+<!-- 🔥 PRO WHITE-BLACK-RED GATE -->
 <style>
-#ov{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center}
-#bx{background:#111;color:#fff;padding:25px;border-radius:18px;box-shadow:0 0 40px #f00;width:90%;max-width:380px;text-align:center}
-.btn{width:100%;margin-top:12px;padding:12px;border:none;border-radius:12px;background:#900;color:#fff}
-.btn:hover{box-shadow:0 0 20px #f00}
-.lock{background:#444}
-.success{background:#0f6}
-.bar{height:12px;background:#333;border-radius:10px;overflow:hidden}
-.fill{height:100%;width:0;background:#f00}
-#p{display:none}
+:root{
+  --red:#e11d48;
+  --red-soft:#f43f5e;
+  --black:#111111;
+  --gray:#6b7280;
+  --border:#e5e7eb;
+}
+
+/* 🔒 overlay */
+#gateOverlay{
+  position:fixed;
+  inset:0;
+  backdrop-filter:blur(12px);
+  background:rgba(255,255,255,0.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+}
+
+/* 💎 card */
+#gateBox{
+  width:92%;
+  max-width:420px;
+  background:#ffffff;
+  border-radius:22px;
+  padding:28px 26px;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.08),
+    0 6px 20px rgba(0,0,0,0.05);
+  border:1px solid var(--border);
+  animation:fadeUp .4s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(20px)}
+  to{opacity:1}
+}
+
+/* 🧠 text */
+h2{
+  font-size:20px;
+  color:var(--black);
+  margin-bottom:4px;
+  font-weight:600;
+}
+
+#desc{
+  font-size:13px;
+  color:var(--gray);
+  margin-bottom:12px;
+}
+
+#status{
+  font-size:13px;
+  color:var(--gray);
+  margin-bottom:10px;
+}
+
+/* 🔘 buttons */
+.btn{
+  width:100%;
+  padding:13px;
+  margin-top:10px;
+  border-radius:12px;
+  border:1px solid transparent;
+  font-size:14px;
+  cursor:pointer;
+  transition:all .2s ease;
+}
+
+/* primary */
+.primary{
+  background:var(--red);
+  color:#fff;
+}
+
+.primary:hover{
+  background:var(--red-soft);
+  transform:translateY(-2px);
+}
+
+.primary:active{
+  transform:scale(.97);
+}
+
+/* disabled */
+.lock{
+  background:#f3f4f6;
+  color:#9ca3af;
+  border:1px solid var(--border);
+  pointer-events:none;
+}
+
+/* success */
+.success{
+  background:#16a34a;
+  color:#fff;
+}
+
+/* enter */
+.enter{
+  background:var(--black);
+  color:#fff;
+}
+
+/* 🍬 progress */
+#progressBox{
+  display:none;
+  margin-top:16px;
+}
+
+.bar{
+  height:12px;
+  border-radius:999px;
+  background:#f3f4f6;
+  overflow:hidden;
+}
+
+.fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(
+    90deg,
+    #ff4d4f,
+    #e11d48,
+    #ff4d4f
+  );
+  transition:width .1s linear;
+}
+
+#cooldownText{
+  margin-top:6px;
+  font-size:12px;
+  color:var(--gray);
+  text-align:center;
+}
+
+/* button spacing fix */
+#enterBtn{
+  display:none;
+  margin-top:14px;
+}
 </style>
-<div id="ov"><div id="bx">
-<h3>Secure Gate</h3><div id="s">0/2</div>
-<button id="a" class="btn">Ads</button>
-<button id="y" class="btn lock">YT</button>
-<div id="p"><div class="bar"><div id="f" class="fill"></div></div><div id="t"></div></div>
-<button id="e" class="btn" style="display:none">Enter</button>
-</div></div>
+
+<div id="gateOverlay">
+  <div id="gateBox">
+    <h2>Secure Access</h2>
+    <div id="desc">กรุณาทำตามขั้นตอนเพื่อเข้าสู่เว็บไซต์</div>
+    <div id="status">Action 0/2</div>
+
+    <button id="adsBtn" class="btn primary">ดูโฆษณา</button>
+    <button id="ytBtn" class="btn lock">ดูวิดีโอ</button>
+
+    <div id="progressBox">
+      <div class="bar">
+        <div id="fill" class="fill"></div>
+      </div>
+      <div id="cooldownText">กำลังเตรียมระบบ...</div>
+    </div>
+
+    <button id="enterBtn" class="btn enter">เข้าสู่เว็บไซต์</button>
+  </div>
+</div>
+
 <script>
-// (logic เหมือนตัวบน)
+let step=0;
+let adsDone=false;
+let ytDone=false;
+let progressRunning=false;
+
+/* update UI */
+function update(){
+  document.getElementById("status").innerText = "Action " + step + "/2";
+}
+
+/* verify real leave */
+function verify(url, success){
+  let start = Date.now();
+  let left = false;
+
+  function onBlur(){
+    left = true;
+  }
+
+  function onFocus(){
+    let duration = (Date.now() - start) / 1000;
+
+    if(left && duration >= 2){
+      cleanup();
+      success();
+    }else{
+      start = Date.now();
+      left = false;
+    }
+  }
+
+  function cleanup(){
+    window.removeEventListener("blur", onBlur);
+    window.removeEventListener("focus", onFocus);
+  }
+
+  window.addEventListener("blur", onBlur);
+  window.addEventListener("focus", onFocus);
+
+  window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6","_blank");
+}
+
+/* ADS */
+document.getElementById("adsBtn").onclick = function(){
+  if(adsDone) return;
+
+  verify("", ()=>{
+    adsDone = true;
+    step++;
+    update();
+
+    let btn = document.getElementById("adsBtn");
+    btn.innerText = "✓ สำเร็จ";
+    btn.classList.add("success");
+
+    document.getElementById("ytBtn").classList.remove("lock");
+  });
+};
+
+/* YOUTUBE */
+document.getElementById("ytBtn").onclick = function(){
+  if(!adsDone || ytDone) return;
+
+  verify("https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV", ()=>{
+    ytDone = true;
+    step++;
+    update();
+
+    let btn = document.getElementById("ytBtn");
+    btn.innerText = "✓ สำเร็จ";
+    btn.classList.add("success");
+
+    startProgress();
+  });
+};
+
+/* PROGRESS */
+function startProgress(){
+  if(progressRunning) return;
+  progressRunning = true;
+
+  let fill = document.getElementById("fill");
+  let text = document.getElementById("cooldownText");
+  let box = document.getElementById("progressBox");
+
+  box.style.display = "block";
+
+  const duration = 5000;
+  const start = performance.now();
+
+  function frame(now){
+    let elapsed = now - start;
+    let progress = Math.min(elapsed / duration, 1);
+
+    fill.style.width = (progress * 100) + "%";
+    text.innerText = "รอ " + Math.max(0, Math.ceil((duration - elapsed)/1000)) + " วินาที";
+
+    if(progress < 1){
+      requestAnimationFrame(frame);
+    }else{
+      text.innerText = "พร้อมแล้ว";
+      document.getElementById("enterBtn").style.display = "block";
+    }
+  }
+
+  requestAnimationFrame(frame);
+}
+
+/* ENTER */
+document.getElementById("enterBtn").onclick = function(){
+  document.getElementById("gateOverlay").remove();
+  document.body.style.overflow = "auto";
+};
+
+update();
 </script>
    
 </body>
