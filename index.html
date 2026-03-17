@@ -528,22 +528,24 @@ draw()
 
 <div class="gate-box">
 
-<h2>🎄 Access Required</h2>
+<h2>🎄 Christmas Access</h2>
 
-<div class="progress-text">0 / 2 Completed</div>
+<p class="desc">Complete all steps to continue</p>
 
-<div class="actions">
-<button onclick="stepAd()">Watch Ad</button>
-<button onclick="stepSocial()">Like Video</button>
+<div class="steps">
+<button id="adBtn" onclick="stepAd()">🎬 Watch Ad</button>
+<button id="ytBtn" onclick="stepYT()">👍 Support</button>
 </div>
 
-<div class="cooldown">
-<div id="bar"></div>
+<div class="status">Progress: <span id="count">0</span>/2</div>
+
+<div class="cooldown" id="cooldown">Waiting...</div>
+
+<div class="bar">
+<div id="barFill"></div>
 </div>
 
-<button id="enterBtn" onclick="enterSite()" disabled>
-Enter Website
-</button>
+<button id="enterBtn" disabled onclick="enterSite()">Enter Website</button>
 
 </div>
 
@@ -551,190 +553,201 @@ Enter Website
 
 <style>
 
+/* BLUR BACKGROUND */
 #gate{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+inset:0;
 backdrop-filter:blur(8px);
 background:rgba(0,0,0,0.5);
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
 z-index:9999;
 }
 
-/* BOX */
+/* POPUP */
 .gate-box{
-width:90%;
-max-width:380px;
-background:linear-gradient(135deg,#d60000,#0b6623);
+background:linear-gradient(135deg,#b30000,#006400);
 padding:30px;
-border-radius:20px;
+border-radius:18px;
+width:320px;
 text-align:center;
 color:white;
-box-shadow:0 20px 50px rgba(0,0,0,0.4);
+box-shadow:0 20px 40px rgba(0,0,0,0.4);
 animation:pop .4s ease;
 }
 
 @keyframes pop{
-from{transform:scale(.8);opacity:0}
-to{transform:scale(1);opacity:1}
+from{transform:scale(.8);opacity:0;}
+to{transform:scale(1);opacity:1;}
 }
 
-.progress-text{
-margin:10px 0;
-font-size:18px;
+.desc{
+opacity:.8;
+margin-bottom:15px;
 }
 
 /* BUTTONS */
 button{
 margin:8px;
-padding:12px 16px;
+padding:12px 18px;
 border:none;
 border-radius:12px;
-background:white;
+background:#fff;
 color:#d60000;
 font-weight:bold;
 cursor:pointer;
-transition:.25s;
+transition:.2s;
 }
 
 button:hover{
-transform:translateY(-4px);
-box-shadow:0 10px 20px rgba(0,0,0,.3);
+transform:translateY(-5px);
+box-shadow:0 8px 20px rgba(0,0,0,0.3);
 }
 
 button:active{
-transform:scale(.9);
+transform:scale(.85);
+}
+
+/* STATUS */
+.status{
+margin-top:10px;
+font-size:15px;
+}
+
+/* COOLDOWN */
+.cooldown{
+margin-top:10px;
+font-size:14px;
+color:#ffd700;
+}
+
+/* BAR */
+.bar{
+margin-top:12px;
+height:10px;
+background:#eee;
+border-radius:10px;
+overflow:hidden;
+}
+
+#barFill{
+width:0%;
+height:100%;
+background:repeating-linear-gradient(
+45deg,
+#ff4d4d,
+#ff4d4d 10px,
+#ffffff 10px,
+#ffffff 20px
+);
+transition:width .1s linear;
 }
 
 /* ENTER BUTTON */
 #enterBtn{
 margin-top:15px;
 width:100%;
-background:#fff;
+background:#00ff88;
+color:black;
 opacity:.5;
 }
 
-/* PROGRESS BAR */
-.cooldown{
-margin-top:15px;
-height:10px;
-background:#ffffff33;
-border-radius:10px;
-overflow:hidden;
-}
-
-#bar{
-width:0%;
-height:100%;
-background:repeating-linear-gradient(
-45deg,
-#ff3c3c,
-#ff3c3c 10px,
-#fff 10px,
-#fff 20px
-);
-transition:width 5s linear;
+#enterBtn.active{
+opacity:1;
 }
 
 </style>
 
 <script>
 
-let progress = 0;
-let active = false;
-let lastAction = Date.now();
+let step = 0;
+let interacted = false;
 
-// 🔒 กัน refresh bypass
-localStorage.removeItem("gate_done");
+// 🔄 รีเซ็ตทุกครั้ง (กัน bypass)
+sessionStorage.removeItem("done");
 
-// 🔥 AFK CHECK (ถ้าปล่อยเกิน 15 วิ รีเซ็ต)
-setInterval(()=>{
-if(Date.now() - lastAction > 15000){
-resetGate();
-}
-},3000);
-
-function updateUI(){
-document.querySelector(".progress-text").innerText = progress + " / 2 Completed";
-
-if(progress === 2){
-startCooldown();
-}
-}
-
-// 🎬 STEP 1 ADS
+// 🎬 STEP 1
 function stepAd(){
 
-if(progress >= 1) return;
+if(step >= 1) return;
 
-lastAction = Date.now();
-
-// ยิง ads
 window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
 
-// กันกดมั่ว ต้องรอ 2 วิ
 setTimeout(()=>{
-progress++;
-updateUI();
+step++;
+update();
 },2000);
 
 }
 
-// 👍 STEP 2 SOCIAL
-function stepSocial(){
+// 👍 STEP 2
+function stepYT(){
 
-if(progress >= 2) return;
-
-lastAction = Date.now();
+if(step >= 2) return;
 
 window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41","_blank");
 
-progress++;
-updateUI();
+step++;
+update();
 
 }
 
-// ⏳ COOLDOWN 5 วิ
+// 🧠 ต้องมี interaction กัน AFK
+document.addEventListener("mousemove",()=> interacted=true);
+document.addEventListener("click",()=> interacted=true);
+
+// 🔄 UPDATE UI
+function update(){
+
+document.getElementById("count").innerText = step;
+
+if(step === 2){
+startCooldown();
+}
+
+}
+
+// ⏳ COOLDOWN + BAR
 function startCooldown(){
 
-if(active) return;
-active = true;
+let time = 5;
+let bar = document.getElementById("barFill");
+let cd = document.getElementById("cooldown");
 
-let bar = document.getElementById("bar");
+let interval = setInterval(()=>{
 
-setTimeout(()=>{
-bar.style.width = "100%";
-},50);
+if(!interacted){
+cd.innerText = "⚠️ Move or click to continue";
+return;
+}
 
-setTimeout(()=>{
-document.getElementById("enterBtn").disabled = false;
-document.getElementById("enterBtn").style.opacity = 1;
-},5000);
+time--;
+cd.innerText = "Please wait " + time + "s";
+
+let percent = (5-time)/5*100;
+bar.style.width = percent + "%";
+
+if(time <= 0){
+
+clearInterval(interval);
+
+cd.innerText = "✅ Completed";
+
+let btn = document.getElementById("enterBtn");
+btn.disabled = false;
+btn.classList.add("active");
 
 }
 
-// 🚀 เข้าเว็บ (ต้องกดเอง)
+},1000);
+
+}
+
+// 🚀 ENTER
 function enterSite(){
 
 document.getElementById("gate").style.display="none";
-
-}
-
-// 🔄 RESET (กัน AFK / hack)
-function resetGate(){
-
-progress = 0;
-active = false;
-
-document.getElementById("bar").style.width = "0%";
-document.getElementById("enterBtn").disabled = true;
-document.getElementById("enterBtn").style.opacity = .5;
-
-updateUI();
 
 }
 
