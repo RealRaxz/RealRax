@@ -12,41 +12,54 @@
 body{
 margin:0;
 font-family:Arial;
-background:#f5f5f5;
+background:#f4f4f4;
 }
 
 /* NAVBAR */
 
 .navbar{
-background:#d60000;
+background:#e10000;
 color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:12px 25px;
+padding:14px 30px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:bold;
+}
+
+.logo img{
+width:36px;
+height:36px;
+border-radius:50%;
 }
 
 .nav-links a{
 color:white;
 text-decoration:none;
-margin-left:15px;
+margin-left:20px;
 font-weight:bold;
 }
 
 /* HERO */
 
 .hero{
-position:relative;
-background:linear-gradient(#d60000,#ff4040);
+background:linear-gradient(135deg,#e10000,#ff4b4b);
 color:white;
 text-align:center;
-padding:80px 20px;
+padding:70px 20px;
+position:relative;
 overflow:hidden;
 }
 
 .hero h1{
+font-size:38px;
 margin:0;
-font-size:34px;
 }
 
 /* SNOW */
@@ -62,26 +75,17 @@ pointer-events:none;
 
 .snow span{
 position:absolute;
-display:block;
-width:6px;
-height:6px;
-background:white;
-border-radius:50%;
-animation:snow 10s linear infinite;
+color:white;
+font-size:14px;
+animation:snow 8s linear infinite;
 }
 
 @keyframes snow{
-0%{
-transform:translateY(-10px);
-opacity:1;
-}
-100%{
-transform:translateY(400px);
-opacity:0;
-}
+0%{transform:translateY(-10px)}
+100%{transform:translateY(400px)}
 }
 
-/* CONTAINER */
+/* CONTENT */
 
 .container{
 max-width:900px;
@@ -93,60 +97,60 @@ padding:30px;
 
 .card{
 background:white;
-padding:35px;
+padding:30px;
 border-radius:12px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
-text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
 /* BUTTONS */
 
 .download-btn{
 display:inline-block;
-background:#d60000;
+margin-top:20px;
+background:#e10000;
 color:white;
-padding:15px 28px;
+padding:15px 30px;
 border-radius:8px;
 text-decoration:none;
 font-size:18px;
 font-weight:bold;
-margin-top:20px;
 transition:0.3s;
 }
 
 .download-btn:hover{
-background:#a80000;
+background:#b80000;
 transform:scale(1.05);
 }
 
 .back-btn{
 display:inline-block;
-margin-top:15px;
+margin-top:20px;
 background:#444;
 color:white;
 padding:10px 20px;
 border-radius:6px;
 text-decoration:none;
+margin-right:10px;
 }
 
 /* TEXT */
 
 .info{
-line-height:1.7;
+line-height:1.8;
 color:#444;
 margin-top:20px;
 }
 
 /* MOBILE */
 
-@media(max-width:600px){
+@media(max-width:700px){
 
 .hero h1{
-font-size:26px;
+font-size:28px;
 }
 
-.card{
-padding:25px;
+.container{
+padding:20px;
 }
 
 }
@@ -159,102 +163,111 @@ padding:25px;
 
 <div class="navbar">
 
-<div><b>RealRax Scripts</b></div>
+<div class="logo">
+<img src="mascot.png">
+RealRax Scripts
+</div>
 
 <div class="nav-links">
 <a href="index.html">Home</a>
 <a href="download.html">Download</a>
-<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
+<a href="https://youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
 </div>
 
 </div>
+
 
 <div class="hero">
 
-<h1>⬇️ Delta Executor Download</h1>
-<p>Download Roblox Executor for Android / iOS / PC</p>
-
 <div class="snow">
 
-<span style="left:10%;animation-delay:0s"></span>
-<span style="left:20%;animation-delay:2s"></span>
-<span style="left:30%;animation-delay:4s"></span>
-<span style="left:40%;animation-delay:1s"></span>
-<span style="left:50%;animation-delay:3s"></span>
-<span style="left:60%;animation-delay:5s"></span>
-<span style="left:70%;animation-delay:2s"></span>
-<span style="left:80%;animation-delay:4s"></span>
-<span style="left:90%;animation-delay:1s"></span>
+<span style="left:10%">❄️</span>
+<span style="left:20%">❄️</span>
+<span style="left:35%">❄️</span>
+<span style="left:50%">❄️</span>
+<span style="left:70%">❄️</span>
+<span style="left:85%">❄️</span>
 
 </div>
 
+<h1>❄️ Delta Executor Download</h1>
+<p>Roblox Script Executor for Mobile & PC</p>
+
 </div>
+
 
 <div class="container">
 
 <div class="card">
 
-<h2>🚀 Delta Executor</h2>
+<h2>📥 Download Delta Executor</h2>
 
 <div class="info">
 
 <p>
-📌 <b>Delta Executor</b> คือโปรแกรมสำหรับรัน Roblox Script
-ที่ได้รับความนิยมสูง ใช้งานง่าย และรองรับสคริปต์หลายประเภท
-เหมาะสำหรับผู้เล่นที่ต้องการเพิ่มความสะดวกในการเล่นเกม Roblox
+🚀 <b>Delta Executor</b> เป็นโปรแกรมสำหรับรัน Roblox Script
+ที่ได้รับความนิยมอย่างมากในหมู่ผู้เล่น Roblox ทั่วโลก
+ด้วยระบบที่รวดเร็ว ใช้งานง่าย และรองรับสคริปต์จำนวนมาก
 </p>
 
 <p>
-⚡ <b>Features / คุณสมบัติ</b>
+⚡ Executor ตัวนี้ถูกออกแบบมาเพื่อให้ผู้เล่นสามารถใช้งาน
+Script ต่าง ๆ ในเกม Roblox ได้อย่างสะดวก เช่น
 </p>
 
 <p>
-🔹 รัน Roblox Script ได้รวดเร็ว  
-🔹 ใช้งานง่าย มือใหม่ก็ใช้ได้  
-🔹 รองรับ Script Hub หลายแบบ  
-🔹 รองรับ Auto Farm / Auto Quest / Auto Level  
-🔹 ปลอดภัยและอัปเดตสม่ำเสมอ  
+🎮 Auto Farm Script  
+⚔️ Boss Farm Script  
+🌍 Teleport Script  
+💎 Item Farming Script  
 </p>
 
 <p>
-📱 <b>Supported Devices / อุปกรณ์ที่รองรับ</b>
+📱 <b>รองรับอุปกรณ์หลายประเภท</b>
 </p>
 
 <p>
-✅ Android  
-✅ iOS  
-✅ PC / Emulator  
+📱 Android Mobile  
+🍎 iOS (ผ่านตัวช่วยบางประเภท)  
+💻 PC Emulator  
 </p>
 
 <p>
-💡 ดาวน์โหลด Delta Executor เวอร์ชันล่าสุดด้านล่าง
+✨ จุดเด่นของ Delta Executor
+</p>
+
+<p>
+⚡ รัน Script ได้เร็ว  
+🔒 ปลอดภัยและใช้งานง่าย  
+📜 รองรับ Script จำนวนมาก  
+🎮 ใช้งานกับ Roblox ได้หลายเกม  
+</p>
+
+<p>
+📌 กดปุ่มด้านล่างเพื่อดาวน์โหลด Delta Executor
 </p>
 
 </div>
 
-<!-- DOWNLOAD BUTTON -->
 
-<a class="download-btn" onclick="startDownload()">
-⬇️ Download Delta Executor
-</a>
+<a class="back-btn" href="index.html">⬅️ Back</a>
 
-<br>
 
-<a class="back-btn" href="index.html">
-🔙 Back to Home
-</a>
+<a class="download-btn" onclick="openDownload()">⬇️ Download Delta Executor</a>
+
 
 </div>
 
 </div>
+
 
 <script>
 
-/* SMARTLINK BEFORE DOWNLOAD */
+/* SMARTLINK */
 
-function startDownload(){
+function openDownload(){
 
-window.open("YOUR_SMARTLINK_HERE","_blank");
+window.open("SMARTLINKของคุณ","_blank");
 
 setTimeout(function(){
 
@@ -265,6 +278,7 @@ window.location.href="https://delta.filenetwork.vip/file/Delta-2.711.876-02.apk"
 }
 
 </script>
+
 
 </body>
 </html>
