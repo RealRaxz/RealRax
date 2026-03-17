@@ -236,29 +236,6 @@ grid-template-columns:repeat(2,1fr);
 font-size:28px;
 }
 }
-
-/* 🍬 SMOOTH CANDY BAR */
-#bar{
-width:0%;
-height:100%;
-background:repeating-linear-gradient(
-45deg,
-#ff4d4d,
-#ff4d4d 10px,
-#ffffff 10px,
-#ffffff 20px
-);
-}
-
-/* ✅ ตัวที่ทำให้ "ลื่น" */
-#bar.run{
-animation:loadBar 5s linear forwards;
-}
-
-@keyframes loadBar{
-from{width:0%;}
-to{width:100%;}
-}
    
 </style>
 
@@ -545,53 +522,212 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
+<!-- 🎄 REALRAX PRO ACCESS GATE -->
+
+<div id="gate">
+  <div class="popup">
+
+    <h2>🎄 Secure Access</h2>
+    <p class="sub">Complete steps to unlock download</p>
+
+    <div class="steps">
+      <div class="step" id="step1">Verify</div>
+      <div class="step" id="step2">Continue</div>
+    </div>
+
+    <div class="actions">
+      <button id="btn1" onclick="runAd()">Verify Access</button>
+      <button id="btn2" onclick="runYT()">Continue</button>
+    </div>
+
+    <div id="status">0 / 2 Completed</div>
+
+    <div class="progress-wrap">
+      <div id="bar"></div>
+    </div>
+
+    <button id="enterBtn" onclick="enterSite()" disabled>
+      Enter Website
+    </button>
+
+  </div>
+</div>
+
+<style>
+
+/* 🔥 BLUR BACKGROUND */
+#gate{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+backdrop-filter:blur(8px);
+background:rgba(0,0,0,0.6);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+/* POPUP */
+.popup{
+background:#fff;
+padding:30px;
+border-radius:18px;
+width:340px;
+text-align:center;
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+animation:fade .4s ease;
+}
+
+@keyframes fade{
+from{opacity:0; transform:scale(.9)}
+to{opacity:1; transform:scale(1)}
+}
+
+h2{
+color:#d60000;
+margin:0;
+}
+
+.sub{
+color:#666;
+font-size:14px;
+margin-bottom:15px;
+}
+
+/* STEPS */
+.steps{
+display:flex;
+gap:10px;
+margin:15px 0;
+}
+
+.step{
+flex:1;
+padding:8px;
+background:#eee;
+border-radius:8px;
+font-size:12px;
+}
+
+.step.active{
+background:#d60000;
+color:#fff;
+}
+
+/* BUTTON */
+button{
+margin:6px;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#d60000;
+color:#fff;
+cursor:pointer;
+transition:.25s;
+width:90%;
+}
+
+button:hover{
+transform:translateY(-4px);
+box-shadow:0 6px 15px rgba(0,0,0,.3);
+}
+
+button:active{
+transform:scale(.92);
+}
+
+/* STATUS */
+#status{
+margin-top:10px;
+font-size:14px;
+}
+
+.done{
+color:#28a745;
+font-weight:bold;
+}
+
+/* 🍬 CANDY PROGRESS (SMOOTH) */
+.progress-wrap{
+margin-top:15px;
+height:10px;
+background:#eee;
+border-radius:10px;
+overflow:hidden;
+}
+
+#bar{
+width:0%;
+height:100%;
+background:repeating-linear-gradient(
+45deg,
+#ff4d4d,
+#ff4d4d 10px,
+#ffffff 10px,
+#ffffff 20px
+);
+}
+
+/* ENTER BTN */
+#enterBtn{
+margin-top:15px;
+background:#28a745;
+opacity:.5;
+cursor:not-allowed;
+}
+
+#enterBtn.active{
+opacity:1;
+cursor:pointer;
+}
+
+</style>
+
 <script>
 
 let step = 0;
 let timerActive = false;
-
-/* =========================
-   🔥 AFK SYSTEM (FIXED)
-========================= */
+let progressRunning = false;
 
 let lastActive = Date.now();
 
-// interaction
-document.addEventListener("mousemove",()=> lastActive=Date.now());
-document.addEventListener("click",()=> lastActive=Date.now());
-document.addEventListener("touchstart",()=> lastActive=Date.now());
-
-// ✅ FIX: กลับมาจากแท็บอื่น
-document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) lastActive = Date.now();
+// ✅ USER ACTIVITY
+["mousemove","click","touchstart","keydown"].forEach(evt=>{
+document.addEventListener(evt,()=> lastActive=Date.now());
 });
 
-window.addEventListener("focus", () => {
-    lastActive = Date.now();
+// ✅ FIX: สลับแท็บไม่รีเซ็ต
+document.addEventListener("visibilitychange",()=>{
+if(!document.hidden){
+lastActive = Date.now();
+}
 });
 
-// เช็ค AFK
+window.addEventListener("focus",()=>{
+lastActive = Date.now();
+});
+
+// 🔥 AFK CHECK (เสถียรขึ้น)
 setInterval(()=>{
-    if(Date.now() - lastActive > 15000){
-        resetAll();
-    }
-},2000);
+if(Date.now() - lastActive > 20000){ // 20 วิ กันพลาด
+resetAll();
+}
+},3000);
 
-
-/* =========================
-   🔄 RESET
-========================= */
-
+// 🔁 RESET
 function resetAll(){
 
 step = 0;
 timerActive = false;
+progressRunning = false;
 
 document.getElementById("status").innerText="0 / 2 Completed";
 document.getElementById("status").classList.remove("done");
 
-document.getElementById("bar").classList.remove("run");
-document.getElementById("countdown").innerText="";
+document.getElementById("bar").style.width="0%";
 
 document.getElementById("enterBtn").disabled=true;
 document.getElementById("enterBtn").classList.remove("active");
@@ -601,17 +737,14 @@ document.getElementById("step2").classList.remove("active");
 
 }
 
-
-/* =========================
-   STEP 1 (ADS)
-========================= */
-
+// STEP 1 ADS
 function runAd(){
 
 if(step >= 1) return;
 
 window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
 
+// delay กันกดหลอก
 setTimeout(()=>{
 step=1;
 document.getElementById("step1").classList.add("active");
@@ -620,11 +753,7 @@ updateUI();
 
 }
 
-
-/* =========================
-   STEP 2 (YOUTUBE)
-========================= */
-
+// STEP 2 YT
 function runYT(){
 
 if(step < 1 || step >= 2) return;
@@ -633,16 +762,11 @@ window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41","_blank");
 
 step=2;
 document.getElementById("step2").classList.add("active");
-
 updateUI();
 
 }
 
-
-/* =========================
-   UPDATE UI
-========================= */
-
+// UPDATE UI
 function updateUI(){
 
 document.getElementById("status").innerText = step+" / 2 Completed";
@@ -652,57 +776,45 @@ if(step==2){
 document.getElementById("status").innerText="✅ Completed";
 document.getElementById("status").classList.add("done");
 
-startCooldown();
+startSmoothProgress();
 
 }
 
 }
 
+// 🍬 SMOOTH PROGRESS (ไม่ผูกเวลา)
+function startSmoothProgress(){
 
-/* =========================
-   🍬 SMOOTH PROGRESS BAR
-========================= */
-
-function startCooldown(){
-
-if(timerActive) return;
-timerActive=true;
+if(progressRunning) return;
+progressRunning = true;
 
 let bar = document.getElementById("bar");
+let width = 0;
 
-// 👉 รีเริ่ม animation
-bar.classList.remove("run");
-void bar.offsetWidth; // force reflow
-bar.classList.add("run");
+function animate(){
 
-let time = 5;
+// ความเร็ว random นิดๆ กันจับ pattern
+width += Math.random()*1.5;
 
-let interval = setInterval(()=>{
+if(width >= 100){
+width = 100;
 
-time--;
-document.getElementById("countdown").innerText="Loading "+time+"s";
+document.getElementById("enterBtn").disabled=false;
+document.getElementById("enterBtn").classList.add("active");
 
-if(time<=0){
+return;
+}
 
-clearInterval(interval);
+bar.style.width = width + "%";
 
-document.getElementById("countdown").innerText="Ready!";
+requestAnimationFrame(animate);
+}
 
-let btn = document.getElementById("enterBtn");
-btn.disabled=false;
-btn.classList.add("active");
+animate();
 
 }
 
-},1000);
-
-}
-
-
-/* =========================
-   ENTER
-========================= */
-
+// ENTER
 function enterSite(){
 document.getElementById("gate").style.display="none";
 }
