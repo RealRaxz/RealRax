@@ -522,7 +522,7 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🎄 GOD CHRISTMAS POPUP SYSTEM -->
+<!-- 🎄 GOD POPUP SYSTEM -->
 
 <div id="gate">
 
@@ -530,232 +530,222 @@ draw()
 
 <h2>🎄 Christmas Access 🎄</h2>
 
-<p id="progressText">Progress: 0/2</p>
+<div class="status">Progress: <span id="step">0</span>/2</div>
 
-<div class="btns">
+<div class="actions">
 
-<button id="adBtn">🎬 Watch Ad</button>
-<button id="ytBtn">👍 Support</button>
+<button id="adBtn" onclick="openAd()">🎬 Watch Ad</button>
+<button id="likeBtn" onclick="openYT()">👍 Like</button>
 
 </div>
 
 <div id="cooldownBox">
-<div id="bar"></div>
-<span id="time">5.0s</span>
+<div id="coolText">⏳ Waiting...</div>
+<div class="bar"><div id="barFill"></div></div>
 </div>
 
-<button id="enterBtn" disabled>🚀 Enter Website</button>
+<button id="enterBtn" onclick="enterSite()" disabled>🚀 Enter Website</button>
 
 </div>
-
 </div>
 
 <style>
 
+/* 🔥 BACKDROP BLUR */
 #gate{
 position:fixed;
-inset:0;
+top:0;left:0;
+width:100%;
+height:100%;
 backdrop-filter:blur(8px);
 background:rgba(0,0,0,0.4);
 display:flex;
 justify-content:center;
 align-items:center;
-z-index:99999;
+z-index:9999;
 }
 
+/* POPUP */
 .popup{
+background:white;
+padding:25px;
+border-radius:15px;
 width:90%;
 max-width:340px;
-background:linear-gradient(#d60000,#0b6623);
-padding:25px;
-border-radius:16px;
 text-align:center;
-color:white;
-box-shadow:0 15px 40px rgba(0,0,0,0.4);
-animation:fade .4s;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
 
-@keyframes fade{
-from{opacity:0;transform:scale(.9)}
-to{opacity:1;transform:scale(1)}
-}
-
-.btns{
-margin:15px 0;
-}
-
+/* BUTTON */
 button{
 margin:8px;
-padding:12px 16px;
+padding:12px 18px;
 border:none;
 border-radius:10px;
-background:white;
-color:#d60000;
-font-weight:bold;
+background:#d60000;
+color:white;
 cursor:pointer;
 transition:.2s;
 }
 
 button:hover{
 transform:translateY(-4px);
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
 button:active{
-transform:scale(.9);
+transform:scale(0.9);
 }
 
-#cooldownBox{
+/* PROGRESS BAR */
+.bar{
 width:100%;
-height:12px;
-background:#fff3;
+height:10px;
+background:#eee;
 border-radius:10px;
 overflow:hidden;
 margin-top:10px;
-position:relative;
 }
 
-#bar{
-width:0%;
+#barFill{
 height:100%;
+width:0%;
 background:repeating-linear-gradient(
 45deg,
-#ff3c3c,
-#ff3c3c 10px,
+#ff4d4d,
+#ff4d4d 10px,
 #fff 10px,
 #fff 20px
 );
-transition:width linear;
+transition:width 5s linear;
 }
 
-#time{
-position:absolute;
-top:-20px;
-right:0;
-font-size:12px;
-}
-
+/* ENTER BUTTON */
 #enterBtn{
-width:100%;
+background:#0b6623;
 margin-top:15px;
-background:#00ff99;
-color:black;
+opacity:.5;
 }
 
-#enterBtn:disabled{
-background:#aaa;
-cursor:not-allowed;
+#enterBtn.active{
+opacity:1;
 }
 
 </style>
 
 <script>
 
-let progress = 0;
-let adDone = false;
-let ytDone = false;
+let step = 0;
+let adOpened = false;
+let returnedFromAd = false;
 let cooldownDone = false;
-let running = false;
 
-// 🔄 reset ทุกครั้ง (กัน bypass)
-localStorage.removeItem("gate_pass");
+// ❌ reset ทุกครั้ง
+localStorage.removeItem("done");
 
-// 🎬 WATCH AD (กัน spam + ต้องอยู่หน้า)
-document.getElementById("adBtn").onclick = () => {
+// 🎬 เปิด Ads + ตรวจกลับ
+function openAd(){
 
-if(adDone) return;
+if(step >= 1) return;
 
-let w = window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165");
+adOpened = true;
 
-let start = Date.now();
+// เปิด ads
+window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
 
-// 👇 ตรวจว่าผู้ใช้ยังอยู่หน้า (กัน AFK)
-let check = setInterval(()=>{
+// ตรวจ user กลับ (focus)
+window.onfocus = () => {
 
-if(document.hidden){
-clearInterval(check);
-return;
-}
+if(adOpened && !returnedFromAd){
 
-// ครบ 2 วิจริง
-if(Date.now() - start > 2000){
-adDone = true;
-progress++;
-update();
-clearInterval(check);
-}
-
-},200);
-
-};
-
-// 👍 YOUTUBE (ต้องเปิดจริง)
-document.getElementById("ytBtn").onclick = () => {
-
-if(ytDone) return;
-
-window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41");
-
-ytDone = true;
-progress++;
+returnedFromAd = true;
+step++;
 update();
 
-};
+}
 
-// 🔄 UPDATE STATUS
+}
+
+}
+
+// 👍 เปิด YouTube
+function openYT(){
+
+if(step >= 2) return;
+
+window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41","_blank");
+
+step++;
+update();
+
+}
+
+// 🔄 อัปเดต
 function update(){
 
-document.getElementById("progressText").innerText =
-"Progress: " + progress + "/2";
+document.getElementById("step").innerText = step;
 
-if(progress === 2){
+if(step === 2){
+
 startCooldown();
-}
 
 }
 
-// ⏳ COOLDOWN (smooth จริง)
+}
+
+// ⏳ คูลดาวน์ + กัน AFK
 function startCooldown(){
 
-if(running) return;
-running = true;
+let bar = document.getElementById("barFill");
+let text = document.getElementById("coolText");
 
-let bar = document.getElementById("bar");
-let timeText = document.getElementById("time");
+let time = 5;
 
-let duration = 5000;
-let start = performance.now();
+bar.style.width = "100%";
 
-function animate(now){
+let interval = setInterval(()=>{
 
-let elapsed = now - start;
-let percent = Math.min(elapsed / duration, 1);
+time--;
+text.innerText = "⏳ " + time + "s";
 
-bar.style.width = (percent * 100) + "%";
-timeText.innerText = (5 - percent*5).toFixed(1) + "s";
+if(time <= 0){
 
-if(percent < 1){
-requestAnimationFrame(animate);
-}else{
+clearInterval(interval);
+
 cooldownDone = true;
+
+text.innerText = "✅ Completed";
+
 document.getElementById("enterBtn").disabled = false;
-timeText.innerText = "Completed";
-}
+document.getElementById("enterBtn").classList.add("active");
 
 }
 
-requestAnimationFrame(animate);
+},1000);
+
+// 🔥 กัน AFK (ต้องมี interaction)
+let interacted = false;
+
+document.addEventListener("mousemove", ()=>interacted=true);
+document.addEventListener("click", ()=>interacted=true);
+
+setTimeout(()=>{
+
+if(!interacted){
+location.reload();
+}
+
+},6000);
 
 }
 
-// 🚀 ENTER (ไม่ auto ตามที่ขอ)
-document.getElementById("enterBtn").onclick = () => {
+// 🚀 เข้าเว็บ
+function enterSite(){
 
 if(!cooldownDone) return;
 
-document.getElementById("gate").style.display="none";
+document.getElementById("gate").style.display = "none";
 
-};
+}
 
 </script>
 
