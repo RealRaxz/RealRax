@@ -1,61 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-<title>Download</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Download Delta Executor</title>
 
 <style>
 
 body{
 margin:0;
-font-family:Segoe UI;
-background:linear-gradient(#ff3c3c,#a10000);
-min-height:100vh;
+font-family:Arial;
+background:#f4f4f4;
 }
+
+/* NAVBAR */
 
 .navbar{
-background:#b80000;
+background:#d60000;
 color:white;
-padding:14px 40px;
 display:flex;
 justify-content:space-between;
+align-items:center;
+padding:12px 30px;
 }
 
-.navbar a{
+.nav-links a{
 color:white;
 text-decoration:none;
-margin-left:15px;
+margin-left:20px;
+font-weight:bold;
 }
 
-.box{
+/* HERO */
 
-max-width:700px;
+.hero{
+background:linear-gradient(#d60000,#ff3b3b);
+color:white;
+text-align:center;
+padding:80px 20px;
+position:relative;
+overflow:hidden;
+}
+
+.hero h1{
+font-size:36px;
+margin:0;
+}
+
+/* SNOW */
+
+.snow{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+}
+
+.snow span{
+position:absolute;
+color:white;
+font-size:20px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-10px);
+opacity:1;
+}
+100%{
+transform:translateY(600px);
+opacity:0;
+}
+}
+
+/* CONTENT */
+
+.container{
+max-width:900px;
 margin:auto;
-margin-top:80px;
+padding:30px;
+}
+
+.card{
 background:white;
 padding:30px;
 border-radius:12px;
-text-align:center;
-
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
 }
 
-.btn{
+/* BUTTON */
 
+.download-btn{
+display:inline-block;
+margin-top:20px;
 background:#d60000;
 color:white;
-padding:12px 20px;
-border-radius:6px;
+padding:14px 30px;
+border-radius:8px;
+font-size:18px;
 text-decoration:none;
-display:inline-block;
-transition:.2s;
-
+font-weight:bold;
+transition:0.3s;
 }
 
-.btn:hover{
-transform:translateY(-4px);
+.download-btn:hover{
+background:#a80000;
+transform:scale(1.05);
 }
 
-.btn:active{
-transform:scale(.9);
+.section-title{
+margin-top:30px;
+font-size:22px;
+color:#d60000;
+}
+
+p{
+line-height:1.7;
+color:#444;
 }
 
 </style>
@@ -66,30 +132,117 @@ transform:scale(.9);
 
 <div class="navbar">
 
-<div>Script Hub</div>
+<div><b>RealRax Scripts</b></div>
 
-<div>
-
+<div class="nav-links">
 <a href="index.html">Home</a>
-<a href="https://youtube.com">YouTube</a>
+<a href="download.html">Download</a>
+<a href="https://youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
+</div>
+
+</div>
+
+<div class="hero">
+
+<h1>Delta Executor Download</h1>
+<p>Roblox Script Executor for Android</p>
+
+<div class="snow">
+
+<span style="left:5%;animation-duration:5s;">❄</span>
+<span style="left:20%;animation-duration:7s;">❄</span>
+<span style="left:35%;animation-duration:6s;">❄</span>
+<span style="left:50%;animation-duration:8s;">❄</span>
+<span style="left:65%;animation-duration:5s;">❄</span>
+<span style="left:80%;animation-duration:7s;">❄</span>
+<span style="left:90%;animation-duration:6s;">❄</span>
 
 </div>
 
 </div>
 
-<div class="box">
+<div class="container">
 
-<h2>Download Executor</h2>
+<div class="card">
 
-<p>ใช้สำหรับรัน Roblox Script</p>
+<h2>📥 Download Delta Executor</h2>
 
-<a class="btn"
-href="https://www.mediafire.com/file/g2n0ans81o4lb87/Delta-2.711.876.apk/file"
-target="_blank">
+<p>
+Delta Executor คือโปรแกรมสำหรับรันสคริปต์ในเกม Roblox บนมือถือ Android
+ช่วยให้ผู้เล่นสามารถใช้ Script ต่าง ๆ เช่น Auto Farm, Auto Level,
+Auto Boss หรือฟีเจอร์อื่น ๆ ได้ง่ายขึ้น
+</p>
 
-Download APK
+<p>
+ตัวโปรแกรมมีระบบรันสคริปต์ที่รวดเร็ว รองรับ Script Hub
+และสามารถใช้งานร่วมกับเกม Roblox ได้หลายเกม
+</p>
 
+<p>
+Delta Executor ถูกออกแบบมาให้ใช้งานง่าย
+เหมาะสำหรับทั้งผู้เล่นมือใหม่และผู้เล่นที่ใช้ Script เป็นประจำ
+</p>
+
+<h3 class="section-title">🇬🇧 English Description</h3>
+
+<p>
+Delta Executor is a Roblox script executor for Android devices.
+It allows players to run scripts in Roblox games such as
+auto farming, auto leveling, boss farming, and other automation features.
+</p>
+
+<p>
+The executor provides a smooth and stable script execution system
+and supports many Roblox scripts used by the community.
+</p>
+
+<p>
+It is designed to be simple and beginner friendly
+while still providing powerful features for advanced users.
+</p>
+
+<h3 class="section-title">📌 วิธีใช้งาน | How to Use</h3>
+
+<p>
+1️⃣ ดาวน์โหลด Delta Executor จากปุ่มด้านล่าง  
+Download Delta Executor using the button below.
+</p>
+
+<p>
+2️⃣ ติดตั้งไฟล์ APK ลงในโทรศัพท์ Android  
+Install the APK file on your Android device.
+</p>
+
+<p>
+3️⃣ เปิด Delta Executor แล้วเข้าเกม Roblox  
+Open Delta Executor and launch Roblox.
+</p>
+
+<p>
+4️⃣ คัดลอก Script จากเว็บไซต์แล้ววางใน Executor  
+Copy the script from the website and paste it into the executor.
+</p>
+
+<p>
+5️⃣ กด Execute เพื่อเริ่มใช้งาน Script  
+Press Execute to start running the script.
+</p>
+
+<!-- SMARTLINK ADS -->
+
+<a class="download-btn" href="YOUR_SMARTLINK_HERE" target="_blank">
+💰 Download via Link
 </a>
+
+<br>
+
+<!-- REAL DOWNLOAD -->
+
+<a class="download-btn" href="https://delta.filenetwork.vip/file/Delta-2.711.876-02.apk" target="_blank">
+⬇️ Direct Download Delta
+</a>
+
+</div>
 
 </div>
 
