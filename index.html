@@ -522,89 +522,83 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🎄 PREMIUM ACCESS GATE -->
+<!-- 🎄 ULTRA PREMIUM GATE -->
 <style>
 #gateOverlay{
   position:fixed; inset:0;
-  background:radial-gradient(circle at top,#330000,#000);
-  backdrop-filter:blur(10px);
+  background:radial-gradient(circle at top,#2b0000,#000);
+  backdrop-filter:blur(12px);
+  display:flex; align-items:center; justify-content:center;
   z-index:99999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
-/* 🎁 กล่องหลัก */
+/* กล่อง */
 #gateBox{
-  width:92%;
-  max-width:420px;
-  padding:28px;
-  border-radius:24px;
-  background:rgba(255,255,255,0.95);
-  box-shadow:0 30px 80px rgba(255,0,0,0.35);
+  width:92%; max-width:420px;
+  padding:30px;
+  border-radius:26px;
+  background:rgba(255,255,255,0.96);
+  box-shadow:
+    0 30px 80px rgba(255,0,0,0.25),
+    inset 0 0 0 1px rgba(255,255,255,0.6);
   text-align:center;
-  animation:pop .5s ease;
+  animation:fadeUp .5s ease;
 }
 
-@keyframes pop{
-  from{opacity:0; transform:scale(.9) translateY(30px);}
-  to{opacity:1; transform:scale(1) translateY(0);}
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(40px) scale(.9);}
+  to{opacity:1; transform:translateY(0) scale(1);}
 }
 
 h2{
-  color:#e00000;
-  margin-bottom:5px;
+  color:#d80000;
+  font-weight:700;
 }
 
 #status{
-  font-size:14px;
+  margin-top:6px;
   color:#666;
-  margin-bottom:10px;
+  font-size:14px;
 }
 
-/* 🔘 ปุ่ม */
+/* ปุ่ม */
 .btn{
   width:100%;
   padding:14px;
-  margin-top:12px;
+  margin-top:14px;
   border:none;
   border-radius:16px;
-  background:linear-gradient(135deg,#ff0000,#c40000);
+  background:linear-gradient(135deg,#ff1a1a,#b80000);
   color:#fff;
   font-size:15px;
   cursor:pointer;
-  transition:.2s;
+  transition:.25s;
 }
 
 .btn:hover{
-  transform:translateY(-6px) scale(1.02);
-  box-shadow:0 15px 30px rgba(0,0,0,.3);
+  transform:translateY(-6px);
+  box-shadow:0 15px 30px rgba(0,0,0,.25);
 }
 
 .btn:active{
   transform:scale(.94);
 }
 
-.lock{
-  background:#ccc;
-  pointer-events:none;
-}
-
-.success{
-  background:#00b33c;
-}
+.lock{background:#ccc; pointer-events:none;}
+.success{background:#00b33c;}
 
 /* 🍬 progress */
 #progressBox{
   display:none;
-  margin-top:20px;
+  margin-top:22px;
 }
 
 .bar{
-  height:20px;
+  height:18px;
   border-radius:20px;
   background:#eee;
   overflow:hidden;
+  position:relative;
 }
 
 .fill{
@@ -617,33 +611,45 @@ h2{
     #fff 10px,
     #fff 20px
   );
-  animation:candy 1s linear infinite;
 }
 
-@keyframes candy{
-  from{background-position:0 0;}
-  to{background-position:40px 0;}
+/* shine effect */
+.bar::after{
+  content:"";
+  position:absolute;
+  top:0; left:-100%;
+  width:100%; height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.6),transparent);
+  animation:shine 2s infinite;
+}
+
+@keyframes shine{
+  to{left:100%;}
+}
+
+#cooldownText{
+  margin-top:8px;
+  font-size:13px;
+  color:#555;
 }
 
 #enterBtn{
   display:none;
-  margin-top:15px;
+  margin-top:16px;
   background:#007bff;
 }
 </style>
 
 <div id="gateOverlay">
   <div id="gateBox">
-    <h2>🎄 Unlock Website</h2>
+    <h2>🎄 Unlock Access</h2>
     <div id="status">Action 0/2</div>
 
     <button id="adsBtn" class="btn">ดูโฆษณา</button>
     <button id="ytBtn" class="btn lock">ดู YouTube</button>
 
     <div id="progressBox">
-      <div class="bar">
-        <div class="fill" id="fill"></div>
-      </div>
+      <div class="bar"><div class="fill" id="fill"></div></div>
       <div id="cooldownText">กำลังโหลด...</div>
     </div>
 
@@ -652,118 +658,100 @@ h2{
 </div>
 
 <script>
-let step = 0;
-let adsDone = false;
-let ytDone = false;
+let step=0, adsDone=false, ytDone=false, progressStarted=false;
 
-/* 🔄 update */
 function update(){
-  document.getElementById("status").innerText = `Action ${step}/2`;
+  document.getElementById("status").innerText=`Action ${step}/2`;
 }
 
-/* 🧠 ตรวจออกจริง */
-function verifyAction(url, successCallback){
-  let startTime = Date.now();
-  let leftPage = false;
+/* 🔐 ตรวจออกจริง */
+function verify(url, success){
+  let start=Date.now();
+  let left=false;
 
-  function handleBlur(){
-    leftPage = true;
-  }
+  function blur(){ left=true; }
+  function focus(){
+    let t=(Date.now()-start)/1000;
 
-  function handleFocus(){
-    let duration = (Date.now() - startTime)/1000;
-
-    if(leftPage && duration >= 2){
+    if(left && t>=2){
       cleanup();
-      successCallback();
+      success();
     }else{
-      // ❌ ไม่ผ่าน
-      startTime = Date.now();
-      leftPage = false;
+      // รีเซ็ตใหม่
+      start=Date.now();
+      left=false;
     }
   }
 
   function cleanup(){
-    window.removeEventListener("blur", handleBlur);
-    window.removeEventListener("focus", handleFocus);
+    window.removeEventListener("blur",blur);
+    window.removeEventListener("focus",focus);
   }
 
-  window.addEventListener("blur", handleBlur);
-  window.addEventListener("focus", handleFocus);
+  window.addEventListener("blur",blur);
+  window.addEventListener("focus",focus);
 
   window.open(url,"_blank");
 }
 
-/* 🚀 ADS */
-document.getElementById("adsBtn").onclick = function(){
+/* ADS */
+adsBtn.onclick=()=>{
   if(adsDone) return;
-
-  verifyAction(
-    "https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",
-    ()=>{
-      adsDone = true;
-      step++; update();
-
-      let btn = document.getElementById("adsBtn");
-      btn.innerText = "✅ สำเร็จ";
-      btn.classList.add("success");
-
-      document.getElementById("ytBtn").classList.remove("lock");
-    }
-  );
+  verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
+    adsDone=true; step++; update();
+    adsBtn.innerText="✅ สำเร็จ";
+    adsBtn.classList.add("success");
+    ytBtn.classList.remove("lock");
+  });
 };
 
-/* ▶️ YOUTUBE */
-document.getElementById("ytBtn").onclick = function(){
-  if(!adsDone || ytDone) return;
-
-  verifyAction(
-    "https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV",
-    ()=>{
-      ytDone = true;
-      step++; update();
-
-      let btn = document.getElementById("ytBtn");
-      btn.innerText = "✅ สำเร็จ";
-      btn.classList.add("success");
-
-      startProgress();
-    }
-  );
+/* YT */
+ytBtn.onclick=()=>{
+  if(!adsDone||ytDone) return;
+  verify("https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV",()=>{
+    ytDone=true; step++; update();
+    ytBtn.innerText="✅ สำเร็จ";
+    ytBtn.classList.add("success");
+    startProgress();
+  });
 };
 
-/* 🍬 progress + cooldown จริง */
+/* 🍬 progress FIXED */
 function startProgress(){
-  let box = document.getElementById("progressBox");
-  let fill = document.getElementById("fill");
-  let text = document.getElementById("cooldownText");
+  if(progressStarted) return;
+  progressStarted=true;
+
+  let fill=document.getElementById("fill");
+  let text=document.getElementById("cooldownText");
+  let box=document.getElementById("progressBox");
 
   box.style.display="block";
 
-  let duration = 5000;
-  let start = Date.now();
+  const duration=5000;
+  const start=performance.now();
 
-  function animate(){
-    let now = Date.now();
-    let progress = Math.min((now-start)/duration,1);
+  function frame(now){
+    let elapsed=now-start;
+    let p=Math.min(elapsed/duration,1);
 
-    fill.style.width = (progress*100)+"%";
-    text.innerText = "รอ " + Math.ceil((duration-(now-start))/1000) + " วิ";
+    fill.style.width=(p*100)+"%";
+    text.innerText="รอ "+Math.max(0,Math.ceil((duration-elapsed)/1000))+" วิ";
 
-    if(progress < 1){
-      requestAnimationFrame(animate);
+    if(p<1){
+      requestAnimationFrame(frame);
     }else{
       text.innerText="พร้อมแล้ว!";
-      document.getElementById("enterBtn").style.display="block";
+      fill.style.width="100%";
+      enterBtn.style.display="block";
     }
   }
 
-  animate();
+  requestAnimationFrame(frame);
 }
 
-/* 🚀 เข้าเว็บ */
-document.getElementById("enterBtn").onclick = ()=>{
-  document.getElementById("gateOverlay").remove();
+/* เข้าเว็บ */
+enterBtn.onclick=()=>{
+  gateOverlay.remove();
   document.body.style.overflow="auto";
 };
 
