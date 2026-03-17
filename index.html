@@ -522,21 +522,19 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🔥 PRO WHITE-BLACK-RED GATE -->
 <style>
 :root{
-  --red:#e11d48;
-  --red-soft:#f43f5e;
-  --black:#111111;
-  --gray:#6b7280;
-  --border:#e5e7eb;
+  --red:#ff0000;
+  --black:#000;
+  --gray:#666;
+  --border:#e5e5e5;
 }
 
 /* 🔒 overlay */
 #gateOverlay{
   position:fixed;
   inset:0;
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(10px);
   background:rgba(255,255,255,0.6);
   display:flex;
   align-items:center;
@@ -544,77 +542,61 @@ draw()
   z-index:99999;
 }
 
-/* 💎 card */
+/* 📦 popup FIX SIZE */
 #gateBox{
-  width:92%;
-  max-width:420px;
-  background:#ffffff;
-  border-radius:22px;
-  padding:28px 26px;
-  box-shadow:
-    0 20px 60px rgba(0,0,0,0.08),
-    0 6px 20px rgba(0,0,0,0.05);
+  width:340px;
+  height:322.38px;
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.12);
   border:1px solid var(--border);
-  animation:fadeUp .4s ease;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
 
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(20px)}
-  to{opacity:1}
-}
-
-/* 🧠 text */
+/* text */
 h2{
-  font-size:20px;
-  color:var(--black);
-  margin-bottom:4px;
-  font-weight:600;
+  margin:0;
+  font-size:18px;
+  color:#000;
 }
 
 #desc{
-  font-size:13px;
+  font-size:12px;
   color:var(--gray);
-  margin-bottom:12px;
 }
 
 #status{
-  font-size:13px;
+  font-size:12px;
   color:var(--gray);
-  margin-bottom:10px;
+  margin:6px 0 10px;
 }
 
 /* 🔘 buttons */
 .btn{
   width:100%;
-  padding:13px;
-  margin-top:10px;
-  border-radius:12px;
-  border:1px solid transparent;
-  font-size:14px;
+  padding:11px;
+  border-radius:10px;
+  border:none;
+  font-size:13px;
   cursor:pointer;
-  transition:all .2s ease;
+  transition:.15s;
 }
 
-/* primary */
+/* red */
 .primary{
   background:var(--red);
   color:#fff;
 }
-
-.primary:hover{
-  background:var(--red-soft);
-  transform:translateY(-2px);
-}
-
-.primary:active{
-  transform:scale(.97);
-}
+.primary:hover{transform:translateY(-1px)}
+.primary:active{transform:scale(.96)}
 
 /* disabled */
 .lock{
-  background:#f3f4f6;
-  color:#9ca3af;
-  border:1px solid var(--border);
+  background:#eee;
+  color:#aaa;
   pointer-events:none;
 }
 
@@ -624,68 +606,65 @@ h2{
   color:#fff;
 }
 
-/* enter */
+/* enter (BLACK) */
 .enter{
-  background:var(--black);
+  background:#000;
   color:#fff;
 }
 
-/* 🍬 progress */
+/* progress */
 #progressBox{
   display:none;
-  margin-top:16px;
 }
 
 .bar{
-  height:12px;
+  height:10px;
+  background:#eee;
   border-radius:999px;
-  background:#f3f4f6;
   overflow:hidden;
 }
 
 .fill{
   height:100%;
   width:0%;
-  background:linear-gradient(
-    90deg,
-    #ff4d4f,
-    #e11d48,
-    #ff4d4f
-  );
-  transition:width .1s linear;
+  background:#ff0000; /* ❌ no candy */
 }
 
 #cooldownText{
-  margin-top:6px;
-  font-size:12px;
+  font-size:11px;
   color:var(--gray);
   text-align:center;
+  margin-top:5px;
 }
 
-/* button spacing fix */
 #enterBtn{
   display:none;
-  margin-top:14px;
 }
 </style>
 
 <div id="gateOverlay">
   <div id="gateBox">
-    <h2>Secure Access</h2>
-    <div id="desc">กรุณาทำตามขั้นตอนเพื่อเข้าสู่เว็บไซต์</div>
-    <div id="status">Action 0/2</div>
+    
+    <div>
+      <h2>Secure Access</h2>
+      <div id="desc">ทำตามขั้นตอนก่อนเข้าใช้งาน</div>
+      <div id="status">Action 0/2</div>
+    </div>
 
-    <button id="adsBtn" class="btn primary">ดูโฆษณา</button>
-    <button id="ytBtn" class="btn lock">ดูวิดีโอ</button>
+    <div>
+      <button id="adsBtn" class="btn primary">ดูโฆษณา</button>
+      <button id="ytBtn" class="btn lock">ดูวิดีโอ</button>
+    </div>
 
     <div id="progressBox">
       <div class="bar">
         <div id="fill" class="fill"></div>
       </div>
-      <div id="cooldownText">กำลังเตรียมระบบ...</div>
+      <div id="cooldownText">กำลังโหลด...</div>
     </div>
 
     <button id="enterBtn" class="btn enter">เข้าสู่เว็บไซต์</button>
+
   </div>
 </div>
 
@@ -693,63 +672,66 @@ h2{
 let step=0;
 let adsDone=false;
 let ytDone=false;
-let progressRunning=false;
+let running=false;
 
-/* update UI */
+/* update */
 function update(){
-  document.getElementById("status").innerText = "Action " + step + "/2";
+  document.getElementById("status").innerText = "Action "+step+"/2";
 }
 
-/* verify real leave */
-function verify(url, success){
+/* 🔥 verify FIX */
+function verify(url, callback){
   let start = Date.now();
   let left = false;
+  let valid = false;
 
-  function onBlur(){
+  function blur(){
     left = true;
   }
 
-  function onFocus(){
-    let duration = (Date.now() - start) / 1000;
+  function focus(){
+    let diff = Date.now() - start;
 
-    if(left && duration >= 2){
+    if(left && diff >= 2000 && !valid){
+      valid = true;
       cleanup();
-      success();
+      callback();
     }else{
+      // reset if fail
       start = Date.now();
       left = false;
     }
   }
 
   function cleanup(){
-    window.removeEventListener("blur", onBlur);
-    window.removeEventListener("focus", onFocus);
+    window.removeEventListener("blur", blur);
+    window.removeEventListener("focus", focus);
   }
 
-  window.addEventListener("blur", onBlur);
-  window.addEventListener("focus", onFocus);
+  window.addEventListener("blur", blur);
+  window.addEventListener("focus", focus);
 
-  window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6","_blank");
+  window.open(url, "_blank");
 }
 
 /* ADS */
 document.getElementById("adsBtn").onclick = function(){
   if(adsDone) return;
 
-  verify("", ()=>{
+  verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6", ()=>{
     adsDone = true;
     step++;
     update();
 
-    let btn = document.getElementById("adsBtn");
-    btn.innerText = "✓ สำเร็จ";
+    let btn=this;
+    btn.innerText="✓ สำเร็จ";
     btn.classList.add("success");
 
     document.getElementById("ytBtn").classList.remove("lock");
   });
 };
 
-/* YOUTUBE */
+/* YT */
 document.getElementById("ytBtn").onclick = function(){
   if(!adsDone || ytDone) return;
 
@@ -758,40 +740,40 @@ document.getElementById("ytBtn").onclick = function(){
     step++;
     update();
 
-    let btn = document.getElementById("ytBtn");
-    btn.innerText = "✓ สำเร็จ";
+    let btn=this;
+    btn.innerText="✓ สำเร็จ";
     btn.classList.add("success");
 
     startProgress();
   });
 };
 
-/* PROGRESS */
+/* progress FIX */
 function startProgress(){
-  if(progressRunning) return;
-  progressRunning = true;
+  if(running) return;
+  running = true;
 
   let fill = document.getElementById("fill");
   let text = document.getElementById("cooldownText");
   let box = document.getElementById("progressBox");
 
-  box.style.display = "block";
+  box.style.display="block";
 
-  const duration = 5000;
-  const start = performance.now();
+  let duration = 5000;
+  let start = performance.now();
 
   function frame(now){
     let elapsed = now - start;
-    let progress = Math.min(elapsed / duration, 1);
+    let p = Math.min(elapsed/duration,1);
 
-    fill.style.width = (progress * 100) + "%";
-    text.innerText = "รอ " + Math.max(0, Math.ceil((duration - elapsed)/1000)) + " วินาที";
+    fill.style.width = (p*100)+"%";
+    text.innerText = "รอ "+Math.ceil((duration-elapsed)/1000)+" วิ";
 
-    if(progress < 1){
+    if(p<1){
       requestAnimationFrame(frame);
     }else{
-      text.innerText = "พร้อมแล้ว";
-      document.getElementById("enterBtn").style.display = "block";
+      text.innerText="พร้อมแล้ว";
+      document.getElementById("enterBtn").style.display="block";
     }
   }
 
@@ -801,7 +783,6 @@ function startProgress(){
 /* ENTER */
 document.getElementById("enterBtn").onclick = function(){
   document.getElementById("gateOverlay").remove();
-  document.body.style.overflow = "auto";
 };
 
 update();
