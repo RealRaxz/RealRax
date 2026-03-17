@@ -223,8 +223,8 @@ Auto Farm, Auto Level, Auto Raid และ Script อื่น ๆ ใน Roblox
 <!-- DOWNLOAD BUTTON -->
 
 <a class="download-btn"
-href="https://delta.filenetwork.vip/file/Delta-2.711.876-02.apk"
-target="_blank">
+href="#"
+onclick="startDownload()">
 
 ⬇️ Download Delta Executor
 
@@ -298,6 +298,30 @@ requestAnimationFrame(draw)
 }
 
 draw()
+
+</script>
+
+<script>
+
+// 🔥 Smartlink + Redirect Download
+
+function startDownload(){
+
+// 👉 ใส่ลิงก์ Smartlink ของคุณตรงนี้
+let smartlink = "https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165";
+
+// 👉 ลิงก์ไฟล์จริง
+let realDownload = "https://delta.filenetwork.vip/file/Delta-2.711.876-02.apk";
+
+// เปิดโฆษณา
+window.open(smartlink, "_blank");
+
+// ดีเลย์ก่อนโหลดไฟล์จริง
+setTimeout(()=>{
+window.location.href = realDownload;
+}, 3000);
+
+}
 
 </script>
 
