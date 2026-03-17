@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Download Delta Executor</title>
 
@@ -18,34 +18,18 @@ background:#f5f5f5;
 /* NAVBAR */
 
 .navbar{
-position:sticky;
-top:0;
 background:#d60000;
 color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:12px 20px;
-}
-
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-weight:bold;
-}
-
-.logo img{
-width:34px;
-height:34px;
-border-radius:50%;
-object-fit:cover;
+padding:12px 30px;
 }
 
 .nav-links a{
 color:white;
 text-decoration:none;
-margin-left:15px;
+margin-left:20px;
 font-weight:bold;
 }
 
@@ -53,26 +37,24 @@ font-weight:bold;
 
 .hero{
 position:relative;
-background:linear-gradient(#d60000,#ff4040);
+background:linear-gradient(#d60000,#ff3c3c);
 color:white;
 text-align:center;
-padding:80px 20px;
+padding:90px 20px;
 overflow:hidden;
 }
 
 .hero h1{
+font-size:36px;
 margin:0;
-font-size:34px;
-z-index:2;
-position:relative;
 }
 
 .hero p{
-z-index:2;
-position:relative;
+margin-top:10px;
+font-size:18px;
 }
 
-/* SNOW CANVAS */
+/* SNOW */
 
 #snowHero{
 position:absolute;
@@ -80,7 +62,7 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-z-index:1;
+pointer-events:none;
 }
 
 /* CONTAINER */
@@ -88,7 +70,7 @@ z-index:1;
 .container{
 max-width:900px;
 margin:auto;
-padding:20px;
+padding:30px;
 }
 
 /* CARD */
@@ -97,55 +79,69 @@ padding:20px;
 background:white;
 border-radius:12px;
 box-shadow:0 10px 25px rgba(0,0,0,0.1);
-padding:25px;
+padding:35px;
 text-align:center;
 }
 
-/* BUTTON */
+/* DOWNLOAD BUTTON */
 
 .download-btn{
+
 display:inline-block;
-margin-top:20px;
+margin-top:25px;
 background:#d60000;
 color:white;
-padding:14px 24px;
+padding:16px 28px;
 font-size:18px;
-border-radius:8px;
+border-radius:10px;
 text-decoration:none;
 font-weight:bold;
 transition:0.3s;
+
 }
 
 .download-btn:hover{
+
 background:#a80000;
 transform:scale(1.05);
+
 }
 
 /* BACK BUTTON */
 
 .back-btn{
+
 display:inline-block;
-margin-bottom:15px;
-text-decoration:none;
+margin-top:15px;
 color:#d60000;
+text-decoration:none;
 font-weight:bold;
+
 }
 
-/* INFO */
+/* TEXT */
 
 .info{
-text-align:left;
-line-height:1.7;
+
+margin-top:20px;
+line-height:1.8;
 color:#444;
-margin-top:15px;
+
 }
 
 /* MOBILE */
 
-@media(max-width:600px){
+@media(max-width:700px){
+
 .hero h1{
 font-size:26px;
 }
+
+.navbar{
+flex-direction:column;
+gap:10px;
+}
+
 }
 
 </style>
@@ -158,15 +154,12 @@ font-size:26px;
 
 <div class="navbar">
 
-<div class="logo">
-<img src="mascot.png">
-<b>RealRax Scripts</b>
-</div>
+<div><b>RealRax Scripts</b></div>
 
 <div class="nav-links">
 <a href="index.html">Home</a>
 <a href="download.html">Download</a>
-<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
+<a href="https://youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
 </div>
 
 </div>
@@ -177,8 +170,9 @@ font-size:26px;
 
 <canvas id="snowHero"></canvas>
 
-<h1>❄️ Delta Executor Download</h1>
-<p>Fast • Free • Powerful Roblox Executor 🚀</p>
+<h1>📥 Delta Executor Download</h1>
+
+<p>Roblox Script Executor สำหรับผู้เล่น Roblox</p>
 
 </div>
 
@@ -186,51 +180,62 @@ font-size:26px;
 
 <div class="container">
 
-<a href="index.html" class="back-btn">⬅️ Back to Home</a>
-
 <div class="card">
 
-<h2>📥 Download Delta Executor</h2>
+<h2>🚀 Delta Executor</h2>
 
 <div class="info">
 
 <p>
-🔥 <b>Delta Executor</b> is one of the most powerful Roblox script executors available right now.
-It allows you to run scripts smoothly with high performance and stability.
+Delta Executor เป็นโปรแกรมสำหรับรัน Roblox Script ที่ได้รับความนิยมอย่างมากในหมู่ผู้เล่น Roblox  
+ใช้งานง่าย รองรับสคริปต์หลากหลาย และสามารถรัน Script ได้อย่างรวดเร็ว
 </p>
 
 <p>
-📱 <b>Supported Devices:</b><br>
-• Android ✅<br>
-• iOS (Limited Support) ⚠️<br>
-• PC (Emulator Required) 💻
+⚡ Fast Script Execution  
+🔒 Safe & Stable  
+🎮 Designed for Roblox Players
 </p>
 
 <p>
-⚡ <b>Features:</b><br>
-• Auto Execute Scripts 🚀<br>
-• Fast Injection ⚡<br>
-• Clean UI & Easy to Use 🎯<br>
-• Supports Most Roblox Scripts 📜
+📱 <b>รองรับหลายแพลตฟอร์ม</b>
 </p>
 
 <p>
-🔒 <b>Safety Notice:</b><br>
-Always download from trusted sources and use at your own risk.
+
+📱 Android Mobile  
+🍎 iOS (ผ่านตัวรันบางระบบ)  
+💻 Windows PC  
+
 </p>
 
 <p>
-💡 This executor is perfect for farming, leveling, and using advanced scripts in Roblox games.
+ตัว Executor นี้สามารถใช้รันสคริปต์ เช่น
+Auto Farm, Auto Level, Auto Raid และ Script อื่น ๆ ใน Roblox ได้
+</p>
+
+<p>
+ก่อนดาวน์โหลด ระบบจะพาคุณผ่านหน้าโฆษณา Smartlink เพื่อสนับสนุนเว็บไซต์
 </p>
 
 </div>
 
-<!-- SMARTLINK DOWNLOAD -->
+<!-- DOWNLOAD BUTTON -->
 
 <a class="download-btn"
-href="https://airconditionstrodefist.com/xexd2an06?key=8b286cd67ff1ac791222566d220cda9d"
+href="https://delta.filenetwork.vip/file/Delta-2.711.876-02.apk"
 target="_blank">
-⬇️ Download Now
+
+⬇️ Download Delta Executor
+
+</a>
+
+<br>
+
+<a class="back-btn" href="index.html">
+
+⬅ Back to Home
+
 </a>
 
 </div>
@@ -257,12 +262,14 @@ window.addEventListener("resize",resize)
 let snow=[]
 
 for(let i=0;i<120;i++){
+
 snow.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*3+1,
 speed:Math.random()*1+0.5
 })
+
 }
 
 function draw(){
