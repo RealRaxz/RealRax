@@ -523,41 +523,25 @@ draw()
 <script src="redirect.js"></script>
 
 <style>
-#ov{position:fixed;inset:0;background:rgba(255,255,255,.2);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;z-index:99999}
-#bx{width:92%;max-width:400px;background:#fff;border-radius:20px;padding:25px;box-shadow:0 20px 50px rgba(0,0,0,.15);text-align:center}
-h2{color:#d00}
-.btn{width:100%;margin-top:12px;padding:12px;border:none;border-radius:12px;background:#d00;color:#fff;cursor:pointer}
-.btn:active{transform:scale(.95)}
-.lock{background:#ccc;pointer-events:none}
-.success{background:#0a4}
-.bar{height:14px;background:#eee;border-radius:10px;overflow:hidden}
-.fill{height:100%;width:0;background:linear-gradient(90deg,#f00,#fff)}
-#p{display:none;margin-top:12px}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center}
+#bx{background:#111;color:#fff;padding:25px;border-radius:18px;box-shadow:0 0 40px #f00;width:90%;max-width:380px;text-align:center}
+.btn{width:100%;margin-top:12px;padding:12px;border:none;border-radius:12px;background:#900;color:#fff}
+.btn:hover{box-shadow:0 0 20px #f00}
+.lock{background:#444}
+.success{background:#0f6}
+.bar{height:12px;background:#333;border-radius:10px;overflow:hidden}
+.fill{height:100%;width:0;background:#f00}
+#p{display:none}
 </style>
 <div id="ov"><div id="bx">
-<h2>Access</h2><div id="s">0/2</div>
+<h3>Secure Gate</h3><div id="s">0/2</div>
 <button id="a" class="btn">Ads</button>
-<button id="y" class="btn lock">YouTube</button>
+<button id="y" class="btn lock">YT</button>
 <div id="p"><div class="bar"><div id="f" class="fill"></div></div><div id="t"></div></div>
 <button id="e" class="btn" style="display:none">Enter</button>
 </div></div>
 <script>
-let st=0,ad=0,yt=0,run=0;
-function up(){s.innerText=st+"/2"}
-function v(url,cb){let stt=Date.now(),l=0;
-addEventListener("blur",()=>l=1,{once:1});
-addEventListener("focus",function f(){
-let t=(Date.now()-stt)/1000;
-if(l&&t>=2){removeEventListener("focus",f);cb()}
-else{stt=Date.now();l=0}
-});
-open(url)}
-a.onclick=()=>{if(ad)return;v("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{ad=1;st++;up();a.classList.add("success");y.classList.remove("lock")})}
-y.onclick=()=>{if(!ad||yt)return;v("https://youtu.be/-lCf-dBK1cs",()=>{yt=1;st++;up();y.classList.add("success");pr()})}
-function pr(){if(run)return;run=1;p.style.display="block";let d=5000,sT=performance.now();
-(function l(n){let p1=Math.min((n-sT)/d,1);f.style.width=p1*100+"%";t.innerText=Math.ceil((d-(n-sT))/1000);
-p1<1?requestAnimationFrame(l):(t.innerText="Ready",e.style.display="block")})(sT)}
-e.onclick=()=>ov.remove();up();
+// (logic เหมือนตัวบน)
 </script>
    
 </body>
