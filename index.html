@@ -522,27 +522,26 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🎄 GOD CHRISTMAS GATE -->
+<!-- 🎄 PREMIUM CHRISTMAS GATE -->
 
 <div id="gate">
 
 <div class="box">
 
-<h2>🎄 Secure Access</h2>
-
-<p id="step">Progress 0/2</p>
+<h2>🎄 Access Required</h2>
+<p id="step">0 / 2 Completed</p>
 
 <div class="btns">
 
-<button id="adBtn" onclick="stepAd()">🎬 Watch Ad</button>
-<button id="likeBtn" onclick="stepLike()">❤️ Like</button>
+<button class="btn" onclick="stepAd()">Watch Ad</button>
+<button class="btn white" onclick="stepLike()">Like Video</button>
 
 </div>
 
-<div id="done"></div>
+<div id="status"></div>
 
-<div class="bar">
-<div id="fill"></div>
+<div class="bar-wrap">
+<div id="bar"></div>
 </div>
 
 </div>
@@ -551,10 +550,12 @@ draw()
 
 <style>
 
+/* 🎄 BACKGROUND */
+
 #gate{
 position:fixed;
 inset:0;
-background:linear-gradient(135deg,#ffffff,#ffe5e5);
+background:linear-gradient(135deg,#ffffff,#ffe5e5,#d60000);
 display:flex;
 justify-content:center;
 align-items:center;
@@ -562,16 +563,16 @@ z-index:99999;
 font-family:Arial;
 }
 
-/* BOX */
+/* 📦 BOX */
 
 .box{
-background:#fff;
+width:90%;
+max-width:380px;
+background:white;
 border-radius:18px;
 padding:30px;
-width:320px;
 text-align:center;
-box-shadow:0 20px 60px rgba(0,0,0,0.15);
-border:2px solid #ffdede;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
 animation:pop .4s ease;
 }
 
@@ -580,83 +581,77 @@ from{transform:scale(.8);opacity:0}
 to{transform:scale(1);opacity:1}
 }
 
-h2{
-color:#d60000;
-margin-bottom:10px;
-}
+/* 🔘 BUTTONS */
 
-#step{
-font-weight:bold;
-color:#333;
-}
-
-/* BUTTONS */
-
-.btns{
-display:flex;
-flex-direction:column;
-gap:10px;
-margin-top:15px;
-}
-
-button{
-padding:12px;
-border:none;
-border-radius:10px;
+.btn{
 background:#d60000;
 color:white;
-font-weight:bold;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+margin:8px;
 cursor:pointer;
-transition:.2s;
-}
-
-button:hover{
-transform:translateY(-4px);
-box-shadow:0 8px 20px rgba(214,0,0,.3);
-}
-
-button:active{
-transform:scale(.92);
-}
-
-/* DONE TEXT */
-
-#done{
-margin-top:10px;
-color:green;
+transition:.25s;
 font-weight:bold;
 }
 
-/* PROGRESS BAR */
+.btn.white{
+background:#fff;
+color:#d60000;
+border:2px solid #d60000;
+}
 
-.bar{
-margin-top:15px;
+.btn:hover{
+transform:translateY(-6px);
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+.btn:active{
+transform:scale(0.85);
+box-shadow:0 3px 10px rgba(0,0,0,0.3);
+}
+
+/* 🍬 CANDY BAR */
+
+.bar-wrap{
 width:100%;
 height:12px;
 background:#eee;
-border-radius:10px;
+border-radius:20px;
 overflow:hidden;
+margin-top:15px;
 }
 
-#fill{
+#bar{
 height:100%;
 width:0%;
+border-radius:20px;
 background:repeating-linear-gradient(
 45deg,
 #ff3c3c,
 #ff3c3c 10px,
-#fff 10px,
-#fff 20px
+#ffffff 10px,
+#ffffff 20px
 );
+background-size:40px 40px;
+animation:moveCandy 1s linear infinite;
 transition:width 5s linear;
 }
 
-/* MOBILE */
+@keyframes moveCandy{
+0%{background-position:0 0}
+100%{background-position:40px 0}
+}
+
+#status{
+margin-top:10px;
+font-weight:bold;
+color:#0a8f2f;
+}
 
 @media(max-width:500px){
 .box{
-width:90%;
-padding:25px;
+padding:20px;
 }
 }
 
@@ -664,52 +659,52 @@ padding:25px;
 
 <script>
 
+// 🔒 state control
 let step = 0;
-let lock = false;
+let adDone = false;
 
-// รีเซ็ตทุกครั้ง
-localStorage.removeItem("gate_done");
+// 🔄 รีเซ็ตทุกครั้ง (กัน bypass)
+sessionStorage.removeItem("done");
 
-/* STEP 1 */
+// 🎬 STEP 1 ADS
 function stepAd(){
 
-if(lock || step >=1) return;
-lock = true;
+if(adDone) return;
 
-// ยิง ads
+adDone = true;
+
+// ยิงโฆษณา
 window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
 
-// delay 2 วิจริง
+// บังคับรอ 2 วิ
 setTimeout(()=>{
 step++;
-lock=false;
-update();
+updateUI();
 },2000);
 
 }
 
-/* STEP 2 */
+// 👍 STEP 2 LIKE
 function stepLike(){
 
-if(lock || step >=2) return;
-lock=true;
+if(step < 1) return;
 
+// เปิด YouTube
 window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41","_blank");
 
 step++;
-lock=false;
-update();
+updateUI();
 
 }
 
-/* UPDATE UI */
-function update(){
+// 🔄 UPDATE UI
+function updateUI(){
 
-document.getElementById("step").innerText="Progress "+step+"/2";
+document.getElementById("step").innerText = step + " / 2 Completed";
 
-if(step===2){
+if(step === 2){
 
-document.getElementById("done").innerText="✅ Completed";
+document.getElementById("status").innerText = "✔ Completed";
 
 startBar();
 
@@ -717,22 +712,40 @@ startBar();
 
 }
 
-/* PROGRESS */
+// 🚀 LOADING BAR
 function startBar(){
 
-let bar=document.getElementById("fill");
+let bar = document.getElementById("bar");
 
-// เริ่มไหลเนียน
+// เริ่มโหลด smooth
 setTimeout(()=>{
-bar.style.width="100%";
+bar.style.width = "100%";
 },100);
 
-// 5 วิ เข้าเว็บ
+// ⏳ 5 วิ แล้วเข้าเว็บ
 setTimeout(()=>{
+
+sessionStorage.setItem("done","true");
 document.getElementById("gate").style.display="none";
+
 },5000);
 
 }
+
+// 🔥 กันเปิดทิ้ง (focus check)
+window.addEventListener("focus", ()=>{
+if(step === 1 && !adDone){
+step = 0;
+updateUI();
+}
+});
+
+// 🔄 กัน reload bypass
+window.onload = ()=>{
+if(sessionStorage.getItem("done")){
+document.getElementById("gate").style.display="none";
+}
+};
 
 </script>
    
