@@ -524,39 +524,36 @@ draw()
 
 <!-- 🎄 REALRAX PRO GATE -->
 
-<div id="gate">
+<div id="gateWrap">
 
 <div class="gate-card">
 
-<div class="header">
-🎄 Access Verification
-</div>
-
-<div class="desc">
-Complete steps to unlock download
+<div class="top">
+<h2>🎄 Access Required</h2>
+<p>Complete steps to unlock download</p>
 </div>
 
 <div class="steps">
-
 <div class="step" id="step1">Verify</div>
-<div class="step" id="step2">Engage</div>
-
+<div class="step" id="step2">Continue</div>
 </div>
 
 <div class="actions">
 
-<button onclick="runAd()">Verify Access</button>
-<button onclick="runYT()">Continue</button>
+<button id="btn1" onclick="stepAd()">Verify Access</button>
+<button id="btn2" onclick="stepYT()" disabled>Continue</button>
 
 </div>
 
-<div id="status">0 / 2 Completed</div>
+<div class="status" id="status">0 / 2 Completed</div>
 
-<div class="progress">
-<div id="bar"></div>
+<div class="progress-wrap">
+<div id="progressBar"></div>
 </div>
 
-<button id="enterBtn" onclick="enterSite()">Enter Website</button>
+<button id="enterBtn" onclick="enterSite()" disabled>
+Enter Website →
+</button>
 
 </div>
 
@@ -564,54 +561,71 @@ Complete steps to unlock download
 
 <style>
 
-#gate{
+/* ❌ กันกดเว็บด้านหลัง */
+body.lock{
+overflow:hidden;
+pointer-events:none;
+}
+
+/* แต่ popup กดได้ */
+#gateWrap{
 position:fixed;
-bottom:20px;
-right:20px;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
 z-index:9999;
+pointer-events:auto;
 }
 
+/* 🎨 card */
 .gate-card{
-width:320px;
-background:#ffffff;
+width:90%;
+max-width:360px;
+background:#fff;
 border-radius:18px;
-padding:25px;
-box-shadow:0 15px 40px rgba(0,0,0,0.2);
-font-family:Arial;
+padding:28px;
+text-align:center;
+box-shadow:0 20px 50px rgba(0,0,0,.3);
+animation:fade .4s;
 }
 
-.header{
-font-size:18px;
-font-weight:bold;
+@keyframes fade{
+from{transform:translateY(20px);opacity:0}
+to{transform:none;opacity:1}
+}
+
+.top h2{
 color:#d60000;
+margin:0;
 }
 
-.desc{
+.top p{
 font-size:13px;
 color:#777;
-margin-bottom:10px;
 }
 
+/* steps */
 .steps{
 display:flex;
 gap:10px;
-margin:10px 0;
+margin:15px 0;
 }
 
 .step{
 flex:1;
-text-align:center;
-padding:6px;
-border-radius:6px;
+padding:8px;
+border-radius:8px;
 background:#eee;
 font-size:12px;
 }
 
-.step.active{
+.step.done{
 background:#d60000;
 color:#fff;
 }
 
+/* buttons */
 .actions button{
 width:100%;
 margin:6px 0;
@@ -619,31 +633,41 @@ padding:12px;
 border:none;
 border-radius:10px;
 background:#d60000;
-color:white;
+color:#fff;
 cursor:pointer;
 transition:.2s;
 }
 
-.actions button:hover{
+.actions button:disabled{
+background:#999;
+cursor:not-allowed;
+}
+
+.actions button:hover:not(:disabled){
 transform:translateY(-3px);
-box-shadow:0 5px 15px rgba(0,0,0,.2);
+box-shadow:0 6px 15px rgba(0,0,0,.3);
 }
 
 .actions button:active{
-transform:scale(.95);
+transform:scale(.9);
 }
 
-/* 🍬 Candy Progress */
+/* status */
+.status{
+font-size:13px;
+margin-top:8px;
+}
 
-.progress{
-height:8px;
+/* 🍬 candy progress */
+.progress-wrap{
+height:10px;
 background:#eee;
 border-radius:10px;
+margin-top:12px;
 overflow:hidden;
-margin-top:10px;
 }
 
-#bar{
+#progressBar{
 width:0%;
 height:100%;
 background:repeating-linear-gradient(
@@ -653,106 +677,109 @@ background:repeating-linear-gradient(
 #ffffff 10px,
 #ffffff 20px
 );
-animation:moveCandy 1s linear infinite;
+transition:width 5s linear;
 }
 
-@keyframes moveCandy{
-0%{background-position:0 0;}
-100%{background-position:40px 0;}
-}
-
-#status{
-font-size:13px;
-margin-top:8px;
-}
-
-/* Enter Button */
-
+/* enter */
 #enterBtn{
-width:100%;
-margin-top:12px;
+margin-top:15px;
 padding:12px;
+width:100%;
 border:none;
 border-radius:10px;
-background:#222;
+background:#0b6623;
 color:#fff;
-display:none;
 cursor:pointer;
 transition:.2s;
 }
 
-#enterBtn:hover{
+#enterBtn:disabled{
+background:#aaa;
+cursor:not-allowed;
+}
+
+#enterBtn:hover:not(:disabled){
 transform:translateY(-3px);
-}
-
-#enterBtn:active{
-transform:scale(.95);
-}
-
-/* 📱 Responsive */
-
-@media(max-width:600px){
-.gate-card{
-width:90vw;
-right:5vw;
-}
 }
 
 </style>
 
 <script>
 
-let step = 0;
-let activeTime = 0;
-let isActive = true;
+document.body.classList.add("lock");
 
-// 🔥 AFK Detection
-document.addEventListener("visibilitychange", () => {
-isActive = !document.hidden;
+let progress = 0;
+let lastActionTime = Date.now();
+
+// ❌ กัน AFK (ต้อง active ตลอด)
+setInterval(()=>{
+let now = Date.now();
+
+// ถ้าไม่ขยับเกิน 10 วิ → รีเซ็ต
+if(now - lastActionTime > 10000){
+resetGate();
+}
+},2000);
+
+// track activity
+["click","mousemove","touchstart"].forEach(e=>{
+document.addEventListener(e,()=>{
+lastActionTime = Date.now();
+});
 });
 
-// ⏱️ Track real active time
-setInterval(()=>{
-if(isActive && step === 2){
-activeTime++;
+// RESET
+function resetGate(){
+
+progress = 0;
+
+document.getElementById("status").innerText = "0 / 2 Completed";
+document.getElementById("progressBar").style.width="0%";
+
+document.getElementById("btn2").disabled = true;
+document.getElementById("enterBtn").disabled = true;
+
+document.getElementById("step1").classList.remove("done");
+document.getElementById("step2").classList.remove("done");
+
 }
-},1000);
 
-// STEP 1 (Ads)
-function runAd(){
+// STEP 1
+function stepAd(){
 
-if(step >= 1) return;
+if(progress >= 1) return;
 
 window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
 
 setTimeout(()=>{
-step++;
+progress++;
 update();
-document.getElementById("step1").classList.add("active");
+document.getElementById("step1").classList.add("done");
+document.getElementById("btn2").disabled = false;
 },2000);
 
 }
 
-// STEP 2 (YT)
-function runYT(){
+// STEP 2
+function stepYT(){
 
-if(step < 1) return;
-if(step >= 2) return;
+if(progress < 1 || progress >= 2) return;
 
 window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41","_blank");
 
-step++;
+progress++;
 update();
-document.getElementById("step2").classList.add("active");
+
+document.getElementById("step2").classList.add("done");
 
 }
 
-// UPDATE UI
+// UPDATE
 function update(){
 
-document.getElementById("status").innerText = step + " / 2 Completed";
+document.getElementById("status").innerText = progress + " / 2 Completed";
 
-if(step === 2){
+if(progress == 2){
 
 document.getElementById("status").innerText = "✅ Completed";
 
@@ -762,30 +789,25 @@ startProgress();
 
 }
 
-// 🍬 Progress (ต้อง active จริง)
+// 🍬 progress load
 function startProgress(){
 
-let bar = document.getElementById("bar");
+setTimeout(()=>{
+document.getElementById("progressBar").style.width="100%";
+},100);
 
-let check = setInterval(()=>{
-
-if(activeTime >= 5){
-
-bar.style.width = "100%";
-
-document.getElementById("enterBtn").style.display="block";
-
-clearInterval(check);
+setTimeout(()=>{
+document.getElementById("enterBtn").disabled = false;
+},5000);
 
 }
 
-},500);
-
-}
-
-// 👉 เข้าเว็บเอง
+// ENTER SITE
 function enterSite(){
-document.getElementById("gate").style.display="none";
+
+document.body.classList.remove("lock");
+document.getElementById("gateWrap").style.display="none";
+
 }
 
 </script>
