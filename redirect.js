@@ -9,6 +9,6 @@ setTimeout(function(){
 
 window.location.href="script1.html?id="+id
 
-},500)
+},3000)
 
 }
