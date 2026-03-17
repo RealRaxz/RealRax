@@ -522,214 +522,244 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🔥 ADVANCED ACCESS GATE -->
+<!-- 🔒 ACCESS GATE PRO -->
+<style>
+#gateOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-<div id="gate">
-  <div class="box">
+#gateBox {
+  width: 92%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 22px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 25px 70px rgba(255,0,0,0.35);
+  animation: fadeUp .5s ease;
+}
 
-    <h2>Access Required</h2>
-    <p id="stepText">Step 1: Watch Ads</p>
+@keyframes fadeUp {
+  from {opacity:0; transform: translateY(40px) scale(.9);}
+  to {opacity:1; transform: translateY(0) scale(1);}
+}
 
-    <div class="btns">
-      <button id="adsBtn">Watch Ads</button>
-      <button id="nextBtn" disabled>Continue</button>
+#gateBox h2 {
+  color: #e60000;
+  margin-bottom: 8px;
+}
+
+.step {
+  margin-top: 15px;
+}
+
+.btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg,#ff0000,#c40000);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,.3);
+}
+
+.btn:active {
+  transform: scale(.95);
+}
+
+.btn.success {
+  background: #00b33c;
+}
+
+.btn.lock {
+  background: #bbb;
+  pointer-events: none;
+}
+
+/* 🍬 progress */
+#progressBox {
+  display: none;
+  margin-top: 18px;
+}
+
+.bar {
+  height: 18px;
+  border-radius: 20px;
+  background: #eee;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  width: 0%;
+  background: repeating-linear-gradient(
+    45deg,
+    #ff0000,
+    #ff0000 10px,
+    #fff 10px,
+    #fff 20px
+  );
+  animation: candy 1s linear infinite;
+  transition: width .3s ease;
+}
+
+@keyframes candy {
+  from {background-position:0 0;}
+  to {background-position:40px 0;}
+}
+
+#enterBtn {
+  display: none;
+  margin-top: 15px;
+  background: #007bff;
+}
+</style>
+
+<div id="gateOverlay">
+  <div id="gateBox">
+    <h2>🎄 เข้าสู่เว็บไซต์</h2>
+    <p id="status">Action 0/2</p>
+
+    <div class="step">
+      <button id="adsBtn" class="btn">ดูโฆษณา</button>
     </div>
 
-    <div id="success"></div>
-
-    <div class="progress-wrap">
-      <div id="bar"></div>
+    <div class="step">
+      <button id="ytBtn" class="btn lock">ดู YouTube</button>
     </div>
 
-    <button id="enterBtn">Enter Website</button>
+    <div id="progressBox">
+      <p id="cooldownText">กำลังเตรียมระบบ...</p>
+      <div class="bar">
+        <div class="fill" id="fill"></div>
+      </div>
+    </div>
 
+    <button id="enterBtn" class="btn">เข้าสู่เว็บไซต์</button>
   </div>
 </div>
 
-<style>
-
-/* 🔥 BLUR LOCK */
-#gate{
-position:fixed;
-inset:0;
-backdrop-filter:blur(10px);
-background:rgba(0,0,0,0.55);
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:9999;
-}
-
-/* BOX */
-.box{
-background:#fff;
-padding:30px;
-border-radius:18px;
-width:340px;
-text-align:center;
-box-shadow:0 20px 50px rgba(0,0,0,0.35);
-animation:pop .35s ease;
-}
-
-@keyframes pop{
-from{transform:scale(.85);opacity:0}
-to{transform:scale(1);opacity:1}
-}
-
-/* BUTTON */
-button{
-margin:8px;
-padding:12px 18px;
-border:none;
-border-radius:12px;
-background:#d60000;
-color:#fff;
-cursor:pointer;
-transition:.2s;
-font-weight:bold;
-}
-
-button:hover{
-transform:translateY(-4px);
-box-shadow:0 8px 18px rgba(0,0,0,.3);
-}
-
-button:active{
-transform:scale(.9);
-}
-
-button:disabled{
-background:#aaa;
-cursor:not-allowed;
-transform:none;
-box-shadow:none;
-}
-
-/* SUCCESS */
-#success{
-margin-top:10px;
-color:green;
-font-weight:bold;
-}
-
-/* PROGRESS */
-.progress-wrap{
-display:none;
-width:100%;
-height:12px;
-background:#eee;
-border-radius:10px;
-margin-top:18px;
-overflow:hidden;
-}
-
-#bar{
-width:0%;
-height:100%;
-background:repeating-linear-gradient(
-45deg,
-#ff3c3c,
-#ff3c3c 10px,
-#fff 10px,
-#fff 20px
-);
-transition:width 5s linear;
-}
-
-/* ENTER */
-#enterBtn{
-display:none;
-background:green;
-}
-
-</style>
-
 <script>
-
 let step = 0;
-let adStartTime = 0;
-let adOpened = false;
+let adsOpened = false;
+let ytOpened = false;
 
-// รีเซ็ตทุกครั้ง
-sessionStorage.clear();
-
-/* 🎬 CLICK ADS */
-document.getElementById("adsBtn").onclick = function(){
-
-if(step !== 0) return;
-
-adOpened = true;
-adStartTime = Date.now();
-
-window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
-
-document.getElementById("stepText").innerText = "Watching Ads...";
-
-};
-
-/* 🔍 CHECK กลับมาหน้าเว็บ */
-window.onfocus = function(){
-
-if(!adOpened || step !== 0) return;
-
-let duration = (Date.now() - adStartTime)/1000;
-
-if(duration >= 2){
-
-step = 1;
-
-document.getElementById("success").innerText = "✅ Ads Completed";
-document.getElementById("nextBtn").disabled = false;
-
-}else{
-
-document.getElementById("success").innerText = "❌ Stay longer on Ads";
+/* 🔄 update UI */
+function updateStatus() {
+  document.getElementById("status").innerText = "Action " + step + "/2";
 }
 
+/* 🚀 ADS */
+document.getElementById("adsBtn").onclick = () => {
+  if (adsOpened) return;
+
+  adsOpened = true;
+  let start = Date.now();
+
+  window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6","_blank");
+
+  let check = () => {
+    let stay = (Date.now() - start) / 1000;
+
+    if (document.hasFocus() && stay >= 2) {
+      step++;
+      updateStatus();
+
+      let btn = document.getElementById("adsBtn");
+      btn.innerText = "✅ สำเร็จ";
+      btn.classList.add("success");
+
+      document.getElementById("ytBtn").classList.remove("lock");
+
+    } else {
+      setTimeout(check, 300);
+    }
+  };
+  setTimeout(check, 300);
 };
 
-/* 👉 STEP 2 */
-document.getElementById("nextBtn").onclick = function(){
+/* ▶️ YOUTUBE */
+document.getElementById("ytBtn").onclick = () => {
+  if (!adsOpened || ytOpened) return;
 
-if(step !== 1) return;
+  ytOpened = true;
+  let start = Date.now();
 
-step = 2;
+  window.open("https://youtu.be/-lCf-dBK1cs?si=TzGArF_2bnUPcWKV","_blank");
 
-document.getElementById("stepText").innerText = "Finalizing...";
-this.style.display="none";
-document.getElementById("adsBtn").style.display="none";
+  let check = () => {
+    let stay = (Date.now() - start) / 1000;
 
-startProgress();
+    if (document.hasFocus() && stay >= 2) {
+      step++;
+      updateStatus();
 
+      let btn = document.getElementById("ytBtn");
+      btn.innerText = "✅ สำเร็จ";
+      btn.classList.add("success");
+
+      startProgress();
+    } else {
+      setTimeout(check, 300);
+    }
+  };
+  setTimeout(check, 300);
 };
 
-/* 🍬 PROGRESS */
-function startProgress(){
+/* 🍬 progress */
+function startProgress() {
+  let box = document.getElementById("progressBox");
+  let fill = document.getElementById("fill");
+  let text = document.getElementById("cooldownText");
 
-let wrap = document.querySelector(".progress-wrap");
-let bar = document.getElementById("bar");
+  box.style.display = "block";
 
-wrap.style.display="block";
+  let width = 0;
+  let time = 5;
 
-setTimeout(()=>{
-bar.style.width="100%";
-},100);
+  let bar = setInterval(() => {
+    width += 20;
+    fill.style.width = width + "%";
+  }, 500);
 
-setTimeout(()=>{
-document.getElementById("enterBtn").style.display="inline-block";
-document.getElementById("stepText").innerText="Ready!";
-},5000);
+  let cd = setInterval(() => {
+    time--;
+    text.innerText = "รอ " + time + " วินาที...";
 
+    if (time <= 0) {
+      clearInterval(cd);
+      clearInterval(bar);
+
+      text.innerText = "พร้อมแล้ว!";
+      document.getElementById("enterBtn").style.display = "block";
+    }
+  }, 1000);
 }
 
-/* 🚀 ENTER */
-document.getElementById("enterBtn").onclick = function(){
-
-document.getElementById("gate").remove();
-
+/* 🚀 เข้าเว็บ */
+document.getElementById("enterBtn").onclick = () => {
+  document.getElementById("gateOverlay").remove();
+  document.body.style.overflow = "auto";
 };
 
+/* init */
+updateStatus();
 </script>
+<!-- 🔒 END -->
    
 </body>
 </html>
