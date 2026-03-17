@@ -522,27 +522,30 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- 🎄 PREMIUM CHRISTMAS GATE -->
+<!-- 🎄 ADVANCED POPUP GATE -->
 
 <div id="gate">
 
-<div class="box">
+<div class="popup">
 
 <h2>🎄 Access Required</h2>
-<p id="step">0 / 2 Completed</p>
 
-<div class="btns">
+<p id="stepText">Step 1: Watch Ads</p>
 
-<button class="btn" onclick="stepAd()">Watch Ad</button>
-<button class="btn white" onclick="stepLike()">Like Video</button>
+<div class="buttons">
+
+<button id="btnAds" onclick="startAds()">🎬 Watch Ads</button>
+<button id="btnLike" onclick="goLike()" disabled>👍 Continue</button>
 
 </div>
 
 <div id="status"></div>
 
-<div class="bar-wrap">
+<div class="barWrap">
 <div id="bar"></div>
 </div>
+
+<button id="enterBtn" onclick="enterSite()">🚀 Enter Website</button>
 
 </div>
 
@@ -550,82 +553,100 @@ draw()
 
 <style>
 
-/* 🎄 BACKGROUND */
+/* 🎯 ล็อคคลิกทั้งเว็บ */
+body.lock{
+pointer-events:none;
+}
 
 #gate{
 position:fixed;
-inset:0;
-background:linear-gradient(135deg,#ffffff,#ffe5e5,#d60000);
+top:0;
+left:0;
+width:100%;
+height:100%;
 display:flex;
 justify-content:center;
 align-items:center;
-z-index:99999;
-font-family:Arial;
+z-index:9999;
+pointer-events:auto;
 }
 
-/* 📦 BOX */
-
-.box{
-width:90%;
-max-width:380px;
-background:white;
-border-radius:18px;
+/* 🎄 POPUP */
+.popup{
+background:#fff;
 padding:30px;
+border-radius:16px;
+width:320px;
 text-align:center;
-box-shadow:0 15px 40px rgba(0,0,0,0.2);
-animation:pop .4s ease;
+box-shadow:0 15px 40px rgba(0,0,0,0.25);
+animation:fade .4s ease;
 }
 
-@keyframes pop{
-from{transform:scale(.8);opacity:0}
-to{transform:scale(1);opacity:1}
+@keyframes fade{
+from{opacity:0;transform:scale(.9);}
+to{opacity:1;transform:scale(1);}
 }
 
-/* 🔘 BUTTONS */
+h2{
+color:#d60000;
+margin-bottom:10px;
+}
 
-.btn{
-background:#d60000;
-color:white;
-border:none;
-padding:12px 18px;
-border-radius:10px;
+#stepText{
+margin-bottom:15px;
+}
+
+/* 🎯 BUTTONS */
+button{
 margin:8px;
+padding:12px 18px;
+border:none;
+border-radius:10px;
+background:#d60000;
+color:#fff;
 cursor:pointer;
-transition:.25s;
+transition:.2s;
 font-weight:bold;
 }
 
-.btn.white{
-background:#fff;
-color:#d60000;
-border:2px solid #d60000;
+/* hover ลอย */
+button:hover{
+transform:translateY(-5px);
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
 }
 
-.btn:hover{
-transform:translateY(-6px);
-box-shadow:0 10px 20px rgba(0,0,0,0.2);
+/* กดยุบ */
+button:active{
+transform:scale(.9);
 }
 
-.btn:active{
-transform:scale(0.85);
-box-shadow:0 3px 10px rgba(0,0,0,0.3);
+/* ปุ่มเขียว */
+.success{
+background:#28a745 !important;
 }
 
-/* 🍬 CANDY BAR */
+/* disable */
+button:disabled{
+background:#ccc;
+cursor:not-allowed;
+transform:none;
+box-shadow:none;
+}
 
-.bar-wrap{
+/* 🍬 progress */
+.barWrap{
 width:100%;
 height:12px;
 background:#eee;
-border-radius:20px;
-overflow:hidden;
+border-radius:10px;
 margin-top:15px;
+overflow:hidden;
+display:none;
 }
 
 #bar{
-height:100%;
 width:0%;
-border-radius:20px;
+height:100%;
 background:repeating-linear-gradient(
 45deg,
 #ff3c3c,
@@ -633,119 +654,118 @@ background:repeating-linear-gradient(
 #ffffff 10px,
 #ffffff 20px
 );
-background-size:40px 40px;
-animation:moveCandy 1s linear infinite;
 transition:width 5s linear;
 }
 
-@keyframes moveCandy{
-0%{background-position:0 0}
-100%{background-position:40px 0}
-}
-
-#status{
-margin-top:10px;
-font-weight:bold;
-color:#0a8f2f;
-}
-
-@media(max-width:500px){
-.box{
-padding:20px;
-}
+/* enter */
+#enterBtn{
+display:none;
+width:100%;
+margin-top:15px;
+background:#28a745;
 }
 
 </style>
 
 <script>
 
-// 🔒 state control
-let step = 0;
-let adDone = false;
+document.body.classList.add("lock");
 
-// 🔄 รีเซ็ตทุกครั้ง (กัน bypass)
-sessionStorage.removeItem("done");
+let step = 0;
+let adsOpened = false;
+let adsStartTime = 0;
+
+// 🔄 รีเซ็ตทุกครั้ง
+localStorage.clear();
 
 // 🎬 STEP 1 ADS
-function stepAd(){
+function startAds(){
 
-if(adDone) return;
+if(step !== 0) return;
 
-adDone = true;
+adsOpened = true;
+adsStartTime = Date.now();
 
-// ยิงโฆษณา
+// เปิด ads
 window.open("https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165","_blank");
 
-// บังคับรอ 2 วิ
-setTimeout(()=>{
-step++;
-updateUI();
-},2000);
+// เปลี่ยนข้อความ
+document.getElementById("status").innerText = "⏳ Watching Ads...";
 
 }
 
-// 👍 STEP 2 LIKE
-function stepLike(){
+// 👁️ ตรวจจับกลับมาหน้าเว็บ
+window.addEventListener("focus", ()=>{
 
-if(step < 1) return;
+if(adsOpened && step === 0){
 
-// เปิด YouTube
+let duration = (Date.now() - adsStartTime)/1000;
+
+if(duration >= 2){
+
+// ผ่าน step
+step = 1;
+
+document.getElementById("btnAds").classList.add("success");
+document.getElementById("status").innerText = "✅ Completed";
+
+document.getElementById("btnLike").disabled = false;
+document.getElementById("stepText").innerText = "Step 2: Continue";
+
+}else{
+
+// ยังไม่ครบ 2 วิ
+document.getElementById("status").innerText = "❌ Please stay 2 seconds";
+
+}
+
+}
+
+});
+
+// 👍 STEP 2
+function goLike(){
+
+if(step !== 1) return;
+
 window.open("https://youtu.be/-lCf-dBK1cs?si=sIwS1MBzv_gHim41","_blank");
 
-step++;
-updateUI();
+step = 2;
+
+document.getElementById("btnLike").classList.add("success");
+document.getElementById("status").innerText = "🎉 All Completed";
+
+startProgress();
 
 }
 
-// 🔄 UPDATE UI
-function updateUI(){
+// 🍬 PROGRESS
+function startProgress(){
 
-document.getElementById("step").innerText = step + " / 2 Completed";
-
-if(step === 2){
-
-document.getElementById("status").innerText = "✔ Completed";
-
-startBar();
-
-}
-
-}
-
-// 🚀 LOADING BAR
-function startBar(){
-
+let wrap = document.querySelector(".barWrap");
 let bar = document.getElementById("bar");
 
-// เริ่มโหลด smooth
+wrap.style.display="block";
+
 setTimeout(()=>{
-bar.style.width = "100%";
+bar.style.width="100%";
 },100);
 
-// ⏳ 5 วิ แล้วเข้าเว็บ
+// ⏳ 5 วิ
 setTimeout(()=>{
-
-sessionStorage.setItem("done","true");
-document.getElementById("gate").style.display="none";
-
+document.getElementById("enterBtn").style.display="block";
+document.getElementById("status").innerText = "🚀 Ready to Enter";
 },5000);
 
 }
 
-// 🔥 กันเปิดทิ้ง (focus check)
-window.addEventListener("focus", ()=>{
-if(step === 1 && !adDone){
-step = 0;
-updateUI();
-}
-});
+// 🚀 เข้าเว็บ
+function enterSite(){
 
-// 🔄 กัน reload bypass
-window.onload = ()=>{
-if(sessionStorage.getItem("done")){
 document.getElementById("gate").style.display="none";
+document.body.classList.remove("lock");
+
 }
-};
 
 </script>
    
