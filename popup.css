@@ -5,7 +5,7 @@
 
 /* overlay */
 #gateOverlay{
-  position:fixed;inset:0;
+  position:fixed; inset:0;
   background:rgba(0,0,0,.6);
   backdrop-filter:blur(10px);
   display:flex;
@@ -21,7 +21,7 @@
   transform:scale(1);
 }
 
-/* popup */
+/* popup box */
 #gateBox{
   width:320px;
   padding:18px;
@@ -32,10 +32,11 @@
   display:flex;
   flex-direction:column;
   gap:14px;
+  perspective:1000px;
   transition:.3s;
 }
 #gateBox:hover{
-  transform:translateY(-5px) scale(1.01);
+  transform:rotateX(3deg) rotateY(3deg) scale(1.02);
 }
 
 /* text */
@@ -58,8 +59,8 @@
 .btn::before{
   content:"";
   position:absolute;
-  top:0;left:-120%;
-  width:60%;height:100%;
+  top:0; left:-120%;
+  width:60%; height:100%;
   background:linear-gradient(120deg,transparent,rgba(255,255,255,.7),transparent);
   transform:skewX(-20deg);
   transition:.6s;
@@ -75,7 +76,7 @@
 .fill{height:100%;width:0%;background:linear-gradient(135deg,var(--red1),var(--red2));transition:width .05s linear;}
 .percent{text-align:center;font-size:11px;}
 
-/* enter button hidden first */
+/* enter button initially hidden */
 #enterBtn{
   height:42px;
   border:none;
@@ -97,18 +98,10 @@
 #enterBtn::before{
   content:"";
   position:absolute;
-  top:0;left:-120%;
-  width:60%;height:100%;
+  top:0; left:-120%;
+  width:60%; height:100%;
   background:linear-gradient(120deg,transparent,rgba(255,255,255,.7),transparent);
   transform:skewX(-20deg);
   transition:.6s;
 }
 #enterBtn:hover::before{left:120%}
-
-/* 3D effect optional */
-#gateBox{
-  perspective:1000px;
-}
-#gateBox:hover{
-  transform:rotateX(3deg) rotateY(3deg) scale(1.02);
-}
