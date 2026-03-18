@@ -5,16 +5,16 @@ const fill = document.getElementById("fill");
 const percent = document.getElementById("percent");
 const enterBtn = document.getElementById("enterBtn");
 
+// แสดง overlay
 requestAnimationFrame(() => overlay.classList.add("show"));
 
-// ใช้ sessionStorage เก็บสถานะขั้นตอน
+// เก็บสถานะขั้นตอน
 let step = Number(sessionStorage.getItem("popupStep") || 0);
 updateUI();
 
-// ป้องกัน busy click
 let busy = false;
 
-// ฟังก์ชัน verify บังคับดู ads 2 วิ
+// ฟังก์ชัน verify บังคับดู Ads อย่างน้อย 2 วิ
 function verify(link, cb) {
   if (busy) return;
   busy = true;
@@ -26,7 +26,7 @@ function verify(link, cb) {
     if (newWindow.closed) {
       clearInterval(checkInterval);
       const elapsed = Date.now() - start;
-      const waitTime = Math.max(2000 - elapsed, 0); // บังคับ 2 วิ
+      const waitTime = Math.max(2000 - elapsed, 0); // บังคับ 2 วินาที
       setTimeout(() => {
         cb();
         busy = false;
@@ -35,14 +35,14 @@ function verify(link, cb) {
   }, 100);
 }
 
-// step1
+// step 1
 btn1.onclick = () => verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6", () => {
   step = 1;
   sessionStorage.setItem("popupStep", step);
   updateUI();
 });
 
-// step2
+// step 2
 btn2.onclick = () => {
   if (step !== 1 || busy) return;
   verify("https://youtu.be/-lCf-dBK1cs?si=b_EgtIkpC-Kd-6c6", () => {
@@ -59,7 +59,7 @@ function startProgress() {
     enterBtn.classList.add("show");
     return;
   }
-  let p = 0;
+  let p = Number(sessionStorage.getItem("popupProgress") || 0);
   const interval = setInterval(() => {
     p++;
     fill.style.width = p + "%";
@@ -75,7 +75,7 @@ function startProgress() {
 // enter
 enterBtn.onclick = () => {
   overlay.remove();
-  sessionStorage.clear(); // เคลียร์หลังเข้าจริง
+  sessionStorage.clear();
 };
 
 // update UI ตามขั้นตอน
