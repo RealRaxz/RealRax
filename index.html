@@ -524,64 +524,63 @@ draw()
 
 <style>
 :root{
-  --red:#ff2b2b;
-  --green:#22c55e;
+  --red:#ff1f1f;
+  --dark:#0e0e0e;
 }
 
 /* overlay */
 #gateOverlay{
   position:fixed;
   inset:0;
-  backdrop-filter:blur(12px);
-  background:rgba(0,0,0,.5);
+  backdrop-filter:blur(14px);
+  background:rgba(0,0,0,.6);
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:99999;
+  font-family:sans-serif;
 }
 
-/* 🎄 popup */
+/* popup */
 #gateBox{
-  width:360px;
-  background:linear-gradient(180deg,#1a1a1a,#111);
-  border-radius:20px;
-  padding:20px;
+  width:340px;
+  height:322.38px;
+  background:linear-gradient(180deg,#1c1c1c,#0e0e0e);
+  border-radius:18px;
+  padding:16px;
   color:#fff;
-  box-shadow:0 0 40px rgba(255,0,0,.3);
-  border:2px solid rgba(255,255,255,.1);
 
   display:flex;
   flex-direction:column;
-}
+  justify-content:space-between;
 
-/* glow top */
-#topGlow{
-  height:6px;
-  border-radius:999px;
-  background:linear-gradient(90deg,red,green,red);
-  margin-bottom:12px;
+  box-shadow:
+    0 10px 40px rgba(0,0,0,.8),
+    0 0 25px rgba(255,0,0,.25);
 }
 
 /* header */
-#title{
+#header{
   text-align:center;
-  font-size:16px;
+}
+
+#title{
+  font-size:15px;
   font-weight:600;
 }
 
-#desc{
-  text-align:center;
+#sub{
   font-size:12px;
-  color:#ccc;
-  margin-top:4px;
+  color:#aaa;
+  margin-top:3px;
 }
 
-/* buttons */
+/* actions */
 #actions{
-  margin-top:16px;
   display:flex;
   flex-direction:column;
   gap:10px;
+  margin-top:10px;
 }
 
 .btn{
@@ -593,15 +592,23 @@ draw()
   transition:.15s;
 }
 
-.btn:active{transform:scale(.96)}
+.btn:hover{
+  transform:translateY(-2px);
+}
 
+.btn:active{
+  transform:scale(.96);
+}
+
+/* styles */
 .primary{
   background:var(--red);
   color:#fff;
+  box-shadow:0 5px 15px rgba(255,0,0,.4);
 }
 
 .secondary{
-  background:var(--green);
+  background:#fff;
   color:#000;
 }
 
@@ -612,29 +619,30 @@ draw()
 }
 
 .success{
-  background:#16a34a;
+  background:#16a34a !important;
   color:#fff;
 }
 
 /* bottom */
 #bottom{
-  margin-top:18px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
 }
 
 /* status */
 #status{
   text-align:center;
   font-size:12px;
-  color:#aaa;
+  color:#bbb;
 }
 
 /* progress */
 .bar{
   height:8px;
-  background:#333;
+  background:#2a2a2a;
   border-radius:999px;
   overflow:hidden;
-  margin-top:8px;
 }
 
 .fill{
@@ -643,16 +651,16 @@ draw()
   background:repeating-linear-gradient(
     45deg,
     #ff0000,
-    #ff0000 10px,
-    #ffffff 10px,
-    #ffffff 20px
+    #ff0000 8px,
+    #ffffff 8px,
+    #ffffff 16px
   );
+  transition:width .1s linear;
 }
 
 /* enter */
 #enterBtn{
-  margin-top:12px;
-  height:44px;
+  height:42px;
   border-radius:12px;
   border:none;
   background:#555;
@@ -669,14 +677,14 @@ draw()
 <div id="gateOverlay">
   <div id="gateBox">
 
-    <div id="topGlow"></div>
-
-    <div id="title">🔒 ปลดล็อกลิงก์</div>
-    <div id="desc">ทำตามขั้นตอนเพื่อรับลิงก์</div>
+    <div id="header">
+      <div id="title">🔒 ปลดล็อกลิงก์</div>
+      <div id="sub">ทำครบ 2 ขั้นตอนก่อนเข้าเว็บ</div>
+    </div>
 
     <div id="actions">
-      <button id="adsBtn" class="btn primary">📺 ดูโฆษณา</button>
-      <button id="ytBtn" class="btn secondary lock">⭐ ทำอีกขั้นตอน</button>
+      <button id="adsBtn" class="btn primary">📺 Watch Ads</button>
+      <button id="step2Btn" class="btn secondary lock">⭐ Complete Step</button>
     </div>
 
     <div id="bottom">
@@ -686,112 +694,130 @@ draw()
         <div id="fill" class="fill"></div>
       </div>
 
-      <button id="enterBtn">🔒 Unlock content</button>
+      <button id="enterBtn">🔒 Locked</button>
     </div>
 
   </div>
 </div>
 
 <script>
-let step=0,verifying=false,progressRun=false;
-let adsDone=false,ytDone=false;
+const adsBtn = document.getElementById("adsBtn");
+const step2Btn = document.getElementById("step2Btn");
+const fill = document.getElementById("fill");
+const status = document.getElementById("status");
+const enterBtn = document.getElementById("enterBtn");
 
-function update(){
-  status.innerText = step + "/2 actions completed";
+let state = {
+  step:0,
+  ads:false,
+  step2:false,
+  verifying:false,
+  progress:false
+};
+
+function updateUI(){
+  status.innerText = state.step + "/2 actions completed";
 }
 
-/* verify */
-function verify(url,cb){
-  if(verifying) return;
-  verifying=true;
+/* verify REAL 2s */
+function verify(url, success){
+  if(state.verifying) return;
+  state.verifying = true;
 
-  let start=Date.now(),left=false,valid=false;
+  let start = Date.now();
+  let left = false;
 
-  function blur(){left=true;}
-  function focus(){
-    let diff=Date.now()-start;
+  function onBlur(){ left = true; }
 
-    if(left && diff>=2000 && !valid){
-      valid=true;
+  function onFocus(){
+    let diff = Date.now() - start;
+
+    if(left && diff >= 2000){
       cleanup();
-      verifying=false;
-      cb();
+      state.verifying = false;
+      success();
     }else{
-      start=Date.now();
-      left=false;
+      start = Date.now();
+      left = false;
     }
   }
 
   function cleanup(){
-    removeEventListener("blur",blur);
-    removeEventListener("focus",focus);
+    window.removeEventListener("blur", onBlur);
+    window.removeEventListener("focus", onFocus);
   }
 
-  addEventListener("blur",blur);
-  addEventListener("focus",focus);
+  window.addEventListener("blur", onBlur);
+  window.addEventListener("focus", onFocus);
 
-  window.open(url,"_blank");
+  window.open(url, "_blank");
 }
 
-/* ADS */
-adsBtn.onclick=function(){
-  if(adsDone) return;
+/* STEP 1 */
+adsBtn.onclick = () => {
+  if(state.ads) return;
 
-  verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
-    adsDone=true;
-    step++; update();
+  verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6", ()=>{
+    state.ads = true;
+    state.step++;
 
-    this.classList.add("success");
-    this.innerText="✓ สำเร็จ";
+    adsBtn.classList.add("success");
+    adsBtn.innerText = "✓ Done";
 
-    ytBtn.classList.remove("lock");
+    step2Btn.classList.remove("lock");
+
+    updateUI();
   });
 };
 
 /* STEP 2 */
-ytBtn.onclick=function(){
-  if(!adsDone || ytDone) return;
+step2Btn.onclick = () => {
+  if(!state.ads || state.step2) return;
 
-  verify("https://youtu.be/-lCf-dBK1cs",()=>{
-    ytDone=true;
-    step++; update();
+  verify("https://youtu.be/-lCf-dBK1cs", ()=>{
+    state.step2 = true;
+    state.step++;
 
-    this.classList.add("success");
-    this.innerText="✓ สำเร็จ";
+    step2Btn.classList.add("success");
+    step2Btn.innerText = "✓ Done";
 
+    updateUI();
     startProgress();
   });
 };
 
-/* progress */
+/* PROGRESS */
 function startProgress(){
-  if(progressRun) return;
-  progressRun=true;
+  if(state.progress) return;
+  state.progress = true;
 
-  let start=performance.now(),d=5000;
+  let start = performance.now();
+  let duration = 5000;
 
-  function frame(n){
-    let e=n-start,p=Math.min(e/d,1);
-    fill.style.width=(p*100)+"%";
+  function animate(t){
+    let p = (t - start) / duration;
+    if(p > 1) p = 1;
 
-    if(p<1){
-      requestAnimationFrame(frame);
+    fill.style.width = (p * 100) + "%";
+
+    if(p < 1){
+      requestAnimationFrame(animate);
     }else{
       enterBtn.classList.add("active");
-      enterBtn.innerText="ปลดล็อกลิงก์";
+      enterBtn.innerText = "Enter Website";
     }
   }
 
-  requestAnimationFrame(frame);
+  requestAnimationFrame(animate);
 }
 
-/* enter */
-enterBtn.onclick=function(){
-  if(!this.classList.contains("active")) return;
-  gateOverlay.remove();
+/* ENTER */
+enterBtn.onclick = () => {
+  if(!enterBtn.classList.contains("active")) return;
+  document.getElementById("gateOverlay").remove();
 };
 
-update();
+updateUI();
 </script>
    
 </body>
