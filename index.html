@@ -522,21 +522,27 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<link rel="stylesheet" href="popup.css">
+<head>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- Content เว็บอื่นๆ -->
 
-<div id="gateOverlay">
-  <div id="gateBox">
-    <div id="title">🔒 Unlock</div>
-    <div id="sub">Complete the actions</div>
-    <button id="btn1" class="btn primary">Watch Ads</button>
-    <button id="btn2" class="btn secondary lock">Like & Comment</button>
-    <div class="bar"><div id="fill" class="fill"></div></div>
-    <div id="percent" class="percent">0%</div>
-    <button id="enterBtn">Enter Website</button>
+  <!-- Popup -->
+  <div id="gateOverlay">
+    <div id="gateBox">
+      <div id="title">🔒 Unlock</div>
+      <div id="sub">Complete the actions</div>
+      <button id="btn1" class="btn primary">Watch Ads</button>
+      <button id="btn2" class="btn secondary lock">Like & Comment</button>
+      <div class="bar"><div id="fill" class="fill"></div></div>
+      <div id="percent" class="percent">0%</div>
+      <button id="enterBtn">Enter Website</button>
+    </div>
   </div>
-</div>
 
-<script src="popup.js"></script>
+  <script src="popup.js"></script>
+</body>
    
 </body>
 </html>
