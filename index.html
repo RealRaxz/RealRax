@@ -524,8 +524,7 @@ draw()
 
 <style>
 :root{
-  --red1:#ff2a2a;
-  --red2:#ff5555;
+  --red-grad: linear-gradient(135deg,#ff0000 0%,#990000 100%);
 }
 
 /* overlay */
@@ -547,7 +546,7 @@ draw()
   transform:scale(1);
 }
 
-/* 🧊 popup 3D */
+/* popup */
 #gateBox{
   width:320px;
   padding:18px;
@@ -565,8 +564,6 @@ draw()
 
   transition:.3s;
 }
-
-/* hover 3D */
 #gateBox:hover{
   transform:translateY(-5px) scale(1.01);
 }
@@ -586,12 +583,10 @@ draw()
   overflow:hidden;
   transition:.2s;
 }
-
-/* hover */
 .btn:hover{transform:translateY(-2px)}
 .btn:active{transform:scale(.95)}
 
-/* ✨ shine */
+/* shine */
 .btn::before{
   content:"";
   position:absolute;
@@ -603,9 +598,9 @@ draw()
 }
 .btn:hover::before{left:120%}
 
-/* 🎨 gradients */
+/* styles */
 .primary{
-  background:linear-gradient(135deg,var(--red1),var(--red2));
+  background:var(--red-grad);
   color:#fff;
 }
 .secondary{
@@ -621,19 +616,44 @@ draw()
   background:linear-gradient(135deg,#16a34a,#22c55e) !important;
 }
 
-/* 🚀 enter button */
+/* progress */
+.bar{
+  height:10px;
+  background:#222;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.fill{
+  height:100%;
+  width:0%;
+  background:var(--red-grad);
+  transition:width .05s linear;
+}
+
+.percent{
+  text-align:center;
+  font-size:11px;
+}
+
+/* enter (ซ่อนก่อน) */
 #enterBtn{
+  display:none;
   height:42px;
   border:none;
   border-radius:12px;
-  background:linear-gradient(135deg,#222,#550000);
-  color:#aaa;
+  background:var(--red-grad);
+  color:#fff;
+  cursor:pointer;
   position:relative;
   overflow:hidden;
-  transition:.2s;
+  transition:.25s;
+}
+#enterBtn.show{
+  display:block;
+  animation:fadeIn .4s ease;
 }
 
-/* same animation */
 #enterBtn:hover{transform:translateY(-2px)}
 #enterBtn:active{transform:scale(.95)}
 
@@ -648,30 +668,9 @@ draw()
 }
 #enterBtn:hover::before{left:120%}
 
-#enterBtn.active{
-  background:linear-gradient(135deg,#000,#ff2a2a);
-  color:#fff;
-  cursor:pointer;
-}
-
-/* progress */
-.bar{
-  height:10px;
-  background:#222;
-  border-radius:999px;
-  overflow:hidden;
-}
-
-.fill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#ff2a2a,#ff5555);
-  transition:width .05s linear;
-}
-
-.percent{
-  text-align:center;
-  font-size:11px;
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
 }
 </style>
 
@@ -679,17 +678,17 @@ draw()
   <div id="gateBox">
 
     <div id="title">🔒 Unlock</div>
-    <div id="sub">Complete steps</div>
+    <div id="sub">Complete actions</div>
 
     <button id="btn1" class="btn primary">Watch Ads</button>
-    <button id="btn2" class="btn secondary lock">Like & Star</button>
+    <button id="btn2" class="btn secondary lock">Like & Comment</button>
 
     <div class="bar">
       <div id="fill" class="fill"></div>
     </div>
     <div id="percent" class="percent">0%</div>
 
-    <button id="enterBtn">Locked</button>
+    <button id="enterBtn">Enter Website</button>
 
   </div>
 </div>
@@ -708,7 +707,7 @@ let step=0;
 let busy=false;
 
 /* verify */
-function verify(cb){
+function verify(link, cb){
   if(busy)return;
   busy=true;
 
@@ -737,12 +736,12 @@ function verify(cb){
   addEventListener("blur",blur);
   addEventListener("focus",focus);
 
-  window.open("https://example.com","_blank");
+  window.open(link,"_blank");
 }
 
 /* step1 */
 b1.onclick=()=>{
-  verify(()=>{
+  verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
     step++;
     b1.classList.add("success");
     b1.textContent="Done";
@@ -753,7 +752,7 @@ b1.onclick=()=>{
 /* step2 */
 b2.onclick=()=>{
   if(step<1)return;
-  verify(()=>{
+  verify("https://youtu.be/-lCf-dBK1cs?si=b_EgtIkpC-Kd-6c6",()=>{
     step++;
     b2.classList.add("success");
     b2.textContent="Done";
@@ -773,15 +772,15 @@ function startProgress(){
 
     if(p>=100){
       clearInterval(interval);
-      enterBtn.classList.add("active");
-      enterBtn.textContent="Enter Website";
+
+      // show enter AFTER complete
+      enterBtn.classList.add("show");
     }
-  },40);
+  },30);
 }
 
 /* enter */
 enterBtn.onclick=()=>{
-  if(!enterBtn.classList.contains("active"))return;
   overlay.remove();
 };
 </script>
