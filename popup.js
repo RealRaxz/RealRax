@@ -6,17 +6,14 @@ const fill = document.getElementById("fill");
 const percent = document.getElementById("percent");
 const enterBtn = document.getElementById("enterBtn");
 
-// ใช้ localStorage แทน sessionStorage สำหรับความเสถียรข้าม reload/back
+// State ปลอดภัย
 let step = Number(localStorage.getItem("popupStep") || 0);
 let progress = Number(localStorage.getItem("popupProgress") || 0);
+let actionComplete = JSON.parse(localStorage.getItem("actionComplete") || '{"btn1":false,"btn2":false}');
 
-// แสดง overlay
-requestAnimationFrame(() => overlay.classList.add("show"));
-
-// ป้องกัน multi click
 let busy = false;
 
-// Responsive scale ตาม viewport
+// Responsive
 function resizePopup() {
   const vw = window.innerWidth;
   gateBox.style.width = vw < 400 ? "90%" : "320px";
@@ -24,22 +21,25 @@ function resizePopup() {
 window.addEventListener("resize", resizePopup);
 resizePopup();
 
-// Verify function รองรับทุกแพลตฟอร์ม
-function verify(link, cb) {
+requestAnimationFrame(() => overlay.classList.add("show"));
+
+// ฟังก์ชัน verify แบบ Action 2/2
+function verify(link, actionKey, cb) {
   if (busy) return;
   busy = true;
 
-  // ป้องกัน popup block บนมือถือ
   const newWindow = window.open(link, "_blank");
   const start = Date.now();
 
-  // check ทุก 100ms ว่าปิดหรือไม่
   const interval = setInterval(() => {
     if (!newWindow || newWindow.closed) {
       clearInterval(interval);
       const elapsed = Date.now() - start;
-      const waitTime = Math.max(2000 - elapsed, 0); // บังคับ 2 วินาที
+      const waitTime = Math.max(2000 - elapsed, 0);
+
       setTimeout(() => {
+        actionComplete[actionKey] = true;
+        localStorage.setItem("actionComplete", JSON.stringify(actionComplete));
         cb();
         busy = false;
       }, waitTime);
@@ -49,38 +49,34 @@ function verify(link, cb) {
 
 // Update UI ทุกขั้นตอน
 function updateUI() {
-  if (step >= 1) {
+  // Step1
+  if (actionComplete.btn1) {
     btn1.classList.add("success");
     btn1.textContent = "Done";
     btn2.classList.remove("lock");
   }
-  if (step >= 2) {
+
+  // Step2
+  if (actionComplete.btn2) {
     btn2.classList.add("success");
     btn2.textContent = "Done";
+  }
+
+  // ถ้าครบ Action ทั้งสองปุ่ม เริ่ม progress
+  if (actionComplete.btn1 && actionComplete.btn2) {
     startProgress(progress);
   }
 }
 
-// ปุ่ม step 1
-btn1.onclick = () => verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6", () => {
-  step = 1;
-  localStorage.setItem("popupStep", step);
-  updateUI();
-});
-
-// ปุ่ม step 2
+// Responsive verify
+btn1.onclick = () => verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6","btn1",()=>updateUI());
 btn2.onclick = () => {
-  if (step !== 1 || busy) return;
-  verify("https://youtu.be/-lCf-dBK1cs?si=b_EgtIkpC-Kd-6c6", () => {
-    step = 2;
-    localStorage.setItem("popupStep", step);
-    updateUI();
-    startProgress(progress);
-  });
-};
+  if (!actionComplete.btn1 || busy) return;
+  verify("https://youtu.be/-lCf-dBK1cs?si=b_EgtIkpC-Kd-6c6","btn2",()=>updateUI());
+}
 
 // Progress + show enter
-function startProgress(start = 0) {
+function startProgress(start=0){
   let p = start;
   fill.style.width = p + "%";
   percent.textContent = p + "%";
@@ -90,16 +86,16 @@ function startProgress(start = 0) {
     return;
   }
 
-  const interval = setInterval(() => {
+  const interval = setInterval(()=>{
     p++;
     fill.style.width = p + "%";
     percent.textContent = p + "%";
-    localStorage.setItem("popupProgress", p);
-    if (p >= 100) {
+    localStorage.setItem("popupProgress",p);
+    if(p>=100){
       clearInterval(interval);
       enterBtn.classList.add("show");
     }
-  }, 30);
+  },30);
 }
 
 // Enter button
@@ -107,7 +103,8 @@ enterBtn.onclick = () => {
   overlay.remove();
   localStorage.removeItem("popupStep");
   localStorage.removeItem("popupProgress");
-};
+  localStorage.removeItem("actionComplete");
+}
 
-// Initial load
+// Initial
 updateUI();
