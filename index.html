@@ -525,7 +525,7 @@ draw()
 <style>
 :root{--red:#ff2a2a}
 
-/* 🎬 overlay (เพิ่ม animation) */
+/* overlay (เพิ่ม animation) */
 #gateOverlay{
   position:fixed;inset:0;
   backdrop-filter:blur(18px);
@@ -534,16 +534,15 @@ draw()
   z-index:99999;font-family:system-ui;
 
   opacity:0;
-  transform:scale(1.05);
-  transition:opacity .4s ease, transform .4s ease;
+  transform:scale(1.06);
+  transition:opacity .45s ease, transform .45s ease;
 }
-
 #gateOverlay.show{
   opacity:1;
   transform:scale(1);
 }
 
-/* 🍭 popup */
+/* popup */
 #gateBox{
   width:340px;height:322.38px;
   border-radius:22px;
@@ -555,27 +554,25 @@ draw()
   box-shadow:0 25px 80px rgba(0,0,0,.9);
 }
 
-/* ✅ FIX ขอบ Candy ทุกมุม (รวมซ้ายล่าง) */
+/* ✅ FIX มุมแคนดี้ (แก้ซ้ายล่างหายจริง) */
 #gateBox::before{
   content:"";
   position:absolute;
   inset:0;
   border-radius:22px;
   padding:3px;
+  background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
 
-  background:
-    repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
-
-  /* FIX cross-browser */
+  /* ตัวนี้สำคัญ แก้มุม */
   -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
+    radial-gradient(circle at bottom left, transparent 21px, #000 22px),
     linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
+  -webkit-mask-composite:destination-over;
 
   mask:
-    linear-gradient(#000 0 0) content-box,
+    radial-gradient(circle at bottom left, transparent 21px, #000 22px),
     linear-gradient(#000 0 0);
-  mask-composite:exclude;
+  mask-composite:add;
 
   pointer-events:none;
 }
@@ -608,6 +605,7 @@ draw()
 .btn:hover{transform:translateY(-2px)}
 .btn:active{transform:scale(.95)}
 
+/* shine */
 .btn::before{
   content:"";
   position:absolute;top:0;left:-120%;
@@ -640,7 +638,6 @@ draw()
   position:absolute;inset:0;
   transform:scaleX(0);
   transform-origin:left;
-  will-change:transform;
 }
 
 .candy{
@@ -665,7 +662,6 @@ draw()
   font-size:10px;
   color:#fff;
   font-weight:600;
-  pointer-events:none;
 }
 
 @keyframes move{
@@ -726,10 +722,11 @@ const percent=document.getElementById("percent");
 const status=document.getElementById("status");
 const enterBtn=document.getElementById("enterBtn");
 const sparkle=document.getElementById("sparkle");
+const gateOverlay=document.getElementById("gateOverlay");
 
-/* 🎬 smooth popup */
+/* 🎬 smooth enter */
 requestAnimationFrame(()=>{
-  document.getElementById("gateOverlay").classList.add("show");
+  gateOverlay.classList.add("show");
 });
 
 /* sparkle */
