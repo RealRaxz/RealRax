@@ -524,7 +524,7 @@ draw()
 
 <style>
 :root{
-  --red:#ff2a2a;
+  --red:#ff1f1f;
 }
 
 /* overlay */
@@ -532,7 +532,7 @@ draw()
   position:fixed;
   inset:0;
   backdrop-filter:blur(18px);
-  background:rgba(0,0,0,.65);
+  background:rgba(0,0,0,.6);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -540,7 +540,7 @@ draw()
   font-family:system-ui;
 }
 
-/* 🍭 popup candy premium */
+/* 🍭 popup */
 #gateBox{
   width:340px;
   height:322.38px;
@@ -548,17 +548,14 @@ draw()
   padding:18px;
   color:#fff;
 
-  /* candy background แบบหรู */
+  /* candy background */
   background:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,.08), transparent 40%),
+    linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)),
     repeating-linear-gradient(
-      135deg,
-      rgba(255,0,0,.08) 0 12px,
-      rgba(255,255,255,.05) 12px 24px
-    ),
-    #0e0e0e;
-
-  border:1px solid rgba(255,255,255,.08);
+      45deg,
+      #ff0000 0 12px,
+      #ffffff 12px 24px
+    );
 
   display:flex;
   flex-direction:column;
@@ -566,13 +563,13 @@ draw()
 
   box-shadow:
     0 25px 80px rgba(0,0,0,.9),
-    0 0 40px rgba(255,0,0,.25);
+    inset 0 0 30px rgba(255,255,255,.15);
 }
 
 /* header */
 #header{text-align:center;}
 #title{font-size:15px;font-weight:600;}
-#sub{font-size:12px;color:#aaa;}
+#sub{font-size:12px;color:#eee;}
 
 /* actions */
 #actions{
@@ -581,28 +578,27 @@ draw()
   gap:12px;
 }
 
-/* ✨ buttons */
+/* ✨ button */
 .btn{
+  position:relative;
   height:46px;
   border-radius:14px;
   border:none;
   cursor:pointer;
   font-size:14px;
-  position:relative;
   overflow:hidden;
   transition:.2s;
 }
 
-/* hover + press */
 .btn:hover{transform:translateY(-2px)}
 .btn:active{transform:scale(.95)}
 
-/* 🌟 shine sweep */
+/* 🌟 shimmer */
 .btn::before{
   content:"";
   position:absolute;
   top:0;
-  left:-100%;
+  left:-120%;
   width:60%;
   height:100%;
   background:linear-gradient(
@@ -614,9 +610,9 @@ draw()
   transform:skewX(-20deg);
 }
 
-/* เล่น animation ตอน hover */
+/* hover trigger */
 .btn:hover::before{
-  animation:shine 0.8s ease forwards;
+  animation:shine 0.8s ease;
 }
 
 @keyframes shine{
@@ -624,25 +620,16 @@ draw()
 }
 
 /* styles */
-.primary{background:var(--red);color:#fff;}
+.primary{background:#ff1f1f;color:#fff;}
 .secondary{background:#fff;color:#000;}
 .lock{background:#444;color:#888;pointer-events:none;}
 .success{background:#16a34a !important;color:#fff;}
 
 /* bottom */
-#bottom{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
+#bottom{display:flex;flex-direction:column;gap:10px;}
+#status{text-align:center;font-size:12px;color:#fff;}
 
-#status{
-  text-align:center;
-  font-size:12px;
-  color:#bbb;
-}
-
-/* 🍬 progress smooth */
+/* 🍬 progress */
 .bar{
   height:10px;
   background:#222;
@@ -651,7 +638,6 @@ draw()
   position:relative;
 }
 
-/* fill scale layer */
 .fill{
   position:absolute;
   inset:0;
@@ -659,7 +645,6 @@ draw()
   transform-origin:left;
 }
 
-/* candy flow */
 .candy{
   position:absolute;
   inset:0;
@@ -668,11 +653,10 @@ draw()
     red 0 10px,
     white 10px 20px
   );
-  animation:flow 1s linear infinite;
+  animation:move 1s linear infinite;
 }
 
-/* animation */
-@keyframes flow{
+@keyframes move{
   from{background-position:0 0}
   to{background-position:40px 0}
 }
@@ -682,15 +666,13 @@ draw()
   height:44px;
   border-radius:14px;
   border:none;
-  background:#555;
+  background:#000;
   color:#aaa;
 }
-
 #enterBtn.active{
-  background:#000;
   color:#fff;
+  box-shadow:0 0 15px rgba(255,255,255,.3);
   cursor:pointer;
-  box-shadow:0 0 12px rgba(255,255,255,.25);
 }
 </style>
 
@@ -729,19 +711,11 @@ const fill=document.getElementById("fill");
 const status=document.getElementById("status");
 const enterBtn=document.getElementById("enterBtn");
 
-let state={
-  step:0,
-  done1:false,
-  done2:false,
-  busy:false,
- progress:false
-};
+let state={step:0,done1:false,done2:false,busy:false,progress:false};
 
-function update(){
-  status.textContent=state.step+"/2 actions completed";
-}
+function update(){status.textContent=state.step+"/2 actions completed";}
 
-/* 🔒 verify (กันบัคจริง) */
+/* verify */
 function verify(url,cb){
   if(state.busy) return;
   state.busy=true;
@@ -781,12 +755,9 @@ btn1.onclick=()=>{
   verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
     state.done1=true;
     state.step++;
-
     btn1.classList.add("success");
     btn1.textContent="✓ Done";
-
     btn2.classList.remove("lock");
-
     update();
   });
 };
@@ -798,22 +769,19 @@ btn2.onclick=()=>{
   verify("https://youtu.be/-lCf-dBK1cs",()=>{
     state.done2=true;
     state.step++;
-
     btn2.classList.add("success");
     btn2.textContent="✓ Done";
-
     update();
-    startProgress();
+    progress();
   });
 };
 
-/* 🍬 smooth progress */
-function startProgress(){
+/* progress */
+function progress(){
   if(state.progress) return;
   state.progress=true;
 
-  let start=performance.now();
-  let dur=5000;
+  let start=performance.now(),dur=5000;
 
   function frame(t){
     let p=(t-start)/dur;
