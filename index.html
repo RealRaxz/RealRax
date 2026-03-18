@@ -530,11 +530,10 @@ draw()
 /* 🎬 overlay */
 #gateOverlay{
   position:fixed;inset:0;
-  background:radial-gradient(circle at center,#200000,#000);
-  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,.7);
+  backdrop-filter:blur(18px);
   display:flex;align-items:center;justify-content:center;
   z-index:99999;
-  font-family:system-ui;
 
   opacity:0;
   transform:scale(1.05);
@@ -545,41 +544,21 @@ draw()
   transform:scale(1);
 }
 
-/* 🎄 snow */
-.snow{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-.snow span{
-  position:absolute;
-  width:4px;height:4px;
-  background:white;
-  border-radius:50%;
-  opacity:.8;
-  animation:snowFall linear infinite;
-}
-@keyframes snowFall{
-  from{transform:translateY(-10px)}
-  to{transform:translateY(100vh)}
-}
-
-/* 🍭 popup */
+/* 🎄 popup */
 #gateBox{
   width:360px;
-  border-radius:26px;
+  border-radius:24px;
   padding:20px;
   color:#fff;
   position:relative;
 
-  background:linear-gradient(160deg,#2b0000,#5a0000 60%,#1a0000);
-  box-shadow:
-    0 30px 90px rgba(0,0,0,.9),
-    0 0 40px rgba(255,0,0,.25);
+  background:linear-gradient(180deg,#5a0000,#2a0000);
 
   display:flex;
   flex-direction:column;
-  gap:16px;
+  gap:14px;
+
+  box-shadow:0 30px 100px rgba(0,0,0,.9);
 }
 
 /* 🍬 candy border FIX */
@@ -587,7 +566,7 @@ draw()
   content:"";
   position:absolute;
   inset:0;
-  border-radius:26px;
+  border-radius:24px;
   padding:4px;
   background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
 
@@ -603,41 +582,58 @@ draw()
 }
 
 /* ✨ sparkle */
-#sparkle{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
+#sparkle{position:absolute;inset:0;pointer-events:none}
 .star{
-  position:absolute;
-  width:3px;height:3px;
-  background:#fff;
-  border-radius:50%;
+  position:absolute;width:3px;height:3px;
+  background:#fff;border-radius:50%;
   animation:sparkle 2s infinite;
 }
 @keyframes sparkle{
-  0%,100%{opacity:0;transform:scale(.5)}
-  50%{opacity:1;transform:scale(1.5)}
+  0%,100%{opacity:0}
+  50%{opacity:1}
+}
+
+/* ❄️ snow */
+.snow{
+  position:absolute;
+  width:4px;height:4px;
+  background:white;
+  border-radius:50%;
+  opacity:.8;
+  animation:snow 6s linear infinite;
+}
+@keyframes snow{
+  from{transform:translateY(-20px)}
+  to{transform:translateY(380px)}
 }
 
 /* header */
 #header{text-align:center}
-#title{font-size:18px;font-weight:700}
-#sub{font-size:12px;color:#eee}
+#title{font-size:16px;font-weight:700}
+#sub{font-size:12px;color:#ddd}
+
+/* 🎀 bow */
+#bow{
+  position:absolute;
+  top:-18px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:26px;
+}
 
 /* buttons */
 .btn{
   height:48px;
-  border-radius:16px;
+  border-radius:14px;
   border:none;
-  font-size:14px;
   cursor:pointer;
+  font-size:14px;
   position:relative;
   overflow:hidden;
   transition:.2s;
 }
 .btn:hover{transform:translateY(-2px)}
-.btn:active{transform:scale(.96)}
+.btn:active{transform:scale(.95)}
 
 .btn::before{
   content:"";
@@ -656,53 +652,46 @@ draw()
 .success{background:#16a34a !important}
 
 /* status */
-#status{text-align:center;font-size:12px}
+#status{text-align:center;font-size:12px;color:#ddd}
 
 /* 🍬 progress */
 .bar{
-  height:14px;
-  background:#300000;
+  height:12px;
+  background:#220000;
   border-radius:999px;
-  overflow:hidden;
   position:relative;
+  overflow:hidden;
 }
 
 .fill{
-  position:absolute;
-  inset:0;
+  position:absolute;inset:0;
   transform:scaleX(0);
   transform-origin:left;
 }
 
-/* candy */
 .candy{
-  position:absolute;
-  inset:0;
+  position:absolute;inset:0;
   background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
   animation:move 1s linear infinite;
 }
 
-/* shine */
 .candy::after{
   content:"";
-  position:absolute;
-  inset:0;
+  position:absolute;inset:0;
   background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);
   animation:shine 2s linear infinite;
 }
 
-/* percent */
 .percent{
   position:absolute;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:11px;
+  font-size:10px;
   font-weight:700;
 }
 
-/* anim */
 @keyframes move{
   from{background-position:0 0}
   to{background-position:40px 0}
@@ -714,7 +703,7 @@ draw()
 
 /* enter */
 #enterBtn{
-  height:46px;
+  height:44px;
   border-radius:14px;
   border:none;
   background:#550000;
@@ -728,18 +717,18 @@ draw()
 </style>
 
 <div id="gateOverlay">
-  <div class="snow" id="snow"></div>
-
   <div id="gateBox">
+
+    <div id="bow">🎀</div>
     <div id="sparkle"></div>
 
     <div id="header">
-      <div id="title">🔒 ปลดล็อกลิงก์</div>
+      <div id="title">🎅 ปลดล็อกลิงก์</div>
       <div id="sub">Complete the actions and unlock the link</div>
     </div>
 
-    <button id="btn1" class="btn primary">🛒 Watch ads</button>
-    <button id="btn2" class="btn secondary lock">⭐ Like and star repo</button>
+    <button id="btn1" class="btn primary">📺 Watch ads</button>
+    <button id="btn2" class="btn secondary lock">⭐ Like & star repo</button>
 
     <div id="status">0/2 actions completed</div>
 
@@ -751,89 +740,127 @@ draw()
     </div>
 
     <button id="enterBtn">🔒 Locked</button>
+
   </div>
 </div>
 
 <script>
 const overlay=document.getElementById("gateOverlay");
-const snow=document.getElementById("snow");
-
-/* 🎬 show */
-requestAnimationFrame(()=>overlay.classList.add("show"));
-
-/* ❄️ snow */
-for(let i=0;i<40;i++){
-  let s=document.createElement("span");
-  s.style.left=Math.random()*100+"%";
-  s.style.animationDuration=(5+Math.random()*5)+"s";
-  s.style.animationDelay=Math.random()*5+"s";
-  snow.appendChild(s);
-}
-
-/* ✨ sparkle */
-const sparkle=document.getElementById("sparkle");
-for(let i=0;i<25;i++){
-  let s=document.createElement("div");
-  s.className="star";
-  s.style.left=Math.random()*100+"%";
-  s.style.top=Math.random()*100+"%";
-  s.style.animationDelay=Math.random()*2+"s";
-  sparkle.appendChild(s);
-}
-
-/* logic */
 const b1=document.getElementById("btn1");
 const b2=document.getElementById("btn2");
 const fill=document.getElementById("fill");
 const percent=document.getElementById("percent");
 const status=document.getElementById("status");
-const enter=document.getElementById("enterBtn");
+const enterBtn=document.getElementById("enterBtn");
+const sparkle=document.getElementById("sparkle");
 
-let s={step:0,d1:false,d2:false,run:false};
+/* 🎬 smooth */
+requestAnimationFrame(()=>overlay.classList.add("show"));
 
-function update(){
-  status.textContent=s.step+"/2 actions completed";
+/* sparkle */
+for(let i=0;i<20;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"%";
+  s.style.top=Math.random()*100+"%";
+  s.style.animationDelay=(Math.random()*2)+"s";
+  sparkle.appendChild(s);
 }
 
-function progress(){
+/* ❄️ snow */
+for(let i=0;i<30;i++){
+  let s=document.createElement("div");
+  s.className="snow";
+  s.style.left=Math.random()*100+"%";
+  s.style.animationDuration=(4+Math.random()*3)+"s";
+  s.style.opacity=Math.random();
+  overlay.appendChild(s);
+}
+
+let state={step:0,d1:false,d2:false,busy:false,prog:false};
+
+function update(){
+  status.textContent=state.step+"/2 actions completed";
+}
+
+/* verify */
+function verify(url,cb){
+  if(state.busy)return;
+  state.busy=true;
+
   let start=performance.now();
-  let dur=5000;
+  let left=false;
+
+  function blur(){left=true}
+  function focus(){
+    let t=performance.now()-start;
+    if(left&&t>=2000){
+      cleanup();state.busy=false;cb();
+    }else{
+      start=performance.now();left=false;
+    }
+  }
+  function cleanup(){
+    removeEventListener("blur",blur);
+    removeEventListener("focus",focus);
+  }
+
+  addEventListener("blur",blur);
+  addEventListener("focus",focus);
+  window.open(url,"_blank");
+}
+
+/* step1 */
+b1.onclick=()=>{
+  if(state.d1)return;
+  verify("https://your-ad-link.com",()=>{
+    state.d1=true;state.step++;
+    b1.classList.add("success");
+    b1.textContent="✓ Done";
+    b2.classList.remove("lock");
+    update();
+  });
+};
+
+/* step2 */
+b2.onclick=()=>{
+  if(!state.d1||state.d2)return;
+  verify("https://github.com",()=>{
+    state.d2=true;state.step++;
+    b2.classList.add("success");
+    b2.textContent="✓ Done";
+    update();
+    progress();
+  });
+};
+
+/* progress */
+function progress(){
+  if(state.prog)return;
+  state.prog=true;
+
+  let start=performance.now(),dur=5000;
 
   function frame(t){
-    let p=Math.min((t-start)/dur,1);
+    let p=(t-start)/dur;
+    p=Math.min(Math.max(p,0),1);
+
     fill.style.transform="scaleX("+p+")";
     percent.textContent=Math.floor(p*100)+"%";
 
     if(p<1){
       requestAnimationFrame(frame);
     }else{
-      enter.classList.add("active");
-      enter.textContent="Enter Website";
+      enterBtn.classList.add("active");
+      enterBtn.textContent="Enter Website";
     }
   }
   requestAnimationFrame(frame);
 }
 
-b1.onclick=()=>{
-  if(s.d1)return;
-  s.d1=true;s.step++;
-  b1.classList.add("success");
-  b1.textContent="✓ Done";
-  b2.classList.remove("lock");
-  update();
-};
-
-b2.onclick=()=>{
-  if(!s.d1||s.d2)return;
-  s.d2=true;s.step++;
-  b2.classList.add("success");
-  b2.textContent="✓ Done";
-  update();
-  progress();
-};
-
-enter.onclick=()=>{
-  if(!enter.classList.contains("active"))return;
+/* enter */
+enterBtn.onclick=()=>{
+  if(!enterBtn.classList.contains("active"))return;
   overlay.remove();
 };
 
