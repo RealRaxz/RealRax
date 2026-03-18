@@ -522,27 +522,44 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<head>
-  <link rel="stylesheet" href="popup.css">
-</head>
-<body>
-  <!-- Content เว็บอื่นๆ -->
-
-  <!-- Popup -->
-  <div id="gateOverlay">
-    <div id="gateBox">
-      <div id="title">🔒 Unlock</div>
-      <div id="sub">Complete the actions</div>
-      <button id="btn1" class="btn primary">Watch Ads</button>
-      <button id="btn2" class="btn secondary lock">Like & Comment</button>
-      <div class="bar"><div id="fill" class="fill"></div></div>
-      <div id="percent" class="percent">0%</div>
-      <button id="enterBtn">Enter Website</button>
+<!-- BEGIN Popup -->
+<div id="subscribePopup" style="display: flex;">
+  <div>
+    <div class="step-indicator">
+      <div class="step-dot active" id="step-dot1"></div>
+      <div class="step-dot" id="step-dot2"></div>
+      <div class="step-dot" id="step-dot3"></div>
     </div>
-  </div>
+    
+    <div class="popup-text">
+      <strong>
+        <img class="icon" src="data:image/svg+xml;base64,PHN2Zy..." alt="unlock">
+        ปลดล็อกโฆษณาทั้งหมด
+      </strong>
+      <div>ทำภารกิจให้ครบเพื่อรับสคริปต์</div>
+      <div>Complete the actions and unlock the link</div>
+    </div>
 
-  <script src="popup.js"></script>
-</body>
+    <a id="adButton1" class="gradient-button" href="https://s.shopee.co.th/9fFdLNUehS" target="_blank">
+      <img class="button-icon" src="data:image/svg+xml;base64,PHN2Zy..." alt="cart">
+      กดดูโฆษณา/Watch ads
+    </a>
+
+    <a id="likeButton1" class="gradient-button disabled" href="https://youtu.be/-SspjIRG4LY" target="_blank">
+      <img class="button-icon" src="data:image/svg+xml;base64,PHN2Zy..." alt="like">
+      กดไลค์และคอมเม้นต์/Like comment
+    </a>
+
+    <div id="progressContainer" class="progress-container" style="display: none;">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <button id="continueButton">
+      ➤ เข้าสู่เว็บไซต์
+    </button>
+  </div>
+</div>
+<!-- END Popup -->
    
 </body>
 </html>
