@@ -1,0 +1,114 @@
+:root{
+  --red1:#ff0000;
+  --red2:#990000;
+}
+
+/* overlay */
+#gateOverlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(10px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  opacity:0;
+  transform:scale(1.05);
+  transition:.3s;
+}
+#gateOverlay.show{
+  opacity:1;
+  transform:scale(1);
+}
+
+/* popup */
+#gateBox{
+  width:320px;
+  padding:18px;
+  border-radius:18px;
+  background:linear-gradient(160deg,#200000,#400000);
+  color:#fff;
+  box-shadow:0 25px 70px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.1);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  transition:.3s;
+}
+#gateBox:hover{
+  transform:translateY(-5px) scale(1.01);
+}
+
+/* text */
+#title{text-align:center;font-weight:700}
+#sub{text-align:center;font-size:12px;color:#ccc}
+
+/* buttons */
+.btn{
+  height:44px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  font-size:14px;
+  position:relative;
+  overflow:hidden;
+  transition:.2s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.95)}
+.btn::before{
+  content:"";
+  position:absolute;
+  top:0;left:-120%;
+  width:60%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.7),transparent);
+  transform:skewX(-20deg);
+  transition:.6s;
+}
+.btn:hover::before{left:120%}
+.primary{background:linear-gradient(135deg,var(--red1),var(--red2));color:#fff;}
+.secondary{background:linear-gradient(135deg,#fff,#ddd);color:#000;}
+.lock{background:#444;color:#888;pointer-events:none;}
+.success{background:linear-gradient(135deg,#16a34a,#22c55e) !important;}
+
+/* progress */
+.bar{height:10px;background:#222;border-radius:999px;overflow:hidden;}
+.fill{height:100%;width:0%;background:linear-gradient(135deg,var(--red1),var(--red2));transition:width .05s linear;}
+.percent{text-align:center;font-size:11px;}
+
+/* enter button hidden first */
+#enterBtn{
+  height:42px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#000,#300000);
+  color:#fff;
+  opacity:0;
+  transform:translateY(10px);
+  pointer-events:none;
+  transition:.3s;
+}
+#enterBtn.show{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+#enterBtn:hover{transform:translateY(-2px)}
+#enterBtn:active{transform:scale(.95)}
+#enterBtn::before{
+  content:"";
+  position:absolute;
+  top:0;left:-120%;
+  width:60%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.7),transparent);
+  transform:skewX(-20deg);
+  transition:.6s;
+}
+#enterBtn:hover::before{left:120%}
+
+/* 3D effect optional */
+#gateBox{
+  perspective:1000px;
+}
+#gateBox:hover{
+  transform:rotateX(3deg) rotateY(3deg) scale(1.02);
+}
