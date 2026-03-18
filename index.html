@@ -524,7 +524,7 @@ draw()
 
 <style>
 :root{
-  --red:#ff2020;
+  --red:#ff2a2a;
 }
 
 /* overlay */
@@ -540,7 +540,7 @@ draw()
   font-family:system-ui;
 }
 
-/* 🍭 popup candy */
+/* 🍭 popup candy premium */
 #gateBox{
   width:340px;
   height:322.38px;
@@ -548,15 +548,17 @@ draw()
   padding:18px;
   color:#fff;
 
+  /* candy background แบบหรู */
   background:
-    linear-gradient(#111,#111) padding-box,
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.08), transparent 40%),
     repeating-linear-gradient(
-      45deg,
-      red 0 10px,
-      white 10px 20px
-    ) border-box;
+      135deg,
+      rgba(255,0,0,.08) 0 12px,
+      rgba(255,255,255,.05) 12px 24px
+    ),
+    #0e0e0e;
 
-  border:3px solid transparent;
+  border:1px solid rgba(255,255,255,.08);
 
   display:flex;
   flex-direction:column;
@@ -564,7 +566,7 @@ draw()
 
   box-shadow:
     0 25px 80px rgba(0,0,0,.9),
-    0 0 30px rgba(255,0,0,.3);
+    0 0 40px rgba(255,0,0,.25);
 }
 
 /* header */
@@ -579,28 +581,68 @@ draw()
   gap:12px;
 }
 
-/* buttons */
+/* ✨ buttons */
 .btn{
   height:46px;
   border-radius:14px;
   border:none;
   cursor:pointer;
   font-size:14px;
+  position:relative;
+  overflow:hidden;
   transition:.2s;
 }
+
+/* hover + press */
 .btn:hover{transform:translateY(-2px)}
 .btn:active{transform:scale(.95)}
 
+/* 🌟 shine sweep */
+.btn::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:60%;
+  height:100%;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.6),
+    transparent
+  );
+  transform:skewX(-20deg);
+}
+
+/* เล่น animation ตอน hover */
+.btn:hover::before{
+  animation:shine 0.8s ease forwards;
+}
+
+@keyframes shine{
+  to{left:140%;}
+}
+
+/* styles */
 .primary{background:var(--red);color:#fff;}
 .secondary{background:#fff;color:#000;}
 .lock{background:#444;color:#888;pointer-events:none;}
-.success{background:#16a34a !important;}
+.success{background:#16a34a !important;color:#fff;}
 
 /* bottom */
-#bottom{display:flex;flex-direction:column;gap:10px;}
-#status{text-align:center;font-size:12px;color:#bbb;}
+#bottom{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
 
-/* 🍬 progress (ใหม่ ลื่นจริง) */
+#status{
+  text-align:center;
+  font-size:12px;
+  color:#bbb;
+}
+
+/* 🍬 progress smooth */
 .bar{
   height:10px;
   background:#222;
@@ -609,7 +651,7 @@ draw()
   position:relative;
 }
 
-/* fill container */
+/* fill scale layer */
 .fill{
   position:absolute;
   inset:0;
@@ -617,7 +659,7 @@ draw()
   transform-origin:left;
 }
 
-/* candy layer */
+/* candy flow */
 .candy{
   position:absolute;
   inset:0;
@@ -626,11 +668,11 @@ draw()
     red 0 10px,
     white 10px 20px
   );
-  animation:move 1s linear infinite;
+  animation:flow 1s linear infinite;
 }
 
-/* animation แค่ลาย */
-@keyframes move{
+/* animation */
+@keyframes flow{
   from{background-position:0 0}
   to{background-position:40px 0}
 }
@@ -643,10 +685,12 @@ draw()
   background:#555;
   color:#aaa;
 }
+
 #enterBtn.active{
   background:#000;
   color:#fff;
   cursor:pointer;
+  box-shadow:0 0 12px rgba(255,255,255,.25);
 }
 </style>
 
@@ -686,14 +730,18 @@ const status=document.getElementById("status");
 const enterBtn=document.getElementById("enterBtn");
 
 let state={
-  step:0,done1:false,done2:false,busy:false,progress:false
+  step:0,
+  done1:false,
+  done2:false,
+  busy:false,
+ progress:false
 };
 
 function update(){
   status.textContent=state.step+"/2 actions completed";
 }
 
-/* verify */
+/* 🔒 verify (กันบัคจริง) */
 function verify(url,cb){
   if(state.busy) return;
   state.busy=true;
@@ -733,9 +781,12 @@ btn1.onclick=()=>{
   verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
     state.done1=true;
     state.step++;
+
     btn1.classList.add("success");
     btn1.textContent="✓ Done";
+
     btn2.classList.remove("lock");
+
     update();
   });
 };
@@ -747,15 +798,17 @@ btn2.onclick=()=>{
   verify("https://youtu.be/-lCf-dBK1cs",()=>{
     state.done2=true;
     state.step++;
+
     btn2.classList.add("success");
     btn2.textContent="✓ Done";
+
     update();
-    progress();
+    startProgress();
   });
 };
 
-/* 🍬 smooth progress (scaleX) */
-function progress(){
+/* 🍬 smooth progress */
+function startProgress(){
   if(state.progress) return;
   state.progress=true;
 
