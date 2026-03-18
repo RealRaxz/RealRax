@@ -527,139 +527,132 @@ draw()
 
 /* overlay */
 #gateOverlay{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   backdrop-filter:blur(18px);
   background:rgba(0,0,0,.65);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:99999;
-  font-family:system-ui;
+  display:flex;align-items:center;justify-content:center;
+  z-index:99999;font-family:system-ui;
 }
 
-/* 🍭 OUTER candy (แก้ขอบแหว่ง) */
-#candyWrap{
-  padding:3px;
-  border-radius:24px;
-  background:repeating-linear-gradient(
-    45deg,
-    red 0 10px,
-    white 10px 20px
-  );
-}
-
-/* inner popup */
+/* 🍭 popup */
 #gateBox{
-  width:340px;
-  height:322.38px;
+  width:340px;height:322.38px;
   border-radius:22px;
   padding:18px;
   color:#fff;
   position:relative;
-
-  background:linear-gradient(#0f0f0f,#0a0a0a);
-
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-
-  box-shadow:
-    0 25px 80px rgba(0,0,0,.9),
-    0 0 40px rgba(255,0,0,.25);
+  background:#0d0d0d;
+  display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:0 25px 80px rgba(0,0,0,.9);
 }
 
-/* 🍬 floating candy */
-.candyFloat{
+/* ✅ candy border FIX */
+#gateBox::before{
+  content:"";
   position:absolute;
-  font-size:12px;
-  opacity:.25;
-  animation:float 6s linear infinite;
-}
-@keyframes float{
-  from{transform:translateY(20px)}
-  to{transform:translateY(-20px)}
+  inset:0;
+  border-radius:22px;
+  padding:3px;
+  background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
 }
 
-/* header */
-#header{text-align:center;}
-#title{font-size:15px;font-weight:600;}
-#sub{font-size:12px;color:#aaa;}
+/* sparkle */
+#sparkle{position:absolute;inset:0;pointer-events:none}
+.star{
+  position:absolute;width:3px;height:3px;
+  background:white;border-radius:50%;
+  animation:sparkle 2s infinite;
+}
+@keyframes sparkle{
+  0%,100%{opacity:0;transform:scale(.5)}
+  50%{opacity:1;transform:scale(1.3)}
+}
 
-/* buttons */
-#actions{display:flex;flex-direction:column;gap:12px;}
+/* layout */
+#header{text-align:center}
+#title{font-size:15px;font-weight:600}
+#sub{font-size:12px;color:#aaa}
+
+#actions{display:flex;flex-direction:column;gap:12px}
 
 .btn{
-  height:46px;
-  border-radius:14px;
-  border:none;
-  cursor:pointer;
-  font-size:14px;
-  position:relative;
-  overflow:hidden;
+  height:46px;border-radius:14px;border:none;
+  cursor:pointer;font-size:14px;
+  position:relative;overflow:hidden;
   transition:.2s;
 }
 .btn:hover{transform:translateY(-2px)}
 .btn:active{transform:scale(.95)}
 
-/* ✨ shine */
+/* shine */
 .btn::before{
   content:"";
-  position:absolute;
-  left:-120%;
-  width:60%;
-  height:100%;
+  position:absolute;top:0;left:-120%;
+  width:60%;height:100%;
   background:linear-gradient(120deg,transparent,rgba(255,255,255,.7),transparent);
   transform:skewX(-20deg);
   transition:.6s;
 }
 .btn:hover::before{left:120%}
 
-.primary{background:var(--red);color:#fff;}
-.secondary{background:#fff;color:#000;}
-.lock{background:#444;color:#888;pointer-events:none;}
-.success{background:#16a34a !important;}
+.primary{background:var(--red);color:#fff}
+.secondary{background:#fff;color:#000}
+.lock{background:#444;color:#888;pointer-events:none}
+.success{background:#16a34a !important}
 
 /* bottom */
-#bottom{display:flex;flex-direction:column;gap:10px;}
-#status{text-align:center;font-size:12px;color:#bbb;}
+#bottom{display:flex;flex-direction:column;gap:10px}
+#status{text-align:center;font-size:12px;color:#bbb}
 
-/* 🍬 progress */
+/* 🍬 progress FIX */
 .bar{
   height:12px;
   background:#222;
   border-radius:999px;
-  overflow:hidden;
   position:relative;
+  overflow:hidden;
 }
 
 /* fill */
 .fill{
-  position:absolute;
-  inset:0;
+  position:absolute;inset:0;
   transform:scaleX(0);
   transform-origin:left;
+  will-change:transform;
 }
 
 /* candy */
 .candy{
-  position:absolute;
-  inset:0;
-  background:repeating-linear-gradient(
-    45deg,
-    red 0 10px,
-    white 10px 20px
-  );
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
   animation:move 1s linear infinite;
 }
 
 /* shine */
 .candy::after{
   content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);
+  animation:shine 2s linear infinite;
+}
+
+/* % text */
+.percent{
   position:absolute;
-  inset:0;
-  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.5),transparent 70%);
-  animation:shine 2s infinite;
+  width:100%;
+  text-align:center;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:10px;
+  color:#fff;
+  font-weight:600;
+  pointer-events:none;
 }
 
 @keyframes move{
@@ -671,72 +664,69 @@ draw()
   to{transform:translateX(100%)}
 }
 
-/* % text */
-#percent{
-  text-align:center;
-  font-size:11px;
-  color:#aaa;
-}
-
 /* enter */
 #enterBtn{
-  height:44px;
-  border-radius:14px;
-  border:none;
-  background:#555;
-  color:#aaa;
+  height:44px;border-radius:14px;border:none;
+  background:#555;color:#aaa;
 }
 #enterBtn.active{
-  background:#000;
-  color:#fff;
-  cursor:pointer;
+  background:#000;color:#fff;cursor:pointer;
 }
 </style>
 
 <div id="gateOverlay">
-  <div id="candyWrap">
-    <div id="gateBox">
+  <div id="gateBox">
 
-      <!-- 🍬 floating candy -->
-      <div class="candyFloat" style="left:10%;top:20%">🍬</div>
-      <div class="candyFloat" style="left:80%;top:70%">🍭</div>
-      <div class="candyFloat" style="left:50%;top:40%">🍬</div>
+    <div id="sparkle"></div>
 
-      <div id="header">
-        <div id="title">🍭 Unlock Content</div>
-        <div id="sub">Complete all steps</div>
-      </div>
-
-      <div id="actions">
-        <button id="btn1" class="btn primary">📺 Watch Ads</button>
-        <button id="btn2" class="btn secondary lock">⭐ Complete Step</button>
-      </div>
-
-      <div id="bottom">
-        <div id="status">0/2 actions completed</div>
-
-        <div class="bar">
-          <div id="fill" class="fill">
-            <div class="candy"></div>
-          </div>
-        </div>
-
-        <div id="percent">0%</div>
-
-        <button id="enterBtn">🔒 Locked</button>
-      </div>
-
+    <div id="header">
+      <div id="title">🍭 Unlock Content</div>
+      <div id="sub">Complete all steps</div>
     </div>
+
+    <div id="actions">
+      <button id="btn1" class="btn primary">📺 Watch Ads</button>
+      <button id="btn2" class="btn secondary lock">⭐ Complete Step</button>
+    </div>
+
+    <div id="bottom">
+      <div id="status">0/2 actions completed</div>
+
+      <div class="bar">
+        <div id="fill" class="fill">
+          <div class="candy"></div>
+        </div>
+        <div id="percent" class="percent">0%</div>
+      </div>
+
+      <button id="enterBtn">🔒 Locked</button>
+    </div>
+
   </div>
 </div>
 
 <script>
-const btn1=document.getElementById("btn1");
-const btn2=document.getElementById("btn2");
+const btn1=btn2=null;
+</script>
+
+<script>
+const b1=document.getElementById("btn1");
+const b2=document.getElementById("btn2");
 const fill=document.getElementById("fill");
-const status=document.getElementById("status");
 const percent=document.getElementById("percent");
+const status=document.getElementById("status");
 const enterBtn=document.getElementById("enterBtn");
+const sparkle=document.getElementById("sparkle");
+
+/* sparkle gen */
+for(let i=0;i<20;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"%";
+  s.style.top=Math.random()*100+"%";
+  s.style.animationDelay=(Math.random()*2)+"s";
+  sparkle.appendChild(s);
+}
 
 let state={step:0,d1:false,d2:false,busy:false,prog:false};
 
@@ -746,7 +736,7 @@ function update(){
 
 /* verify */
 function verify(url,cb){
-  if(state.busy) return;
+  if(state.busy)return;
   state.busy=true;
 
   let start=performance.now();
@@ -755,17 +745,12 @@ function verify(url,cb){
   function blur(){left=true}
   function focus(){
     let t=performance.now()-start;
-
-    if(left && t>=2000){
-      cleanup();
-      state.busy=false;
-      cb();
+    if(left&&t>=2000){
+      cleanup();state.busy=false;cb();
     }else{
-      start=performance.now();
-      left=false;
+      start=performance.now();left=false;
     }
   }
-
   function cleanup(){
     removeEventListener("blur",blur);
     removeEventListener("focus",focus);
@@ -773,46 +758,43 @@ function verify(url,cb){
 
   addEventListener("blur",blur);
   addEventListener("focus",focus);
-
   window.open(url,"_blank");
 }
 
 /* step1 */
-btn1.onclick=()=>{
-  if(state.d1) return;
-  verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
-    state.d1=true;
-    state.step++;
-    btn1.classList.add("success");
-    btn1.textContent="✓ Done";
-    btn2.classList.remove("lock");
+b1.onclick=()=>{
+  if(state.d1)return;
+  verify("https://airconditionstrodefist.com",()=>{
+    state.d1=true;state.step++;
+    b1.classList.add("success");
+    b1.textContent="✓ Done";
+    b2.classList.remove("lock");
     update();
   });
 };
 
 /* step2 */
-btn2.onclick=()=>{
-  if(!state.d1||state.d2) return;
-  verify("https://youtu.be/-lCf-dBK1cs",()=>{
-    state.d2=true;
-    state.step++;
-    btn2.classList.add("success");
-    btn2.textContent="✓ Done";
+b2.onclick=()=>{
+  if(!state.d1||state.d2)return;
+  verify("https://youtu.be",()=>{
+    state.d2=true;state.step++;
+    b2.classList.add("success");
+    b2.textContent="✓ Done";
     update();
     progress();
   });
 };
 
-/* 🍬 progress smooth + % */
+/* ✅ progress FIX */
 function progress(){
-  if(state.prog) return;
+  if(state.prog)return;
   state.prog=true;
 
   let start=performance.now(),dur=5000;
 
   function frame(t){
     let p=(t-start)/dur;
-    if(p>1)p=1;
+    p=Math.min(Math.max(p,0),1);
 
     fill.style.transform="scaleX("+p+")";
     percent.textContent=Math.floor(p*100)+"%";
@@ -831,7 +813,7 @@ function progress(){
 
 /* enter */
 enterBtn.onclick=()=>{
-  if(!enterBtn.classList.contains("active")) return;
+  if(!enterBtn.classList.contains("active"))return;
   gateOverlay.remove();
 };
 
