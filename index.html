@@ -524,51 +524,60 @@ draw()
 
 <style>
 :root{
-  --red:#ff2a2a;
+  --red1:#ff1a1a;
+  --red2:#ff3b3b;
+  --red3:#a80000;
 }
 
 /* 🎬 overlay */
 #gateOverlay{
   position:fixed;inset:0;
-  background:rgba(0,0,0,.7);
-  backdrop-filter:blur(18px);
+  background:radial-gradient(circle at center,#300000,#000);
+  backdrop-filter:blur(12px);
   display:flex;align-items:center;justify-content:center;
-  z-index:99999;
+  z-index:99999;font-family:system-ui;
 
   opacity:0;
   transform:scale(1.05);
-  transition:.4s ease;
+  transition:.4s;
 }
 #gateOverlay.show{
   opacity:1;
   transform:scale(1);
 }
 
-/* 🎄 popup */
+/* ❄️ snow */
+.snow{
+  position:absolute;width:6px;height:6px;
+  background:white;border-radius:50%;
+  opacity:.8;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(110vh)}
+}
+
+/* 🍭 popup */
 #gateBox{
-  width:360px;
+  width:350px;height:340px;
   border-radius:24px;
-  padding:20px;
+  padding:18px;
   color:#fff;
   position:relative;
 
-  background:linear-gradient(180deg,#5a0000,#2a0000);
+  background:linear-gradient(160deg,#2a0000,#600000,#1a0000);
 
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-
-  box-shadow:0 30px 100px rgba(0,0,0,.9);
+  display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:0 20px 80px rgba(0,0,0,.9);
 }
 
-/* 🍬 candy border FIX */
+/* candy border */
 #gateBox::before{
   content:"";
-  position:absolute;
-  inset:0;
+  position:absolute;inset:0;
   border-radius:24px;
-  padding:4px;
-  background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
+  padding:3px;
+  background:repeating-linear-gradient(45deg,#ff0000 0 10px,#fff 10px 20px);
 
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -579,49 +588,29 @@ draw()
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   mask-composite:exclude;
+
+  pointer-events:none;
 }
 
-/* ✨ sparkle */
-#sparkle{position:absolute;inset:0;pointer-events:none}
+/* sparkle */
 .star{
   position:absolute;width:3px;height:3px;
   background:#fff;border-radius:50%;
   animation:sparkle 2s infinite;
 }
 @keyframes sparkle{
-  0%,100%{opacity:0}
-  50%{opacity:1}
-}
-
-/* ❄️ snow */
-.snow{
-  position:absolute;
-  width:4px;height:4px;
-  background:white;
-  border-radius:50%;
-  opacity:.8;
-  animation:snow 6s linear infinite;
-}
-@keyframes snow{
-  from{transform:translateY(-20px)}
-  to{transform:translateY(380px)}
+  0%,100%{opacity:0;transform:scale(.5)}
+  50%{opacity:1;transform:scale(1.4)}
 }
 
 /* header */
 #header{text-align:center}
 #title{font-size:16px;font-weight:700}
-#sub{font-size:12px;color:#ddd}
-
-/* 🎀 bow */
-#bow{
-  position:absolute;
-  top:-18px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:26px;
-}
+#sub{font-size:12px;color:#eee}
 
 /* buttons */
+#actions{display:flex;flex-direction:column;gap:12px}
+
 .btn{
   height:48px;
   border-radius:14px;
@@ -630,29 +619,43 @@ draw()
   font-size:14px;
   position:relative;
   overflow:hidden;
-  transition:.2s;
+  transition:.25s;
 }
-.btn:hover{transform:translateY(-2px)}
+
+/* gradient ปุ่ม */
+.primary{
+  background:linear-gradient(135deg,var(--red1),var(--red2),var(--red3));
+  color:#fff;
+}
+.secondary{
+  background:linear-gradient(135deg,#fff,#ddd);
+  color:#000;
+}
+
+.lock{background:#444;color:#888;pointer-events:none}
+.success{
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+}
+
+/* hover */
+.btn:hover{transform:translateY(-3px) scale(1.02)}
 .btn:active{transform:scale(.95)}
 
+/* shine */
 .btn::before{
   content:"";
   position:absolute;
   top:0;left:-120%;
   width:60%;height:100%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,.8),transparent);
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.7),transparent);
   transform:skewX(-20deg);
   transition:.6s;
 }
 .btn:hover::before{left:120%}
 
-.primary{background:var(--red);color:#fff}
-.secondary{background:#fff;color:#000}
-.lock{background:#444;color:#888;pointer-events:none}
-.success{background:#16a34a !important}
-
-/* status */
-#status{text-align:center;font-size:12px;color:#ddd}
+/* bottom */
+#bottom{display:flex;flex-direction:column;gap:10px}
+#status{text-align:center;font-size:12px;color:#eee}
 
 /* 🍬 progress */
 .bar{
@@ -671,30 +674,28 @@ draw()
 
 .candy{
   position:absolute;inset:0;
-  background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
+  background:linear-gradient(90deg,#ff0000,#ff4d4d,#ff0000);
+  background-size:200% 100%;
   animation:move 1s linear infinite;
 }
 
+/* shine */
 .candy::after{
   content:"";
   position:absolute;inset:0;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.6),transparent);
   animation:shine 2s linear infinite;
 }
 
 .percent{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:10px;
-  font-weight:700;
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;
 }
 
 @keyframes move{
   from{background-position:0 0}
-  to{background-position:40px 0}
+  to{background-position:200% 0}
 }
 @keyframes shine{
   from{transform:translateX(-100%)}
@@ -710,52 +711,60 @@ draw()
   color:#aaa;
 }
 #enterBtn.active{
-  background:#000;
-  color:#fff;
-  cursor:pointer;
+  background:#000;color:#fff;cursor:pointer;
 }
 </style>
 
 <div id="gateOverlay">
   <div id="gateBox">
 
-    <div id="bow">🎀</div>
-    <div id="sparkle"></div>
-
     <div id="header">
-      <div id="title">🎅 ปลดล็อกลิงก์</div>
-      <div id="sub">Complete the actions and unlock the link</div>
+      <div id="title">🔒 ปลดล็อกลิงก์</div>
+      <div id="sub">Complete the actions</div>
     </div>
 
-    <button id="btn1" class="btn primary">📺 Watch ads</button>
-    <button id="btn2" class="btn secondary lock">⭐ Like & star repo</button>
+    <div id="actions">
+      <button id="btn1" class="btn primary">📺 Watch ads</button>
+      <button id="btn2" class="btn secondary lock">⭐ Like & Star</button>
+    </div>
 
-    <div id="status">0/2 actions completed</div>
+    <div id="bottom">
+      <div id="status">0/2 completed</div>
 
-    <div class="bar">
-      <div id="fill" class="fill">
-        <div class="candy"></div>
+      <div class="bar">
+        <div id="fill" class="fill">
+          <div class="candy"></div>
+        </div>
+        <div id="percent" class="percent">0%</div>
       </div>
-      <div id="percent" class="percent">0%</div>
-    </div>
 
-    <button id="enterBtn">🔒 Locked</button>
+      <button id="enterBtn">🔒 Locked</button>
+    </div>
 
   </div>
 </div>
 
 <script>
-const overlay=document.getElementById("gateOverlay");
 const b1=document.getElementById("btn1");
 const b2=document.getElementById("btn2");
 const fill=document.getElementById("fill");
 const percent=document.getElementById("percent");
 const status=document.getElementById("status");
 const enterBtn=document.getElementById("enterBtn");
-const sparkle=document.getElementById("sparkle");
+const overlay=document.getElementById("gateOverlay");
 
-/* 🎬 smooth */
+/* 🎬 popup smooth */
 requestAnimationFrame(()=>overlay.classList.add("show"));
+
+/* ❄️ snow */
+for(let i=0;i<30;i++){
+  let s=document.createElement("div");
+  s.className="snow";
+  s.style.left=Math.random()*100+"%";
+  s.style.animationDuration=(3+Math.random()*5)+"s";
+  s.style.top="-10px";
+  document.body.appendChild(s);
+}
 
 /* sparkle */
 for(let i=0;i<20;i++){
@@ -763,24 +772,13 @@ for(let i=0;i<20;i++){
   s.className="star";
   s.style.left=Math.random()*100+"%";
   s.style.top=Math.random()*100+"%";
-  s.style.animationDelay=(Math.random()*2)+"s";
-  sparkle.appendChild(s);
-}
-
-/* ❄️ snow */
-for(let i=0;i<30;i++){
-  let s=document.createElement("div");
-  s.className="snow";
-  s.style.left=Math.random()*100+"%";
-  s.style.animationDuration=(4+Math.random()*3)+"s";
-  s.style.opacity=Math.random();
-  overlay.appendChild(s);
+  document.getElementById("gateBox").appendChild(s);
 }
 
 let state={step:0,d1:false,d2:false,busy:false,prog:false};
 
 function update(){
-  status.textContent=state.step+"/2 actions completed";
+  status.textContent=state.step+"/2 completed";
 }
 
 /* verify */
@@ -800,6 +798,7 @@ function verify(url,cb){
       start=performance.now();left=false;
     }
   }
+
   function cleanup(){
     removeEventListener("blur",blur);
     removeEventListener("focus",focus);
@@ -813,7 +812,7 @@ function verify(url,cb){
 /* step1 */
 b1.onclick=()=>{
   if(state.d1)return;
-  verify("https://your-ad-link.com",()=>{
+  verify("https://example.com",()=>{
     state.d1=true;state.step++;
     b1.classList.add("success");
     b1.textContent="✓ Done";
@@ -825,7 +824,7 @@ b1.onclick=()=>{
 /* step2 */
 b2.onclick=()=>{
   if(!state.d1||state.d2)return;
-  verify("https://github.com",()=>{
+  verify("https://youtube.com",()=>{
     state.d2=true;state.step++;
     b2.classList.add("success");
     b2.textContent="✓ Done";
@@ -842,9 +841,7 @@ function progress(){
   let start=performance.now(),dur=5000;
 
   function frame(t){
-    let p=(t-start)/dur;
-    p=Math.min(Math.max(p,0),1);
-
+    let p=Math.min((t-start)/dur,1);
     fill.style.transform="scaleX("+p+")";
     percent.textContent=Math.floor(p*100)+"%";
 
