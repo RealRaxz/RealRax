@@ -525,7 +525,7 @@ draw()
 <style>
 :root{--red:#ff2a2a}
 
-/* overlay */
+/* 🎬 overlay (เพิ่ม animation) */
 #gateOverlay{
   position:fixed;inset:0;
   backdrop-filter:blur(18px);
@@ -535,14 +535,14 @@ draw()
 
   opacity:0;
   transform:scale(1.05);
-  transition:.4s ease;
+  transition:opacity .4s ease, transform .4s ease;
 }
 #gateOverlay.show{
   opacity:1;
   transform:scale(1);
 }
 
-/* popup */
+/* 🍭 popup */
 #gateBox{
   width:340px;height:322.38px;
   border-radius:22px;
@@ -552,13 +552,13 @@ draw()
   background:#0d0d0d;
   display:flex;flex-direction:column;justify-content:space-between;
   box-shadow:0 25px 80px rgba(0,0,0,.9);
-  overflow:hidden;
 }
 
-/* candy border */
+/* ✅ candy border FIX สมบูรณ์ */
 #gateBox::before{
   content:"";
-  position:absolute;inset:0;
+  position:absolute;
+  inset:0;
   border-radius:22px;
   padding:3px;
   background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
@@ -574,35 +574,6 @@ draw()
   mask-composite:exclude;
 
   pointer-events:none;
-}
-
-/* ❄️ SNOW BORDER */
-#snow{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-
-/* ก้อนหิมะ */
-.flake{
-  position:absolute;
-  background:white;
-  border-radius:50%;
-  opacity:.9;
-  filter:blur(.5px);
-  animation:fall linear infinite, float ease-in-out infinite;
-}
-
-/* ตกลง */
-@keyframes fall{
-  from{transform:translateY(-20px)}
-  to{transform:translateY(360px)}
-}
-
-/* ลอยนิดๆ */
-@keyframes float{
-  0%,100%{transform:translateX(0)}
-  50%{transform:translateX(8px)}
 }
 
 /* sparkle */
@@ -633,6 +604,7 @@ draw()
 .btn:hover{transform:translateY(-2px)}
 .btn:active{transform:scale(.95)}
 
+/* shine */
 .btn::before{
   content:"";
   position:absolute;top:0;left:-120%;
@@ -652,7 +624,7 @@ draw()
 #bottom{display:flex;flex-direction:column;gap:10px}
 #status{text-align:center;font-size:12px;color:#bbb}
 
-/* progress */
+/* 🍬 progress */
 .bar{
   height:12px;
   background:#222;
@@ -660,11 +632,14 @@ draw()
   position:relative;
   overflow:hidden;
 }
+
 .fill{
   position:absolute;inset:0;
   transform:scaleX(0);
   transform-origin:left;
+  will-change:transform;
 }
+
 .candy{
   position:absolute;inset:0;
   background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
@@ -676,6 +651,7 @@ draw()
   background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);
   animation:shine 2s linear infinite;
 }
+
 .percent{
   position:absolute;
   width:100%;
@@ -685,6 +661,7 @@ draw()
   font-size:10px;
   color:#fff;
   font-weight:600;
+  pointer-events:none;
 }
 
 @keyframes move{
@@ -709,7 +686,6 @@ draw()
 <div id="gateOverlay">
   <div id="gateBox">
 
-    <div id="snow"></div>
     <div id="sparkle"></div>
 
     <div id="header">
@@ -739,61 +715,52 @@ draw()
 </div>
 
 <script>
-const overlay=document.getElementById("gateOverlay");
-const snow=document.getElementById("snow");
-const sparkle=document.getElementById("sparkle");
-
-/* popup smooth */
-requestAnimationFrame(()=>overlay.classList.add("show"));
-
-/* ❄️ snow gen */
-for(let i=0;i<25;i++){
-  let f=document.createElement("div");
-  f.className="flake";
-  let size=Math.random()*4+2;
-
-  f.style.width=size+"px";
-  f.style.height=size+"px";
-  f.style.left=Math.random()*100+"%";
-  f.style.animationDuration=(Math.random()*3+3)+"s, "+(Math.random()*2+2)+"s";
-  f.style.animationDelay=Math.random()*3+"s";
-
-  snow.appendChild(f);
-}
-
-/* sparkle */
-for(let i=0;i<15;i++){
-  let s=document.createElement("div");
-  s.className="star";
-  s.style.left=Math.random()*100+"%";
-  s.style.top=Math.random()*100+"%";
-  s.style.animationDelay=Math.random()*2+"s";
-  sparkle.appendChild(s);
-}
-
-/* logic เดิม */
 const b1=document.getElementById("btn1");
 const b2=document.getElementById("btn2");
 const fill=document.getElementById("fill");
 const percent=document.getElementById("percent");
 const status=document.getElementById("status");
 const enterBtn=document.getElementById("enterBtn");
+const sparkle=document.getElementById("sparkle");
+const overlay=document.getElementById("gateOverlay");
+
+/* 🎬 smooth popup enter */
+requestAnimationFrame(()=>{
+  overlay.classList.add("show");
+});
+
+/* sparkle */
+for(let i=0;i<20;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"%";
+  s.style.top=Math.random()*100+"%";
+  s.style.animationDelay=(Math.random()*2)+"s";
+  sparkle.appendChild(s);
+}
 
 let state={step:0,d1:false,d2:false,busy:false,prog:false};
 
-function update(){status.textContent=state.step+"/2 actions completed";}
+function update(){
+  status.textContent=state.step+"/2 actions completed";
+}
 
+/* verify */
 function verify(url,cb){
   if(state.busy)return;
   state.busy=true;
-  let start=performance.now(),left=false;
+
+  let start=performance.now();
+  let left=false;
 
   function blur(){left=true}
   function focus(){
     let t=performance.now()-start;
     if(left&&t>=2000){
       cleanup();state.busy=false;cb();
-    }else{start=performance.now();left=false;}
+    }else{
+      start=performance.now();left=false;
+    }
   }
   function cleanup(){
     removeEventListener("blur",blur);
@@ -805,6 +772,7 @@ function verify(url,cb){
   window.open(url,"_blank");
 }
 
+/* step1 */
 b1.onclick=()=>{
   if(state.d1)return;
   verify("https://airconditionstrodefist.com",()=>{
@@ -816,6 +784,7 @@ b1.onclick=()=>{
   });
 };
 
+/* step2 */
 b2.onclick=()=>{
   if(!state.d1||state.d2)return;
   verify("https://youtu.be",()=>{
@@ -827,6 +796,7 @@ b2.onclick=()=>{
   });
 };
 
+/* progress */
 function progress(){
   if(state.prog)return;
   state.prog=true;
@@ -834,20 +804,25 @@ function progress(){
   let start=performance.now(),dur=5000;
 
   function frame(t){
-    let p=Math.min((t-start)/dur,1);
+    let p=(t-start)/dur;
+    p=Math.min(Math.max(p,0),1);
+
     fill.style.transform="scaleX("+p+")";
     percent.textContent=Math.floor(p*100)+"%";
 
     if(p<1){
       requestAnimationFrame(frame);
     }else{
+      percent.textContent="100%";
       enterBtn.classList.add("active");
       enterBtn.textContent="Enter Website";
     }
   }
+
   requestAnimationFrame(frame);
 }
 
+/* enter */
 enterBtn.onclick=()=>{
   if(!enterBtn.classList.contains("active"))return;
   gateOverlay.remove();
