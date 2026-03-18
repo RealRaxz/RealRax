@@ -1,30 +1,15 @@
-const overlay = document.getElementById("gateOverlay");
-const gateBox = document.getElementById("gateBox");
-const btn1 = document.getElementById("btn1");
-const btn2 = document.getElementById("btn2");
-const fill = document.getElementById("fill");
-const percent = document.getElementById("percent");
-const enterBtn = document.getElementById("enterBtn");
+<script>
+const adBtn = document.getElementById("adButton1");
+const likeBtn = document.getElementById("likeButton1");
+const progressContainer = document.getElementById("progressContainer");
+const progressBar = document.getElementById("progressBar");
+const continueBtn = document.getElementById("continueButton");
 
-// State ปลอดภัย
-let step = Number(localStorage.getItem("popupStep") || 0);
-let progress = Number(localStorage.getItem("popupProgress") || 0);
-let actionComplete = JSON.parse(localStorage.getItem("actionComplete") || '{"btn1":false,"btn2":false}');
-
+let actionDone = { ad: false, like: false };
 let busy = false;
+let progress = 0;
 
-// Responsive
-function resizePopup() {
-  const vw = window.innerWidth;
-  gateBox.style.width = vw < 400 ? "90%" : "320px";
-}
-window.addEventListener("resize", resizePopup);
-resizePopup();
-
-requestAnimationFrame(() => overlay.classList.add("show"));
-
-// ฟังก์ชัน verify แบบ Action 2/2
-function verify(link, actionKey, cb) {
+function verify(link, key, cb) {
   if (busy) return;
   busy = true;
 
@@ -35,76 +20,50 @@ function verify(link, actionKey, cb) {
     if (!newWindow || newWindow.closed) {
       clearInterval(interval);
       const elapsed = Date.now() - start;
-      const waitTime = Math.max(2000 - elapsed, 0);
+      const waitTime = Math.max(2000 - elapsed, 0); // 2 วิ
 
       setTimeout(() => {
-        actionComplete[actionKey] = true;
-        localStorage.setItem("actionComplete", JSON.stringify(actionComplete));
-        cb();
+        actionDone[key] = true;
+        updateUI();
         busy = false;
+        cb && cb();
       }, waitTime);
     }
   }, 100);
 }
 
-// Update UI ทุกขั้นตอน
 function updateUI() {
-  // Step1
-  if (actionComplete.btn1) {
-    btn1.classList.add("success");
-    btn1.textContent = "Done";
-    btn2.classList.remove("lock");
+  if (actionDone.ad) {
+    adBtn.textContent = "Done";
+    adBtn.style.pointerEvents = "none";
+    likeBtn.classList.remove("disabled");
   }
 
-  // Step2
-  if (actionComplete.btn2) {
-    btn2.classList.add("success");
-    btn2.textContent = "Done";
+  if (actionDone.like) {
+    likeBtn.textContent = "Done";
+    likeBtn.style.pointerEvents = "none";
   }
 
-  // ถ้าครบ Action ทั้งสองปุ่ม เริ่ม progress
-  if (actionComplete.btn1 && actionComplete.btn2) {
-    startProgress(progress);
+  if (actionDone.ad && actionDone.like && progress === 0) {
+    progressContainer.style.display = "block";
+    startProgress();
   }
 }
 
-// Responsive verify
-btn1.onclick = () => verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6","btn1",()=>updateUI());
-btn2.onclick = () => {
-  if (!actionComplete.btn1 || busy) return;
-  verify("https://youtu.be/-lCf-dBK1cs?si=b_EgtIkpC-Kd-6c6","btn2",()=>updateUI());
-}
-
-// Progress + show enter
-function startProgress(start=0){
-  let p = start;
-  fill.style.width = p + "%";
-  percent.textContent = p + "%";
-
-  if (p >= 100) {
-    enterBtn.classList.add("show");
-    return;
-  }
-
-  const interval = setInterval(()=>{
-    p++;
-    fill.style.width = p + "%";
-    percent.textContent = p + "%";
-    localStorage.setItem("popupProgress",p);
-    if(p>=100){
+function startProgress() {
+  const interval = setInterval(() => {
+    progress++;
+    progressBar.style.width = progress + "%";
+    if (progress >= 100) {
       clearInterval(interval);
-      enterBtn.classList.add("show");
+      continueBtn.style.display = "block";
     }
-  },30);
+  }, 30);
 }
 
-// Enter button
-enterBtn.onclick = () => {
-  overlay.remove();
-  localStorage.removeItem("popupStep");
-  localStorage.removeItem("popupProgress");
-  localStorage.removeItem("actionComplete");
-}
-
-// Initial
-updateUI();
+adBtn.addEventListener("click", () => verify(adBtn.href, "ad"));
+likeBtn.addEventListener("click", () => verify(likeBtn.href, "like"));
+continueBtn.addEventListener("click", () => {
+  document.getElementById("subscribePopup").style.display = "none";
+});
+</script>
