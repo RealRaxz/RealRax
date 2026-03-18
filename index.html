@@ -525,7 +525,7 @@ draw()
 <style>
 :root{--red:#ff2a2a}
 
-/* 🎬 overlay (เพิ่ม animation) */
+/* overlay */
 #gateOverlay{
   position:fixed;inset:0;
   backdrop-filter:blur(18px);
@@ -533,6 +533,7 @@ draw()
   display:flex;align-items:center;justify-content:center;
   z-index:99999;font-family:system-ui;
 
+  /* 🎬 smooth enter */
   opacity:0;
   transform:scale(1.05);
   transition:opacity .4s ease, transform .4s ease;
@@ -542,7 +543,7 @@ draw()
   transform:scale(1);
 }
 
-/* 🍭 popup */
+/* popup */
 #gateBox{
   width:340px;height:322.38px;
   border-radius:22px;
@@ -554,7 +555,7 @@ draw()
   box-shadow:0 25px 80px rgba(0,0,0,.9);
 }
 
-/* ✅ candy border FIX สมบูรณ์ */
+/* 🍭 candy border FIX 100% */
 #gateBox::before{
   content:"";
   position:absolute;
@@ -604,7 +605,6 @@ draw()
 .btn:hover{transform:translateY(-2px)}
 .btn:active{transform:scale(.95)}
 
-/* shine */
 .btn::before{
   content:"";
   position:absolute;top:0;left:-120%;
@@ -624,15 +624,16 @@ draw()
 #bottom{display:flex;flex-direction:column;gap:10px}
 #status{text-align:center;font-size:12px;color:#bbb}
 
-/* 🍬 progress */
+/* 🍬 progress FIX สมดุล */
 .bar{
   height:12px;
-  background:#222;
+  background:#1a1a1a;
   border-radius:999px;
   position:relative;
   overflow:hidden;
 }
 
+/* fill */
 .fill{
   position:absolute;inset:0;
   transform:scaleX(0);
@@ -640,27 +641,40 @@ draw()
   will-change:transform;
 }
 
+/* candy */
 .candy{
   position:absolute;inset:0;
-  background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
+  background:repeating-linear-gradient(
+    45deg,
+    red 0 10px,
+    white 10px 20px
+  );
   animation:move 1s linear infinite;
 }
+
+/* shine */
 .candy::after{
   content:"";
   position:absolute;inset:0;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.5),
+    transparent
+  );
   animation:shine 2s linear infinite;
 }
 
+/* % ตรงกลางเป๊ะ */
 .percent{
   position:absolute;
-  width:100%;
-  text-align:center;
-  top:50%;
-  transform:translateY(-50%);
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   font-size:10px;
-  color:#fff;
   font-weight:600;
+  color:#fff;
   pointer-events:none;
 }
 
@@ -722,11 +736,10 @@ const percent=document.getElementById("percent");
 const status=document.getElementById("status");
 const enterBtn=document.getElementById("enterBtn");
 const sparkle=document.getElementById("sparkle");
-const overlay=document.getElementById("gateOverlay");
 
 /* 🎬 smooth popup enter */
 requestAnimationFrame(()=>{
-  overlay.classList.add("show");
+  gateOverlay.classList.add("show");
 });
 
 /* sparkle */
@@ -756,12 +769,17 @@ function verify(url,cb){
   function blur(){left=true}
   function focus(){
     let t=performance.now()-start;
+
     if(left&&t>=2000){
-      cleanup();state.busy=false;cb();
+      cleanup();
+      state.busy=false;
+      cb();
     }else{
-      start=performance.now();left=false;
+      start=performance.now();
+      left=false;
     }
   }
+
   function cleanup(){
     removeEventListener("blur",blur);
     removeEventListener("focus",focus);
@@ -769,6 +787,7 @@ function verify(url,cb){
 
   addEventListener("blur",blur);
   addEventListener("focus",focus);
+
   window.open(url,"_blank");
 }
 
@@ -776,7 +795,8 @@ function verify(url,cb){
 b1.onclick=()=>{
   if(state.d1)return;
   verify("https://airconditionstrodefist.com",()=>{
-    state.d1=true;state.step++;
+    state.d1=true;
+    state.step++;
     b1.classList.add("success");
     b1.textContent="✓ Done";
     b2.classList.remove("lock");
@@ -788,7 +808,8 @@ b1.onclick=()=>{
 b2.onclick=()=>{
   if(!state.d1||state.d2)return;
   verify("https://youtu.be",()=>{
-    state.d2=true;state.step++;
+    state.d2=true;
+    state.step++;
     b2.classList.add("success");
     b2.textContent="✓ Done";
     update();
@@ -796,7 +817,7 @@ b2.onclick=()=>{
   });
 };
 
-/* progress */
+/* 🍬 progress สมูท + % */
 function progress(){
   if(state.prog)return;
   state.prog=true;
