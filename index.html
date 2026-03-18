@@ -525,13 +525,21 @@ draw()
 <style>
 :root{--red:#ff2a2a}
 
-/* overlay */
+/* 🎬 overlay (เพิ่ม animation) */
 #gateOverlay{
   position:fixed;inset:0;
   backdrop-filter:blur(18px);
   background:rgba(0,0,0,.65);
   display:flex;align-items:center;justify-content:center;
   z-index:99999;font-family:system-ui;
+
+  opacity:0;
+  transform:scale(1.05);
+  transition:opacity .4s ease, transform .4s ease;
+}
+#gateOverlay.show{
+  opacity:1;
+  transform:scale(1);
 }
 
 /* 🍭 popup */
@@ -546,7 +554,7 @@ draw()
   box-shadow:0 25px 80px rgba(0,0,0,.9);
 }
 
-/* ✅ candy border FIX */
+/* ✅ candy border FIX สมบูรณ์ */
 #gateBox::before{
   content:"";
   position:absolute;
@@ -554,11 +562,17 @@ draw()
   border-radius:22px;
   padding:3px;
   background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
+
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;
+
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
   mask-composite:exclude;
+
   pointer-events:none;
 }
 
@@ -610,7 +624,7 @@ draw()
 #bottom{display:flex;flex-direction:column;gap:10px}
 #status{text-align:center;font-size:12px;color:#bbb}
 
-/* 🍬 progress FIX */
+/* 🍬 progress */
 .bar{
   height:12px;
   background:#222;
@@ -619,7 +633,6 @@ draw()
   overflow:hidden;
 }
 
-/* fill */
 .fill{
   position:absolute;inset:0;
   transform:scaleX(0);
@@ -627,14 +640,11 @@ draw()
   will-change:transform;
 }
 
-/* candy */
 .candy{
   position:absolute;inset:0;
   background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
   animation:move 1s linear infinite;
 }
-
-/* shine */
 .candy::after{
   content:"";
   position:absolute;inset:0;
@@ -642,7 +652,6 @@ draw()
   animation:shine 2s linear infinite;
 }
 
-/* % text */
 .percent{
   position:absolute;
   width:100%;
@@ -706,10 +715,6 @@ draw()
 </div>
 
 <script>
-const btn1=btn2=null;
-</script>
-
-<script>
 const b1=document.getElementById("btn1");
 const b2=document.getElementById("btn2");
 const fill=document.getElementById("fill");
@@ -717,8 +722,14 @@ const percent=document.getElementById("percent");
 const status=document.getElementById("status");
 const enterBtn=document.getElementById("enterBtn");
 const sparkle=document.getElementById("sparkle");
+const overlay=document.getElementById("gateOverlay");
 
-/* sparkle gen */
+/* 🎬 smooth popup enter */
+requestAnimationFrame(()=>{
+  overlay.classList.add("show");
+});
+
+/* sparkle */
 for(let i=0;i<20;i++){
   let s=document.createElement("div");
   s.className="star";
@@ -785,7 +796,7 @@ b2.onclick=()=>{
   });
 };
 
-/* ✅ progress FIX */
+/* progress */
 function progress(){
   if(state.prog)return;
   state.prog=true;
