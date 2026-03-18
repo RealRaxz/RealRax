@@ -1,30 +1,42 @@
 const overlay = document.getElementById("gateOverlay");
+const gateBox = document.getElementById("gateBox");
 const btn1 = document.getElementById("btn1");
 const btn2 = document.getElementById("btn2");
 const fill = document.getElementById("fill");
 const percent = document.getElementById("percent");
 const enterBtn = document.getElementById("enterBtn");
 
+// ใช้ localStorage แทน sessionStorage สำหรับความเสถียรข้าม reload/back
+let step = Number(localStorage.getItem("popupStep") || 0);
+let progress = Number(localStorage.getItem("popupProgress") || 0);
+
 // แสดง overlay
 requestAnimationFrame(() => overlay.classList.add("show"));
 
-// เก็บสถานะขั้นตอน
-let step = Number(sessionStorage.getItem("popupStep") || 0);
-updateUI();
-
+// ป้องกัน multi click
 let busy = false;
 
-// ฟังก์ชัน verify บังคับดู Ads อย่างน้อย 2 วิ
+// Responsive scale ตาม viewport
+function resizePopup() {
+  const vw = window.innerWidth;
+  gateBox.style.width = vw < 400 ? "90%" : "320px";
+}
+window.addEventListener("resize", resizePopup);
+resizePopup();
+
+// Verify function รองรับทุกแพลตฟอร์ม
 function verify(link, cb) {
   if (busy) return;
   busy = true;
 
+  // ป้องกัน popup block บนมือถือ
   const newWindow = window.open(link, "_blank");
   const start = Date.now();
 
-  const checkInterval = setInterval(() => {
-    if (newWindow.closed) {
-      clearInterval(checkInterval);
+  // check ทุก 100ms ว่าปิดหรือไม่
+  const interval = setInterval(() => {
+    if (!newWindow || newWindow.closed) {
+      clearInterval(interval);
       const elapsed = Date.now() - start;
       const waitTime = Math.max(2000 - elapsed, 0); // บังคับ 2 วินาที
       setTimeout(() => {
@@ -35,50 +47,7 @@ function verify(link, cb) {
   }, 100);
 }
 
-// step 1
-btn1.onclick = () => verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6", () => {
-  step = 1;
-  sessionStorage.setItem("popupStep", step);
-  updateUI();
-});
-
-// step 2
-btn2.onclick = () => {
-  if (step !== 1 || busy) return;
-  verify("https://youtu.be/-lCf-dBK1cs?si=b_EgtIkpC-Kd-6c6", () => {
-    step = 2;
-    sessionStorage.setItem("popupStep", step);
-    updateUI();
-    startProgress();
-  });
-};
-
-// progress + show enter
-function startProgress() {
-  if (sessionStorage.getItem("popupProgress") === "100") {
-    enterBtn.classList.add("show");
-    return;
-  }
-  let p = Number(sessionStorage.getItem("popupProgress") || 0);
-  const interval = setInterval(() => {
-    p++;
-    fill.style.width = p + "%";
-    percent.textContent = p + "%";
-    sessionStorage.setItem("popupProgress", p);
-    if (p >= 100) {
-      clearInterval(interval);
-      setTimeout(() => enterBtn.classList.add("show"), 200);
-    }
-  }, 30);
-}
-
-// enter
-enterBtn.onclick = () => {
-  overlay.remove();
-  sessionStorage.clear();
-};
-
-// update UI ตามขั้นตอน
+// Update UI ทุกขั้นตอน
 function updateUI() {
   if (step >= 1) {
     btn1.classList.add("success");
@@ -88,6 +57,57 @@ function updateUI() {
   if (step >= 2) {
     btn2.classList.add("success");
     btn2.textContent = "Done";
-    startProgress();
+    startProgress(progress);
   }
 }
+
+// ปุ่ม step 1
+btn1.onclick = () => verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6", () => {
+  step = 1;
+  localStorage.setItem("popupStep", step);
+  updateUI();
+});
+
+// ปุ่ม step 2
+btn2.onclick = () => {
+  if (step !== 1 || busy) return;
+  verify("https://youtu.be/-lCf-dBK1cs?si=b_EgtIkpC-Kd-6c6", () => {
+    step = 2;
+    localStorage.setItem("popupStep", step);
+    updateUI();
+    startProgress(progress);
+  });
+};
+
+// Progress + show enter
+function startProgress(start = 0) {
+  let p = start;
+  fill.style.width = p + "%";
+  percent.textContent = p + "%";
+
+  if (p >= 100) {
+    enterBtn.classList.add("show");
+    return;
+  }
+
+  const interval = setInterval(() => {
+    p++;
+    fill.style.width = p + "%";
+    percent.textContent = p + "%";
+    localStorage.setItem("popupProgress", p);
+    if (p >= 100) {
+      clearInterval(interval);
+      enterBtn.classList.add("show");
+    }
+  }, 30);
+}
+
+// Enter button
+enterBtn.onclick = () => {
+  overlay.remove();
+  localStorage.removeItem("popupStep");
+  localStorage.removeItem("popupProgress");
+};
+
+// Initial load
+updateUI();
