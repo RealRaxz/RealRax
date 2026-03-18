@@ -524,17 +524,15 @@ draw()
 
 <style>
 :root{
-  --red:#ff2a2a;
-  --dark:#0b0b0c;
+  --red:#ff1e1e;
 }
 
 /* 🌌 overlay */
 #gateOverlay{
   position:fixed;
   inset:0;
-  backdrop-filter:blur(18px) saturate(140%);
-  background:radial-gradient(circle at top, rgba(255,0,0,.15), transparent 60%),
-             rgba(0,0,0,.65);
+  backdrop-filter:blur(16px) brightness(.9);
+  background:rgba(0,0,0,.6);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -550,26 +548,16 @@ draw()
   padding:18px;
   color:#fff;
 
-  background:linear-gradient(180deg,#161616,#0b0b0c);
+  background:linear-gradient(180deg,#151515,#0a0a0a);
   border:1px solid rgba(255,255,255,.08);
-
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.03),
-    0 20px 60px rgba(0,0,0,.9),
-    0 0 40px rgba(255,0,0,.25);
 
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-}
 
-/* glow line */
-#topLine{
-  height:4px;
-  border-radius:999px;
-  background:linear-gradient(90deg,transparent,red,white,red,transparent);
-  margin-bottom:10px;
-  opacity:.8;
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.9),
+    0 0 40px rgba(255,0,0,.2);
 }
 
 /* header */
@@ -577,68 +565,35 @@ draw()
   text-align:center;
   font-size:15px;
   font-weight:600;
-  letter-spacing:.3px;
 }
-
 #sub{
   text-align:center;
   font-size:12px;
   color:#aaa;
-  margin-top:4px;
 }
 
-/* actions */
+/* buttons */
 #actions{
   display:flex;
   flex-direction:column;
   gap:12px;
-  margin-top:14px;
 }
 
-/* ✨ button base */
 .btn{
-  position:relative;
   height:46px;
   border-radius:14px;
   border:none;
-  font-size:14px;
   cursor:pointer;
-  overflow:hidden;
+  font-size:14px;
   transition:.2s;
 }
 
-/* glow layer */
-.btn::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:14px;
-  opacity:0;
-  transition:.25s;
-}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.96)}
 
-/* hover */
-.btn:hover{
-  transform:translateY(-2px);
-}
-
-.btn:hover::before{
-  opacity:.4;
-}
-
-/* press */
-.btn:active{
-  transform:scale(.95);
-}
-
-/* styles */
 .primary{
   background:var(--red);
   color:#fff;
-}
-
-.primary::before{
-  background:radial-gradient(circle,rgba(255,255,255,.6),transparent);
 }
 
 .secondary{
@@ -646,28 +601,18 @@ draw()
   color:#000;
 }
 
-.secondary::before{
-  background:radial-gradient(circle,rgba(0,0,0,.3),transparent);
-}
-
 .lock{
-  background:#3a3a3a;
+  background:#444;
   color:#888;
   pointer-events:none;
 }
 
 .success{
   background:#16a34a !important;
+  color:#fff;
 }
 
 /* bottom */
-#bottom{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-/* status */
 #status{
   text-align:center;
   font-size:12px;
@@ -677,9 +622,9 @@ draw()
 /* 🍬 progress */
 .bar{
   height:10px;
+  background:#222;
   border-radius:999px;
   overflow:hidden;
-  background:#222;
 }
 
 .fill{
@@ -687,15 +632,13 @@ draw()
   width:0%;
   background:repeating-linear-gradient(
     45deg,
-    #ff0000,
-    #ff0000 10px,
-    #ffffff 10px,
-    #ffffff 20px
+    red 0 10px,
+    white 10px 20px
   );
-  animation:moveCandy 1s linear infinite;
+  animation:candyMove 1s linear infinite;
 }
 
-@keyframes moveCandy{
+@keyframes candyMove{
   from{background-position:0 0}
   to{background-position:40px 0}
 }
@@ -705,15 +648,13 @@ draw()
   height:44px;
   border-radius:14px;
   border:none;
-  background:#444;
+  background:#555;
   color:#aaa;
 }
-
 #enterBtn.active{
   background:#000;
   color:#fff;
   cursor:pointer;
-  box-shadow:0 0 15px rgba(255,255,255,.2);
 }
 </style>
 
@@ -721,22 +662,19 @@ draw()
   <div id="gateBox">
 
     <div>
-      <div id="topLine"></div>
       <div id="title">🔒 Unlock Content</div>
-      <div id="sub">Complete 2 steps to continue</div>
+      <div id="sub">Complete all steps</div>
     </div>
 
     <div id="actions">
-      <button id="adsBtn" class="btn primary">📺 Watch Ads</button>
-      <button id="step2Btn" class="btn secondary lock">⭐ Complete Step</button>
+      <button id="btn1" class="btn primary">📺 Watch Ads</button>
+      <button id="btn2" class="btn secondary lock">⭐ Complete Step</button>
     </div>
 
-    <div id="bottom">
+    <div>
       <div id="status">0/2 actions completed</div>
 
-      <div class="bar">
-        <div id="fill" class="fill"></div>
-      </div>
+      <div class="bar"><div id="fill" class="fill"></div></div>
 
       <button id="enterBtn">🔒 Locked</button>
     </div>
@@ -745,99 +683,114 @@ draw()
 </div>
 
 <script>
-const adsBtn = document.getElementById("adsBtn");
-const step2Btn = document.getElementById("step2Btn");
+const btn1 = document.getElementById("btn1");
+const btn2 = document.getElementById("btn2");
 const fill = document.getElementById("fill");
 const status = document.getElementById("status");
 const enterBtn = document.getElementById("enterBtn");
 
-let state = {step:0,ads:false,step2:false,verifying:false,progress:false};
+let step=0;
+let busy=false;
+let done1=false,done2=false;
+let progressing=false;
 
-function update(){status.innerText = state.step + "/2 actions completed";}
+/* UI */
+function update(){
+  status.textContent = step + "/2 actions completed";
+}
 
-/* 🔒 verify จริง */
+/* 🔒 verify REAL */
 function verify(url,cb){
-  if(state.verifying) return;
-  state.verifying=true;
+  if(busy) return;
+  busy=true;
 
-  let start=Date.now(),left=false;
+  let start=performance.now();
+  let left=false;
 
-  function blur(){left=true;}
-  function focus(){
-    let diff=Date.now()-start;
-    if(left && diff>=2000){
+  function onBlur(){
+    left=true;
+  }
+
+  function onFocus(){
+    let t=performance.now()-start;
+
+    if(left && t>=2000){
       cleanup();
-      state.verifying=false;
+      busy=false;
       cb();
     }else{
-      start=Date.now();
+      start=performance.now();
       left=false;
     }
   }
+
   function cleanup(){
-    removeEventListener("blur",blur);
-    removeEventListener("focus",focus);
+    window.removeEventListener("blur",onBlur);
+    window.removeEventListener("focus",onFocus);
   }
 
-  addEventListener("blur",blur);
-  addEventListener("focus",focus);
+  window.addEventListener("blur",onBlur);
+  window.addEventListener("focus",onFocus);
 
   window.open(url,"_blank");
 }
 
-/* step1 */
-adsBtn.onclick=()=>{
-  if(state.ads) return;
+/* STEP1 */
+btn1.onclick=()=>{
+  if(done1) return;
 
   verify("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",()=>{
-    state.ads=true;
-    state.step++;
-    adsBtn.classList.add("success");
-    adsBtn.innerText="✓ Done";
-    step2Btn.classList.remove("lock");
+    done1=true;
+    step++;
+    btn1.classList.add("success");
+    btn1.textContent="✓ Done";
+    btn2.classList.remove("lock");
     update();
   });
 };
 
-/* step2 */
-step2Btn.onclick=()=>{
-  if(!state.ads||state.step2) return;
+/* STEP2 */
+btn2.onclick=()=>{
+  if(!done1 || done2) return;
 
   verify("https://youtu.be/-lCf-dBK1cs",()=>{
-    state.step2=true;
-    state.step++;
-    step2Btn.classList.add("success");
-    step2Btn.innerText="✓ Done";
+    done2=true;
+    step++;
+    btn2.classList.add("success");
+    btn2.textContent="✓ Done";
     update();
-    progress();
+    startProgress();
   });
 };
 
-/* progress */
-function progress(){
-  if(state.progress) return;
-  state.progress=true;
+/* 🍬 progress smooth */
+function startProgress(){
+  if(progressing) return;
+  progressing=true;
 
-  let start=performance.now(),dur=5000;
+  let start=performance.now();
+  let dur=5000;
 
-  function anim(t){
+  function frame(t){
     let p=(t-start)/dur;
     if(p>1)p=1;
+
     fill.style.width=(p*100)+"%";
 
     if(p<1){
-      requestAnimationFrame(anim);
+      requestAnimationFrame(frame);
     }else{
       enterBtn.classList.add("active");
-      enterBtn.innerText="Enter Website";
+      enterBtn.textContent="Enter Website";
     }
   }
-  requestAnimationFrame(anim);
+
+  requestAnimationFrame(frame);
 }
 
-/* enter */
+/* ENTER */
 enterBtn.onclick=()=>{
-  if(!enterBtn.classList.contains("active"))return;
+  if(!enterBtn.classList.contains("active")) return;
   gateOverlay.remove();
 };
 
