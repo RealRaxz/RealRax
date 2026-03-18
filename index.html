@@ -523,47 +523,72 @@ draw()
 <script src="redirect.js"></script>
 
 <style>
-:root{--red:#ff2a2a}
+:root{
+  --red:#ff2a2a;
+}
 
 /* 🎬 overlay */
 #gateOverlay{
   position:fixed;inset:0;
-  backdrop-filter:blur(18px);
-  background:rgba(0,0,0,.65);
+  background:radial-gradient(circle at center,#200000,#000);
+  backdrop-filter:blur(10px);
   display:flex;align-items:center;justify-content:center;
-  z-index:99999;font-family:system-ui;
+  z-index:99999;
+  font-family:system-ui;
 
   opacity:0;
   transform:scale(1.05);
-  transition:opacity .4s ease, transform .4s ease;
+  transition:.4s ease;
 }
 #gateOverlay.show{
   opacity:1;
   transform:scale(1);
 }
 
+/* 🎄 snow */
+.snow{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.snow span{
+  position:absolute;
+  width:4px;height:4px;
+  background:white;
+  border-radius:50%;
+  opacity:.8;
+  animation:snowFall linear infinite;
+}
+@keyframes snowFall{
+  from{transform:translateY(-10px)}
+  to{transform:translateY(100vh)}
+}
+
 /* 🍭 popup */
 #gateBox{
-  width:340px;height:322.38px;
-  border-radius:22px;
-  padding:18px;
+  width:360px;
+  border-radius:26px;
+  padding:20px;
   color:#fff;
   position:relative;
 
-  /* 🔴 พื้นใหม่แดงหรู */
-  background:linear-gradient(160deg,#1a0000,#300000 60%,#120000);
+  background:linear-gradient(160deg,#2b0000,#5a0000 60%,#1a0000);
+  box-shadow:
+    0 30px 90px rgba(0,0,0,.9),
+    0 0 40px rgba(255,0,0,.25);
 
-  display:flex;flex-direction:column;justify-content:space-between;
-  box-shadow:0 25px 80px rgba(0,0,0,.9);
+  display:flex;
+  flex-direction:column;
+  gap:16px;
 }
 
-/* ✅ FIX ขอบ candy ไม่แหว่ง */
+/* 🍬 candy border FIX */
 #gateBox::before{
   content:"";
   position:absolute;
   inset:0;
-  border-radius:22px;
-  padding:3px;
+  border-radius:26px;
+  padding:4px;
   background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
 
   -webkit-mask:
@@ -575,44 +600,51 @@ draw()
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   mask-composite:exclude;
-
-  pointer-events:none;
 }
 
-/* sparkle */
-#sparkle{position:absolute;inset:0;pointer-events:none}
+/* ✨ sparkle */
+#sparkle{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
 .star{
-  position:absolute;width:3px;height:3px;
-  background:white;border-radius:50%;
+  position:absolute;
+  width:3px;height:3px;
+  background:#fff;
+  border-radius:50%;
   animation:sparkle 2s infinite;
 }
 @keyframes sparkle{
   0%,100%{opacity:0;transform:scale(.5)}
-  50%{opacity:1;transform:scale(1.3)}
+  50%{opacity:1;transform:scale(1.5)}
 }
 
-/* layout */
+/* header */
 #header{text-align:center}
-#title{font-size:15px;font-weight:600}
-#sub{font-size:12px;color:#ddd}
-
-#actions{display:flex;flex-direction:column;gap:12px}
+#title{font-size:18px;font-weight:700}
+#sub{font-size:12px;color:#eee}
 
 /* buttons */
 .btn{
-  height:46px;border-radius:14px;border:none;
-  cursor:pointer;font-size:14px;
-  position:relative;overflow:hidden;
+  height:48px;
+  border-radius:16px;
+  border:none;
+  font-size:14px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
   transition:.2s;
 }
 .btn:hover{transform:translateY(-2px)}
-.btn:active{transform:scale(.95)}
+.btn:active{transform:scale(.96)}
 
 .btn::before{
   content:"";
-  position:absolute;top:0;left:-120%;
+  position:absolute;
+  top:0;left:-120%;
   width:60%;height:100%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,.7),transparent);
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.8),transparent);
   transform:skewX(-20deg);
   transition:.6s;
 }
@@ -623,30 +655,29 @@ draw()
 .lock{background:#444;color:#888;pointer-events:none}
 .success{background:#16a34a !important}
 
-/* bottom */
-#bottom{display:flex;flex-direction:column;gap:10px}
-#status{text-align:center;font-size:12px;color:#ddd}
+/* status */
+#status{text-align:center;font-size:12px}
 
-/* 🍬 progress FIX */
+/* 🍬 progress */
 .bar{
-  height:12px;
-  background:#220000;
+  height:14px;
+  background:#300000;
   border-radius:999px;
-  position:relative;
   overflow:hidden;
+  position:relative;
 }
 
-/* fill */
 .fill{
-  position:absolute;inset:0;
+  position:absolute;
+  inset:0;
   transform:scaleX(0);
   transform-origin:left;
-  will-change:transform;
 }
 
 /* candy */
 .candy{
-  position:absolute;inset:0;
+  position:absolute;
+  inset:0;
   background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
   animation:move 1s linear infinite;
 }
@@ -654,25 +685,24 @@ draw()
 /* shine */
 .candy::after{
   content:"";
-  position:absolute;inset:0;
+  position:absolute;
+  inset:0;
   background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);
   animation:shine 2s linear infinite;
 }
 
-/* ✅ % สมดุลจริง */
+/* percent */
 .percent{
   position:absolute;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:10px;
-  font-weight:600;
-  color:#fff;
-  pointer-events:none;
+  font-size:11px;
+  font-weight:700;
 }
 
-/* animation */
+/* anim */
 @keyframes move{
   from{background-position:0 0}
   to{background-position:40px 0}
@@ -684,157 +714,127 @@ draw()
 
 /* enter */
 #enterBtn{
-  height:44px;border-radius:14px;border:none;
-  background:#550000;color:#aaa;
+  height:46px;
+  border-radius:14px;
+  border:none;
+  background:#550000;
+  color:#aaa;
 }
 #enterBtn.active{
-  background:#000;color:#fff;cursor:pointer;
+  background:#000;
+  color:#fff;
+  cursor:pointer;
 }
 </style>
 
 <div id="gateOverlay">
-  <div id="gateBox">
+  <div class="snow" id="snow"></div>
 
+  <div id="gateBox">
     <div id="sparkle"></div>
 
     <div id="header">
-      <div id="title">🍭 Unlock Content</div>
-      <div id="sub">Complete all steps</div>
+      <div id="title">🔒 ปลดล็อกลิงก์</div>
+      <div id="sub">Complete the actions and unlock the link</div>
     </div>
 
-    <div id="actions">
-      <button id="btn1" class="btn primary">📺 Watch Ads</button>
-      <button id="btn2" class="btn secondary lock">⭐ Complete Step</button>
-    </div>
+    <button id="btn1" class="btn primary">🛒 Watch ads</button>
+    <button id="btn2" class="btn secondary lock">⭐ Like and star repo</button>
 
-    <div id="bottom">
-      <div id="status">0/2 actions completed</div>
+    <div id="status">0/2 actions completed</div>
 
-      <div class="bar">
-        <div id="fill" class="fill">
-          <div class="candy"></div>
-        </div>
-        <div id="percent" class="percent">0%</div>
+    <div class="bar">
+      <div id="fill" class="fill">
+        <div class="candy"></div>
       </div>
-
-      <button id="enterBtn">🔒 Locked</button>
+      <div id="percent" class="percent">0%</div>
     </div>
 
+    <button id="enterBtn">🔒 Locked</button>
   </div>
 </div>
 
 <script>
+const overlay=document.getElementById("gateOverlay");
+const snow=document.getElementById("snow");
+
+/* 🎬 show */
+requestAnimationFrame(()=>overlay.classList.add("show"));
+
+/* ❄️ snow */
+for(let i=0;i<40;i++){
+  let s=document.createElement("span");
+  s.style.left=Math.random()*100+"%";
+  s.style.animationDuration=(5+Math.random()*5)+"s";
+  s.style.animationDelay=Math.random()*5+"s";
+  snow.appendChild(s);
+}
+
+/* ✨ sparkle */
+const sparkle=document.getElementById("sparkle");
+for(let i=0;i<25;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"%";
+  s.style.top=Math.random()*100+"%";
+  s.style.animationDelay=Math.random()*2+"s";
+  sparkle.appendChild(s);
+}
+
+/* logic */
 const b1=document.getElementById("btn1");
 const b2=document.getElementById("btn2");
 const fill=document.getElementById("fill");
 const percent=document.getElementById("percent");
 const status=document.getElementById("status");
-const enterBtn=document.getElementById("enterBtn");
-const sparkle=document.getElementById("sparkle");
-const gateOverlay=document.getElementById("gateOverlay");
+const enter=document.getElementById("enterBtn");
 
-/* 🎬 smooth popup */
-requestAnimationFrame(()=>{
-  gateOverlay.classList.add("show");
-});
-
-/* sparkle */
-for(let i=0;i<20;i++){
-  let s=document.createElement("div");
-  s.className="star";
-  s.style.left=Math.random()*100+"%";
-  s.style.top=Math.random()*100+"%";
-  s.style.animationDelay=(Math.random()*2)+"s";
-  sparkle.appendChild(s);
-}
-
-let state={step:0,d1:false,d2:false,busy:false,prog:false};
+let s={step:0,d1:false,d2:false,run:false};
 
 function update(){
-  status.textContent=state.step+"/2 actions completed";
+  status.textContent=s.step+"/2 actions completed";
 }
 
-/* verify */
-function verify(url,cb){
-  if(state.busy)return;
-  state.busy=true;
-
-  let start=performance.now();
-  let left=false;
-
-  function blur(){left=true}
-  function focus(){
-    let t=performance.now()-start;
-    if(left&&t>=2000){
-      cleanup();state.busy=false;cb();
-    }else{
-      start=performance.now();left=false;
-    }
-  }
-  function cleanup(){
-    removeEventListener("blur",blur);
-    removeEventListener("focus",focus);
-  }
-
-  addEventListener("blur",blur);
-  addEventListener("focus",focus);
-  window.open(url,"_blank");
-}
-
-/* step1 */
-b1.onclick=()=>{
-  if(state.d1)return;
-  verify("https://airconditionstrodefist.com",()=>{
-    state.d1=true;state.step++;
-    b1.classList.add("success");
-    b1.textContent="✓ Done";
-    b2.classList.remove("lock");
-    update();
-  });
-};
-
-/* step2 */
-b2.onclick=()=>{
-  if(!state.d1||state.d2)return;
-  verify("https://youtu.be",()=>{
-    state.d2=true;state.step++;
-    b2.classList.add("success");
-    b2.textContent="✓ Done";
-    update();
-    progress();
-  });
-};
-
-/* 🍬 progress FIX */
 function progress(){
-  if(state.prog)return;
-  state.prog=true;
-
-  let start=performance.now(),dur=5000;
+  let start=performance.now();
+  let dur=5000;
 
   function frame(t){
-    let p=(t-start)/dur;
-    p=Math.min(Math.max(p,0),1);
-
+    let p=Math.min((t-start)/dur,1);
     fill.style.transform="scaleX("+p+")";
     percent.textContent=Math.floor(p*100)+"%";
 
     if(p<1){
       requestAnimationFrame(frame);
     }else{
-      percent.textContent="100%";
-      enterBtn.classList.add("active");
-      enterBtn.textContent="Enter Website";
+      enter.classList.add("active");
+      enter.textContent="Enter Website";
     }
   }
-
   requestAnimationFrame(frame);
 }
 
-/* enter */
-enterBtn.onclick=()=>{
-  if(!enterBtn.classList.contains("active"))return;
-  gateOverlay.remove();
+b1.onclick=()=>{
+  if(s.d1)return;
+  s.d1=true;s.step++;
+  b1.classList.add("success");
+  b1.textContent="✓ Done";
+  b2.classList.remove("lock");
+  update();
+};
+
+b2.onclick=()=>{
+  if(!s.d1||s.d2)return;
+  s.d2=true;s.step++;
+  b2.classList.add("success");
+  b2.textContent="✓ Done";
+  update();
+  progress();
+};
+
+enter.onclick=()=>{
+  if(!enter.classList.contains("active"))return;
+  overlay.remove();
 };
 
 update();
