@@ -523,40 +523,35 @@ draw()
 <script src="redirect.js"></script>
 
 <style>
-:root{
-  --red:#ff2a2a;
-}
+:root{--red:#ff2a2a}
 
 /* overlay */
 #gateOverlay{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   backdrop-filter:blur(18px);
   background:rgba(0,0,0,.65);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:99999;
-  font-family:system-ui;
+  display:flex;align-items:center;justify-content:center;
+  z-index:99999;font-family:system-ui;
 }
 
-/* 🍭 popup candy perfect border */
+/* 🍭 popup (แก้ขอบไม่แหว่ง) */
 #gateBox{
-  width:340px;
-  height:322.38px;
+  width:340px;height:322.38px;
   border-radius:22px;
   padding:18px;
   color:#fff;
   position:relative;
 
-  background:
-    linear-gradient(#0f0f0f,#0a0a0a) padding-box,
-    repeating-linear-gradient(45deg,red 0 10px,white 10px 20px) border-box;
+  background:#0b0b0b;
 
+  /* candy border FIX */
   border:3px solid transparent;
+  background-clip:padding-box,border-box;
+  background-image:
+    linear-gradient(#0b0b0b,#0b0b0b),
+    repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
 
-  display:flex;
-  flex-direction:column;
+  display:flex;flex-direction:column;
   justify-content:space-between;
 
   box-shadow:
@@ -564,134 +559,80 @@ draw()
     0 0 40px rgba(255,0,0,.25);
 }
 
-/* ✨ sparkle layer */
-#sparkle{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-}
-
+/* sparkle */
+#sparkle{position:absolute;inset:0;pointer-events:none}
 .star{
-  position:absolute;
-  width:3px;
-  height:3px;
-  background:white;
-  border-radius:50%;
-  opacity:0;
-  animation:sparkle 2s infinite;
+  position:absolute;width:3px;height:3px;
+  background:#fff;border-radius:50%;
+  opacity:0;animation:sparkle 2s infinite;
 }
-
 @keyframes sparkle{
   0%,100%{opacity:0;transform:scale(.5)}
   50%{opacity:1;transform:scale(1.3)}
 }
 
 /* header */
-#header{text-align:center;}
-#title{font-size:15px;font-weight:600;}
-#sub{font-size:12px;color:#aaa;}
+#header{text-align:center}
+#title{font-size:15px;font-weight:600}
+#sub{font-size:12px;color:#aaa}
 
 /* buttons */
-#actions{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
+#actions{display:flex;flex-direction:column;gap:12px}
 .btn{
-  height:46px;
-  border-radius:14px;
-  border:none;
-  cursor:pointer;
-  font-size:14px;
-  position:relative;
-  overflow:hidden;
+  height:46px;border-radius:14px;border:none;
+  cursor:pointer;font-size:14px;
+  position:relative;overflow:hidden;
   transition:.2s;
 }
-
 .btn:hover{transform:translateY(-2px)}
 .btn:active{transform:scale(.95)}
 
-/* 💫 shine sweep */
+/* shine */
 .btn::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:-120%;
-  width:60%;
-  height:100%;
-  background:linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,.7),
-    transparent
-  );
+  content:"";position:absolute;
+  top:0;left:-120%;
+  width:60%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.7),transparent);
   transform:skewX(-20deg);
-  transition:0.6s;
+  transition:.6s;
 }
+.btn:hover::before{left:120%}
 
-.btn:hover::before{
-  left:120%;
-}
-
-/* styles */
-.primary{background:var(--red);color:#fff;}
-.secondary{background:#fff;color:#000;}
-.lock{background:#444;color:#888;pointer-events:none;}
-.success{background:#16a34a !important;}
+/* colors */
+.primary{background:var(--red);color:#fff}
+.secondary{background:#fff;color:#000}
+.lock{background:#444;color:#888;pointer-events:none}
+.success{background:#16a34a !important}
 
 /* bottom */
-#bottom{display:flex;flex-direction:column;gap:10px;}
-#status{text-align:center;font-size:12px;color:#bbb;}
+#bottom{display:flex;flex-direction:column;gap:10px}
+#status{text-align:center;font-size:12px;color:#bbb}
 
-/* 🍬 progress */
+/* 🍬 progress FIX */
 .bar{
-  height:10px;
-  background:#222;
-  border-radius:999px;
-  overflow:hidden;
+  height:10px;background:#222;
+  border-radius:999px;overflow:hidden;
   position:relative;
 }
 
 .fill{
-  position:absolute;
-  inset:0;
+  position:absolute;inset:0;
   transform:scaleX(0);
   transform-origin:left;
 }
 
-/* candy base */
+/* candy layer */
 .candy{
-  position:absolute;
-  inset:0;
-  background:repeating-linear-gradient(
-    45deg,
-    red 0 10px,
-    white 10px 20px
-  );
-  animation:move 1s linear infinite;
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,red 0 10px,white 10px 20px);
 }
 
-/* 🍬 shine layer */
+/* shine */
 .candy::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(255,255,255,.5),
-    transparent 70%
-  );
-  animation:shine 2s infinite;
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.5),transparent 70%);
+  animation:shine 2s linear infinite;
 }
-
-@keyframes move{
-  from{background-position:0 0}
-  to{background-position:40px 0}
-}
-
 @keyframes shine{
   from{transform:translateX(-100%)}
   to{transform:translateX(100%)}
@@ -699,23 +640,16 @@ draw()
 
 /* enter */
 #enterBtn{
-  height:44px;
-  border-radius:14px;
-  border:none;
-  background:#555;
-  color:#aaa;
+  height:44px;border-radius:14px;border:none;
+  background:#555;color:#aaa;
 }
-
 #enterBtn.active{
-  background:#000;
-  color:#fff;
-  cursor:pointer;
+  background:#000;color:#fff;cursor:pointer;
 }
 </style>
 
 <div id="gateOverlay">
   <div id="gateBox">
-
     <div id="sparkle"></div>
 
     <div id="header">
@@ -725,7 +659,7 @@ draw()
 
     <div id="actions">
       <button id="btn1" class="btn primary">📺 Watch Ads</button>
-      <button id="btn2" class="btn secondary lock">⭐ Complete Step</button>
+      <button id="btn2" class="btn secondary lock">⏳ Wait</button>
     </div>
 
     <div id="bottom">
@@ -739,7 +673,6 @@ draw()
 
       <button id="enterBtn">🔒 Locked</button>
     </div>
-
   </div>
 </div>
 
@@ -751,7 +684,7 @@ const status=document.getElementById("status");
 const enterBtn=document.getElementById("enterBtn");
 const sparkle=document.getElementById("sparkle");
 
-/* ✨ generate sparkle */
+/* sparkle */
 for(let i=0;i<25;i++){
   let s=document.createElement("div");
   s.className="star";
@@ -763,6 +696,7 @@ for(let i=0;i<25;i++){
 
 let state={step:0,d1:false,d2:false,busy:false,prog:false};
 
+/* update */
 function update(){
   status.textContent=state.step+"/2 actions completed";
 }
@@ -772,23 +706,17 @@ function verify(url,cb){
   if(state.busy) return;
   state.busy=true;
 
-  let start=performance.now();
-  let left=false;
+  let start=performance.now(),left=false;
 
   function blur(){left=true}
   function focus(){
     let t=performance.now()-start;
-
     if(left && t>=2000){
-      cleanup();
-      state.busy=false;
-      cb();
+      cleanup();state.busy=false;cb();
     }else{
-      start=performance.now();
-      left=false;
+      start=performance.now();left=false;
     }
   }
-
   function cleanup(){
     removeEventListener("blur",blur);
     removeEventListener("focus",focus);
@@ -800,6 +728,22 @@ function verify(url,cb){
   window.open(url,"_blank");
 }
 
+/* cooldown 5 วิ */
+function cooldown(){
+  let t=5;
+  btn2.textContent="⏳ Wait "+t+"s";
+
+  let i=setInterval(()=>{
+    t--;
+    btn2.textContent="⏳ Wait "+t+"s";
+    if(t<=0){
+      clearInterval(i);
+      btn2.textContent="⭐ Complete Step";
+      btn2.classList.remove("lock");
+    }
+  },1000);
+}
+
 /* step1 */
 btn1.onclick=()=>{
   if(state.d1) return;
@@ -808,14 +752,15 @@ btn1.onclick=()=>{
     state.step++;
     btn1.classList.add("success");
     btn1.textContent="✓ Done";
-    btn2.classList.remove("lock");
     update();
+    cooldown();
   });
 };
 
 /* step2 */
 btn2.onclick=()=>{
-  if(!state.d1||state.d2) return;
+  if(!state.d1||state.d2||btn2.classList.contains("lock")) return;
+
   verify("https://youtu.be/-lCf-dBK1cs",()=>{
     state.d2=true;
     state.step++;
@@ -826,7 +771,7 @@ btn2.onclick=()=>{
   });
 };
 
-/* progress */
+/* progress smooth */
 function progress(){
   if(state.prog) return;
   state.prog=true;
