@@ -9,14 +9,19 @@
   z-index: 9999;
 }
 
+/* layout */
 #box {
   display: flex;
   gap: 60px;
   align-items: center;
   max-width: 90%;
+  opacity: 0;
+  transform: scale(0.95);
+  animation: fadeIn 0.8s ease forwards;
 }
 
-@media (max-width: 768px) {
+/* responsive */
+@media (max-width:768px){
   #box {
     flex-direction: column;
   }
@@ -25,6 +30,9 @@
 /* mascot */
 #mascotWrap {
   position: relative;
+  transform: translateX(-80px);
+  opacity: 0;
+  animation: slideLeft 0.9s cubic-bezier(.22,1,.36,1) forwards;
 }
 
 #mascot {
@@ -32,78 +40,81 @@
   animation: float 4s ease-in-out infinite;
 }
 
-/* 🎄 particles */
-.candy, .star, .snow {
-  position: absolute;
-  opacity: 0.9;
-  animation: floatUp 4s linear forwards;
-}
-
-/* candy cane */
-.candy {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: repeating-linear-gradient(45deg, red 0 3px, white 3px 6px);
-}
-
-/* star */
-.star {
-  width: 10px;
-  height: 10px;
-  background: gold;
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-}
-
-/* snow */
-.snow {
-  width: 8px;
-  height: 8px;
-  background: white;
-  border-radius: 50%;
-}
-
 /* panel */
 #panel {
   width: 320px;
   padding: 22px;
   border-radius: 16px;
+
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+  transform: translateX(80px);
+  opacity: 0;
+  animation: slideRight 0.9s cubic-bezier(.22,1,.36,1) forwards;
 }
 
-/* buttons */
+/* title */
+#panel > div:first-child {
+  color: white;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* button */
 .btn {
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
+  padding: 13px;
+  border-radius: 12px;
   border: none;
   margin-top: 10px;
   cursor: pointer;
-  transition: 0.25s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
+  transition: all 0.25s ease;
 }
 
+/* 🔴 gradient red */
 .red {
-  background: linear-gradient(135deg, #ff0000, #ff4d4d);
+  background: linear-gradient(135deg, #ff0000, #ff3b3b, #ff6a6a);
   color: white;
+  box-shadow: 0 8px 25px rgba(255,0,0,0.4);
 }
 
+/* 🟢 green */
 .green {
-  background: #44ff44;
+  background: linear-gradient(135deg, #00d084, #00ffae);
   color: black;
 }
 
-.btn:hover { transform: translateY(-2px); }
-.btn:active { transform: scale(0.96); }
+/* hover */
+.btn:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
+/* click */
+.btn:active {
+  transform: scale(0.96);
+}
 
 .disabled {
   opacity: 0.3;
   pointer-events: none;
 }
 
+/* status */
 .status {
   font-size: 12px;
-  color: #44ff44;
+  color: #ddd;
+  text-align: center;
 }
 
 /* progress */
@@ -115,9 +126,9 @@
 #barBox {
   width: 100%;
   height: 8px;
-  background: rgba(255,255,255,0.1);
   border-radius: 6px;
   overflow: hidden;
+  background: rgba(255,255,255,0.1);
 }
 
 #bar {
@@ -127,9 +138,9 @@
 }
 
 #percent {
+  text-align: center;
   font-size: 12px;
-  color: #44ff44;
-  text-align: right;
+  color: white;
 }
 
 /* enter */
@@ -138,13 +149,63 @@
   margin-top: 12px;
 }
 
-/* anim */
+/* 🍬 candy types */
+.candy, .cane, .star, .snow {
+  position: absolute;
+  animation: floatUp 4s linear forwards;
+}
+
+/* circle candy */
+.candy {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: repeating-linear-gradient(45deg, red, red 2px, white 2px, white 4px);
+}
+
+/* cane */
+.cane {
+  width: 6px;
+  height: 18px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(180deg, red, red 3px, white 3px, white 6px);
+}
+
+/* star */
+.star {
+  width: 10px;
+  height: 10px;
+  background: yellow;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* snow */
+.snow {
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+}
+
+/* animations */
+@keyframes fadeIn {
+  to {opacity:1; transform:scale(1);}
+}
+
+@keyframes slideLeft {
+  to {transform:translateX(0); opacity:1;}
+}
+
+@keyframes slideRight {
+  to {transform:translateX(0); opacity:1;}
+}
+
 @keyframes float {
-  0%,100% {transform: translateY(0);}
-  50% {transform: translateY(-8px);}
+  0%,100% {transform:translateY(0);}
+  50% {transform:translateY(-8px);}
 }
 
 @keyframes floatUp {
-  from {transform: translateY(0); opacity:1;}
-  to {transform: translateY(-90px); opacity:0;}
+  from {transform:translateY(0); opacity:1;}
+  to {transform:translateY(-80px); opacity:0;}
 }
