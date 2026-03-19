@@ -6,6 +6,7 @@ fetch("popup.html")
   });
 
 function initPopup() {
+
   const mascotZone = document.getElementById("mascot-zone");
   const actionZone = document.getElementById("action-zone");
 
@@ -24,31 +25,38 @@ function initPopup() {
 
   document.body.style.overflow = "hidden";
 
-  // 🎬 STEP 0: มาสคอตลอยขึ้นก่อน
-  setTimeout(() => {
-    mascotZone.classList.add("show-mascot");
-  }, 200);
+  // animation flow
+  setTimeout(() => mascotZone.classList.add("show-mascot"), 200);
 
-  // 🎬 STEP 1: split layout (ซ้าย-ขวา)
   setTimeout(() => {
-    mascotZone.classList.add("split-layout");
+    mascotZone.classList.add("split");
     actionZone.classList.add("show-actions");
     step1.classList.remove("disabled");
   }, 900);
 
-  // STEP 1
+  // 🔥 ตรวจจับ ads จริง
+  let adOpenedTime = 0;
+
   adsBtn.onclick = () => {
-    window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
+    const adWindow = window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
 
-    adsBtn.innerText = "⏳ รอ 2 วิ...";
-    adsBtn.disabled = true;
-
-    setTimeout(() => {
-      done1 = true;
-      adsBtn.innerText = "✅ เสร็จแล้ว";
-      step2.classList.remove("disabled");
-    }, 2000);
+    adOpenedTime = Date.now();
+    adsBtn.innerText = "กำลังตรวจสอบ...";
   };
+
+  window.addEventListener("focus", () => {
+    if (!done1 && adOpenedTime > 0) {
+      let duration = (Date.now() - adOpenedTime) / 1000;
+
+      if (duration >= 2) {
+        done1 = true;
+        adsBtn.innerText = "✅ สำเร็จ";
+        step2.classList.remove("disabled");
+      } else {
+        adsBtn.innerText = "❌ อยู่ไม่ครบ 2 วิ";
+      }
+    }
+  });
 
   // STEP 2
   ytBtn.onclick = () => {
@@ -57,26 +65,41 @@ function initPopup() {
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
 
     done2 = true;
-    ytBtn.innerText = "✅ เสร็จแล้ว";
+    ytBtn.innerText = "✅ สำเร็จ";
 
     startProgress();
   };
 
+  // 🔥 easing progress
   function startProgress() {
     progress.style.display = "block";
 
-    let p = 0;
-    let interval = setInterval(() => {
-      p += 2;
-      bar.style.width = p + "%";
+    let start = null;
+    let duration = 2000;
 
-      if (p >= 100) {
-        clearInterval(interval);
-        enterBtn.style.display = "block";
+    function animate(ts) {
+      if (!start) start = ts;
+      let progressTime = ts - start;
+      let percent = easeOutCubic(progressTime / duration) * 100;
+
+      bar.style.width = percent + "%";
+
+      if (progressTime < duration) {
+        requestAnimationFrame(animate);
+      } else {
+        bar.style.width = "100%";
+        enterBtn.classList.add("show");
       }
-    }, 30);
+    }
+
+    requestAnimationFrame(animate);
   }
 
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  // enter
   enterBtn.onclick = () => {
     document.getElementById("popup-overlay").remove();
     document.body.style.overflow = "auto";
