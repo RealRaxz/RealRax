@@ -13,58 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
   .pf-btn{width:100%; padding:12px; margin-top:10px; border:none; border-radius:10px;cursor:pointer; font-weight:bold; transition:.2s; box-shadow:0 0 10px rgba(255,255,255,0.4);}
   .pf-btn:hover{transform:translateY(-2px);}
   .pf-btn:active{transform:scale(.96);}
-
-  .pf-red{
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(90deg,#ffd84d,#ffb300,#ff6a00,#ff2a00,#ff0000);
-    box-shadow:
-      inset 0 2px 6px rgba(255,255,255,0.4),
-      inset 0 -4px 8px rgba(0,0,0,0.25),
-      0 0 12px rgba(255,120,0,0.6);
-    color:#fff;
-  }
-
-  .pf-green{
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(90deg,#ffff66,#aaff00,#00ff66,#00cc55);
-    box-shadow:
-      inset 0 2px 6px rgba(255,255,255,0.4),
-      inset 0 -4px 8px rgba(0,0,0,0.25),
-      0 0 12px rgba(0,255,100,0.6);
-    color:#000;
-  }
-
-  .pf-red::after, .pf-green::after{
-    content:"";
-    position:absolute;
-    top:0; left:0;
-    width:100%; height:55%;
-    background: linear-gradient(to bottom,rgba(255,255,255,0.65),rgba(255,255,255,0.25),rgba(255,255,255,0));
-    border-radius: inherit;
-    pointer-events:none;
-  }
-
-  .pf-red::before, .pf-green::before{
-    content:"";
-    position:absolute;
-    top:0; left:-75%;
-    width:50%; height:100%;
-    background: linear-gradient(120deg,rgba(255,255,255,0),rgba(255,255,255,0.8),rgba(255,255,255,0));
-    transform: skewX(-20deg);
-  }
-
-  .pf-red:hover::before,
-  .pf-green:hover::before{
-    animation: shine 0.9s ease forwards;
-  }
-
-  @keyframes shine{
-    0%{left:-75%;}
-    100%{left:125%;}
-  }
-
+  .pf-red{position: relative;overflow: hidden;background: linear-gradient(90deg,#ffd84d,#ffb300,#ff6a00,#ff2a00,#ff0000);box-shadow:inset 0 2px 6px rgba(255,255,255,0.4),inset 0 -4px 8px rgba(0,0,0,0.25),0 0 12px rgba(255,120,0,0.6);color:#fff;}
+  .pf-green{position: relative;overflow: hidden;background: linear-gradient(90deg,#ffff66,#aaff00,#00ff66,#00cc55);box-shadow:inset 0 2px 6px rgba(255,255,255,0.4),inset 0 -4px 8px rgba(0,0,0,0.25),0 0 12px rgba(0,255,100,0.6);color:#000;}
+  .pf-red::after,.pf-green::after{content:"";position:absolute;top:0;left:0;width:100%;height:55%;background:linear-gradient(to bottom,rgba(255,255,255,0.65),rgba(255,255,255,0.25),rgba(255,255,255,0));border-radius:inherit;pointer-events:none;}
+  .pf-red::before,.pf-green::before{content:"";position:absolute;top:0;left:-75%;width:50%;height:100%;background:linear-gradient(120deg,rgba(255,255,255,0),rgba(255,255,255,0.8),rgba(255,255,255,0));transform:skewX(-20deg);}
+  .pf-red:hover::before,.pf-green:hover::before{animation:shine 0.9s ease forwards;}
+  @keyframes shine{0%{left:-75%;}100%{left:125%;}}
   .pf-disabled{opacity:.4; pointer-events:none;}
   .pf-status{font-size:12px;color:white;}
   .pf-status.done{color:white;}
@@ -176,25 +130,32 @@ document.addEventListener("DOMContentLoaded", () => {
   /* 🔥 แก้เฉพาะตรงนี้ */
   function startProgress(){
     progress.style.display="block";
-    let val = 0;
 
-    function animate(){
-      if(document.visibilityState !== "visible"){
-        requestAnimationFrame(animate);
-        return;
+    let elapsed = 0;
+    let duration = 5000;
+    let last = performance.now();
+
+    function animate(now){
+      if(document.visibilityState === "visible"){
+        let dt = now - last;
+        elapsed += dt;
       }
+      last = now;
 
-      val += 0.8; // ความเร็ว
-      if(val > 100) val = 100;
+      let t = elapsed / duration;
+      if(t > 1) t = 1;
+
+      let eased = 1 - Math.pow(1 - t, 3);
+      let val = eased * 100;
 
       bar.style.width = val + "%";
       percent.innerText = Math.floor(val) + "%";
 
-      if(val < 100){
+      if(t < 1){
         requestAnimationFrame(animate);
       } else {
-        percent.innerText="100%";
-        enter.style.display="block";
+        percent.innerText = "100%";
+        enter.style.display = "block";
       }
     }
 
