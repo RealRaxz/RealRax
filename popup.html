@@ -1,195 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Popup Mascot</title>
-<style>
-  /* เบื้องต้น: overlay เบลอหน้าเว็บ */
-  body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    background: transparent;
-  }
+<div id="popup-overlay">
+  <div id="popup-container">
 
-  .overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
+    <!-- Mascot -->
+    <img src="mascot1.png" id="mascot" />
 
-  /* มาสคอต */
-  .mascot {
-    position: absolute;
-    width: 150px;
-    bottom: -200px;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: all 1s ease-in-out;
-    cursor: default;
-  }
+    <!-- Action Panel -->
+    <div id="actions">
 
-  /* ปุ่มเงื่อนไข */
-  .condition-button {
-    position: absolute;
-    right: -200px;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 12px 20px;
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
-  }
+      <div class="step disabled" id="step1">
+        <button id="adsBtn">📺 ดูโฆษณา (2 วิ)</button>
+        <span class="status">0/2</span>
+      </div>
 
-  .condition-button:hover {
-    transform: translateY(-50%) translateX(0) scale(1.05);
-  }
+      <div class="step disabled" id="step2">
+        <button id="ytBtn">👍 ไลก์ + คอมเมนต์</button>
+      </div>
 
-  .condition-button:active {
-    transform: translateY(-50%) translateX(0) scale(0.95);
-  }
+      <!-- Progress -->
+      <div id="progress-container">
+        <div id="progress-bar"></div>
+      </div>
 
-  /* Progress Bar Container */
-  .progress-container {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70%;
-    height: 25px;
-    background: #eee;
-    border-radius: 12px;
-    overflow: hidden;
-    display: none;
-  }
+      <button id="enterBtn">เข้าสู่เว็บไซต์</button>
 
-  .progress-bar {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, #ff0000, #ff6666);
-    border-radius: 12px;
-    transition: width 0.05s linear;
-  }
-
-  /* ปุ่มเข้าสู่เว็บ */
-  .enter-button {
-    display: none;
-    position: absolute;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 30px;
-    background: #28a745;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .enter-button:hover {
-    transform: translateX(-50%) translateY(-3px);
-  }
-
-  .enter-button:active {
-    transform: translateX(-50%) translateY(1px) scale(0.97);
-  }
-
-</style>
-</head>
-<body>
-<div class="overlay">
-  <img src="mascot1.png" alt="Mascot" class="mascot" id="mascot">
-  <button class="condition-button" id="cond1">ดูโฆษณา</button>
-  <button class="condition-button" id="cond2">กดไลก์/คอมเมนต์</button>
-  <div class="progress-container" id="progressContainer">
-    <div class="progress-bar" id="progressBar"></div>
+    </div>
   </div>
-  <button class="enter-button" id="enterBtn">เข้าสู่เว็บไซต์</button>
 </div>
-
-<script>
-  const mascot = document.getElementById('mascot');
-  const cond1 = document.getElementById('cond1');
-  const cond2 = document.getElementById('cond2');
-  const progressContainer = document.getElementById('progressContainer');
-  const progressBar = document.getElementById('progressBar');
-  const enterBtn = document.getElementById('enterBtn');
-
-  // เริ่ม Animation มาสคอตลอยขึ้น
-  setTimeout(() => {
-    mascot.style.bottom = '50%';
-    mascot.style.transform = 'translate(-50%, 50%)';
-    cond1.style.right = '20px';
-    cond2.style.right = '20px';
-  }, 500);
-
-  let cond1Done = false;
-  let cond2Done = false;
-
-  // เงื่อนไข 1: ดูโฆษณา 2 วินาที
-  cond1.addEventListener('click', () => {
-    cond1.disabled = true;
-    cond1.innerText = "กำลังดูโฆษณา...";
-    // เปิดโฆษณาใหม่
-    window.open('https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6','_blank');
-    setTimeout(() => {
-      cond1Done = true;
-      cond1.innerText = "เสร็จแล้ว ✔";
-      checkConditions();
-    }, 2000);
-  });
-
-  // เงื่อนไข 2: ไลก์/คอมเมนต์
-  cond2.addEventListener('click', () => {
-    if (!cond1Done) {
-      alert("กรุณาทำเงื่อนไขแรกก่อน");
-      return;
-    }
-    cond2.disabled = true;
-    cond2.innerText = "เปิดลิงก์...";
-    window.open('https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd','_blank');
-    cond2Done = true;
-    cond2.innerText = "เสร็จแล้ว ✔";
-    checkConditions();
-  });
-
-  function checkConditions() {
-    if (cond1Done && cond2Done) {
-      // เริ่ม progress bar
-      progressContainer.style.display = 'block';
-      let progress = 0;
-      const interval = setInterval(() => {
-        if (progress >= 100) {
-          clearInterval(interval);
-          enterBtn.style.display = 'block';
-        } else {
-          progress += 1;
-          progressBar.style.width = progress + '%';
-        }
-      }, 30);
-    }
-  }
-
-  // ปุ่มเข้าสู่เว็บ
-  enterBtn.addEventListener('click', () => {
-    // ปิด popup
-    window.parent.postMessage({action: 'closePopup'}, '*');
-  });
-</script>
-</body>
-</html>
