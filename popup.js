@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
     text-align:center;
   }
 
-  /* ===== BUTTON SYSTEM (ไม่บัคแน่นอน) ===== */
   .pf-btn{
     width:100%;
     padding:12px;
@@ -65,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
   .pf-btn:hover{transform:translateY(-2px);}
   .pf-btn:active{transform:scale(.96);}
 
-  /* state */
   .pf-red{
     background:linear-gradient(135deg,#FFD700,#FF0000);
     color:#fff;
@@ -81,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
     pointer-events:none;
   }
 
-  /* status */
   .pf-status{
     font-size:12px;
     background:linear-gradient(90deg,yellow,pink);
@@ -94,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
     -webkit-background-clip:text;
   }
 
-  /* progress */
   .pf-progress{display:none;margin-top:10px;}
   .pf-barBox{
     width:100%;height:8px;
@@ -152,8 +148,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== logic =====
   let done1=false, done2=false;
-  let tracking=false, adStart=0, timeSpent=0;
+  let tracking=false;
+
   let ytOpened=false, returned=false;
+
+  // 🔥 ตัวใหม่
+  let leftPage=false;
+  let leftTime=0;
 
   const ads=document.getElementById("pfAds");
   const yt=document.getElementById("pfYT");
@@ -175,31 +176,38 @@ document.addEventListener("DOMContentLoaded", () => {
     adsStatus.innerText="กรุณาอยู่หน้าโฆษณาสักครู่...";
   };
 
-  document.addEventListener("visibilitychange",()=>{
-
-    if(tracking && !done1){
-      if(document.hidden){
-        adStart=performance.now();
-      }else{
-        let t=(performance.now()-adStart)/1000;
-        timeSpent+=t;
-
-        if(timeSpent>=2){
-          done1=true;
-          ads.className="pf-btn pf-green";
-          ads.innerText="Completed";
-
-          adsStatus.classList.add("done");
-          adsStatus.innerText="สำเร็จแล้ว";
-
-          yt.classList.remove("pf-disabled");
-        }
-      }
+  // 🔥 ออกจากหน้า
+  window.addEventListener("blur", () => {
+    if (tracking && !done1) {
+      leftPage = true;
+      leftTime = performance.now();
     }
+  });
 
-    if(ytOpened && document.visibilityState==="visible" && !returned){
-      returned=true;
-      startProgress();
+  // 🔥 กลับมา
+  window.addEventListener("focus", () => {
+    if (tracking && !done1 && leftPage) {
+
+      let spent = (performance.now() - leftTime) / 1000;
+
+      if (spent >= 2) {
+
+        done1 = true;
+        tracking = false;
+
+        ads.className = "pf-btn pf-green";
+        ads.innerText = "Completed";
+
+        adsStatus.classList.add("done");
+        adsStatus.innerText = "สำเร็จแล้ว";
+
+        yt.classList.remove("pf-disabled");
+
+      } else {
+        adsStatus.innerText = "อยู่หน้าโฆษณาให้นานขึ้น...";
+      }
+
+      leftPage = false;
     }
   });
 
@@ -246,6 +254,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     requestAnimationFrame(animate);
   }
+
+  // 🔥 เดิมใช้ visibility → เก็บไว้เฉพาะ progress
+  document.addEventListener("visibilitychange", () => {
+    if (ytOpened && document.visibilityState==="visible" && !returned) {
+      returned = true;
+      startProgress();
+    }
+  });
 
   enter.onclick=()=>{
     document.querySelector(".pf-overlay").remove();
