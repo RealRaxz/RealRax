@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div style="margin-bottom:10px;color:white;">Complete Steps</div>
 
         <button id="pfYT1" class="pf-btn pf-red">Like & Comment 1</button>
-        <div id="pfYTStatus1" class="pf-status">กรุณาอยู่หน้า YouTube 3 วินาที</div>
+        <div id="pfYTStatus1" class="pf-status">กรุณากดไลก์และคอมเมนต์ก่อน</div>
 
         <button id="pfYT2" class="pf-btn pf-red pf-disabled">Like & Comment 2</button>
         <div id="pfYTStatus2" class="pf-status">ล็อคอยู่</div>
