@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const panel = document.querySelector(".pf-panel");
   requestAnimationFrame(()=>{
     mascotWrap.classList.add("show");
-    setTimeout(()=> panel.classList.add("show"), 400); // delay นุ่มๆ
+    setTimeout(()=> panel.classList.add("show"), 400);
   });
 
   const yt1=document.getElementById("pfYT1");
@@ -96,37 +96,87 @@ document.addEventListener("DOMContentLoaded", () => {
   const progress=document.getElementById("pfProgress");
   const enter=document.getElementById("pfEnter");
 
-  let done1=false, done2=false, yt1Opened=false, yt2Opened=false, yt1Start=0, yt2Start=0;
+  let done1=false, done2=false;
+
+  // ✅ เวลาแบบ "นับเฉพาะตอนอยู่หน้าเว็บจริง"
+  let activeStart1=null, total1=0;
+  let activeStart2=null, total2=0;
+  let yt1Opened=false, yt2Opened=false;
 
   yt1.onclick=()=>{
     if(done1) return;
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
-    yt1Opened=true; yt1Start=performance.now();
-    yt1.className="pf-btn pf-disabled"; ytStatus1.innerText="กดไลก์และคอมเมนต์ก่อน";
+    yt1Opened=true;
+    activeStart1=performance.now();
+    yt1.className="pf-btn pf-disabled";
+    ytStatus1.innerText="อยู่หน้า YouTube 3 วินาที...";
   };
 
   yt2.onclick=()=>{
     if(!done1||done2) return;
     window.open("https://youtu.be/DHsN-UjeDdU?si=nmCZtki5fyylgO7W");
-    yt2Opened=true; yt2Start=performance.now();
-    yt2.className="pf-btn pf-disabled"; ytStatus2.innerText="กดไลก์และคอมเมนต์ก่อน";
+    yt2Opened=true;
+    activeStart2=performance.now();
+    yt2.className="pf-btn pf-disabled";
+    ytStatus2.innerText="อยู่หน้า YouTube 3 วินาที...";
   };
 
-  const checkInterval=setInterval(()=>{
-    // ตรวจ yt1
-    if(yt1Opened&&!done1&&document.visibilityState==="visible"){
-      const t=(performance.now()-yt1Start)/1000;
-      if(t>=3){done1=true; yt1.className="pf-btn pf-green"; yt1.innerText="𝗖𝗼𝗺𝗽𝗹𝗲𝘁𝗲𝗱!"; ytStatus1.classList.add("done"); ytStatus1.innerText="สำเร็จแล้ว"; yt2.classList.remove("pf-disabled");}
-    }else if(yt1Opened&&!done1 && document.visibilityState!=="visible"){
-      yt1Start += performance.now()-yt1Start; // ไม่ให้ bypass
+  document.addEventListener("visibilitychange",()=>{
+    const now = performance.now();
+
+    // yt1
+    if(yt1Opened && !done1){
+      if(document.visibilityState==="hidden"){
+        if(activeStart1){
+          total1 += now - activeStart1;
+          activeStart1=null;
+        }
+      }else{
+        activeStart1 = now;
+      }
     }
 
-    // ตรวจ yt2
-    if(yt2Opened&&!done2&&document.visibilityState==="visible"&&done1){
-      const t=(performance.now()-yt2Start)/1000;
-      if(t>=3){done2=true; yt2.className="pf-btn pf-green"; yt2.innerText="𝗖𝗼𝗺𝗽𝗹𝗲𝘁𝗲𝗱!"; ytStatus2.classList.add("done"); ytStatus2.innerText="สำเร็จแล้ว"; startProgress(); clearInterval(checkInterval);}
-    }else if(yt2Opened&&!done2 && document.visibilityState!=="visible"){
-      yt2Start += performance.now()-yt2Start;
+    // yt2
+    if(yt2Opened && !done2){
+      if(document.visibilityState==="hidden"){
+        if(activeStart2){
+          total2 += now - activeStart2;
+          activeStart2=null;
+        }
+      }else{
+        activeStart2 = now;
+      }
+    }
+  });
+
+  const checkInterval=setInterval(()=>{
+    const now = performance.now();
+
+    // yt1
+    if(yt1Opened && !done1){
+      let current = total1 + (activeStart1 ? now - activeStart1 : 0);
+      if(current/1000 >= 3){
+        done1=true;
+        yt1.className="pf-btn pf-green";
+        yt1.innerText="𝗖𝗼𝗺𝗽𝗹𝗲𝘁𝗲𝗱!";
+        ytStatus1.classList.add("done");
+        ytStatus1.innerText="สำเร็จแล้ว";
+        yt2.classList.remove("pf-disabled");
+      }
+    }
+
+    // yt2
+    if(yt2Opened && !done2 && done1){
+      let current = total2 + (activeStart2 ? now - activeStart2 : 0);
+      if(current/1000 >= 3){
+        done2=true;
+        yt2.className="pf-btn pf-green";
+        yt2.innerText="𝗖𝗼𝗺𝗽𝗹𝗲𝘁𝗲𝗱!";
+        ytStatus2.classList.add("done");
+        ytStatus2.innerText="สำเร็จแล้ว";
+        startProgress();
+        clearInterval(checkInterval);
+      }
     }
   },100);
 
@@ -137,7 +187,8 @@ document.addEventListener("DOMContentLoaded", () => {
       let t=(now-start)/duration; if(t>1)t=1;
       let eased=1-Math.pow(1-t,3); let val=eased*100;
       bar.style.width=val+"%"; percent.innerText=Math.floor(val)+"%";
-      if(t<1) requestAnimationFrame(animate); else {percent.innerText="100%"; enter.style.display="block";}
+      if(t<1) requestAnimationFrame(animate);
+      else{percent.innerText="100%"; enter.style.display="block";}
     }
     requestAnimationFrame(animate);
   }
