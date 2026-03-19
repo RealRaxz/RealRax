@@ -2,13 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.body.insertAdjacentHTML("beforeend", `
   <div id="overlay">
-    <div id="box" class="animate">
+    <div id="box">
 
       <div id="mascotWrap">
         <img src="mascot1.png" id="mascot">
       </div>
 
-      <div id="panel" class="animate">
+      <div id="panel">
         <div>Complete Steps</div>
 
         <button id="adsBtn" class="btn gradient">Watch Ads</button>
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div id="percent">0%</div>
         </div>
 
-        <button id="enter" class="btn enterBtn">ENTER WEBSITE</button>
+        <button id="enter" class="btn">ENTER</button>
       </div>
 
     </div>
@@ -41,6 +41,9 @@ function init() {
   let timeSpent = 0;
   let tracking = false;
 
+  let ytOpened = false;
+  let returned = false;
+
   const adsBtn = document.getElementById("adsBtn");
   const ytBtn = document.getElementById("ytBtn");
 
@@ -52,7 +55,7 @@ function init() {
   const progress = document.getElementById("progress");
   const enter = document.getElementById("enter");
 
-  // ads
+  // ===== ADS =====
   adsBtn.onclick = () => {
     if (done1) return;
 
@@ -62,46 +65,50 @@ function init() {
   };
 
   document.addEventListener("visibilitychange", () => {
-    if (!tracking || done1) return;
 
-    if (document.hidden) {
-      adStart = Date.now();
-    } else {
-      let t = (Date.now() - adStart)/1000;
-      timeSpent += t;
+    // ADS
+    if (tracking && !done1) {
+      if (document.hidden) {
+        adStart = Date.now();
+      } else {
+        let t = (Date.now() - adStart)/1000;
+        timeSpent += t;
 
-      if (timeSpent >= 2) {
-        done1 = true;
+        if (timeSpent >= 2) {
+          done1 = true;
+          adsBtn.className = "btn completed";
+          adsBtn.innerText = "Completed";
+          adsStatus.classList.add("done");
+          adsStatus.innerText = "สำเร็จแล้ว";
 
-        adsBtn.className = "btn completed";
-        adsBtn.innerText = "Completed";
-
-        adsStatus.classList.add("done");
-        adsStatus.innerText = "สำเร็จแล้ว";
-
-        ytBtn.disabled = false;
+          ytBtn.disabled = false;
+        }
       }
+    }
+
+    // YT RETURN
+    if (ytOpened && document.visibilityState === "visible" && !returned) {
+      returned = true;
+      startProgress();
     }
   });
 
-  // step2
+  // ===== STEP2 =====
   ytBtn.onclick = () => {
     if (!done1 || done2) return;
 
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
 
     done2 = true;
+    ytOpened = true;
 
     ytBtn.className = "btn completed";
     ytBtn.innerText = "Completed";
-
     ytStatus.classList.add("done");
     ytStatus.innerText = "สำเร็จแล้ว";
-
-    startProgress();
   };
 
-  // progress
+  // ===== PROGRESS 5 วิ SMOOTH =====
   function startProgress() {
     progress.style.display = "block";
 
@@ -111,7 +118,7 @@ function init() {
     function animate(ts) {
       if (!start) start = ts;
 
-      let t = (ts - start)/duration;
+      let t = (ts - start) / duration;
       let eased = 1 - Math.pow(1 - t, 3);
       let val = Math.floor(eased * 100);
 
@@ -121,6 +128,7 @@ function init() {
       if (t < 1) {
         requestAnimationFrame(animate);
       } else {
+        percent.innerText = "100%";
         enter.style.display = "block";
       }
     }
@@ -128,6 +136,7 @@ function init() {
     requestAnimationFrame(animate);
   }
 
+  // enter
   enter.onclick = () => {
     document.getElementById("overlay").remove();
   };
@@ -139,10 +148,10 @@ function particles() {
 
   setInterval(() => {
     let el = document.createElement("div");
-    let types = ["candy","star","snow"];
-    let type = types[Math.floor(Math.random()*types.length)];
 
-    el.className = type;
+    let types = ["candy","star","snow"];
+    el.className = types[Math.floor(Math.random()*types.length)];
+
     el.style.left = Math.random()*100 + "%";
     el.style.bottom = "0px";
 
