@@ -12,18 +12,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   .pf-box{
     display:flex; flex-direction:column; align-items:center; gap:20px;
-    opacity:0; transform:translateY(-40px) scale(0.96);
   }
 
-  .pf-box.show{
-    animation:pf-pop 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
+  .pf-mascotWrap{
+    opacity:0; transform:translateY(-60px) scale(0.92);
+    animation:pf-mascotPop 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
   }
 
-  @keyframes pf-pop{
+  @keyframes pf-mascotPop{
     0%{opacity:0; transform:translateY(-60px) scale(0.92);}
     60%{opacity:1; transform:translateY(10px) scale(1.02);}
     100%{opacity:1; transform:translateY(0) scale(1);}
   }
+
+  .pf-panel{
+    width:320px; padding:20px; border-radius:16px;
+    background:rgba(255,255,255,.08); backdrop-filter:blur(20px);
+    text-align:center; box-shadow:0 0 15px rgba(255,255,255,0.5);
+    opacity:0; transform:translateY(20px) scale(0.96);
+    transition: all 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .pf-panel.show{opacity:1; transform:translateY(0) scale(1);}
 
   .pf-mascot{width:200px; filter:drop-shadow(0 0 15px rgba(255,255,255,0.6)); animation:aura 2s infinite alternate;}
   @keyframes aura{
@@ -32,24 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
     100%{filter:drop-shadow(0 0 15px rgba(255,255,255,0.4));}
   }
 
-  .pf-panel{
-    width:320px; padding:20px; border-radius:16px;
-    background:rgba(255,255,255,0.08); backdrop-filter:blur(20px);
-    text-align:center; box-shadow:0 0 15px rgba(255,255,255,0.5);
-  }
-
   .pf-btn{width:100%; padding:12px; margin-top:10px; border:none; border-radius:10px;
     cursor:pointer; font-weight:bold; transition:.2s; box-shadow:0 0 10px rgba(255,255,255,0.4);}
   .pf-btn:hover{transform:translateY(-2px);}
   .pf-btn:active{transform:scale(.96);}
-
   .pf-red{background:linear-gradient(135deg,#FFD700,#FF0000); color:#fff;}
   .pf-green{background:linear-gradient(135deg,#FFFF66,#00FF66); color:#000;}
   .pf-disabled{opacity:.4; pointer-events:none;}
-
   .pf-status{font-size:12px;color:white;}
   .pf-status.done{color:white;}
-
   .pf-progress{display:none;margin-top:10px;}
   .pf-barBox{width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;}
   .pf-bar{height:100%;width:0%;background:linear-gradient(90deg,yellow,limegreen);}
@@ -81,9 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
   `);
 
-  // ✅ Trigger animation container เดียว = smooth
-  requestAnimationFrame(()=>document.querySelector(".pf-box").classList.add("show"));
-
+  // ===== logic =====
   const yt1=document.getElementById("pfYT1");
   const yt2=document.getElementById("pfYT2");
   const ytStatus1=document.getElementById("pfYTStatus1");
@@ -92,8 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const percent=document.getElementById("pfPercent");
   const progress=document.getElementById("pfProgress");
   const enter=document.getElementById("pfEnter");
+  const panel=document.querySelector(".pf-panel");
 
   let done1=false, done2=false, yt1Opened=false, yt2Opened=false, yt1Start=0, yt2Start=0;
+
+  // หลังมาสคอตเด้ง 800ms → UI เด้ง
+  setTimeout(()=>panel.classList.add("show"),800);
 
   yt1.onclick=()=>{
     if(done1) return;
