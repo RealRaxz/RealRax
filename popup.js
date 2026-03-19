@@ -51,10 +51,8 @@ function init() {
   const progress = document.getElementById("progress");
   const enter = document.getElementById("enter");
 
-  // ads
   adsBtn.onclick = () => {
     if (done1) return;
-
     window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
     tracking = true;
     adsStatus.innerText = "กำลังตรวจสอบ...";
@@ -74,7 +72,7 @@ function init() {
         tracking = false;
 
         adsBtn.outerHTML = '<button class="btn green">Completed</button>';
-        adsStatus.innerText = "Completed";
+        adsStatus.innerText = "สำเร็จแล้ว";
 
         ytBtn.classList.remove("disabled");
         ytStatus.innerText = "พร้อมใช้งาน";
@@ -90,12 +88,11 @@ function init() {
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
 
     ytBtn.outerHTML = '<button class="btn green">Completed</button>';
-    ytStatus.innerText = "Completed";
+    ytStatus.innerText = "สำเร็จแล้ว";
 
     startProgress();
   };
 
-  // progress 5 วิ smooth
   function startProgress() {
     progress.style.display = "block";
 
@@ -107,15 +104,14 @@ function init() {
 
       let t = (ts - start)/duration;
       let eased = 1 - Math.pow(1 - t, 3);
-      let val = Math.floor(eased * 100);
+      let value = Math.min(Math.floor(eased * 100), 100);
 
-      bar.style.width = val + "%";
-      percent.innerText = val + "%";
+      bar.style.width = value + "%";
+      percent.innerText = value + "%";
 
       if (t < 1) {
         requestAnimationFrame(animate);
       } else {
-        percent.innerText = "Completed";
         enter.style.display = "block";
       }
     }
@@ -128,17 +124,16 @@ function init() {
   };
 }
 
-// 🎄 particles random
+/* 🍬 particles 4 แบบ */
 function particles() {
   const wrap = document.getElementById("mascotWrap");
+  const types = ["candy","cane","star","snow"];
 
   setInterval(() => {
-    let types = ["candy", "star", "snow"];
+    let el = document.createElement("div");
     let type = types[Math.floor(Math.random()*types.length)];
 
-    let el = document.createElement("div");
     el.className = type;
-
     el.style.left = Math.random()*100 + "%";
     el.style.bottom = "0px";
 
