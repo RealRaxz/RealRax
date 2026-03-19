@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
 
       <div id="panel">
-        <div>Complete Steps</div>
+        <div style="margin-bottom:10px;">Complete Steps</div>
 
         <button id="adsBtn" class="btn gradient">Watch Ads</button>
         <div id="adsStatus" class="status">ยังไม่ได้ทำ</div>
@@ -28,6 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </div>
   `);
+
+  // 🔥 trigger animation (สำคัญ)
+  setTimeout(() => {
+    document.getElementById("box").classList.add("active");
+  }, 50);
 
   init();
   particles();
@@ -55,7 +60,7 @@ function init() {
   const progress = document.getElementById("progress");
   const enter = document.getElementById("enter");
 
-  // ===== ADS =====
+  // ads
   adsBtn.onclick = () => {
     if (done1) return;
 
@@ -66,12 +71,11 @@ function init() {
 
   document.addEventListener("visibilitychange", () => {
 
-    // ADS
     if (tracking && !done1) {
       if (document.hidden) {
-        adStart = Date.now();
+        adStart = performance.now();
       } else {
-        let t = (Date.now() - adStart)/1000;
+        let t = (performance.now() - adStart)/1000;
         timeSpent += t;
 
         if (timeSpent >= 2) {
@@ -80,20 +84,17 @@ function init() {
           adsBtn.innerText = "Completed";
           adsStatus.classList.add("done");
           adsStatus.innerText = "สำเร็จแล้ว";
-
           ytBtn.disabled = false;
         }
       }
     }
 
-    // YT RETURN
     if (ytOpened && document.visibilityState === "visible" && !returned) {
       returned = true;
       startProgress();
     }
   });
 
-  // ===== STEP2 =====
   ytBtn.onclick = () => {
     if (!done1 || done2) return;
 
@@ -108,22 +109,21 @@ function init() {
     ytStatus.innerText = "สำเร็จแล้ว";
   };
 
-  // ===== PROGRESS 5 วิ SMOOTH =====
   function startProgress() {
     progress.style.display = "block";
 
-    let start = null;
+    let start = performance.now();
     let duration = 5000;
 
-    function animate(ts) {
-      if (!start) start = ts;
+    function animate(now) {
+      let t = (now - start) / duration;
+      if (t > 1) t = 1;
 
-      let t = (ts - start) / duration;
       let eased = 1 - Math.pow(1 - t, 3);
-      let val = Math.floor(eased * 100);
 
+      let val = eased * 100;
       bar.style.width = val + "%";
-      percent.innerText = val + "%";
+      percent.innerText = Math.floor(val) + "%";
 
       if (t < 1) {
         requestAnimationFrame(animate);
@@ -136,7 +136,6 @@ function init() {
     requestAnimationFrame(animate);
   }
 
-  // enter
   enter.onclick = () => {
     document.getElementById("overlay").remove();
   };
@@ -148,7 +147,6 @@ function particles() {
 
   setInterval(() => {
     let el = document.createElement("div");
-
     let types = ["candy","star","snow"];
     el.className = types[Math.floor(Math.random()*types.length)];
 
