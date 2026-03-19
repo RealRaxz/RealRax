@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="pf-box">
       <div class="pf-mascotWrap"><img src="mascot1.png" class="pf-mascot"></div>
       <div class="pf-panel">
-        <div style="margin-bottom:10px;color:white;">ทำตามขั้นตอน / Complete Steps</div>
+        <div style="margin-bottom:10px;color:white;">ทำตามขั้นตอน / 𝗖𝗼𝗺𝗽𝗹𝗲𝘁𝗲 𝗦𝘁𝗲𝗽𝘀</div>
 
         <button id="pfYT1" class="pf-btn pf-red">กดไลก์ & คอมเมนต์ / Like & Comment 1</button>
         <div id="pfYTStatus1" class="pf-status">กดไลก์และคอมเมนต์</div>
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ตรวจ yt1
     if(yt1Opened&&!done1&&document.visibilityState==="visible"){
       const t=(performance.now()-yt1Start)/1000;
-      if(t>=3){done1=true; yt1.className="pf-btn pf-green"; yt1.innerText="Completed"; ytStatus1.classList.add("done"); ytStatus1.innerText="สำเร็จแล้ว"; yt2.classList.remove("pf-disabled");}
+      if(t>=3){done1=true; yt1.className="pf-btn pf-green"; yt1.innerText="𝗖𝗼𝗺𝗽𝗹𝗲𝘁𝗲𝗱"; ytStatus1.classList.add("done"); ytStatus1.innerText="สำเร็จแล้ว"; yt2.classList.remove("pf-disabled");}
     }else if(yt1Opened&&!done1 && document.visibilityState!=="visible"){
       yt1Start += performance.now()-yt1Start; // ไม่ให้ bypass
     }
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ตรวจ yt2
     if(yt2Opened&&!done2&&document.visibilityState==="visible"&&done1){
       const t=(performance.now()-yt2Start)/1000;
-      if(t>=3){done2=true; yt2.className="pf-btn pf-green"; yt2.innerText="Completed"; ytStatus2.classList.add("done"); ytStatus2.innerText="สำเร็จแล้ว"; startProgress(); clearInterval(checkInterval);}
+      if(t>=3){done2=true; yt2.className="pf-btn pf-green"; yt2.innerText="𝗖𝗼𝗺𝗽𝗹𝗲𝘁𝗲𝗱"; ytStatus2.classList.add("done"); ytStatus2.innerText="สำเร็จแล้ว"; startProgress(); clearInterval(checkInterval);}
     }else if(yt2Opened&&!done2 && document.visibilityState!=="visible"){
       yt2Start += performance.now()-yt2Start;
     }
