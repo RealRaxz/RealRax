@@ -16,24 +16,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   .pf-mascotWrap{
     opacity:0; transform:translateY(-60px) scale(0.92);
-    animation:pf-mascotPop 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
+    transition: all 0.7s cubic-bezier(0.22,1,0.36,1);
   }
 
-  @keyframes pf-mascotPop{
-    0%{opacity:0; transform:translateY(-60px) scale(0.92);}
-    60%{opacity:1; transform:translateY(10px) scale(1.02);}
-    100%{opacity:1; transform:translateY(0) scale(1);}
+  .pf-mascotWrap.show{
+    opacity:1; transform:translateY(0) scale(1);
   }
 
   .pf-panel{
     width:320px; padding:20px; border-radius:16px;
-    background:rgba(255,255,255,.08); backdrop-filter:blur(20px);
+    background:rgba(255,255,255,0.08); backdrop-filter:blur(20px);
     text-align:center; box-shadow:0 0 15px rgba(255,255,255,0.5);
-    opacity:0; transform:translateY(20px) scale(0.96);
-    transition: all 0.6s cubic-bezier(0.22,1,0.36,1);
+    opacity:0; transform:translateY(20px); transition: all 0.7s cubic-bezier(0.22,1,0.36,1);
   }
-
-  .pf-panel.show{opacity:1; transform:translateY(0) scale(1);}
+  .pf-panel.show{opacity:1; transform:translateY(0);}
 
   .pf-mascot{width:200px; filter:drop-shadow(0 0 15px rgba(255,255,255,0.6)); animation:aura 2s infinite alternate;}
   @keyframes aura{
@@ -49,8 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
   .pf-red{background:linear-gradient(135deg,#FFD700,#FF0000); color:#fff;}
   .pf-green{background:linear-gradient(135deg,#FFFF66,#00FF66); color:#000;}
   .pf-disabled{opacity:.4; pointer-events:none;}
+
   .pf-status{font-size:12px;color:white;}
   .pf-status.done{color:white;}
+
   .pf-progress{display:none;margin-top:10px;}
   .pf-barBox{width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;}
   .pf-bar{height:100%;width:0%;background:linear-gradient(90deg,yellow,limegreen);}
@@ -82,7 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
   `);
 
-  // ===== logic =====
+  const mascotWrap = document.querySelector(".pf-mascotWrap");
+  const panel = document.querySelector(".pf-panel");
+  requestAnimationFrame(()=>{
+    mascotWrap.classList.add("show");
+    setTimeout(()=> panel.classList.add("show"), 400); // delay นุ่มๆ
+  });
+
   const yt1=document.getElementById("pfYT1");
   const yt2=document.getElementById("pfYT2");
   const ytStatus1=document.getElementById("pfYTStatus1");
@@ -91,12 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const percent=document.getElementById("pfPercent");
   const progress=document.getElementById("pfProgress");
   const enter=document.getElementById("pfEnter");
-  const panel=document.querySelector(".pf-panel");
 
   let done1=false, done2=false, yt1Opened=false, yt2Opened=false, yt1Start=0, yt2Start=0;
-
-  // หลังมาสคอตเด้ง 800ms → UI เด้ง
-  setTimeout(()=>panel.classList.add("show"),800);
 
   yt1.onclick=()=>{
     if(done1) return;
@@ -113,13 +113,20 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const checkInterval=setInterval(()=>{
+    // ตรวจ yt1
     if(yt1Opened&&!done1&&document.visibilityState==="visible"){
       const t=(performance.now()-yt1Start)/1000;
       if(t>=3){done1=true; yt1.className="pf-btn pf-green"; yt1.innerText="Completed"; ytStatus1.classList.add("done"); ytStatus1.innerText="สำเร็จแล้ว"; yt2.classList.remove("pf-disabled");}
+    }else if(yt1Opened&&!done1 && document.visibilityState!=="visible"){
+      yt1Start += performance.now()-yt1Start; // ไม่ให้ bypass
     }
+
+    // ตรวจ yt2
     if(yt2Opened&&!done2&&document.visibilityState==="visible"&&done1){
       const t=(performance.now()-yt2Start)/1000;
       if(t>=3){done2=true; yt2.className="pf-btn pf-green"; yt2.innerText="Completed"; ytStatus2.classList.add("done"); ytStatus2.innerText="สำเร็จแล้ว"; startProgress(); clearInterval(checkInterval);}
+    }else if(yt2Opened&&!done2 && document.visibilityState!=="visible"){
+      yt2Start += performance.now()-yt2Start;
     }
   },100);
 
