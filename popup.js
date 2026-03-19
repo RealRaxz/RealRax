@@ -4,10 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
   <div id="overlay">
     <div id="box">
 
-      <img src="mascot1.png" id="mascot">
+      <div id="mascotWrap">
+        <img src="mascot1.png" id="mascot">
+      </div>
 
       <div id="panel">
-        <div class="title">Complete Steps</div>
+        <div>Complete Steps</div>
 
         <button id="adsBtn" class="btn primary">Watch Ads</button>
         <div id="adsStatus" class="status">ยังไม่ได้ทำ</div>
@@ -15,24 +17,28 @@ document.addEventListener("DOMContentLoaded", () => {
         <button id="ytBtn" class="btn secondary disabled">Like & Comment</button>
         <div id="ytStatus" class="status">ล็อคอยู่</div>
 
-        <div id="progress"><div id="bar"></div></div>
+        <div id="progress">
+          <div id="barBox"><div id="bar"></div></div>
+          <div id="percent">0%</div>
+        </div>
 
-        <button id="enter" class="btn">ENTER WEBSITE</button>
+        <button id="enter" class="btn">ENTER</button>
       </div>
 
     </div>
   </div>
   `);
 
-  initPopup();
+  init();
+  createParticles();
 });
 
-function initPopup() {
+function init() {
 
   let done1 = false;
+  let tracking = false;
   let adStart = 0;
   let timeSpent = 0;
-  let tracking = false;
 
   const adsBtn = document.getElementById("adsBtn");
   const ytBtn = document.getElementById("ytBtn");
@@ -41,20 +47,22 @@ function initPopup() {
   const ytStatus = document.getElementById("ytStatus");
 
   const bar = document.getElementById("bar");
+  const percent = document.getElementById("percent");
   const progress = document.getElementById("progress");
   const enter = document.getElementById("enter");
 
-  document.body.style.overflow = "hidden";
-
-  // ads
+  // ===== ADS =====
   adsBtn.onclick = () => {
+    if (done1) return;
+
     window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
+
     tracking = true;
     adsStatus.innerText = "กำลังตรวจสอบ...";
   };
 
   document.addEventListener("visibilitychange", () => {
-    if (!tracking) return;
+    if (!tracking || done1) return;
 
     if (document.hidden) {
       adStart = Date.now();
@@ -62,55 +70,68 @@ function initPopup() {
       let t = (Date.now() - adStart)/1000;
       timeSpent += t;
 
-      if (timeSpent >= 2 && !done1) {
+      if (timeSpent >= 2) {
         done1 = true;
-        adsStatus.innerText = "สำเร็จ";
+        tracking = false;
+        adsStatus.innerText = "✅ Completed";
         ytBtn.classList.remove("disabled");
         ytStatus.innerText = "พร้อมใช้งาน";
       } else {
-        adsStatus.innerText = "ต้องอยู่โฆษณานานขึ้น";
+        adsStatus.innerText = "อยู่ให้นานขึ้น...";
       }
     }
   });
 
+  // ===== STEP2 =====
   ytBtn.onclick = () => {
     if (!done1) return;
 
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
 
-    ytStatus.innerText = "สำเร็จ";
-
+    ytStatus.innerText = "✅ Completed";
     startProgress();
   };
 
+  // ===== PROGRESS 5 วิ =====
   function startProgress() {
     progress.style.display = "block";
 
-    let start = null;
-    let duration = 1800;
+    let start = Date.now();
+    let duration = 5000;
 
-    function animate(ts) {
-      if (!start) start = ts;
+    let interval = setInterval(() => {
+      let t = (Date.now() - start) / duration;
+      let percentVal = Math.min(Math.floor(t * 100), 100);
 
-      let t = (ts - start)/duration;
-      let eased = 1 - Math.pow(1 - t, 3);
+      bar.style.width = percentVal + "%";
+      percent.innerText = percentVal + "%";
 
-      bar.style.width = (eased*100) + "%";
-
-      if (t < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        setTimeout(() => {
-          enter.style.display = "block";
-        }, 250);
+      if (percentVal >= 100) {
+        clearInterval(interval);
+        enter.style.display = "block";
       }
-    }
-
-    requestAnimationFrame(animate);
+    }, 30);
   }
 
+  // enter
   enter.onclick = () => {
     document.getElementById("overlay").remove();
-    document.body.style.overflow = "auto";
   };
+}
+
+// ===== PARTICLE =====
+function createParticles() {
+  const wrap = document.getElementById("mascotWrap");
+
+  setInterval(() => {
+    let p = document.createElement("div");
+    p.className = "particle";
+
+    p.style.left = Math.random() * 100 + "%";
+    p.style.bottom = "0px";
+
+    wrap.appendChild(p);
+
+    setTimeout(() => p.remove(), 4000);
+  }, 200);
 }
