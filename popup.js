@@ -1,4 +1,3 @@
-// inject html เข้าเว็บ
 fetch("popup.html")
   .then(res => res.text())
   .then(data => {
@@ -7,10 +6,15 @@ fetch("popup.html")
   });
 
 function initPopup() {
+  const mascotZone = document.getElementById("mascot-zone");
+  const actionZone = document.getElementById("action-zone");
+
   const step1 = document.getElementById("step1");
   const step2 = document.getElementById("step2");
+
   const adsBtn = document.getElementById("adsBtn");
   const ytBtn = document.getElementById("ytBtn");
+
   const progress = document.getElementById("progress-container");
   const bar = document.getElementById("progress-bar");
   const enterBtn = document.getElementById("enterBtn");
@@ -18,10 +22,21 @@ function initPopup() {
   let done1 = false;
   let done2 = false;
 
-  // เปิด step1
-  step1.classList.remove("disabled");
+  document.body.style.overflow = "hidden";
 
-  // STEP 1 (Ads)
+  // 🎬 STEP 0: มาสคอตลอยขึ้นก่อน
+  setTimeout(() => {
+    mascotZone.classList.add("show-mascot");
+  }, 200);
+
+  // 🎬 STEP 1: split layout (ซ้าย-ขวา)
+  setTimeout(() => {
+    mascotZone.classList.add("split-layout");
+    actionZone.classList.add("show-actions");
+    step1.classList.remove("disabled");
+  }, 900);
+
+  // STEP 1
   adsBtn.onclick = () => {
     window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
 
@@ -35,7 +50,7 @@ function initPopup() {
     }, 2000);
   };
 
-  // STEP 2 (YouTube)
+  // STEP 2
   ytBtn.onclick = () => {
     if (!done1) return;
 
@@ -48,28 +63,22 @@ function initPopup() {
   };
 
   function startProgress() {
-    if (!done1 || !done2) return;
-
     progress.style.display = "block";
 
-    let percent = 0;
+    let p = 0;
     let interval = setInterval(() => {
-      percent += 2;
-      bar.style.width = percent + "%";
+      p += 2;
+      bar.style.width = p + "%";
 
-      if (percent >= 100) {
+      if (p >= 100) {
         clearInterval(interval);
         enterBtn.style.display = "block";
       }
     }, 30);
   }
 
-  // ENTER
   enterBtn.onclick = () => {
     document.getElementById("popup-overlay").remove();
     document.body.style.overflow = "auto";
   };
-
-  // ล็อค scroll
-  document.body.style.overflow = "hidden";
 }
