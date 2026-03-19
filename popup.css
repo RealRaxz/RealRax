@@ -12,8 +12,17 @@
 /* layout */
 #box {
   display: flex;
-  gap: 100px;
+  gap: 60px;
   align-items: center;
+  max-width: 90%;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  #box {
+    flex-direction: column;
+    gap: 30px;
+  }
 }
 
 /* mascot */
@@ -22,60 +31,65 @@
 }
 
 #mascot {
-  width: 240px;
+  width: 200px;
   animation: float 4s ease-in-out infinite;
 }
 
-/* particle */
-.particle {
+/* 🍬 candy particle */
+.candy {
   position: absolute;
-  width: 6px;
-  height: 6px;
-  background: radial-gradient(circle, #fff, transparent);
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  opacity: 0.7;
-  animation: particleFloat 4s linear infinite;
+  background: repeating-linear-gradient(
+    45deg,
+    red 0px,
+    red 3px,
+    white 3px,
+    white 6px
+  );
+  animation: candyFloat 4s linear forwards;
 }
 
 /* panel */
 #panel {
-  width: 340px;
-  padding: 28px;
-  border-radius: 18px;
+  width: 320px;
+  max-width: 90vw;
+  padding: 22px;
+  border-radius: 16px;
   background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(25px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  overflow: hidden;
 }
 
 /* button */
 .btn {
   width: 100%;
-  padding: 14px;
-  border-radius: 12px;
+  padding: 12px;
+  border-radius: 10px;
   border: none;
   margin-top: 10px;
   cursor: pointer;
   transition: 0.25s;
+  font-weight: 500;
 }
 
-.primary {
-  background: linear-gradient(135deg, #ff2d55, #ff6a6a);
+.red {
+  background: linear-gradient(135deg, #ff0000, #ff4d4d);
   color: white;
 }
 
-.secondary {
-  background: rgba(255,255,255,0.1);
-  color: white;
+.green {
+  background: #00d084;
+  color: black;
 }
 
 .btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .btn:active {
-  transform: scale(0.95);
+  transform: scale(0.96);
 }
 
 .disabled {
@@ -86,12 +100,12 @@
 /* status */
 .status {
   font-size: 12px;
-  color: #aaa;
+  color: #ccc;
 }
 
 /* progress */
 #progress {
-  margin-top: 15px;
+  margin-top: 12px;
   display: none;
 }
 
@@ -106,30 +120,28 @@
 #bar {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #ff2d55, #ff7a7a);
+  background: linear-gradient(90deg, #ff0000, #ff2a2a);
 }
 
 #percent {
   font-size: 12px;
   color: white;
-  margin-top: 5px;
   text-align: right;
 }
 
 /* enter */
 #enter {
   display: none;
-  margin-top: 15px;
-  background: #00d084;
+  margin-top: 12px;
 }
 
 /* anim */
 @keyframes float {
   0%,100% {transform: translateY(0);}
-  50% {transform: translateY(-10px);}
+  50% {transform: translateY(-8px);}
 }
 
-@keyframes particleFloat {
+@keyframes candyFloat {
   from {transform: translateY(0); opacity:1;}
   to {transform: translateY(-80px); opacity:0;}
 }
