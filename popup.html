@@ -1,32 +1,25 @@
-<div id="popup-overlay">
-  <div id="popup-box">
+<div id="overlay">
+  <div id="box">
 
-    <!-- LEFT -->
-    <div id="left">
+    <div id="mascotWrap">
       <img src="mascot1.png" id="mascot">
     </div>
 
-    <!-- RIGHT -->
-    <div id="right">
+    <div id="panel">
+      <div class="title">Complete Steps</div>
 
-      <h2 class="title">Complete Required Steps</h2>
+      <button id="adsBtn" class="btn gold">Watch Ads</button>
+      <div id="adsStatus" class="status">ยังไม่ได้ทำ</div>
 
-      <div class="step disabled" id="step1">
-        <button id="adsBtn">Watch Ads</button>
-        <span class="badge">STEP 1</span>
+      <button id="ytBtn" class="btn gold" disabled>Like & Comment</button>
+      <div id="ytStatus" class="status">ล็อคอยู่</div>
+
+      <div id="progress">
+        <div id="barBox"><div id="bar"></div></div>
+        <div id="percent">0%</div>
       </div>
 
-      <div class="step disabled" id="step2">
-        <button id="ytBtn">Like & Comment</button>
-        <span class="badge">STEP 2</span>
-      </div>
-
-      <div id="progress-container">
-        <div id="progress-bar"></div>
-      </div>
-
-      <button id="enterBtn">ENTER WEBSITE</button>
-
+      <button id="enter" class="btn enterBtn">ENTER</button>
     </div>
 
   </div>
