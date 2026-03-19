@@ -29,132 +29,129 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
   `);
 
-  // 🔥 trigger animation (สำคัญ)
-  setTimeout(() => {
+  setTimeout(()=> {
     document.getElementById("box").classList.add("active");
-  }, 50);
+  },50);
 
   init();
   particles();
 });
 
-function init() {
+function init(){
 
-  let done1 = false;
-  let done2 = false;
-  let adStart = 0;
-  let timeSpent = 0;
-  let tracking = false;
+  let done1=false, done2=false;
+  let adStart=0, timeSpent=0, tracking=false;
 
-  let ytOpened = false;
-  let returned = false;
+  let ytOpened=false, returned=false;
 
-  const adsBtn = document.getElementById("adsBtn");
-  const ytBtn = document.getElementById("ytBtn");
+  const adsBtn=document.getElementById("adsBtn");
+  const ytBtn=document.getElementById("ytBtn");
 
-  const adsStatus = document.getElementById("adsStatus");
-  const ytStatus = document.getElementById("ytStatus");
+  const adsStatus=document.getElementById("adsStatus");
+  const ytStatus=document.getElementById("ytStatus");
 
-  const bar = document.getElementById("bar");
-  const percent = document.getElementById("percent");
-  const progress = document.getElementById("progress");
-  const enter = document.getElementById("enter");
+  const bar=document.getElementById("bar");
+  const percent=document.getElementById("percent");
+  const progress=document.getElementById("progress");
+  const enter=document.getElementById("enter");
 
-  // ads
-  adsBtn.onclick = () => {
-    if (done1) return;
+  adsBtn.onclick=()=>{
+    if(done1) return;
 
     window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
-    tracking = true;
-    adsStatus.innerText = "กำลังตรวจสอบ...";
+    tracking=true;
+    adsStatus.innerText="กำลังตรวจสอบ...";
   };
 
-  document.addEventListener("visibilitychange", () => {
+  document.addEventListener("visibilitychange",()=>{
 
-    if (tracking && !done1) {
-      if (document.hidden) {
-        adStart = performance.now();
-      } else {
-        let t = (performance.now() - adStart)/1000;
-        timeSpent += t;
+    if(tracking && !done1){
+      if(document.hidden){
+        adStart=performance.now();
+      }else{
+        let t=(performance.now()-adStart)/1000;
+        timeSpent+=t;
 
-        if (timeSpent >= 2) {
-          done1 = true;
-          adsBtn.className = "btn completed";
-          adsBtn.innerText = "Completed";
+        if(timeSpent>=2){
+          done1=true;
+          tracking=false;
+
+          adsBtn.className="btn completed";
+          adsBtn.innerText="Completed";
+
           adsStatus.classList.add("done");
-          adsStatus.innerText = "สำเร็จแล้ว";
-          ytBtn.disabled = false;
+          adsStatus.innerText="สำเร็จแล้ว";
+
+          ytBtn.disabled=false;
         }
       }
     }
 
-    if (ytOpened && document.visibilityState === "visible" && !returned) {
-      returned = true;
+    if(ytOpened && document.visibilityState==="visible" && !returned){
+      returned=true;
       startProgress();
     }
   });
 
-  ytBtn.onclick = () => {
-    if (!done1 || done2) return;
+  ytBtn.onclick=()=>{
+    if(!done1 || done2) return;
 
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
 
-    done2 = true;
-    ytOpened = true;
+    done2=true;
+    ytOpened=true;
 
-    ytBtn.className = "btn completed";
-    ytBtn.innerText = "Completed";
+    ytBtn.className="btn completed";
+    ytBtn.innerText="Completed";
+
     ytStatus.classList.add("done");
-    ytStatus.innerText = "สำเร็จแล้ว";
+    ytStatus.innerText="สำเร็จแล้ว";
   };
 
-  function startProgress() {
-    progress.style.display = "block";
+  function startProgress(){
+    progress.style.display="block";
 
-    let start = performance.now();
-    let duration = 5000;
+    let start=performance.now();
+    let duration=5000;
 
-    function animate(now) {
-      let t = (now - start) / duration;
-      if (t > 1) t = 1;
+    function animate(now){
+      let t=(now-start)/duration;
+      if(t>1) t=1;
 
-      let eased = 1 - Math.pow(1 - t, 3);
+      let eased=1-Math.pow(1-t,3);
+      let val=eased*100;
 
-      let val = eased * 100;
-      bar.style.width = val + "%";
-      percent.innerText = Math.floor(val) + "%";
+      bar.style.width=val+"%";
+      percent.innerText=Math.floor(val)+"%";
 
-      if (t < 1) {
+      if(t<1){
         requestAnimationFrame(animate);
-      } else {
-        percent.innerText = "100%";
-        enter.style.display = "block";
+      }else{
+        percent.innerText="100%";
+        enter.style.display="block";
       }
     }
 
     requestAnimationFrame(animate);
   }
 
-  enter.onclick = () => {
+  enter.onclick=()=>{
     document.getElementById("overlay").remove();
   };
 }
 
-// particles
-function particles() {
-  const wrap = document.getElementById("mascotWrap");
+function particles(){
+  const wrap=document.getElementById("mascotWrap");
 
-  setInterval(() => {
-    let el = document.createElement("div");
-    let types = ["candy","star","snow"];
-    el.className = types[Math.floor(Math.random()*types.length)];
+  setInterval(()=>{
+    let el=document.createElement("div");
+    let types=["candy","star","snow"];
+    el.className=types[Math.floor(Math.random()*types.length)];
 
-    el.style.left = Math.random()*100 + "%";
-    el.style.bottom = "0px";
+    el.style.left=Math.random()*100+"%";
+    el.style.bottom="0px";
 
     wrap.appendChild(el);
-
     setTimeout(()=>el.remove(),4000);
   },150);
 }
