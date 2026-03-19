@@ -13,7 +13,24 @@ document.addEventListener("DOMContentLoaded", () => {
   .pf-btn{width:100%; padding:12px; margin-top:10px; border:none; border-radius:10px;cursor:pointer; font-weight:bold; transition:.2s; box-shadow:0 0 10px rgba(255,255,255,0.4);}
   .pf-btn:hover{transform:translateY(-2px);}
   .pf-btn:active{transform:scale(.96);}
-  .pf-red{background:linear-gradient(135deg,#FFD700,#FF0000); color:#fff;}
+
+  /* 🔥 แก้เฉพาะตรงนี้ */
+  .pf-red{
+    background: linear-gradient(
+      90deg,
+      #ffd84d 0%,
+      #ffb300 25%,
+      #ff6a00 55%,
+      #ff2a00 80%,
+      #ff0000 100%
+    );
+    box-shadow:
+      inset 0 2px 6px rgba(255,255,255,0.4),
+      inset 0 -4px 8px rgba(0,0,0,0.25),
+      0 0 10px rgba(255,255,255,0.4);
+    color:#fff;
+  }
+
   .pf-green{background:linear-gradient(135deg,#FFFF66,#00FF66); color:#000;}
   .pf-disabled{opacity:.4; pointer-events:none;}
   .pf-status{font-size:12px;color:white;}
@@ -67,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let done1=false, done2=false;
 
-  // ✅ ใช้ accumulator แทน (กัน bypass จริง)
   let yt1Time=0, yt2Time=0;
   let yt1Running=false, yt2Running=false;
   let lastTime=0;
@@ -95,7 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const dt=(now-lastTime)/1000;
     lastTime=now;
 
-    // 🔒 นับเฉพาะตอน "hidden" (อยู่ YouTube)
     if(document.visibilityState==="hidden"){
       if(yt1Running && !done1){
         yt1Time+=dt;
