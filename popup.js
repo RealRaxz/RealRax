@@ -1,130 +1,52 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ===== inject style (กันชน CSS) =====
+  // ===== STYLE =====
   const style = document.createElement("style");
   style.innerHTML = `
-  .pf-overlay{
-    position:fixed;inset:0;
-    backdrop-filter:blur(12px);
-    background:rgba(0,0,0,.25);
-    display:flex;justify-content:center;align-items:center;
-    z-index:999999;
-    font-family:sans-serif;
-  }
+  .pf-overlay{position:fixed;inset:0;backdrop-filter:blur(12px);background:rgba(0,0,0,.25);display:flex;justify-content:center;align-items:center;z-index:999999;font-family:sans-serif;}
+  .pf-box{display:flex;gap:60px;align-items:center;}
+  @media(max-width:768px){.pf-box{flex-direction:column;}}
 
-  .pf-box{
-    display:flex;gap:60px;align-items:center;
-  }
-
-  @media(max-width:768px){
-    .pf-box{flex-direction:column;}
-  }
-
-  /* animation */
   .pf-mascotWrap,.pf-panel{opacity:0;}
+  .pf-box.active .pf-mascotWrap{animation:pf-left .7s ease forwards;}
+  .pf-box.active .pf-panel{animation:pf-right .7s ease forwards;}
 
-  .pf-box.active .pf-mascotWrap{
-    animation:pf-left .7s ease forwards;
-  }
-  .pf-box.active .pf-panel{
-    animation:pf-right .7s ease forwards;
-  }
-
-  @keyframes pf-left{
-    from{opacity:0;transform:translateX(-80px);}
-    to{opacity:1;transform:translateX(0);}
-  }
-  @keyframes pf-right{
-    from{opacity:0;transform:translateX(80px);}
-    to{opacity:1;transform:translateX(0);}
-  }
+  @keyframes pf-left{from{opacity:0;transform:translateX(-80px);}to{opacity:1;transform:translateX(0);}}
+  @keyframes pf-right{from{opacity:0;transform:translateX(80px);}to{opacity:1;transform:translateX(0);}}
 
   .pf-mascot{width:200px;}
 
-  .pf-panel{
-    width:320px;
-    padding:20px;
-    border-radius:16px;
-    background:rgba(255,255,255,.08);
-    backdrop-filter:blur(20px);
-    text-align:center;
-  }
+  .pf-panel{width:320px;padding:20px;border-radius:16px;background:rgba(255,255,255,.08);backdrop-filter:blur(20px);text-align:center;}
 
-  .pf-btn{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.2s;
-  }
-
+  .pf-btn{width:100%;padding:12px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;font-weight:bold;transition:.2s;}
   .pf-btn:hover{transform:translateY(-2px);}
   .pf-btn:active{transform:scale(.96);}
 
-  .pf-red{
-    background:linear-gradient(135deg,#FFD700,#FF0000);
-    color:#fff;
-  }
+  .pf-red{background:linear-gradient(135deg,#FFD700,#FF0000);color:#fff;}
+  .pf-green{background:linear-gradient(135deg,#FFFF66,#00FF66);color:#000;}
+  .pf-disabled{opacity:.4;pointer-events:none;}
 
-  .pf-green{
-    background:linear-gradient(135deg,#FFFF66,#00FF66);
-    color:#000;
-  }
-
-  .pf-disabled{
-    opacity:.4;
-    pointer-events:none;
-  }
-
-  .pf-status{
-    font-size:12px;
-    background:linear-gradient(90deg,yellow,pink);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-  }
-
-  .pf-status.done{
-    background:linear-gradient(90deg,yellow,limegreen);
-    -webkit-background-clip:text;
-  }
+  .pf-status{font-size:12px;background:linear-gradient(90deg,yellow,pink);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .pf-status.done{background:linear-gradient(90deg,yellow,limegreen);}
 
   .pf-progress{display:none;margin-top:10px;}
-  .pf-barBox{
-    width:100%;height:8px;
-    background:rgba(255,255,255,.1);
-    border-radius:6px;overflow:hidden;
-  }
-
-  .pf-bar{
-    height:100%;
-    width:0%;
-    background:linear-gradient(90deg,yellow,limegreen);
-  }
-
-  .pf-percent{
-    text-align:right;
-    font-size:12px;
-    color:#fff;
-  }
+  .pf-barBox{width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;}
+  .pf-bar{height:100%;width:0%;background:linear-gradient(90deg,yellow,limegreen);}
+  .pf-percent{text-align:right;font-size:12px;color:#fff;}
   `;
   document.head.appendChild(style);
 
-  // ===== inject html =====
+  // ===== HTML =====
   document.body.insertAdjacentHTML("beforeend", `
   <div class="pf-overlay">
     <div class="pf-box">
-
       <div class="pf-mascotWrap">
         <img src="mascot1.png" class="pf-mascot">
       </div>
-
       <div class="pf-panel">
         <div style="margin-bottom:10px;color:white;">Complete Steps</div>
 
-        <button id="pfAds" class="pf-btn pf-red">Watch Ads  →  ดูโฆษณา 2 วินาที</button>
+        <button id="pfAds" class="pf-btn pf-red">Watch Ads</button>
         <div id="pfAdsStatus" class="pf-status">กรุณาทำขั้นตอนนี้ก่อน</div>
 
         <button id="pfYT" class="pf-btn pf-red pf-disabled">Like & Comment</button>
@@ -137,24 +59,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <button id="pfEnter" class="pf-btn pf-green" style="display:none;">ENTER</button>
       </div>
-
     </div>
   </div>
   `);
 
-  setTimeout(()=>{
-    document.querySelector(".pf-box").classList.add("active");
-  },50);
+  setTimeout(()=>document.querySelector(".pf-box").classList.add("active"),50);
 
-  // ===== logic =====
+  // ===== LOGIC =====
   let done1=false, done2=false;
-  let tracking=false;
+  let tracking=false, adStart=0, timeSpent=0;
+
+  let adWindowOpened=false;
+  let validLeave=false;
+  let maxAwayTime=8000;
 
   let ytOpened=false, returned=false;
-
-  // 🔥 ตัวใหม่
-  let leftPage=false;
-  let leftTime=0;
 
   const ads=document.getElementById("pfAds");
   const yt=document.getElementById("pfYT");
@@ -167,51 +86,74 @@ document.addEventListener("DOMContentLoaded", () => {
   const progress=document.getElementById("pfProgress");
   const enter=document.getElementById("pfEnter");
 
-  // ads
+  // ===== ADS =====
   ads.onclick=()=>{
     if(done1) return;
 
     window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
+
     tracking=true;
-    adsStatus.innerText="กรุณาอยู่หน้าโฆษณาสักครู่...";
+    adWindowOpened=true;
+    validLeave=false;
+    timeSpent=0;
+
+    adsStatus.innerText="กรุณาอยู่หน้าโฆษณา...";
   };
 
-  // 🔥 ออกจากหน้า
-  window.addEventListener("blur", () => {
-    if (tracking && !done1) {
-      leftPage = true;
-      leftTime = performance.now();
-    }
-  });
+  document.addEventListener("visibilitychange",()=>{
 
-  // 🔥 กลับมา
-  window.addEventListener("focus", () => {
-    if (tracking && !done1 && leftPage) {
+    if(tracking && !done1){
 
-      let spent = (performance.now() - leftTime) / 1000;
-
-      if (spent >= 2) {
-
-        done1 = true;
-        tracking = false;
-
-        ads.className = "pf-btn pf-green";
-        ads.innerText = "Completed";
-
-        adsStatus.classList.add("done");
-        adsStatus.innerText = "สำเร็จแล้ว";
-
-        yt.classList.remove("pf-disabled");
-
+      if(document.hidden){
+        // ออกจากหน้า
+        if(adWindowOpened){
+          adStart=performance.now();
+          validLeave=true;
+        }
       } else {
-        adsStatus.innerText = "อยู่หน้าโฆษณาให้นานขึ้น...";
-      }
+        // กลับมา
+        if(!validLeave){
+          adsStatus.innerText="ตรวจจับการสลับแท็บ ❌";
+          return;
+        }
 
-      leftPage = false;
+        let t=performance.now()-adStart;
+
+        if(t > maxAwayTime){
+          adsStatus.innerText="อยู่นานเกินไป ❌";
+          return;
+        }
+
+        timeSpent += t/1000;
+
+        if(timeSpent >= 2){
+          done1=true;
+          tracking=false;
+
+          ads.className="pf-btn pf-green";
+          ads.innerText="Completed";
+
+          adsStatus.classList.add("done");
+          adsStatus.innerText="สำเร็จแล้ว";
+
+          yt.classList.remove("pf-disabled");
+        } else {
+          adsStatus.innerText="อยู่หน้าโฆษณาให้นานขึ้น...";
+        }
+
+        validLeave=false;
+      }
     }
+
+    // YT
+    if(ytOpened && document.visibilityState==="visible" && !returned){
+      returned=true;
+      startProgress();
+    }
+
   });
 
-  // yt
+  // ===== YT =====
   yt.onclick=()=>{
     if(!done1 || done2) return;
 
@@ -227,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ytStatus.innerText="สำเร็จแล้ว";
   };
 
-  // progress
+  // ===== PROGRESS =====
   function startProgress(){
     progress.style.display="block";
 
@@ -246,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if(t<1){
         requestAnimationFrame(animate);
-      }else{
+      } else {
         percent.innerText="100%";
         enter.style.display="block";
       }
@@ -255,14 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(animate);
   }
 
-  // 🔥 เดิมใช้ visibility → เก็บไว้เฉพาะ progress
-  document.addEventListener("visibilitychange", () => {
-    if (ytOpened && document.visibilityState==="visible" && !returned) {
-      returned = true;
-      startProgress();
-    }
-  });
-
+  // ENTER
   enter.onclick=()=>{
     document.querySelector(".pf-overlay").remove();
   };
