@@ -522,46 +522,36 @@ draw()
 <script src="antiadblock.js"></script>
 <script src="redirect.js"></script>
 
-<!-- BEGIN Popup -->
-<div id="subscribePopup" style="display: flex;">
-  <div>
+<!-- Professional Popup -->
+<div id="proPopup" class="popup-overlay">
+  <div class="popup-box">
+    <div class="popup-header">
+      <h2>🔒 Unlock All Ads</h2>
+      <p>Complete the actions to unlock your link</p>
+    </div>
+
     <div class="step-indicator">
-      <div class="step-dot active" id="step-dot1"></div>
-      <div class="step-dot" id="step-dot2"></div>
-      <div class="step-dot" id="step-dot3"></div>
-    </div>
-    
-    <div class="popup-text">
-      <strong>
-        <img class="icon" src="data:image/svg+xml;base64,PHN2Zy..." alt="unlock">
-        ปลดล็อกโฆษณาทั้งหมด
-      </strong>
-      <div>ทำภารกิจให้ครบเพื่อรับสคริปต์</div>
-      <div>Complete the actions and unlock the link</div>
+      <span class="step-dot active" id="proStep1"></span>
+      <span class="step-dot" id="proStep2"></span>
+      <span class="step-dot" id="proStep3"></span>
     </div>
 
-    <a id="adButton1" class="gradient-button" href="https://s.shopee.co.th/9fFdLNUehS" target="_blank">
-      <img class="button-icon" src="data:image/svg+xml;base64,PHN2Zy..." alt="cart">
-      กดดูโฆษณา/Watch ads
-    </a>
-
-    <a id="likeButton1" class="gradient-button disabled" href="https://youtu.be/-SspjIRG4LY" target="_blank">
-      <img class="button-icon" src="data:image/svg+xml;base64,PHN2Zy..." alt="like">
-      กดไลค์และคอมเม้นต์/Like comment
-    </a>
-
-    <div id="progressContainer" class="progress-container" style="display: none;">
-      <div id="progressBar" class="progress-bar"></div>
+    <div class="popup-buttons">
+      <a id="proAdBtn" class="gradient-button" href="https://s.shopee.co.th/9fFdLNUehS" target="_blank">
+        📺 Watch Ads
+      </a>
+      <a id="proLikeBtn" class="gradient-button disabled" href="https://youtu.be/-SspjIRG4LY" target="_blank">
+        👍 Like & Comment
+      </a>
     </div>
 
-    <button id="continueButton">
-      ➤ เข้าสู่เว็บไซต์
-    </button>
+    <div id="proProgressContainer">
+      <div id="proProgressBar"></div>
+    </div>
+
+    <button id="proContinueBtn">➤ Enter Website</button>
   </div>
 </div>
-<!-- END Popup -->
-   
-<script src="popup.js"></script>
    
 </body>
 </html>
