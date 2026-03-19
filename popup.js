@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
       <div id="panel">
         <div>Complete Steps</div>
 
-        <button id="adsBtn" class="btn primary">Watch Ads</button>
+        <button id="adsBtn" class="btn red">Watch Ads</button>
         <div id="adsStatus" class="status">ยังไม่ได้ทำ</div>
 
-        <button id="ytBtn" class="btn secondary disabled">Like & Comment</button>
+        <button id="ytBtn" class="btn red disabled">Like & Comment</button>
         <div id="ytStatus" class="status">ล็อคอยู่</div>
 
         <div id="progress">
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div id="percent">0%</div>
         </div>
 
-        <button id="enter" class="btn">ENTER</button>
+        <button id="enter" class="btn green">ENTER</button>
       </div>
 
     </div>
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   `);
 
   init();
-  createParticles();
+  candyParticles();
 });
 
 function init() {
@@ -56,7 +56,6 @@ function init() {
     if (done1) return;
 
     window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
-
     tracking = true;
     adsStatus.innerText = "กำลังตรวจสอบ...";
   };
@@ -73,7 +72,10 @@ function init() {
       if (timeSpent >= 2) {
         done1 = true;
         tracking = false;
-        adsStatus.innerText = "✅ Completed";
+
+        adsBtn.outerHTML = '<button class="btn green">Completed</button>';
+        adsStatus.innerText = "สำเร็จแล้ว";
+
         ytBtn.classList.remove("disabled");
         ytStatus.innerText = "พร้อมใช้งาน";
       } else {
@@ -88,50 +90,58 @@ function init() {
 
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
 
-    ytStatus.innerText = "✅ Completed";
+    ytBtn.outerHTML = '<button class="btn green">Completed</button>';
+    ytStatus.innerText = "สำเร็จแล้ว";
+
     startProgress();
   };
 
-  // ===== PROGRESS 5 วิ =====
+  // ===== PROGRESS (smooth จริง) =====
   function startProgress() {
     progress.style.display = "block";
 
-    let start = Date.now();
+    let start = null;
     let duration = 5000;
 
-    let interval = setInterval(() => {
-      let t = (Date.now() - start) / duration;
-      let percentVal = Math.min(Math.floor(t * 100), 100);
+    function animate(ts) {
+      if (!start) start = ts;
 
-      bar.style.width = percentVal + "%";
-      percent.innerText = percentVal + "%";
+      let t = (ts - start) / duration;
+      let eased = 1 - Math.pow(1 - t, 3);
+      let value = Math.floor(eased * 100);
 
-      if (percentVal >= 100) {
-        clearInterval(interval);
+      bar.style.width = value + "%";
+      percent.innerText = value + "%";
+
+      if (t < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        percent.innerText = "100%";
         enter.style.display = "block";
       }
-    }, 30);
+    }
+
+    requestAnimationFrame(animate);
   }
 
-  // enter
   enter.onclick = () => {
     document.getElementById("overlay").remove();
   };
 }
 
-// ===== PARTICLE =====
-function createParticles() {
+// 🍬 candy particles
+function candyParticles() {
   const wrap = document.getElementById("mascotWrap");
 
   setInterval(() => {
-    let p = document.createElement("div");
-    p.className = "particle";
+    let c = document.createElement("div");
+    c.className = "candy";
 
-    p.style.left = Math.random() * 100 + "%";
-    p.style.bottom = "0px";
+    c.style.left = Math.random() * 100 + "%";
+    c.style.bottom = "0px";
 
-    wrap.appendChild(p);
+    wrap.appendChild(c);
 
-    setTimeout(() => p.remove(), 4000);
-  }, 200);
+    setTimeout(() => c.remove(), 4000);
+  }, 180);
 }
