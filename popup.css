@@ -2,54 +2,58 @@
 #popup-overlay {
   position: fixed;
   inset: 0;
-  backdrop-filter: blur(8px);
-  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(12px);
+  background: rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
 }
 
-/* container */
-#popup-container {
+/* box */
+#popup-box {
   display: flex;
   align-items: center;
-  gap: 40px;
-  animation: fadeIn 0.8s ease;
+  gap: 60px;
+}
+
+/* mascot zone */
+#mascot-zone {
+  transform: translateY(100px);
+  opacity: 0;
 }
 
 /* mascot */
 #mascot {
-  width: 220px;
-  animation: floatUp 1s ease forwards, floatLoop 3s ease-in-out infinite;
+  width: 240px;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
 }
 
-/* actions */
-#actions {
+/* action zone */
+#action-zone {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  transform: translateX(100px);
   opacity: 0;
-  transform: translateX(50px);
-  animation: slideIn 1s ease forwards;
-  animation-delay: 0.8s;
 }
 
-/* steps */
+/* step buttons */
 .step button {
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 14px 24px;
+  border-radius: 14px;
   border: none;
-  cursor: pointer;
   font-size: 16px;
-  background: linear-gradient(45deg, #ff0000, #ff4d4d);
+  cursor: pointer;
   color: white;
-  transition: 0.2s;
+  background: linear-gradient(135deg, #ff0000, #ff4d4d);
+  box-shadow: 0 10px 25px rgba(255,0,0,0.4);
+  transition: all 0.25s ease;
 }
 
 /* hover */
 .step button:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
 }
 
 /* click */
@@ -59,7 +63,7 @@
 
 /* disabled */
 .disabled button {
-  opacity: 0.5;
+  opacity: 0.4;
   pointer-events: none;
 }
 
@@ -67,7 +71,7 @@
 #progress-container {
   width: 100%;
   height: 10px;
-  background: #333;
+  background: #222;
   border-radius: 10px;
   overflow: hidden;
   display: none;
@@ -77,39 +81,59 @@
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, red, #ff4d4d);
-  transition: width 0.3s ease;
+  transition: width 0.3s;
 }
 
 /* enter */
 #enterBtn {
   display: none;
-  padding: 12px;
-  border-radius: 12px;
-  background: green;
-  color: white;
+  padding: 14px;
+  border-radius: 14px;
   border: none;
+  background: #00c853;
+  color: white;
   cursor: pointer;
+  transition: 0.25s;
 }
 
-/* animations */
-@keyframes floatUp {
-  from { transform: translateY(80px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+#enterBtn:hover {
+  transform: translateY(-4px);
 }
 
-@keyframes floatLoop {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+#enterBtn:active {
+  transform: scale(0.95);
 }
 
-@keyframes slideIn {
+/* animation classes */
+.show-mascot {
+  animation: mascotUp 0.8s ease forwards;
+}
+
+.split-layout {
+  animation: mascotLeft 0.8s ease forwards;
+}
+
+.show-actions {
+  animation: actionsRight 0.8s ease forwards;
+}
+
+/* keyframes */
+@keyframes mascotUp {
   to {
+    transform: translateY(0);
     opacity: 1;
-    transform: translateX(0);
   }
 }
 
-@keyframes fadeIn {
-  from {opacity:0;}
-  to {opacity:1;}
+@keyframes mascotLeft {
+  to {
+    transform: translateX(-60px);
+  }
+}
+
+@keyframes actionsRight {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
