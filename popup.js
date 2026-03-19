@@ -1,4 +1,3 @@
-// ===== inject HTML =====
 document.addEventListener("DOMContentLoaded", () => {
 
   document.body.insertAdjacentHTML("beforeend", `
@@ -28,8 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initPopup();
 });
 
-
-// ===== logic =====
 function initPopup() {
 
   let done1 = false;
@@ -51,10 +48,9 @@ function initPopup() {
 
   document.body.style.overflow = "hidden";
 
-  // ===== ADS =====
+  // ads
   adsBtn.onclick = () => {
     window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
-
     tracking = true;
     adsStatus.innerText = "กำลังตรวจสอบ...";
   };
@@ -79,7 +75,6 @@ function initPopup() {
     }
   });
 
-  // ===== STEP2 =====
   ytBtn.onclick = () => {
     if (!done1) return;
 
@@ -91,7 +86,6 @@ function initPopup() {
     startProgress();
   };
 
-  // ===== PROGRESS =====
   function startProgress() {
     progress.style.display = "block";
 
@@ -109,14 +103,15 @@ function initPopup() {
       if (t < 1) {
         requestAnimationFrame(animate);
       } else {
-        enter.style.display = "block";
+        setTimeout(() => {
+          enter.style.display = "block";
+        }, 200);
       }
     }
 
     requestAnimationFrame(animate);
   }
 
-  // ===== ENTER =====
   enter.onclick = () => {
     document.getElementById("overlay").remove();
     document.body.style.overflow = "auto";
