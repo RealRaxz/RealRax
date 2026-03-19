@@ -1,9 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ===== STYLE =====
+  // ===== STYLE (ไม่มีสีปุ่มแล้ว) =====
   const style = document.createElement("style");
   style.innerHTML = `
-  .pf-overlay{position:fixed;inset:0;backdrop-filter:blur(12px);background:rgba(0,0,0,.25);display:flex;justify-content:center;align-items:center;z-index:999999;font-family:sans-serif;}
+  .pf-overlay{
+    position:fixed;inset:0;
+    backdrop-filter:blur(12px);
+    background:rgba(0,0,0,.25);
+    display:flex;justify-content:center;align-items:center;
+    z-index:999999;font-family:sans-serif;
+  }
+
   .pf-box{display:flex;gap:60px;align-items:center;}
   @media(max-width:768px){.pf-box{flex-direction:column;}}
 
@@ -11,27 +18,64 @@ document.addEventListener("DOMContentLoaded", () => {
   .pf-box.active .pf-mascotWrap{animation:pf-left .7s ease forwards;}
   .pf-box.active .pf-panel{animation:pf-right .7s ease forwards;}
 
-  @keyframes pf-left{from{opacity:0;transform:translateX(-80px);}to{opacity:1;transform:translateX(0);}}
-  @keyframes pf-right{from{opacity:0;transform:translateX(80px);}to{opacity:1;transform:translateX(0);}}
+  @keyframes pf-left{
+    from{opacity:0;transform:translateX(-80px);}
+    to{opacity:1;transform:translateX(0);}
+  }
+  @keyframes pf-right{
+    from{opacity:0;transform:translateX(80px);}
+    to{opacity:1;transform:translateX(0);}
+  }
 
   .pf-mascot{width:200px;}
 
-  .pf-panel{width:320px;padding:20px;border-radius:16px;background:rgba(255,255,255,.08);backdrop-filter:blur(20px);text-align:center;}
+  .pf-panel{
+    width:320px;padding:20px;border-radius:16px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
+    text-align:center;
+  }
 
-  .pf-btn{width:100%;padding:12px;margin-top:10px;border:none;border-radius:10px;cursor:pointer;font-weight:bold;transition:.2s;}
-  .pf-btn:hover{transform:translateY(-2px);}
+  .pf-btn{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.2s;
+  }
+
+  .pf-btn:hover{transform:translateY(-2px);filter:brightness(1.05);}
   .pf-btn:active{transform:scale(.96);}
 
-  .pf-red{background:linear-gradient(135deg,#FFD700,#FF0000);color:#fff;}
-  .pf-green{background:linear-gradient(135deg,#FFFF66,#00FF66);color:#000;}
   .pf-disabled{opacity:.4;pointer-events:none;}
 
-  .pf-status{font-size:12px;background:linear-gradient(90deg,yellow,pink);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-  .pf-status.done{background:linear-gradient(90deg,yellow,limegreen);}
+  .pf-status{
+    font-size:12px;
+    background:linear-gradient(90deg,yellow,pink);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+
+  .pf-status.done{
+    background:linear-gradient(90deg,yellow,limegreen);
+    -webkit-background-clip:text;
+  }
 
   .pf-progress{display:none;margin-top:10px;}
-  .pf-barBox{width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;}
-  .pf-bar{height:100%;width:0%;background:linear-gradient(90deg,yellow,limegreen);}
+  .pf-barBox{
+    width:100%;height:8px;
+    background:rgba(255,255,255,.1);
+    border-radius:6px;overflow:hidden;
+  }
+
+  .pf-bar{
+    height:100%;width:0%;
+    background:linear-gradient(90deg,yellow,limegreen);
+  }
+
   .pf-percent{text-align:right;font-size:12px;color:#fff;}
   `;
   document.head.appendChild(style);
@@ -40,16 +84,18 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.insertAdjacentHTML("beforeend", `
   <div class="pf-overlay">
     <div class="pf-box">
+
       <div class="pf-mascotWrap">
         <img src="mascot1.png" class="pf-mascot">
       </div>
+
       <div class="pf-panel">
         <div style="margin-bottom:10px;color:white;">Complete Steps</div>
 
-        <button id="pfAds" class="pf-btn pf-red">Watch Ads</button>
+        <button id="pfAds" class="pf-btn">ดูโฆษณา 2 วินาที</button>
         <div id="pfAdsStatus" class="pf-status">กรุณาทำขั้นตอนนี้ก่อน</div>
 
-        <button id="pfYT" class="pf-btn pf-red pf-disabled">Like & Comment</button>
+        <button id="pfYT" class="pf-btn pf-disabled">กดไลค์ + คอมเมนต์</button>
         <div id="pfYTStatus" class="pf-status">ปลดล็อคหลังจากดูโฆษณา</div>
 
         <div id="pfProgress" class="pf-progress">
@@ -57,13 +103,43 @@ document.addEventListener("DOMContentLoaded", () => {
           <div id="pfPercent" class="pf-percent">0%</div>
         </div>
 
-        <button id="pfEnter" class="pf-btn pf-green" style="display:none;">ENTER</button>
+        <button id="pfEnter" class="pf-btn" style="display:none;">เข้าเว็บไซต์</button>
       </div>
+
     </div>
   </div>
   `);
 
-  setTimeout(()=>document.querySelector(".pf-box").classList.add("active"),50);
+  setTimeout(()=>{
+    document.querySelector(".pf-box").classList.add("active");
+  },50);
+
+  // ===== ELEMENT =====
+  const ads = document.getElementById("pfAds");
+  const yt = document.getElementById("pfYT");
+  const enter = document.getElementById("pfEnter");
+
+  const adsStatus = document.getElementById("pfAdsStatus");
+  const ytStatus = document.getElementById("pfYTStatus");
+
+  const bar = document.getElementById("pfBar");
+  const percent = document.getElementById("pfPercent");
+  const progress = document.getElementById("pfProgress");
+
+  // ===== 🔥 ตั้งสีเริ่มต้น (ล็อกสี) =====
+  function setRed(btn){
+    btn.style.background = "linear-gradient(135deg,#FFD700,#FF0000)";
+    btn.style.color = "#fff";
+  }
+
+  function setGreen(btn){
+    btn.style.background = "linear-gradient(135deg,#FFFF66,#00FF66)";
+    btn.style.color = "#000";
+  }
+
+  setRed(ads);
+  setRed(yt);
+  setGreen(enter);
 
   // ===== LOGIC =====
   let done1=false, done2=false;
@@ -74,17 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let maxAwayTime=8000;
 
   let ytOpened=false, returned=false;
-
-  const ads=document.getElementById("pfAds");
-  const yt=document.getElementById("pfYT");
-
-  const adsStatus=document.getElementById("pfAdsStatus");
-  const ytStatus=document.getElementById("pfYTStatus");
-
-  const bar=document.getElementById("pfBar");
-  const percent=document.getElementById("pfPercent");
-  const progress=document.getElementById("pfProgress");
-  const enter=document.getElementById("pfEnter");
 
   // ===== ADS =====
   ads.onclick=()=>{
@@ -105,13 +170,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if(tracking && !done1){
 
       if(document.hidden){
-        // ออกจากหน้า
         if(adWindowOpened){
           adStart=performance.now();
           validLeave=true;
         }
       } else {
-        // กลับมา
+
         if(!validLeave){
           adsStatus.innerText="ตรวจจับการสลับแท็บ ❌";
           return;
@@ -130,8 +194,8 @@ document.addEventListener("DOMContentLoaded", () => {
           done1=true;
           tracking=false;
 
-          ads.className="pf-btn pf-green";
-          ads.innerText="Completed";
+          setGreen(ads);
+          ads.innerText="เสร็จแล้ว";
 
           adsStatus.classList.add("done");
           adsStatus.innerText="สำเร็จแล้ว";
@@ -145,7 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // YT
     if(ytOpened && document.visibilityState==="visible" && !returned){
       returned=true;
       startProgress();
@@ -162,8 +225,8 @@ document.addEventListener("DOMContentLoaded", () => {
     done2=true;
     ytOpened=true;
 
-    yt.className="pf-btn pf-green";
-    yt.innerText="Completed";
+    setGreen(yt);
+    yt.innerText="เสร็จแล้ว";
 
     ytStatus.classList.add("done");
     ytStatus.innerText="สำเร็จแล้ว";
@@ -197,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(animate);
   }
 
-  // ENTER
+  // ===== ENTER =====
   enter.onclick=()=>{
     document.querySelector(".pf-overlay").remove();
   };
