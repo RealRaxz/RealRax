@@ -1,0 +1,115 @@
+/* overlay */
+#popup-overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* container */
+#popup-container {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  animation: fadeIn 0.8s ease;
+}
+
+/* mascot */
+#mascot {
+  width: 220px;
+  animation: floatUp 1s ease forwards, floatLoop 3s ease-in-out infinite;
+}
+
+/* actions */
+#actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  opacity: 0;
+  transform: translateX(50px);
+  animation: slideIn 1s ease forwards;
+  animation-delay: 0.8s;
+}
+
+/* steps */
+.step button {
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  background: linear-gradient(45deg, #ff0000, #ff4d4d);
+  color: white;
+  transition: 0.2s;
+}
+
+/* hover */
+.step button:hover {
+  transform: translateY(-4px);
+}
+
+/* click */
+.step button:active {
+  transform: scale(0.95);
+}
+
+/* disabled */
+.disabled button {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* progress */
+#progress-container {
+  width: 100%;
+  height: 10px;
+  background: #333;
+  border-radius: 10px;
+  overflow: hidden;
+  display: none;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, red, #ff4d4d);
+  transition: width 0.3s ease;
+}
+
+/* enter */
+#enterBtn {
+  display: none;
+  padding: 12px;
+  border-radius: 12px;
+  background: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* animations */
+@keyframes floatUp {
+  from { transform: translateY(80px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes floatLoop {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
