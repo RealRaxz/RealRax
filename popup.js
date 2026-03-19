@@ -14,30 +14,32 @@ document.addEventListener("DOMContentLoaded", () => {
   .pf-btn:hover{transform:translateY(-2px);}
   .pf-btn:active{transform:scale(.96);}
 
-  /* 🔥 ปุ่มแดง: วาว + แสงวิ่ง */
+  /* 🔥 ปุ่มแดง */
   .pf-red{
     position: relative;
     overflow: hidden;
-
-    background: linear-gradient(
-      90deg,
-      #ffd84d 0%,
-      #ffb300 25%,
-      #ff6a00 55%,
-      #ff2a00 80%,
-      #ff0000 100%
-    );
-
+    background: linear-gradient(90deg,#ffd84d,#ffb300,#ff6a00,#ff2a00,#ff0000);
     box-shadow:
       inset 0 2px 6px rgba(255,255,255,0.4),
       inset 0 -4px 8px rgba(0,0,0,0.25),
       0 0 12px rgba(255,120,0,0.6);
-
     color:#fff;
   }
 
-  /* ✨ ชั้นวาวด้านบน */
-  .pf-red::after{
+  /* 🔥 ปุ่มเขียว (อัปเกรดให้สวยเหมือนกัน) */
+  .pf-green{
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(90deg,#ffff66,#aaff00,#00ff66,#00cc55);
+    box-shadow:
+      inset 0 2px 6px rgba(255,255,255,0.4),
+      inset 0 -4px 8px rgba(0,0,0,0.25),
+      0 0 12px rgba(0,255,100,0.6);
+    color:#000;
+  }
+
+  /* ✨ ชั้นวาว */
+  .pf-red::after, .pf-green::after{
     content:"";
     position:absolute;
     top:0;
@@ -55,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ⚡ แสงวิ่ง */
-  .pf-red::before{
+  .pf-red::before, .pf-green::before{
     content:"";
     position:absolute;
     top:0;
@@ -71,7 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
     transform: skewX(-20deg);
   }
 
-  .pf-red:hover::before{
+  .pf-red:hover::before,
+  .pf-green:hover::before{
     animation: shine 0.9s ease forwards;
   }
 
@@ -80,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
     100%{left:125%;}
   }
 
-  .pf-green{background:linear-gradient(135deg,#FFFF66,#00FF66); color:#000;}
   .pf-disabled{opacity:.4; pointer-events:none;}
   .pf-status{font-size:12px;color:white;}
   .pf-status.done{color:white;}
@@ -101,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <button id="pfYT1" class="pf-btn pf-red">กดไลก์ คอมเมนต์ / 𝗟𝗶𝗸𝗲 & 𝗖𝗼𝗺𝗺𝗲𝗻𝘁</button>
         <div id="pfYTStatus1" class="pf-status">เพื่อปลดล็อกขั้นต่อไป!</div>
 
-        <button id="pfYT2" class="pf-btn pf-red pf-disabled">กดไลก์ คอมเมนต์ / 𝗟𝗶𝗸𝗲 & 𝗟𝗶𝗸𝗲 & 𝗖𝗼𝗺𝗺𝗲𝗻𝘁</button>
+        <button id="pfYT2" class="pf-btn pf-red pf-disabled">กดไลก์ คอมเมนต์ / 𝗟𝗶𝗸𝗲 & 𝗖𝗼𝗺𝗺𝗲𝗻𝘁</button>
         <div id="pfYTStatus2" class="pf-status">ล็อกอยู่!</div>
 
         <div id="pfProgress" class="pf-progress">
@@ -132,7 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const enter=document.getElementById("pfEnter");
 
   let done1=false, done2=false;
-
   let yt1Time=0, yt2Time=0;
   let yt1Running=false, yt2Running=false;
   let lastTime=0;
