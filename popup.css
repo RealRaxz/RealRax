@@ -9,69 +9,62 @@
   z-index: 9999;
 }
 
-/* layout */
 #box {
   display: flex;
   gap: 60px;
   align-items: center;
 }
 
-/* 🎬 entrance */
-#box {
-  opacity: 0;
-  transform: scale(0.95);
-  animation: fadeIn 0.8s cubic-bezier(.22,1,.36,1) forwards;
+/* 🎬 animation sync */
+.animate {
+  animation: fadeSlide 0.8s cubic-bezier(.22,1,.36,1) forwards;
 }
 
-#mascotWrap {
-  transform: translateX(-120px);
-  opacity: 0;
-  animation: slideLeft 0.9s cubic-bezier(.22,1,.36,1) forwards;
-}
-
-#panel {
-  transform: translateX(120px);
-  opacity: 0;
-  animation: slideRight 0.9s cubic-bezier(.22,1,.36,1) forwards;
+@keyframes fadeSlide {
+  from {opacity:0; transform: translateY(40px);}
+  to {opacity:1; transform: translateY(0);}
 }
 
 /* mascot */
+#mascotWrap {
+  position: relative;
+}
+
 #mascot {
   width: 200px;
   animation: float 4s ease-in-out infinite;
 }
 
-/* 🍭 particles */
-.candy {
+/* 🍬 particles */
+.candy, .star, .snow {
   position: absolute;
   animation: floatUp 4s linear forwards;
 }
 
-.candy.circle {
-  width: 10px;
-  height: 10px;
+.candy {
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: red;
-}
-
-.candy.cane {
-  width: 6px;
-  height: 14px;
   background: repeating-linear-gradient(45deg, red, red 3px, white 3px, white 6px);
 }
 
-.candy.star {
-  width: 10px;
-  height: 10px;
-  background: yellow;
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+.star {
+  width: 14px;
+  height: 14px;
+  background: gold;
+  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
 }
 
-.candy.snow {
+.snow {
   width: 6px;
   height: 6px;
   background: white;
   border-radius: 50%;
+}
+
+@keyframes floatUp {
+  from {transform: translateY(0); opacity:1;}
+  to {transform: translateY(-80px); opacity:0;}
 }
 
 /* panel */
@@ -87,47 +80,45 @@
 .btn {
   width: 100%;
   padding: 12px;
-  margin-top: 10px;
   border-radius: 10px;
   border: none;
+  margin-top: 10px;
   cursor: pointer;
   text-align: center;
   font-weight: bold;
-  transition: 0.25s;
 }
 
-/* 🔴 แดงทอง */
-.redgold {
-  background: linear-gradient(135deg, #ff0000, #ffcc00);
+.gradient {
+  background: linear-gradient(135deg, gold, red);
   color: white;
 }
 
-/* 🟡🔵 เหลืองฟ้า */
-.bluegold {
-  background: linear-gradient(135deg, #ffd700, #00cfff);
+.completed {
+  background: linear-gradient(135deg, yellow, limegreen);
   color: black;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
+/* status */
+.status {
+  font-size: 12px;
+  background: linear-gradient(90deg, yellow, pink);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.btn:active {
-  transform: scale(0.96);
-}
-
-.disabled {
-  opacity: 0.3;
-  pointer-events: none;
+.status.done {
+  background: linear-gradient(90deg, yellow, limegreen);
+  -webkit-background-clip: text;
 }
 
 /* progress */
 #progress {
-  margin-top: 12px;
   display: none;
+  margin-top: 10px;
 }
 
 #barBox {
+  width: 100%;
   height: 8px;
   background: rgba(255,255,255,0.1);
   border-radius: 6px;
@@ -137,7 +128,7 @@
 #bar {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #ff0000, #ff2a2a);
+  background: red;
 }
 
 #percent {
@@ -146,19 +137,15 @@
   color: white;
 }
 
-/* anim */
-@keyframes fadeIn {
-  to {opacity:1; transform:scale(1);}
+/* enter */
+#enter {
+  display: none;
+  margin-top: 10px;
+  background: limegreen;
 }
-@keyframes slideLeft {
-  to {transform: translateX(0); opacity:1;}
-}
-@keyframes slideRight {
-  to {transform: translateX(0); opacity:1;}
-}
+
+/* float */
 @keyframes float {
+  0%,100% {transform: translateY(0);}
   50% {transform: translateY(-8px);}
-}
-@keyframes floatUp {
-  to {transform: translateY(-80px); opacity:0;}
 }
