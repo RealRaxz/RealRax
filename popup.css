@@ -9,13 +9,22 @@
   z-index: 9999;
 }
 
+/* layout */
 #box {
   display: flex;
   gap: 60px;
   align-items: center;
+  max-width: 90%;
 }
 
-/* 🎬 animation sync */
+/* responsive */
+@media (max-width: 768px) {
+  #box {
+    flex-direction: column;
+  }
+}
+
+/* animation เข้า */
 .animate {
   animation: fadeSlide 0.8s cubic-bezier(.22,1,.36,1) forwards;
 }
@@ -26,17 +35,15 @@
 }
 
 /* mascot */
-#mascotWrap {
-  position: relative;
-}
+#mascotWrap { position: relative; }
 
 #mascot {
   width: 200px;
   animation: float 4s ease-in-out infinite;
 }
 
-/* 🍬 particles */
-.candy, .star, .snow {
+/* particles */
+.candy,.star,.snow {
   position: absolute;
   animation: floatUp 4s linear forwards;
 }
@@ -76,7 +83,7 @@
   backdrop-filter: blur(20px);
 }
 
-/* button */
+/* ===== BUTTON (แก้ animation กลับมาแล้ว) ===== */
 .btn {
   width: 100%;
   padding: 12px;
@@ -84,16 +91,52 @@
   border: none;
   margin-top: 10px;
   cursor: pointer;
-  text-align: center;
   font-weight: bold;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(.22,1,.36,1);
 }
 
+/* hover ลอย */
+.btn:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
+/* กดยุบ */
+.btn:active {
+  transform: scale(0.95);
+}
+
+/* glow sweep */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 120%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+  transition: 0.6s;
+}
+
+.btn:hover::after {
+  left: 120%;
+}
+
+/* สีปุ่ม */
 .gradient {
   background: linear-gradient(135deg, gold, red);
   color: white;
 }
 
 .completed {
+  background: linear-gradient(135deg, yellow, limegreen);
+  color: black;
+}
+
+/* ENTER */
+.enterBtn {
   background: linear-gradient(135deg, yellow, limegreen);
   color: black;
 }
@@ -128,7 +171,7 @@
 #bar {
   height: 100%;
   width: 0%;
-  background: red;
+  background: linear-gradient(90deg, gold, orange);
 }
 
 #percent {
@@ -137,11 +180,9 @@
   color: white;
 }
 
-/* enter */
+/* enter hidden */
 #enter {
   display: none;
-  margin-top: 10px;
-  background: limegreen;
 }
 
 /* float */
