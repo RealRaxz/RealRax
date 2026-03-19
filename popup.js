@@ -1,69 +1,67 @@
-<script>
-const adBtn = document.getElementById("adButton1");
-const likeBtn = document.getElementById("likeButton1");
-const progressContainer = document.getElementById("progressContainer");
-const progressBar = document.getElementById("progressBar");
-const continueBtn = document.getElementById("continueButton");
+const proAdBtn = document.getElementById("proAdBtn");
+const proLikeBtn = document.getElementById("proLikeBtn");
+const proProgressContainer = document.getElementById("proProgressContainer");
+const proProgressBar = document.getElementById("proProgressBar");
+const proContinueBtn = document.getElementById("proContinueBtn");
 
-let actionDone = { ad: false, like: false };
+let proActions = { ad:false, like:false };
 let busy = false;
 let progress = 0;
 
-function verify(link, key, cb) {
+function verify(link, key) {
   if (busy) return;
   busy = true;
 
-  const newWindow = window.open(link, "_blank");
+  const win = window.open(link,"_blank");
   const start = Date.now();
 
-  const interval = setInterval(() => {
-    if (!newWindow || newWindow.closed) {
+  const interval = setInterval(()=>{
+    if(!win || win.closed){
       clearInterval(interval);
       const elapsed = Date.now() - start;
-      const waitTime = Math.max(2000 - elapsed, 0); // 2 วิ
-
-      setTimeout(() => {
-        actionDone[key] = true;
-        updateUI();
+      setTimeout(()=>{
+        proActions[key] = true;
+        updateProUI();
         busy = false;
-        cb && cb();
-      }, waitTime);
+      }, Math.max(2000-elapsed,0));
     }
-  }, 100);
+  },100);
 }
 
-function updateUI() {
-  if (actionDone.ad) {
-    adBtn.textContent = "Done";
-    adBtn.style.pointerEvents = "none";
-    likeBtn.classList.remove("disabled");
+function updateProUI(){
+  if(proActions.ad){
+    proAdBtn.textContent="Done";
+    proAdBtn.style.pointerEvents="none";
+    proLikeBtn.classList.remove("disabled");
+    document.getElementById("proStep1").classList.remove("active");
+    document.getElementById("proStep2").classList.add("active");
+  }
+  if(proActions.like){
+    proLikeBtn.textContent="Done";
+    proLikeBtn.style.pointerEvents="none";
+    document.getElementById("proStep2").classList.remove("active");
+    document.getElementById("proStep3").classList.add("active");
   }
 
-  if (actionDone.like) {
-    likeBtn.textContent = "Done";
-    likeBtn.style.pointerEvents = "none";
-  }
-
-  if (actionDone.ad && actionDone.like && progress === 0) {
-    progressContainer.style.display = "block";
-    startProgress();
+  if(proActions.ad && proActions.like && progress===0){
+    proProgressContainer.style.display="block";
+    startProProgress();
   }
 }
 
-function startProgress() {
-  const interval = setInterval(() => {
+function startProProgress(){
+  const interval = setInterval(()=>{
     progress++;
-    progressBar.style.width = progress + "%";
-    if (progress >= 100) {
+    proProgressBar.style.width = progress+"%";
+    if(progress>=100){
       clearInterval(interval);
-      continueBtn.style.display = "block";
+      proContinueBtn.style.display="block";
     }
-  }, 30);
+  },30);
 }
 
-adBtn.addEventListener("click", () => verify(adBtn.href, "ad"));
-likeBtn.addEventListener("click", () => verify(likeBtn.href, "like"));
-continueBtn.addEventListener("click", () => {
-  document.getElementById("subscribePopup").style.display = "none";
+proAdBtn.addEventListener("click",()=>verify(proAdBtn.href,"ad"));
+proLikeBtn.addEventListener("click",()=>verify(proLikeBtn.href,"like"));
+proContinueBtn.addEventListener("click",()=>{
+  document.getElementById("proPopup").style.display="none";
 });
-</script>
