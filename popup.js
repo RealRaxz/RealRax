@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div id="pfPercent" class="pf-percent">0%</div>
         </div>
 
-        <button id="pfEnter" class="pf-btn pf-green" style="display:none;">𝗔𝗰𝗰𝗲𝘀𝘀 𝘁𝗵𝗲 𝘀𝗶𝘁𝗲 𝘁𝗼 𝗰𝗼𝗻𝘁𝗶𝗻𝘂𝗲✅</button>
+        <button id="pfEnter" class="pf-btn pf-green" style="display:none;">𝗰𝗼𝗻𝘁𝗶𝗻𝘂𝗲✅</button>
       </div>
     </div>
   </div>
