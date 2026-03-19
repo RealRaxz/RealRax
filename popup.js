@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div id="pfYTStatus1" class="pf-status">เพื่อปลดล็อกขั้นต่อไป!</div>
 
         <button id="pfYT2" class="pf-btn pf-red pf-disabled">กดไลก์ คอมเมนต์ / Like & Comment</button>
-        <div id="pfYTStatus2" class="pf-status">ล็อคอยู่</div>
+        <div id="pfYTStatus2" class="pf-status">ล็อกอยู่</div>
 
         <div id="pfProgress" class="pf-progress">
           <div class="pf-barBox"><div id="pfBar" class="pf-bar"></div></div>
