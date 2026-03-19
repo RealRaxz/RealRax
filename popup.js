@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div id="percent">0%</div>
         </div>
 
-        <button id="enter" class="btn">ENTER</button>
+        <button id="enter" class="btn enterBtn">ENTER WEBSITE</button>
       </div>
 
     </div>
@@ -72,8 +72,10 @@ function init() {
 
       if (timeSpent >= 2) {
         done1 = true;
+
         adsBtn.className = "btn completed";
         adsBtn.innerText = "Completed";
+
         adsStatus.classList.add("done");
         adsStatus.innerText = "สำเร็จแล้ว";
 
@@ -89,15 +91,17 @@ function init() {
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
 
     done2 = true;
+
     ytBtn.className = "btn completed";
     ytBtn.innerText = "Completed";
+
     ytStatus.classList.add("done");
     ytStatus.innerText = "สำเร็จแล้ว";
 
     startProgress();
   };
 
-  // progress smooth
+  // progress
   function startProgress() {
     progress.style.display = "block";
 
@@ -117,7 +121,6 @@ function init() {
       if (t < 1) {
         requestAnimationFrame(animate);
       } else {
-        percent.innerText = "100%";
         enter.style.display = "block";
       }
     }
@@ -136,7 +139,6 @@ function particles() {
 
   setInterval(() => {
     let el = document.createElement("div");
-
     let types = ["candy","star","snow"];
     let type = types[Math.floor(Math.random()*types.length)];
 
