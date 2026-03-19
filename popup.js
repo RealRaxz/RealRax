@@ -14,8 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
   .pf-btn:hover{transform:translateY(-2px);}
   .pf-btn:active{transform:scale(.96);}
 
-  /* 🔥 แก้เฉพาะตรงนี้ */
+  /* 🔥 ปุ่มแดง: วาว + แสงวิ่ง */
   .pf-red{
+    position: relative;
+    overflow: hidden;
+
     background: linear-gradient(
       90deg,
       #ffd84d 0%,
@@ -24,11 +27,57 @@ document.addEventListener("DOMContentLoaded", () => {
       #ff2a00 80%,
       #ff0000 100%
     );
+
     box-shadow:
       inset 0 2px 6px rgba(255,255,255,0.4),
       inset 0 -4px 8px rgba(0,0,0,0.25),
-      0 0 10px rgba(255,255,255,0.4);
+      0 0 12px rgba(255,120,0,0.6);
+
     color:#fff;
+  }
+
+  /* ✨ ชั้นวาวด้านบน */
+  .pf-red::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:55%;
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.65),
+      rgba(255,255,255,0.25),
+      rgba(255,255,255,0)
+    );
+    border-radius: inherit;
+    pointer-events:none;
+  }
+
+  /* ⚡ แสงวิ่ง */
+  .pf-red::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-75%;
+    width:50%;
+    height:100%;
+    background: linear-gradient(
+      120deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.8) 50%,
+      rgba(255,255,255,0) 100%
+    );
+    transform: skewX(-20deg);
+  }
+
+  .pf-red:hover::before{
+    animation: shine 0.9s ease forwards;
+  }
+
+  @keyframes shine{
+    0%{left:-75%;}
+    100%{left:125%;}
   }
 
   .pf-green{background:linear-gradient(135deg,#FFFF66,#00FF66); color:#000;}
@@ -52,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <button id="pfYT1" class="pf-btn pf-red">กดไลก์ คอมเมนต์ / 𝗟𝗶𝗸𝗲 & 𝗖𝗼𝗺𝗺𝗲𝗻𝘁</button>
         <div id="pfYTStatus1" class="pf-status">เพื่อปลดล็อกขั้นต่อไป!</div>
 
-        <button id="pfYT2" class="pf-btn pf-red pf-disabled">กดไลก์ คอมเมนต์ / 𝗟𝗶𝗸𝗲 & 𝗖𝗼𝗺𝗺𝗲𝗻𝘁</button>
+        <button id="pfYT2" class="pf-btn pf-red pf-disabled">กดไลก์ คอมเมนต์ / 𝗟𝗶𝗸𝗲 & 𝗟𝗶𝗸𝗲 & 𝗖𝗼𝗺𝗺𝗲𝗻𝘁</button>
         <div id="pfYTStatus2" class="pf-status">ล็อกอยู่!</div>
 
         <div id="pfProgress" class="pf-progress">
