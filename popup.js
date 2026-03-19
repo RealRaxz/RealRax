@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   `);
 
   init();
-  candyParticles();
+  particles();
 });
 
 function init() {
@@ -51,7 +51,7 @@ function init() {
   const progress = document.getElementById("progress");
   const enter = document.getElementById("enter");
 
-  // ===== ADS =====
+  // ads
   adsBtn.onclick = () => {
     if (done1) return;
 
@@ -74,7 +74,7 @@ function init() {
         tracking = false;
 
         adsBtn.outerHTML = '<button class="btn green">Completed</button>';
-        adsStatus.innerText = "สำเร็จแล้ว";
+        adsStatus.innerText = "Completed";
 
         ytBtn.classList.remove("disabled");
         ytStatus.innerText = "พร้อมใช้งาน";
@@ -84,19 +84,18 @@ function init() {
     }
   });
 
-  // ===== STEP2 =====
   ytBtn.onclick = () => {
     if (!done1) return;
 
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
 
     ytBtn.outerHTML = '<button class="btn green">Completed</button>';
-    ytStatus.innerText = "สำเร็จแล้ว";
+    ytStatus.innerText = "Completed";
 
     startProgress();
   };
 
-  // ===== PROGRESS (smooth จริง) =====
+  // progress 5 วิ smooth
   function startProgress() {
     progress.style.display = "block";
 
@@ -106,17 +105,17 @@ function init() {
     function animate(ts) {
       if (!start) start = ts;
 
-      let t = (ts - start) / duration;
+      let t = (ts - start)/duration;
       let eased = 1 - Math.pow(1 - t, 3);
-      let value = Math.floor(eased * 100);
+      let val = Math.floor(eased * 100);
 
-      bar.style.width = value + "%";
-      percent.innerText = value + "%";
+      bar.style.width = val + "%";
+      percent.innerText = val + "%";
 
       if (t < 1) {
         requestAnimationFrame(animate);
       } else {
-        percent.innerText = "100%";
+        percent.innerText = "Completed";
         enter.style.display = "block";
       }
     }
@@ -129,19 +128,22 @@ function init() {
   };
 }
 
-// 🍬 candy particles
-function candyParticles() {
+// 🎄 particles random
+function particles() {
   const wrap = document.getElementById("mascotWrap");
 
   setInterval(() => {
-    let c = document.createElement("div");
-    c.className = "candy";
+    let types = ["candy", "star", "snow"];
+    let type = types[Math.floor(Math.random()*types.length)];
 
-    c.style.left = Math.random() * 100 + "%";
-    c.style.bottom = "0px";
+    let el = document.createElement("div");
+    el.className = type;
 
-    wrap.appendChild(c);
+    el.style.left = Math.random()*100 + "%";
+    el.style.bottom = "0px";
 
-    setTimeout(() => c.remove(), 4000);
-  }, 180);
+    wrap.appendChild(el);
+
+    setTimeout(() => el.remove(), 4000);
+  }, 150);
 }
