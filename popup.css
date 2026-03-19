@@ -9,7 +9,6 @@
   z-index: 9999;
 }
 
-/* layout */
 #box {
   display: flex;
   gap: 60px;
@@ -17,11 +16,9 @@
   max-width: 90%;
 }
 
-/* responsive */
 @media (max-width: 768px) {
   #box {
     flex-direction: column;
-    gap: 30px;
   }
 }
 
@@ -35,34 +32,47 @@
   animation: float 4s ease-in-out infinite;
 }
 
-/* 🍬 candy particle */
-.candy {
+/* 🎄 particles */
+.candy, .star, .snow {
   position: absolute;
-  width: 14px;
-  height: 14px;
+  opacity: 0.9;
+  animation: floatUp 4s linear forwards;
+}
+
+/* candy cane */
+.candy {
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: repeating-linear-gradient(
-    45deg,
-    red 0px,
-    red 3px,
-    white 3px,
-    white 6px
-  );
-  animation: candyFloat 4s linear forwards;
+  background: repeating-linear-gradient(45deg, red 0 3px, white 3px 6px);
+}
+
+/* star */
+.star {
+  width: 10px;
+  height: 10px;
+  background: gold;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* snow */
+.snow {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
 }
 
 /* panel */
 #panel {
   width: 320px;
-  max-width: 90vw;
   padding: 22px;
   border-radius: 16px;
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* button */
+/* buttons */
 .btn {
   width: 100%;
   padding: 12px;
@@ -71,7 +81,6 @@
   margin-top: 10px;
   cursor: pointer;
   transition: 0.25s;
-  font-weight: 500;
 }
 
 .red {
@@ -80,27 +89,21 @@
 }
 
 .green {
-  background: #00d084;
+  background: #44ff44;
   color: black;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
-}
-
-.btn:active {
-  transform: scale(0.96);
-}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: scale(0.96); }
 
 .disabled {
   opacity: 0.3;
   pointer-events: none;
 }
 
-/* status */
 .status {
   font-size: 12px;
-  color: #ccc;
+  color: #44ff44;
 }
 
 /* progress */
@@ -125,7 +128,7 @@
 
 #percent {
   font-size: 12px;
-  color: white;
+  color: #44ff44;
   text-align: right;
 }
 
@@ -141,7 +144,7 @@
   50% {transform: translateY(-8px);}
 }
 
-@keyframes candyFloat {
+@keyframes floatUp {
   from {transform: translateY(0); opacity:1;}
-  to {transform: translateY(-80px); opacity:0;}
+  to {transform: translateY(-90px); opacity:0;}
 }
