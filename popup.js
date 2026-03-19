@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
   .pf-mascotWrap{
     opacity:0;
     animation:pf-drop .7s ease forwards;
-    position:relative;
   }
 
   @keyframes pf-drop{
@@ -32,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   .pf-mascot{
     width:200px;
-    position:relative;
     filter: drop-shadow(0 0 15px rgba(255,255,255,0.6));
     animation:aura 2s infinite alternate;
   }
@@ -82,12 +80,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   .pf-status{
     font-size:12px;
-    color:#fff; /* เปลี่ยนเป็นสีขาว */
-    margin-bottom:5px;
+    color:white;
   }
-
   .pf-status.done{
-    color:#00FF66;
+    color:white;
   }
 
   .pf-progress{display:none;margin-top:10px;}
@@ -124,10 +120,10 @@ document.addEventListener("DOMContentLoaded", () => {
         <div style="margin-bottom:10px;color:white;">Complete Steps</div>
 
         <button id="pfYT1" class="pf-btn pf-red">Like & Comment 1</button>
-        <div id="pfYT1Status" class="pf-status">กรุณากดไลก์และคอมเมนต์ยูทูป 3 วิ</div>
+        <div id="pfYTStatus1" class="pf-status">กรุณาอยู่หน้า YouTube 3 วินาที</div>
 
         <button id="pfYT2" class="pf-btn pf-red pf-disabled">Like & Comment 2</button>
-        <div id="pfYT2Status" class="pf-status">ปลดล็อคหลังจากทำขั้นตอนแรก</div>
+        <div id="pfYTStatus2" class="pf-status">ล็อคอยู่</div>
 
         <div id="pfProgress" class="pf-progress">
           <div class="pf-barBox"><div id="pfBar" class="pf-bar"></div></div>
@@ -140,79 +136,83 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
   `);
 
+  setTimeout(()=>{
+    document.querySelector(".pf-mascotWrap").style.opacity="1";
+    document.querySelector(".pf-panel").style.opacity="1";
+  },50);
+
   // ===== logic =====
   const yt1 = document.getElementById("pfYT1");
   const yt2 = document.getElementById("pfYT2");
-  const yt1Status = document.getElementById("pfYT1Status");
-  const yt2Status = document.getElementById("pfYT2Status");
+  const ytStatus1 = document.getElementById("pfYTStatus1");
+  const ytStatus2 = document.getElementById("pfYTStatus2");
   const bar = document.getElementById("pfBar");
   const percent = document.getElementById("pfPercent");
   const progress = document.getElementById("pfProgress");
   const enter = document.getElementById("pfEnter");
 
-  let done1=false, done2=false;
-  let yt1Opened=false, yt2Opened=false;
-  let start1=0, start2=0;
+  let done1=false, done2=false, yt1Opened=false, yt2Opened=false, yt1Start=0, yt2Start=0;
 
-  // ปุ่มแรก
-  yt1.onclick = ()=>{
+  yt1.onclick = () => {
     if(done1) return;
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
-    yt1Opened=true; start1=performance.now();
+    yt1Opened = true;
+    yt1Start = performance.now();
     yt1.className="pf-btn pf-disabled";
-    yt1Status.innerText="อยู่หน้า YouTube 3 วินาที...";
+    ytStatus1.innerText="อยู่หน้า YouTube 3 วินาที...";
   };
 
-  // ปุ่มสอง
-  yt2.onclick = ()=>{
+  yt2.onclick = () => {
     if(!done1 || done2) return;
-    window.open("https://youtu.be/DHsN-UjeDdU?si=nmCZtki5fyylgO7");
-    yt2Opened=true; start2=performance.now();
+    window.open("https://youtu.be/DHsN-UjeDdU?si=nmCZtki5fyylgO7W");
+    yt2Opened = true;
+    yt2Start = performance.now();
     yt2.className="pf-btn pf-disabled";
-    yt2Status.innerText="อยู่หน้า YouTube 3 วินาที...";
+    ytStatus2.innerText="อยู่หน้า YouTube 3 วินาที...";
   };
 
-  // ตรวจ 3 วิ หน้ายูทูป
   const checkInterval = setInterval(()=>{
-    // ปุ่ม 1
-    if(yt1Opened && !done1){
-      const t=(performance.now()-start1)/1000;
-      if(t>=3 && document.visibilityState==="visible"){
+    // ตรวจ yt1
+    if(yt1Opened && !done1 && document.visibilityState==="visible"){
+      const t = (performance.now()-yt1Start)/1000;
+      if(t>=3){
         done1=true;
         yt1.className="pf-btn pf-green";
         yt1.innerText="Completed";
-        yt1Status.classList.add("done");
-        yt1Status.innerText="สำเร็จแล้ว";
+        ytStatus1.classList.add("done");
+        ytStatus1.innerText="สำเร็จแล้ว";
+
         yt2.classList.remove("pf-disabled");
       }
     }
-    // ปุ่ม 2
-    if(yt2Opened && !done2 && done1){
-      const t2=(performance.now()-start2)/1000;
-      if(t2>=3 && document.visibilityState==="visible"){
+
+    // ตรวจ yt2
+    if(yt2Opened && !done2 && document.visibilityState==="visible" && done1){
+      const t = (performance.now()-yt2Start)/1000;
+      if(t>=3){
         done2=true;
         yt2.className="pf-btn pf-green";
         yt2.innerText="Completed";
-        yt2Status.classList.add("done");
-        yt2Status.innerText="สำเร็จแล้ว";
+        ytStatus2.classList.add("done");
+        ytStatus2.innerText="สำเร็จแล้ว";
+
         startProgress();
         clearInterval(checkInterval);
       }
     }
   },100);
 
-  // progress bar
   function startProgress(){
     progress.style.display="block";
     let start = performance.now();
     let duration = 5000;
     function animate(now){
-      let t=(now-start)/duration;
+      let t = (now-start)/duration;
       if(t>1) t=1;
-      let eased=1-Math.pow(1-t,3);
-      let val=eased*100;
-      bar.style.width=val+"%";
-      percent.innerText=Math.floor(val)+"%";
+      let eased = 1-Math.pow(1-t,3);
+      let val = eased*100;
+      bar.style.width = val+"%";
+      percent.innerText = Math.floor(val)+"%";
       if(t<1){
         requestAnimationFrame(animate);
       }else{
@@ -223,6 +223,5 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(animate);
   }
 
-  enter.onclick=()=>document.querySelector(".pf-overlay").remove();
-
+  enter.onclick = () => document.querySelector(".pf-overlay").remove();
 });
