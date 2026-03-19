@@ -30,8 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
 function initPopup() {
 
   let done1 = false;
-  let done2 = false;
-
   let adStart = 0;
   let timeSpent = 0;
   let tracking = false;
@@ -80,7 +78,6 @@ function initPopup() {
 
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
 
-    done2 = true;
     ytStatus.innerText = "สำเร็จ";
 
     startProgress();
@@ -105,7 +102,7 @@ function initPopup() {
       } else {
         setTimeout(() => {
           enter.style.display = "block";
-        }, 200);
+        }, 250);
       }
     }
 
