@@ -128,11 +128,11 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="pf-panel">
         <div style="margin-bottom:10px;color:white;">Complete Steps</div>
 
-        <button id="pfAds" class="pf-btn pf-red">Watch Ads</button>
-        <div id="pfAdsStatus" class="pf-status">ยังไม่ได้ทำ</div>
+        <button id="pfAds" class="pf-btn pf-red">Watch Ads  →  ดูโฆษณา 2 วินาที</button>
+        <div id="pfAdsStatus" class="pf-status">กรุณาทำขั้นตอนนี้ก่อน</div>
 
         <button id="pfYT" class="pf-btn pf-red pf-disabled">Like & Comment</button>
-        <div id="pfYTStatus" class="pf-status">ล็อคอยู่</div>
+        <div id="pfYTStatus" class="pf-status">ปลดล็อคหลังจากดูโฆษณา</div>
 
         <div id="pfProgress" class="pf-progress">
           <div class="pf-barBox"><div id="pfBar" class="pf-bar"></div></div>
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
     tracking=true;
-    adsStatus.innerText="กำลังตรวจสอบ...";
+    adsStatus.innerText="กรุณาอยู่หน้าโฆษณาสักครู่...";
   };
 
   document.addEventListener("visibilitychange",()=>{
