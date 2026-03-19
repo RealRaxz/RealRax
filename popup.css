@@ -1,113 +1,116 @@
 #overlay {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.05), rgba(0,0,0,0.8));
-  backdrop-filter: blur(25px);
+  background:
+    radial-gradient(circle at 30% 50%, rgba(255,0,80,0.15), transparent 40%),
+    radial-gradient(circle at 70% 50%, rgba(0,200,255,0.15), transparent 40%),
+    rgba(10,10,15,0.85);
+  backdrop-filter: blur(30px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
 }
 
-/* layout */
+/* container */
 #box {
   display: flex;
   align-items: center;
-  gap: 90px;
+  gap: 100px;
+  opacity: 0;
+  transform: scale(0.95);
+  animation: containerIn 0.9s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+/* 🎬 main entrance */
+@keyframes containerIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* mascot */
 #mascot {
-  width: 240px;
-  opacity: 0;
-  transform: translateX(-120px) scale(0.9);
-  animation: mascotIn 1s cubic-bezier(.22,1,.36,1) forwards;
-}
-
-@keyframes mascotIn {
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-}
-
-/* float loop */
-#mascot::after {}
-
-#mascot {
+  width: 250px;
+  transform: translateX(-140px);
   animation:
-    mascotIn 1s cubic-bezier(.22,1,.36,1) forwards,
+    slideLeft 1s cubic-bezier(.22,1,.36,1) forwards,
     float 4s ease-in-out infinite 1s;
 }
 
 /* panel */
 #panel {
-  width: 330px;
-  padding: 30px;
-  border-radius: 20px;
+  width: 340px;
+  padding: 32px;
+  border-radius: 22px;
+
   background: linear-gradient(
     135deg,
-    rgba(255,255,255,0.08),
-    rgba(255,255,255,0.02)
+    rgba(255,255,255,0.12),
+    rgba(255,255,255,0.03)
   );
-  backdrop-filter: blur(30px);
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow:
-    0 20px 60px rgba(0,0,0,0.6),
-    inset 0 0 20px rgba(255,255,255,0.05);
 
-  opacity: 0;
-  transform: translateX(120px) scale(0.95);
-  animation: panelIn 1s cubic-bezier(.22,1,.36,1) forwards;
-  animation-delay: 0.2s;
+  border: 1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.7),
+    inset 0 0 30px rgba(255,255,255,0.05);
+
+  transform: translateX(140px);
+  animation: slideRight 1s cubic-bezier(.22,1,.36,1) forwards;
 }
 
-@keyframes panelIn {
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
+/* sync animations */
+@keyframes slideLeft {
+  to { transform: translateX(0); }
+}
+
+@keyframes slideRight {
+  to { transform: translateX(0); }
 }
 
 /* title */
 .title {
   color: white;
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 21px;
+  margin-bottom: 22px;
 }
 
-/* button */
+/* buttons */
 .btn {
   width: 100%;
-  padding: 14px;
-  border-radius: 14px;
+  padding: 15px;
+  border-radius: 16px;
   border: none;
   margin-top: 12px;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(.22,1,.36,1);
+  transition: all 0.3s cubic-bezier(.22,1,.36,1);
   position: relative;
   overflow: hidden;
 }
 
-/* glow */
-.btn::before {
+/* light reflection */
+.btn::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
-  opacity: 0;
-  transition: 0.5s;
+  top: 0;
+  left: -120%;
+  width: 120%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
+  transition: 0.6s;
 }
 
-.btn:hover::before {
-  opacity: 1;
+.btn:hover::after {
+  left: 120%;
 }
 
 /* styles */
 .primary {
   background: linear-gradient(135deg, #ff2d55, #ff6a6a);
   color: white;
-  box-shadow: 0 10px 30px rgba(255,50,80,0.4);
+  box-shadow: 0 10px 40px rgba(255,50,80,0.5);
 }
 
 .secondary {
@@ -116,7 +119,7 @@
 }
 
 .btn:hover {
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-5px) scale(1.03);
 }
 
 .btn:active {
@@ -124,7 +127,7 @@
 }
 
 .disabled {
-  opacity: 0.35;
+  opacity: 0.3;
   pointer-events: none;
 }
 
@@ -137,10 +140,9 @@
 /* progress */
 #progress {
   display: none;
-  margin-top: 15px;
+  margin-top: 18px;
   height: 6px;
   border-radius: 6px;
-  overflow: hidden;
   background: rgba(255,255,255,0.1);
 }
 
@@ -153,7 +155,7 @@
 /* enter */
 #enter {
   display: none;
-  margin-top: 15px;
+  margin-top: 18px;
   background: linear-gradient(135deg, #00d084, #00ffae);
   font-weight: bold;
 }
@@ -161,5 +163,5 @@
 /* float */
 @keyframes float {
   0%,100% {transform: translateY(0);}
-  50% {transform: translateY(-12px);}
+  50% {transform: translateY(-14px);}
 }
