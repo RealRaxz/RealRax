@@ -1,61 +1,42 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
-  document.body.insertAdjacentHTML("beforeend", `
-  <div id="overlay">
-    <div id="box">
+  // โหลด HTML
+  const res = await fetch("popup.html");
+  const html = await res.text();
+  document.body.insertAdjacentHTML("beforeend", html);
 
-      <div id="mascotWrap">
-        <img src="mascot1.png" id="mascot">
-      </div>
+  // โหลด CSS
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "popup.css";
+  document.head.appendChild(link);
 
-      <div id="panel">
-        <div style="margin-bottom:10px;">Complete Steps</div>
-
-        <button id="adsBtn" class="btn gradient">Watch Ads</button>
-        <div id="adsStatus" class="status">ยังไม่ได้ทำ</div>
-
-        <button id="ytBtn" class="btn gradient" disabled>Like & Comment</button>
-        <div id="ytStatus" class="status">ล็อคอยู่</div>
-
-        <div id="progress">
-          <div id="barBox"><div id="bar"></div></div>
-          <div id="percent">0%</div>
-        </div>
-
-        <button id="enter" class="btn">ENTER</button>
-      </div>
-
-    </div>
-  </div>
-  `);
-
-  setTimeout(()=> {
+  setTimeout(()=>{
     document.getElementById("box").classList.add("active");
   },50);
 
   init();
-  particles();
 });
 
 function init(){
 
   let done1=false, done2=false;
-  let adStart=0, timeSpent=0, tracking=false;
+  let tracking=false, adStart=0, timeSpent=0;
 
   let ytOpened=false, returned=false;
 
-  const adsBtn=document.getElementById("adsBtn");
-  const ytBtn=document.getElementById("ytBtn");
+  const adsBtn = document.getElementById("adsBtn");
+  const ytBtn = document.getElementById("ytBtn");
 
-  const adsStatus=document.getElementById("adsStatus");
-  const ytStatus=document.getElementById("ytStatus");
+  const adsStatus = document.getElementById("adsStatus");
+  const ytStatus = document.getElementById("ytStatus");
 
-  const bar=document.getElementById("bar");
-  const percent=document.getElementById("percent");
-  const progress=document.getElementById("progress");
-  const enter=document.getElementById("enter");
+  const bar = document.getElementById("bar");
+  const percent = document.getElementById("percent");
+  const progress = document.getElementById("progress");
+  const enter = document.getElementById("enter");
 
-  adsBtn.onclick=()=>{
+  adsBtn.onclick = ()=>{
     if(done1) return;
 
     window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
@@ -63,7 +44,7 @@ function init(){
     adsStatus.innerText="กำลังตรวจสอบ...";
   };
 
-  document.addEventListener("visibilitychange",()=>{
+  document.addEventListener("visibilitychange", ()=>{
 
     if(tracking && !done1){
       if(document.hidden){
@@ -74,9 +55,7 @@ function init(){
 
         if(timeSpent>=2){
           done1=true;
-          tracking=false;
-
-          adsBtn.className="btn completed";
+          adsBtn.className="btn doneBtn";
           adsBtn.innerText="Completed";
 
           adsStatus.classList.add("done");
@@ -101,7 +80,7 @@ function init(){
     done2=true;
     ytOpened=true;
 
-    ytBtn.className="btn completed";
+    ytBtn.className="btn doneBtn";
     ytBtn.innerText="Completed";
 
     ytStatus.classList.add("done");
@@ -138,20 +117,4 @@ function init(){
   enter.onclick=()=>{
     document.getElementById("overlay").remove();
   };
-}
-
-function particles(){
-  const wrap=document.getElementById("mascotWrap");
-
-  setInterval(()=>{
-    let el=document.createElement("div");
-    let types=["candy","star","snow"];
-    el.className=types[Math.floor(Math.random()*types.length)];
-
-    el.style.left=Math.random()*100+"%";
-    el.style.bottom="0px";
-
-    wrap.appendChild(el);
-    setTimeout(()=>el.remove(),4000);
-  },150);
 }
