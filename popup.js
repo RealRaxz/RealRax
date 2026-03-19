@@ -7,9 +7,6 @@ fetch("popup.html")
 
 function initPopup() {
 
-  const mascotZone = document.getElementById("mascot-zone");
-  const actionZone = document.getElementById("action-zone");
-
   const step1 = document.getElementById("step1");
   const step2 = document.getElementById("step2");
 
@@ -25,52 +22,41 @@ function initPopup() {
 
   document.body.style.overflow = "hidden";
 
-  // animation flow
-  setTimeout(() => mascotZone.classList.add("show-mascot"), 200);
+  step1.classList.remove("disabled");
 
-  setTimeout(() => {
-    mascotZone.classList.add("split");
-    actionZone.classList.add("show-actions");
-    step1.classList.remove("disabled");
-  }, 900);
-
-  // 🔥 ตรวจจับ ads จริง
-  let adOpenedTime = 0;
+  let adTime = 0;
 
   adsBtn.onclick = () => {
-    const adWindow = window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
-
-    adOpenedTime = Date.now();
-    adsBtn.innerText = "กำลังตรวจสอบ...";
+    window.open("https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6");
+    adTime = Date.now();
+    adsBtn.innerText = "Checking...";
   };
 
   window.addEventListener("focus", () => {
-    if (!done1 && adOpenedTime > 0) {
-      let duration = (Date.now() - adOpenedTime) / 1000;
+    if (!done1 && adTime > 0) {
+      let t = (Date.now() - adTime) / 1000;
 
-      if (duration >= 2) {
+      if (t >= 2) {
         done1 = true;
-        adsBtn.innerText = "✅ สำเร็จ";
+        adsBtn.innerText = "Done";
         step2.classList.remove("disabled");
       } else {
-        adsBtn.innerText = "❌ อยู่ไม่ครบ 2 วิ";
+        adsBtn.innerText = "Stay longer";
       }
     }
   });
 
-  // STEP 2
   ytBtn.onclick = () => {
     if (!done1) return;
 
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
 
     done2 = true;
-    ytBtn.innerText = "✅ สำเร็จ";
+    ytBtn.innerText = "Done";
 
     startProgress();
   };
 
-  // 🔥 easing progress
   function startProgress() {
     progress.style.display = "block";
 
@@ -79,15 +65,14 @@ function initPopup() {
 
     function animate(ts) {
       if (!start) start = ts;
-      let progressTime = ts - start;
-      let percent = easeOutCubic(progressTime / duration) * 100;
+      let t = (ts - start) / duration;
+      let eased = 1 - Math.pow(1 - t, 3);
 
-      bar.style.width = percent + "%";
+      bar.style.width = (eased * 100) + "%";
 
-      if (progressTime < duration) {
+      if (t < 1) {
         requestAnimationFrame(animate);
       } else {
-        bar.style.width = "100%";
         enterBtn.classList.add("show");
       }
     }
@@ -95,11 +80,6 @@ function initPopup() {
     requestAnimationFrame(animate);
   }
 
-  function easeOutCubic(t) {
-    return 1 - Math.pow(1 - t, 3);
-  }
-
-  // enter
   enterBtn.onclick = () => {
     document.getElementById("popup-overlay").remove();
     document.body.style.overflow = "auto";
