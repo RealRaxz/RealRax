@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="pf-box">
       <div class="pf-mascotWrap"><img src="mascot1.png" class="pf-mascot"></div>
       <div class="pf-panel">
-        <div style="margin-bottom:10px;color:white;">Complete Steps</div>
+        <div style="margin-bottom:10px;color:white;">ทำตามขั้นตอน / Complete Steps</div>
 
         <button id="pfYT1" class="pf-btn pf-red">กดไลก์ & คอมเมนต์ / Like & Comment 1</button>
         <div id="pfYTStatus1" class="pf-status">กดไลก์และคอมเมนต์</div>
