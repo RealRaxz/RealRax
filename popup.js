@@ -14,67 +14,40 @@ document.addEventListener("DOMContentLoaded", () => {
   .pf-btn:hover{transform:translateY(-2px);}
   .pf-btn:active{transform:scale(.96);}
 
-  /* 🔥 ปุ่มแดง */
-  .pf-red{
+  .pf-red, .pf-green{
     position: relative;
     overflow: hidden;
+  }
+
+  .pf-red{
     background: linear-gradient(90deg,#ffd84d,#ffb300,#ff6a00,#ff2a00,#ff0000);
-    box-shadow:
-      inset 0 2px 6px rgba(255,255,255,0.4),
-      inset 0 -4px 8px rgba(0,0,0,0.25),
-      0 0 12px rgba(255,120,0,0.6);
+    box-shadow: inset 0 2px 6px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.25), 0 0 12px rgba(255,120,0,0.6);
     color:#fff;
   }
 
-  /* 🔥 ปุ่มเขียว (อัปเกรดให้สวยเหมือนกัน) */
   .pf-green{
-    position: relative;
-    overflow: hidden;
     background: linear-gradient(90deg,#ffff66,#aaff00,#00ff66,#00cc55);
-    box-shadow:
-      inset 0 2px 6px rgba(255,255,255,0.4),
-      inset 0 -4px 8px rgba(0,0,0,0.25),
-      0 0 12px rgba(0,255,100,0.6);
+    box-shadow: inset 0 2px 6px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.25), 0 0 12px rgba(0,255,100,0.6);
     color:#000;
   }
 
-  /* ✨ ชั้นวาว */
   .pf-red::after, .pf-green::after{
     content:"";
     position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:55%;
-    background: linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.65),
-      rgba(255,255,255,0.25),
-      rgba(255,255,255,0)
-    );
+    top:0; left:0; width:100%; height:55%;
+    background: linear-gradient(to bottom,rgba(255,255,255,0.65),rgba(255,255,255,0.25),rgba(255,255,255,0));
     border-radius: inherit;
-    pointer-events:none;
   }
 
-  /* ⚡ แสงวิ่ง */
   .pf-red::before, .pf-green::before{
     content:"";
     position:absolute;
-    top:0;
-    left:-75%;
-    width:50%;
-    height:100%;
-    background: linear-gradient(
-      120deg,
-      rgba(255,255,255,0) 0%,
-      rgba(255,255,255,0.8) 50%,
-      rgba(255,255,255,0) 100%
-    );
+    top:0; left:-75%; width:50%; height:100%;
+    background: linear-gradient(120deg,transparent,rgba(255,255,255,0.8),transparent);
     transform: skewX(-20deg);
   }
 
-  .pf-red:hover::before,
-  .pf-green:hover::before{
+  .pf-red:hover::before, .pf-green:hover::before{
     animation: shine 0.9s ease forwards;
   }
 
@@ -85,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   .pf-disabled{opacity:.4; pointer-events:none;}
   .pf-status{font-size:12px;color:white;}
-  .pf-status.done{color:white;}
   .pf-progress{display:none;margin-top:10px;}
   .pf-barBox{width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;}
   .pf-bar{height:100%;width:0%;background:linear-gradient(90deg,yellow,limegreen);}
@@ -98,110 +70,69 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="pf-box">
       <div class="pf-mascotWrap"><img src="mascot1.png" class="pf-mascot"></div>
       <div class="pf-panel">
-        <div style="margin-bottom:10px;color:white;">💡ทำตามขั้นตอน / 𝗖𝗼𝗺𝗽𝗹𝗲𝘁𝗲 𝗦𝘁𝗲𝗽𝘀</div>
+        <div style="margin-bottom:10px;color:white;">💡ทำตามขั้นตอน</div>
 
-        <button id="pfYT1" class="pf-btn pf-red">กดไลก์ คอมเมนต์ / 𝗟𝗶𝗸𝗲 & 𝗖𝗼𝗺𝗺𝗲𝗻𝘁</button>
-        <div id="pfYTStatus1" class="pf-status">เพื่อปลดล็อกขั้นต่อไป!</div>
+        <button id="pfYT1" class="pf-btn pf-red">Like & Comment</button>
+        <div id="pfYTStatus1" class="pf-status">ปลดล็อกขั้นต่อไป</div>
 
-        <button id="pfYT2" class="pf-btn pf-red pf-disabled">กดไลก์ คอมเมนต์ / 𝗟𝗶𝗸𝗲 & 𝗖𝗼𝗺𝗺𝗲𝗻𝘁</button>
-        <div id="pfYTStatus2" class="pf-status">ล็อกอยู่!</div>
+        <button id="pfYT2" class="pf-btn pf-red pf-disabled">Like & Comment</button>
+        <div id="pfYTStatus2" class="pf-status">ล็อกอยู่</div>
 
         <div id="pfProgress" class="pf-progress">
           <div class="pf-barBox"><div id="pfBar" class="pf-bar"></div></div>
           <div id="pfPercent" class="pf-percent">0%</div>
         </div>
 
-        <button id="pfEnter" class="pf-btn pf-green" style="display:none;">𝗖𝗼𝗻𝘁𝗶𝗻𝘂𝗲 𝘁𝗼 𝘄𝗲𝗯𝘀𝗶𝘁𝗲</button>
+        <button id="pfEnter" class="pf-btn pf-green" style="display:none;">ENTER</button>
       </div>
     </div>
   </div>
   `);
 
-  const mascotWrap = document.querySelector(".pf-mascotWrap");
-  const panel = document.querySelector(".pf-panel");
-  requestAnimationFrame(()=>{
-    mascotWrap.classList.add("show");
-    setTimeout(()=> panel.classList.add("show"), 400);
-  });
-
   const yt1=document.getElementById("pfYT1");
   const yt2=document.getElementById("pfYT2");
-  const ytStatus1=document.getElementById("pfYTStatus1");
-  const ytStatus2=document.getElementById("pfYTStatus2");
   const bar=document.getElementById("pfBar");
   const percent=document.getElementById("pfPercent");
   const progress=document.getElementById("pfProgress");
   const enter=document.getElementById("pfEnter");
 
   let done1=false, done2=false;
-  let yt1Time=0, yt2Time=0;
-  let yt1Running=false, yt2Running=false;
-  let lastTime=0;
+  let progressValue = 0;
 
   yt1.onclick=()=>{
-    if(done1) return;
-    window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
-    yt1Running=true;
-    lastTime=performance.now();
-    yt1.className="pf-btn pf-disabled";
-    ytStatus1.innerText="กรุณาทำตามขั้นตอน...";
+    window.open("https://youtu.be/-lCf-dBK1cs");
+    done1=true;
+    yt2.classList.remove("pf-disabled");
   };
 
   yt2.onclick=()=>{
-    if(!done1||done2) return;
-    window.open("https://youtu.be/DHsN-UjeDdU?si=nmCZtki5fyylgO7W");
-    yt2Running=true;
-    lastTime=performance.now();
-    yt2.className="pf-btn pf-disabled";
-    ytStatus2.innerText="กรุณาทำตามขั้นตอน...";
+    if(!done1) return;
+    window.open("https://youtu.be/DHsN-UjeDdU");
+    done2=true;
+    startProgress();
   };
-
-  setInterval(()=>{
-    const now=performance.now();
-    const dt=(now-lastTime)/1000;
-    lastTime=now;
-
-    if(document.visibilityState==="hidden"){
-      if(yt1Running && !done1){
-        yt1Time+=dt;
-        if(yt1Time>=3){
-          done1=true;
-          yt1Running=false;
-          yt1.className="pf-btn pf-green";
-          yt1.innerText="𝗖𝗼𝗺𝗽𝗹𝗲𝘁𝗲𝗱!";
-          ytStatus1.classList.add("done");
-          ytStatus1.innerText="สำเร็จแล้ว✅";
-          yt2.classList.remove("pf-disabled");
-        }
-      }
-
-      if(yt2Running && !done2 && done1){
-        yt2Time+=dt;
-        if(yt2Time>=3){
-          done2=true;
-          yt2Running=false;
-          yt2.className="pf-btn pf-green";
-          yt2.innerText="𝗖𝗼𝗺𝗽𝗹𝗲𝘁𝗲𝗱!";
-          ytStatus2.classList.add("done");
-          ytStatus2.innerText="สำเร็จแล้ว✅";
-          startProgress();
-        }
-      }
-    }
-
-  },100);
 
   function startProgress(){
     progress.style.display="block";
-    let start=performance.now(); let duration=5000;
-    function animate(now){
-      let t=(now-start)/duration; if(t>1)t=1;
-      let eased=1-Math.pow(1-t,3); let val=eased*100;
-      bar.style.width=val+"%"; percent.innerText=Math.floor(val)+"%";
-      if(t<1) requestAnimationFrame(animate);
-      else {percent.innerText="100%"; enter.style.display="block";}
+
+    function loop(){
+      // ✅ เดินเฉพาะตอนกลับมาหน้าเว็บ
+      if(document.visibilityState === "visible"){
+        progressValue += 0.5;
+        if(progressValue > 100) progressValue = 100;
+
+        bar.style.width = progressValue + "%";
+        percent.innerText = Math.floor(progressValue) + "%";
+      }
+
+      if(progressValue < 100){
+        requestAnimationFrame(loop);
+      }else{
+        enter.style.display="block";
+      }
     }
-    requestAnimationFrame(animate);
+
+    requestAnimationFrame(loop);
   }
 
   enter.onclick=()=>document.querySelector(".pf-overlay").remove();
