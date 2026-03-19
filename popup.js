@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div style="margin-bottom:10px;color:white;">Complete Steps</div>
 
         <button id="pfYT1" class="pf-btn pf-red">Like & Comment 1</button>
-        <div id="pfYTStatus1" class="pf-status">กรุณากดไลก์และคอมเมนต์ก่อน</div>
+        <div id="pfYTStatus1" class="pf-status">กรุณากดไลก์และคอมเมนต์เพื่อปลดล็อก</div>
 
         <button id="pfYT2" class="pf-btn pf-red pf-disabled">Like & Comment 2</button>
         <div id="pfYTStatus2" class="pf-status">ล็อคอยู่</div>
@@ -102,14 +102,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if(done1) return;
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
     yt1Opened=true; yt1Start=performance.now();
-    yt1.className="pf-btn pf-disabled"; ytStatus1.innerText="อยู่หน้า YouTube 3 วินาที...";
+    yt1.className="pf-btn pf-disabled"; ytStatus1.innerText="กรุณากดไลก์และคอมเมนต์ก่อน";
   };
 
   yt2.onclick=()=>{
     if(!done1||done2) return;
     window.open("https://youtu.be/DHsN-UjeDdU?si=nmCZtki5fyylgO7W");
     yt2Opened=true; yt2Start=performance.now();
-    yt2.className="pf-btn pf-disabled"; ytStatus2.innerText="อยู่หน้า YouTube 3 วินาที...";
+    yt2.className="pf-btn pf-disabled"; ytStatus2.innerText="กรุณากดไลก์และคอมเมนต์ก่อน";
   };
 
   const checkInterval=setInterval(()=>{
