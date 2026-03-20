@@ -548,8 +548,17 @@ document.onkeydown = function(e) {
 </script>
 
 <script>
-function openPage(id){
-  window.location.href = "script1.html?id=" + id;
+function openPage(key){
+
+  const token = Math.random().toString(36).substring(2);
+  const tabId = Math.random().toString(36).substring(2);
+  const time = Date.now();
+
+  sessionStorage.setItem("access_token", token);
+  sessionStorage.setItem("access_time", time);
+  sessionStorage.setItem("tab_id", tabId);
+
+  window.location.href = "script1.html?key=" + key + "&t=" + token + "&tab=" + tabId;
 }
 </script>
    
