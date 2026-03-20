@@ -1,4 +1,4 @@
-/* ===== BUTTON FIX ===== */
+
 .btn {
   width: 100%;
   padding: 12px;
@@ -14,26 +14,26 @@
   transition: transform .2s ease;
 }
 
-/* 🔴 ปกติ */
+
 .btn.gold {
   background: linear-gradient(135deg, #FFD700, #FF0000);
   color: #fff;
 }
 
-/* 🟢 completed */
+
 .btn.done {
   background: linear-gradient(135deg, #FFFF66, #00FF66) !important;
   color: #000 !important;
 }
 
-/* 🟢 ENTER */
+
 .btn.enter {
   background: linear-gradient(135deg, #FFFF66, #00FF66) !important;
   color: #000 !important;
   display: none;
 }
 
-/* hover ไม่เปลี่ยนสีแล้ว */
+
 .btn:hover {
   transform: translateY(-2px);
   filter: brightness(1.05);
