@@ -1,4 +1,4 @@
-// สร้างกล่องเตือน
+
 let warn = document.createElement("div")
 
 warn.id = "adblock-warning"
