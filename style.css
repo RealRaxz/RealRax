@@ -5,7 +5,7 @@ background:white;
 color:#333;
 }
 
-/* navbar */
+
 
 .navbar{
 position:fixed;
@@ -28,7 +28,7 @@ text-decoration:none;
 font-weight:bold;
 }
 
-/* hero */
+
 
 .hero{
 margin-top:70px;
@@ -44,7 +44,7 @@ margin:auto;
 padding:20px;
 }
 
-/* grid */
+
 
 .grid{
 display:grid;
@@ -52,7 +52,7 @@ grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:25px;
 }
 
-/* card */
+
 
 .card{
 background:white;
@@ -93,7 +93,7 @@ padding:4px 8px;
 border-radius:5px;
 }
 
-/* pagination */
+
 
 .pagination{
 text-align:center;
@@ -110,7 +110,7 @@ border-radius:5px;
 cursor:pointer;
 }
 
-/* script box */
+
 
 .script-box{
 background:white;
@@ -125,7 +125,7 @@ height:200px;
 resize:none;
 }
 
-/* toast */
+
 
 #toast{
 position:fixed;
