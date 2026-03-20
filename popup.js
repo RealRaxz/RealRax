@@ -74,6 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let yt1Running=false, yt2Running=false;
   let lastTime=0;
 
+  let progressStarted=false; // 🔥 กันซ้ำ
+
   yt1.onclick=()=>{
     if(done1) return;
     window.open("https://youtu.be/-lCf-dBK1cs?si=za60J3O5xnlSbgvd");
@@ -120,65 +122,53 @@ document.addEventListener("DOMContentLoaded", () => {
           yt2.innerText="𝗖𝗼𝗺𝗽𝗹𝗲𝘁𝗲𝗱!";
           ytStatus2.classList.add("done");
           ytStatus2.innerText="สำเร็จแล้ว✅";
-          startProgress();
         }
       }
     }
 
   },100);
 
-/* 🔥 FIX REAL PROGRESS (กันโหลดตอน hidden + resume smooth) */
-function startProgress(){
-  progress.style.display="block";
+  // 🔥 เริ่ม progress "หลังกลับหน้าเว็บเท่านั้น"
+  document.addEventListener("visibilitychange", () => {
+    if(document.visibilityState === "visible" && done1 && done2 && !progressStarted){
+      progressStarted = true;
+      startProgress();
+    }
+  });
 
-  let elapsed = 0;
-  let duration = 5000;
-  let last = null;
-  let started = false;
+  function startProgress(){
+    progress.style.display="block";
 
-  function animate(now){
+    let elapsed = 0;
+    let duration = 5000;
+    let last = performance.now();
 
-    // ❗ ถ้ายังไม่เคยเริ่ม → รอจน visible ก่อน
-    if(!started){
+    function animate(now){
       if(document.visibilityState === "visible"){
-        started = true;
-        last = now;
+        let dt = now - last;
+        elapsed += dt;
       }
-      requestAnimationFrame(animate);
-      return;
-    }
-
-    // ❗ ถ้า hidden → pause (ไม่เพิ่มเวลา)
-    if(document.visibilityState !== "visible"){
       last = now;
-      requestAnimationFrame(animate);
-      return;
+
+      let t = elapsed / duration;
+      if(t > 1) t = 1;
+
+      let eased = 1 - Math.pow(1 - t, 3);
+      let val = eased * 100;
+
+      bar.style.width = val + "%";
+      percent.innerText = Math.floor(val) + "%";
+
+      if(t < 1){
+        requestAnimationFrame(animate);
+      } else {
+        percent.innerText = "100%";
+        enter.style.display = "block";
+      }
     }
 
-    // ✅ นับเวลาเฉพาะตอนอยู่หน้าเว็บ
-    let dt = now - last;
-    last = now;
-    elapsed += dt;
-
-    let t = elapsed / duration;
-    if(t > 1) t = 1;
-
-    let eased = 1 - Math.pow(1 - t, 3);
-    let val = eased * 100;
-
-    bar.style.width = val + "%";
-    percent.innerText = Math.floor(val) + "%";
-
-    if(t < 1){
-      requestAnimationFrame(animate);
-    } else {
-      percent.innerText = "100%";
-      enter.style.display = "block";
-    }
+    requestAnimationFrame(animate);
   }
-
-  requestAnimationFrame(animate);
-}
 
   enter.onclick=()=>document.querySelector(".pf-overlay").remove();
 });
