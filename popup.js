@@ -127,50 +127,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
   },100);
 
-  /* 🔥 FIX จริง */
-  function startProgress(){
-    progress.style.display="block";
+/* 🔥 FIX REAL PROGRESS (กันโหลดตอน hidden + resume smooth) */
+function startProgress(){
+  progress.style.display="block";
 
-    let elapsed = 0;
-    let duration = 5000;
-    let last = performance.now();
-    let started = false;
+  let elapsed = 0;
+  let duration = 5000;
+  let last = null;
+  let started = false;
 
-    function animate(now){
+  function animate(now){
 
-      // ✅ เริ่มนับ "หลังกลับหน้าเว็บเท่านั้น"
+    // ❗ ถ้ายังไม่เคยเริ่ม → รอจน visible ก่อน
+    if(!started){
       if(document.visibilityState === "visible"){
-        if(!started){
-          started = true;
-          last = now;
-        }
-        let dt = now - last;
-        elapsed += dt;
-        last = now;
-      }else{
-        // ❌ ถ้าไม่อยู่หน้าเว็บ หยุดเวลา
+        started = true;
         last = now;
       }
-
-      let t = elapsed / duration;
-      if(t > 1) t = 1;
-
-      let eased = 1 - Math.pow(1 - t, 3);
-      let val = eased * 100;
-
-      bar.style.width = val + "%";
-      percent.innerText = Math.floor(val) + "%";
-
-      if(t < 1){
-        requestAnimationFrame(animate);
-      } else {
-        percent.innerText = "100%";
-        enter.style.display = "block";
-      }
+      requestAnimationFrame(animate);
+      return;
     }
 
-    requestAnimationFrame(animate);
+    // ❗ ถ้า hidden → pause (ไม่เพิ่มเวลา)
+    if(document.visibilityState !== "visible"){
+      last = now;
+      requestAnimationFrame(animate);
+      return;
+    }
+
+    // ✅ นับเวลาเฉพาะตอนอยู่หน้าเว็บ
+    let dt = now - last;
+    last = now;
+    elapsed += dt;
+
+    let t = elapsed / duration;
+    if(t > 1) t = 1;
+
+    let eased = 1 - Math.pow(1 - t, 3);
+    let val = eased * 100;
+
+    bar.style.width = val + "%";
+    percent.innerText = Math.floor(val) + "%";
+
+    if(t < 1){
+      requestAnimationFrame(animate);
+    } else {
+      percent.innerText = "100%";
+      enter.style.display = "block";
+    }
   }
+
+  requestAnimationFrame(animate);
+}
 
   enter.onclick=()=>document.querySelector(".pf-overlay").remove();
 });
