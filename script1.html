@@ -347,7 +347,7 @@ if(
   token !== savedToken ||
   tab !== savedTab ||
   !savedTime ||
-  (now - savedTime > 5000)
+  (now - savedTime > 30000)
 ){
   sessionStorage.clear();
   window.location.href = "index.html";
@@ -417,7 +417,7 @@ const titles=[
 ]
 
 
-let id = parseInt(params.get("id")) || 1;
+let id = parseInt(params.get("key")) || 1;
 
 if (id < 1 || id > scripts.length) {
   id = 1
