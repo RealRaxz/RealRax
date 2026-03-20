@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if(document.visibilityState==="hidden"){
       if(yt1Running && !done1){
         yt1Time+=dt;
-        if(yt1Time>=3){
+        if(yt1Time>=2){
           done1=true;
           yt1Running=false;
           yt1.className="pf-btn pf-green";
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if(yt2Running && !done2 && done1){
         yt2Time+=dt;
-        if(yt2Time>=3){
+        if(yt2Time>=2){
           done2=true;
           yt2Running=false;
           yt2.className="pf-btn pf-green";
