@@ -127,20 +127,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   },100);
 
-  /* 🔥 แก้เฉพาะตรงนี้ */
+  /* 🔥 FIX จริง */
   function startProgress(){
     progress.style.display="block";
 
     let elapsed = 0;
     let duration = 5000;
     let last = performance.now();
+    let started = false;
 
     function animate(now){
+
+      // ✅ เริ่มนับ "หลังกลับหน้าเว็บเท่านั้น"
       if(document.visibilityState === "visible"){
+        if(!started){
+          started = true;
+          last = now;
+        }
         let dt = now - last;
         elapsed += dt;
+        last = now;
+      }else{
+        // ❌ ถ้าไม่อยู่หน้าเว็บ หยุดเวลา
+        last = now;
       }
-      last = now;
 
       let t = elapsed / duration;
       if(t > 1) t = 1;
