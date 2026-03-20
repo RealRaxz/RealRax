@@ -1,4 +1,3 @@
-
 let warn = document.createElement("div")
 
 warn.id = "adblock-warning"
