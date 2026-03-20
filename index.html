@@ -527,5 +527,10 @@ draw()
 
 <script src="popup.js" defer></script>
    
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.onkeydown = function(e) {
+  if (e.key === "F12") return false;
+};
+   
 </body>
 </html>
