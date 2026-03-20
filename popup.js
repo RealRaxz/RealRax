@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const style = document.createElement("style");
-  style.innerHTML = `/* CSS เดิมของคุณ (ไม่เปลี่ยน) */ 
+  style.innerHTML = `/* CSS YOU (unchanged) */ 
   .pf-overlay{position:fixed; inset:0;backdrop-filter:blur(12px);background:rgba(0,0,0,.25);display:flex; justify-content:center; align-items:center;z-index:999999;font-family:sans-serif;}
   .pf-box{display:flex; flex-direction:column; align-items:center; gap:20px;}
   .pf-mascotWrap{opacity:0; transform:translateY(-60px) scale(0.92);transition: all 0.7s cubic-bezier(0.22,1,0.36,1);}
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let yt1Running=false, yt2Running=false;
   let lastTime=0;
 
-  let progressStarted=false; // 🔥 กันซ้ำ
+  let progressStarted=false; 
 
   yt1.onclick=()=>{
     if(done1) return;
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   },100);
 
-  // 🔥 เริ่ม progress "หลังกลับหน้าเว็บเท่านั้น"
+
   document.addEventListener("visibilitychange", () => {
     if(document.visibilityState === "visible" && done1 && done2 && !progressStarted){
       progressStarted = true;
