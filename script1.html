@@ -327,7 +327,31 @@ height:180px;
 
 <div id="toast">Script Copied</div>
 
+
 <script>
+
+// 🔒 ระบบกันเข้าตรง
+const params = new URLSearchParams(window.location.search);
+
+let token = params.get("t");
+let tab = params.get("tab");
+
+let savedToken = sessionStorage.getItem("access_token");
+let savedTime = parseInt(sessionStorage.getItem("access_time"));
+let savedTab = sessionStorage.getItem("tab_id");
+
+let now = Date.now();
+
+if(
+  !token ||
+  token !== savedToken ||
+  tab !== savedTab ||
+  !savedTime ||
+  (now - savedTime > 5000)
+){
+  sessionStorage.clear();
+  window.location.href = "index.html";
+}
 
 
 
@@ -392,10 +416,7 @@ const titles=[
 ]
 
 
-
-const params=new URLSearchParams(window.location.search)
-
-let id = parseInt(params.get("id")) || 1
+let id = parseInt(params.get("id")) || 1;
 
 if (id < 1 || id > scripts.length) {
   id = 1
