@@ -15,7 +15,7 @@ font-family:Arial;
 background:#f5f5f5;
 }
 
-/* NAVBAR */
+
 
 .navbar{
 background:#d60000;
@@ -33,7 +33,7 @@ margin-left:20px;
 font-weight:bold;
 }
 
-/* HERO */
+
 
 .hero{
 position:relative;
@@ -54,7 +54,7 @@ margin-top:10px;
 font-size:18px;
 }
 
-/* SNOW */
+
 
 #snowHero{
 position:absolute;
@@ -65,7 +65,7 @@ height:100%;
 pointer-events:none;
 }
 
-/* CONTAINER */
+
 
 .container{
 max-width:900px;
@@ -73,7 +73,7 @@ margin:auto;
 padding:30px;
 }
 
-/* CARD */
+
 
 .card{
 background:white;
@@ -83,7 +83,7 @@ padding:35px;
 text-align:center;
 }
 
-/* DOWNLOAD BUTTON */
+
 
 .download-btn{
 
@@ -107,7 +107,7 @@ transform:scale(1.05);
 
 }
 
-/* BACK BUTTON */
+
 
 .back-btn{
 
@@ -119,7 +119,7 @@ font-weight:bold;
 
 }
 
-/* TEXT */
+
 
 .info{
 
@@ -129,7 +129,7 @@ color:#444;
 
 }
 
-/* MOBILE */
+
 
 @media(max-width:700px){
 
@@ -150,7 +150,7 @@ gap:10px;
 
 <body>
 
-<!-- NAVBAR -->
+
 
 <div class="navbar">
 
@@ -164,7 +164,7 @@ gap:10px;
 
 </div>
 
-<!-- HERO -->
+
 
 <div class="hero">
 
@@ -176,7 +176,7 @@ gap:10px;
 
 </div>
 
-<!-- CONTENT -->
+
 
 <div class="container">
 
@@ -218,7 +218,7 @@ Auto Farm, Auto Level, Auto Raid และ Script อื่น ๆ ใน Roblox
 
 </div>
 
-<!-- DOWNLOAD BUTTON -->
+
 
 <a class="download-btn"
 href="#"
@@ -240,11 +240,11 @@ onclick="startDownload()">
 
 </div>
 
-<!-- SNOW SCRIPT -->
+
 
 <script>
 
-/* HERO SNOW */
+
 
 const canvas=document.getElementById("snowHero")
 const ctx=canvas.getContext("2d")
@@ -299,11 +299,11 @@ draw()
 
 </script>
 
-<!-- 🔥 ADS SYSTEM -->
+
 
 <script>
 
-// 🔥 ป้องกันยิงซ้ำ
+
 let clicked = false;
 
 function startDownload(){
@@ -311,24 +311,24 @@ function startDownload(){
 if(clicked) return;
 clicked = true;
 
-// 🔥 Smartlink หลัก
+
 let smartlink1 = "https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724beb73c4d19b77466165";
 
-// 🔥 Popunder เพิ่ม (ใส่ลิงก์อีกตัวได้)
+
 let smartlink2 = "https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6";
 
-// 🔥 ไฟล์จริง
+
 let realDownload = "https://delta.filenetwork.vip/file/Delta-2.711.876-02.apk";
 
-// 👉 ยิง Popup Under (2 ชั้น)
+
 window.open(smartlink1, "_blank");
 
-// ดีเลย์เล็กน้อยแล้วยิงอีกตัว (กันโดนบล็อก)
+
 setTimeout(()=>{
 window.open(smartlink2, "_blank");
 }, 300);
 
-// 👉 ดีเลย์ก่อนโหลดจริง
+
 setTimeout(()=>{
 window.location.href = realDownload;
 }, 3000);
@@ -337,7 +337,7 @@ window.location.href = realDownload;
 
 </script>
 
-<!-- 🔥 SOCIAL BAR (ใส่โค้ดจริงจากเว็บโฆษณาแทนได้เลย) -->
+
 <script src="https://airconditionstrodefist.com/8b/f9/c2/8bf9c2a00d1d723faf2111b54b17a1bd.js"></script>
 
 </body>
