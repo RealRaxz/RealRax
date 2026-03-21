@@ -555,6 +555,18 @@ function openPage(key){
   window.location.href = "script1.html?key=" + key + "&t=" + token + "&tab=" + tabId;
 }
 </script>
+
+<script>
+window.addEventListener("pageshow", function(event) {
+  if (event.persisted || window.performance.navigation.type === 2) {
+    // ล้าง session เก่า
+    sessionStorage.clear();
+
+    // รีโหลดหน้า เพื่อบังคับ popup / เงื่อนไขใหม่
+    location.reload();
+  }
+});
+</script>
    
 </body>
 </html>
