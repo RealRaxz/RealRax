@@ -6,16 +6,25 @@
 <head>
 
 <meta charset="UTF-8">
+<script src="https://unpkg.com/lucide@latest"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>RealRax Scripts</title>
+<title>RealRax Hub</title>
 
 <style>
+
+:root{
+--main:#d60000;
+--dark:#990000;
+--light:#ff4040;
+--active:#b30000;
+--bg:#f5f5f5;
+}
 
 body{
 margin:0;
 font-family:Arial;
-background:#f5f5f5;
+background:var(--bg);
 }
 
 
@@ -23,13 +32,14 @@ background:#f5f5f5;
 .navbar{
 position:sticky;
 top:0;
-background:#d60000;
+background:var(--main);
 color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:12px 30px;
 z-index:1000;
+box-shadow:0 4px 12px rgba(0,0,0,0.15);
 }
 
 .logo{
@@ -56,7 +66,7 @@ font-weight:bold;
 
 .hero{
 position:relative;
-background:linear-gradient(#d60000,#ff4040);
+background:linear-gradient(var(--dark),var(--light));
 color:white;
 text-align:center;
 padding:90px 20px;
@@ -116,7 +126,7 @@ margin-bottom:25px;
 margin:5px;
 padding:8px 14px;
 border:none;
-background:#d60000;
+background:var(--main);
 color:white;
 border-radius:6px;
 cursor:pointer;
@@ -145,14 +155,15 @@ gap:25px;
 .card{
 background:white;
 border-radius:12px;
+border:2px solid var(--light);
 box-shadow:0 8px 20px rgba(0,0,0,0.1);
 overflow:hidden;
-transition:.3s;
+transition:0.25s ease;
 }
 
 .card:hover{
 transform:translateY(-6px);
-box-shadow:0 12px 28px rgba(0,0,0,0.2);
+box-shadow:0 12px 28px rgba(214,0,0,0.35);
 }
 
 .card img{
@@ -176,7 +187,7 @@ font-size:13px;
 .card button{
 display:inline-block;
 margin:15px;
-background:#d60000;
+background:var(--main);
 color:white;
 padding:10px 16px;
 border-radius:6px;
@@ -195,14 +206,14 @@ margin-top:40px;
 margin:4px;
 padding:8px 12px;
 border:none;
-background:#d60000;
+background:var(--main);
 color:white;
 border-radius:5px;
 cursor:pointer;
 }
 
 .pagination button.active{
-background:#990000;
+background:var(--active);
 }
 
 /* TITLES */
@@ -239,6 +250,18 @@ grid-template-columns:repeat(2,1fr);
 font-size:28px;
 }
 }
+
+.categories button:hover{
+background:var(--dark);
+}
+
+.card button:hover{
+background:var(--dark);
+}
+
+.pagination button:hover{
+background:var(--dark);
+}
    
 </style>
 
@@ -250,7 +273,7 @@ font-size:28px;
 
 <div class="logo">
 <img src="mascot1.png">
-<b>RealRax Scripts</b>
+<b>RealRax Hub</b>
 </div>
 
 <div class="nav-links">
@@ -265,7 +288,7 @@ font-size:28px;
 
 <canvas id="snowHero"></canvas>
 
-<h1>RealRax Script Library</h1>
+<h1>RealRax Hub Library</h1>
 <p>Free Roblox Scripts</p>
 
 </div>
@@ -284,9 +307,9 @@ font-size:28px;
 
 <div class="categories">
 <button onclick="filterCategory('all')">All</button>
-<button onclick="filterCategory('blox')">Blox Fruits</button>
-<button onclick="filterCategory('anime')">Anime</button>
-<button onclick="filterCategory('sim')">Simulator</button>
+<button onclick="filterCategory('Blox Fruits')">Blox Fruits</button>
+<button onclick="filterCategory('Fisch')">Fisch</button>
+<button onclick="filterCategory('another')">another</button>
 </div>
 
 <div id="scripts" class="grid"></div>
@@ -297,9 +320,9 @@ font-size:28px;
 
 <footer>
 
-RealRax Scripts<br>
+RealRax Hub<br>
 Free Roblox Script Library<br><br>
-© 2026 RealRax
+© 2026 RealRax Hub
 
 </footer>
 
@@ -310,39 +333,38 @@ Free Roblox Script Library<br><br>
 const defaultThumb="https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"
 
 /* DATABASE */
-
-const scripts=[
    
-{ id:1, title:"🔥𝗡𝗲𝘄 𝗙𝗶𝘀𝗵 𝗦𝗰𝗿𝗶𝗽𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/lUeRb1mXMOo/maxresdefault.jpg"},
-{ id:2, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/w4SMkisfER0/maxresdefault.jpg"},
-{ id:3, title:"🔥𝗡𝗲𝘄 𝗘𝘀𝗰𝗮𝗽𝗲 𝗦𝘂𝗻𝗮𝗺𝗶",cat:"blox",thumb:"https://img.youtube.com/vi/Cbf6cTNZU9k/maxresdefault.jpg"},
-{ id:4, title:"🔥𝗡𝗲𝘄 𝗘𝘀𝗰𝗮𝗽𝗲 𝗦𝘂𝗻𝗮𝗺𝗶",cat:"blox",thumb:"https://img.youtube.com/vi/Cd8V4aPgQlQ/maxresdefault.jpg"},
-{ id:5, title:"🔥𝗡𝗲𝘄 𝗘𝘀𝗰𝗮𝗽𝗲 𝗦𝘂𝗻𝗮𝗺𝗶",cat:"blox",thumb:"https://img.youtube.com/vi/Xt0T1P1VkFk/maxresdefault.jpg"},
-{ id:6, title:"🔥𝗡𝗲𝘄 𝗕𝗿𝗲𝗮𝗸 𝗟𝘂𝗰𝗸𝘆 𝗕𝗹𝗼𝗰𝗸",cat:"blox",thumb:"https://img.youtube.com/vi/I-gV7E5nQOw/maxresdefault.jpg"},
-{ id:7, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/9ljB0oY3Di0/maxresdefault.jpg"},
-{ id:8, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/7ODi4G1S7oI/maxresdefault.jpg"},
-   
-{ id:9, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/DHsN-UjeDdU/maxresdefault.jpg"},
-{ id:10, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/cpwUSz5DDeU/maxresdefault.jpg"},
-{ id:11, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/FDXR4wV7_xY/maxresdefault.jpg"},
-{ id:12, title:"🔥𝗡𝗲𝘄 𝗚𝗮𝗿𝗱𝗲𝗻 𝗛𝗼𝗿𝗶𝘇𝗼𝗻𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/C1UuwAgE5Ds/maxresdefault.jpg"},
-{ id:13, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/-EPAv0hRwPc/maxresdefault.jpg"},
-{ id:14, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/FCfEYlq-RRg/maxresdefault.jpg"},
-{ id:15, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg"},
-{ id:16, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/-lCf-dBK1cs/maxresdefault.jpg"},
+let scripts=[]
+let filtered=[]
+let trendingData=[]
 
-{ id:17, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/NxcjNO1i2vw/maxresdefault.jpg"},
-{ id:18, title:"🔥𝗡𝗲𝘄 𝗕𝗹𝗼𝘅 𝗙𝗿𝘂𝗶𝘁𝘀",cat:"blox",thumb:"https://img.youtube.com/vi/8nZ66uuYJEA/maxresdefault.jpg"},
-   
-]
+fetch("database.json")
+.then(res=>res.json())
+.then(data=>{
 
-scripts.reverse()
+scripts=data.scripts.reverse()
+
+/* เอาเฉพาะตัวที่ trending=true */
+trendingData = scripts.filter(s => s.trending === true)
+
+filtered=[...scripts]
+
+renderTrending()
+render()
+
+})
 
 /* TRENDING */
 
+function renderTrending(){
+
 let trending=document.getElementById("trending")
 
-scripts.slice(0,3).forEach((s,i)=>{
+trending.innerHTML=""
+
+trendingData
+.slice(0,3)
+.forEach(s=>{
 
 let thumb=s.thumb || defaultThumb
 
@@ -354,22 +376,24 @@ trending.innerHTML+=`
 
 <h3>${s.title}</h3>
 
-<div class="status">🟢 𝙒𝙤𝙧𝙠𝙞𝙣𝙜</div>
+<div class="status">🟢 Working</div>
 
 <button onclick="openPage(${s.id})">
 📜 Get Script
 </button>
 
 </div>
+
 `
 
 })
+
+}
 
 /* PAGINATION */
 
 let perPage=8
 let currentPage=1
-let filtered=[...scripts]
 
 function render(){
 
@@ -461,17 +485,21 @@ render()
 function filterCategory(cat){
 
 if(cat=="all"){
+
 filtered=[...scripts]
+
 }else{
-filtered=scripts.filter(s=>s.cat==cat)
+
+filtered=scripts.filter(
+s => s.category && s.category.toLowerCase().trim().includes(cat.toLowerCase().trim())
+)
+
 }
 
 currentPage=1
 render()
 
 }
-
-render()
 
 /* HERO SNOW */
 
