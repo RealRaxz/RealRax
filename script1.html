@@ -9,10 +9,18 @@
 
 <style>
 
+:root{
+--main:#d60000;
+--dark:#990000;
+--light:#ff4040;
+--active:#b30000;
+--bg:#f5f5f5;
+}
+
 body{
 margin:0;
 font-family:Arial;
-background:#f5f5f5;
+background:var(--bg);
 }
 
 .logo{
@@ -31,13 +39,14 @@ object-fit:cover;
 .navbar{
 position:sticky;
 top:0;
-background:#d60000;
+background:var(--main);
 color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:12px 30px;
 z-index:1000;
+box-shadow:0 4px 12px rgba(0,0,0,0.15);
 }
 
 .navbar a{
@@ -73,23 +82,24 @@ z-index:1;
 
 .script-box{
 
-background:linear-gradient(180deg,#ffffff,#f3f3f3);
+background:linear-gradient(180deg,#ffffff,#f5f5f5);
 padding:30px;
 border-radius:14px;
 
 box-shadow:
 0 12px 28px rgba(0,0,0,0.15),
-0 0 0 2px rgba(214,0,0,0.08);
+0 0 0 2px rgba(214,0,0,0.25);
 
-transition:.3s;
-
+transition:0.25s ease;
 }
 
 .script-box:hover{
 
 box-shadow:
 0 14px 34px rgba(0,0,0,0.2),
-0 0 0 2px rgba(214,0,0,0.15);
+0 0 0 2px rgba(153,0,0,0.35);
+
+transform:translateY(-4px);
 
 }
 
@@ -126,7 +136,7 @@ height:220px;
 padding:12px;
 
 border-radius:8px;
-border:1px solid #ccc;
+border:1px solid var(--light);
 
 font-family:monospace;
 
@@ -134,13 +144,22 @@ resize:none;
 
 }
 
+textarea:focus{
+
+outline:none;
+
+border:1px solid var(--main);
+
+box-shadow:0 0 0 2px rgba(214,0,0,0.25);
+
+}
 
 
 .copy-btn{
 
 margin-top:14px;
 
-background:#d60000;
+background:var(--main);
 color:white;
 
 border:none;
@@ -153,10 +172,20 @@ cursor:pointer;
 
 font-size:15px;
 
+transition:0.25s ease;
+
+box-shadow:0 4px 12px rgba(214,0,0,0.25);
+
 }
 
 .copy-btn:hover{
-background:#b80000;
+
+background:var(--dark);
+
+box-shadow:0 8px 20px rgba(224,154,45,0.45);
+
+transform:scale(1.05);
+
 }
 
 
@@ -170,7 +199,7 @@ left:50%;
 
 transform:translateX(-50%);
 
-background:#d60000;
+background:var(--main);
 color:white;
 
 padding:12px 20px;
@@ -197,7 +226,7 @@ display:inline-block;
 
 margin-top:20px;
 
-color:#d60000;
+color:var(--main);
 text-decoration:none;
 font-weight:bold;
 
@@ -231,7 +260,7 @@ height:180px;
 
 <div class="logo">
   <img src="mascot1.png">
-  <b>RealRax Scripts</b>
+  <b>RealRax Hub</b>
 </div>
 
 <div>
@@ -252,13 +281,12 @@ height:180px;
 
 <div class="section">
 
-<h2>รายละเอียด</h2>
+<h2>details</h2>
 
 <p>✨ <b>Roblox Auto Script Guide</b> 🎮</p>
 
 <p>
-สคริปต์นี้ถูกพัฒนาเพื่อช่วยให้การเล่นเกม Roblox สะดวกและรวดเร็วมากขึ้น
-ระบบภายในสามารถทำงานอัตโนมัติได้หลายอย่าง เช่น
+สคริปต์นี้ถูกพัฒนาเพื่อช่วยให้การเล่นเกม Roblox สะดวกและรวดเร็วมากขึ้น ระบบภายในสามารถทำงานอัตโนมัติได้หลายอย่าง เช่น
 </p>
 
 <ul>
@@ -268,18 +296,15 @@ height:180px;
 </ul>
 
 <p>
-ตัวสคริปต์ถูกออกแบบมาให้รองรับ Executor หลายประเภท
-ทำให้สามารถใช้งานกับ Roblox Script Runner ยอดนิยมได้
+ตัวสคริปต์ถูกออกแบบมาให้รองรับ Executor หลายประเภท ทำให้สามารถใช้งานกับ Roblox Script Runner ยอดนิยมได้
 </p>
 
 <p>
-📋 ผู้ใช้สามารถคัดลอกสคริปต์ไปใช้งานได้ทันที
-โดยไม่ต้องแก้ไขโค้ดใด ๆ
+📋 ผู้ใช้สามารถคัดลอกสคริปต์ไปใช้งานได้ทันที โดยไม่ต้องแก้ไขโค้ดใด ๆ
 </p>
 
 <p>
-🚀 เหมาะสำหรับผู้เล่นที่ต้องการ
-ฟาร์มเร็วขึ้น ประหยัดเวลา และเพิ่มประสิทธิภาพในการเล่น Roblox
+🚀 เหมาะสำหรับผู้เล่นที่ต้องการ ฟาร์มเร็วขึ้น ประหยัดเวลา และเพิ่มประสิทธิภาพในการเล่น Roblox
 </p>
 
 </div>
@@ -291,7 +316,7 @@ height:180px;
 <div class="howto">
 
 <div class="step">
-<b>📌 วิธีใช้งาน | How to Use</b>
+<b>📌 How to Use</b>
 </div>
 
 <div class="step">
@@ -333,7 +358,7 @@ height:180px;
 
 <br>
 
-<a class="back" href="index.html">← กลับหน้า Scripts</a>
+<a class="back" href="index.html">← Return to Scripts page</a>
 
 </div>
 
@@ -367,124 +392,64 @@ if(
   window.location.href = "index.html";
 }
 
+let scripts=[];
 
+fetch("database.json")
+.then(res=>res.json())
+.then(data=>{
 
-const scripts=[
-  
-`loadstring(game:HttpGet("https://zenithhub.cloud/panel/script"))()`,
-`repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
-loadstring(game:HttpGet("https://leaf-zeta.onrender.com/api/script"))()`,
-`loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()`,
-`loadstring(game:HttpGet("https://raw.githubusercontent.com/ekuve/ekuvehub/main/main.lua"))()`,
-`loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()`,
-`loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()`,
-`loadstring(game:HttpGet("https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/Main-BF.lua"))()`,
-`loadstring(game:HttpGet("https://raw.githubusercontent.com/Anniecreate86/BloxFruits/refs/heads/main/BetaHub-BF"))()`,
+scripts=data.scripts;
 
-`Leaf HUB👇
- 
-repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer
-loadstring(game:HttpGet("https://github.com/LeafHubAcademy/LeafHub/raw/refs/heads/main/Leaf.lua"))()
- 
-OMG HUB👇
- 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua"))()`,
-`loadstring(game:HttpGet("https://raw.githubusercontent.com/Jadelly/bloxfruit/refs/heads/main/HighLoader", true))()`,
-`repeat task.wait() until game:IsLoaded() and game:GetService("Players") and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild("PlayerGui")
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TEDDYHUB-FREEMIUM"))()`,
-`loadstring(game:HttpGet("https://raw.githubusercontent.com/meobeo8/a/a/a"))()`,
-`Config = {
-Team = "Pirates",
-Configuration = {
-HopWhenIdle = true,
-AutoHop = true,
-AutoHopDelay = 60 * 60,
-FpsBoost = false,
-BlackScreen = true
-},
-Items = {
--- Melees
-AutoFullyMelees = true,
--- Swords
-Saber = true,
-CursedDualKatana = true,
--- Guns
-SoulGuitar = false,
--- Upgrades
-RaceV2 = true
-},
-Settings = {
-StayInSea2UntilHaveDarkFragments = false
-}
-}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/hhl29042008-ops/script/refs/heads/main/cac"))()`,
-`local Settings = {
-JoinTeam = "Pirates"; -- Pirates/Marines
-Translator = true; -- true/false
-}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/newredz/refs/heads/main/Remake-version.luau"))(Settings)`,
-`loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/MaruHubV1/refs/heads/main/MainV1.Lua "))()`,
-`repeat task.wait() until game:IsLoaded() and game:GetService("Players") and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild("PlayerGui")
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TEDDYHUB-FREEMIUM"))()
-`,
+let id=parseInt(params.get("key")) || 1;
 
-`loadstring(game:HttpGet("https://raw.githubusercontent.com/HieuDepTrai-Z/Dev_Orange/refs/heads/main/OrangeHub.lua"))()`,
-`getgenv().SCRIPT_KEY = "KEYLESS" loadstring(game:HttpGet("https://raw.githubusercontent.com/DEKTHAT0XX/all_hub/refs/heads/main/DEKTAI.lua"))()`
+let scriptData=scripts.find(s=>s.id==id);
 
-  
-]
+if(!scriptData){
 
-const titles=[
-  
-"🔥fish Auto farm",
-"🔥Blox Fruits Auto Farm",
-"🔥Escape T Sunami1",
-"🔥Escape T Sunami2",
-"🔥Escape T Sunami3",
-"🔥Break A Lucky Block",
-"🔥Blox Fruits Auto Farm",
-"🔥Blox Fruits Auto Farm",
-  
-"🔥Blox Fruits Auto Farm",
-"🔥Blox Fruits Auto Farm",
-"🔥Blox Fruits Auto Farm",
-"🔥garden Horizons",
-"🔥Blox Fruits Auto Farm",
-"🔥Blox Fruits Auto Farm",
-"🔥Blox Fruits Auto Farm",
-"🔥Blox Fruits Auto Farm",
-  
-"🔥Blox Fruits Auto Farm",
-"🔥Blox Fruits Auto Farm"
+scriptData=scripts[0];
 
-]
-
-
-let id = parseInt(params.get("key")) || 1;
-
-if (id < 1 || id > scripts.length) {
-  id = 1
 }
 
-document.getElementById("script").value=scripts[id-1]
+document.getElementById("script").value=
+scriptData.script;
 
-document.getElementById("title").innerText=titles[id-1]
+document.getElementById("title").innerText=
+scriptData.title;
+
+});
 
 
+  
+let clickedOnce = false;
 
 function copyScript(){
 
+// ครั้งแรก → เปิด Smart Link
+if(!clickedOnce){
+
+clickedOnce = true;
+
+window.open(
+"https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",
+"_blank"
+);
+
+return;
+
+}
+
+// ครั้งที่สอง → ค่อย Copy
 navigator.clipboard.writeText(
 document.getElementById("script").value
-)
+);
 
-let toast=document.getElementById("toast")
+let toast=document.getElementById("toast");
 
-toast.classList.add("show")
+toast.classList.add("show");
 
 setTimeout(()=>{
-toast.classList.remove("show")
-},2000)
+toast.classList.remove("show");
+},2000);
 
 }
 
@@ -551,11 +516,8 @@ requestAnimationFrame(draw)
 draw()
 
 </script>
-
-<script src="ads.js"></script>
-
-<script src="antiadblock.js"></script>
-
+  
+  
 <script>
 
 window.onload=function(){
@@ -568,8 +530,13 @@ window.open(
 }
 
 </script>
+  
+
+<script src="ads.js"></script>
 
 <script src="antiadblock.js"></script>
 
+<script src="https://airconditionstrodefist.com/48/6b/e9/486be951557a940606cb3f3d6ce342d3.js"></script>
+  
 </body>
 </html>
