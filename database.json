@@ -1,0 +1,149 @@
+{
+  "trending": [],
+  "scripts": [
+    {
+      "id": 1776833233175,
+      "title": "🔥New Fisch Script",
+      "category": "Fisch",
+      "thumb": "https://img.youtube.com/vi/lUeRb1mXMOo/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://zenithhub.cloud/panel/script\"))()",
+      "trending": false
+    },
+    {
+      "id": 1776833308960,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/w4SMkisfER0/maxresdefault.jpg",
+      "script": "repeat wait() until game:IsLoaded() and game.Players.LocalPlayer\nloadstring(game:HttpGet(\"https://leaf-zeta.onrender.com/api/script\"))()",
+      "trending": false
+    },
+    {
+      "id": 1776833381258,
+      "title": "🔥New Escape Sunami",
+      "category": "another",
+      "thumb": "https://img.youtube.com/vi/Cbf6cTNZU9k/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua\", true))()",
+      "trending": false
+    },
+    {
+      "id": 1776833455902,
+      "title": "🔥New Escape Sunami",
+      "category": "another",
+      "thumb": "https://img.youtube.com/vi/Cd8V4aPgQlQ/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/ekuve/ekuvehub/main/main.lua\"))()",
+      "trending": false
+    },
+    {
+      "id": 1776833503072,
+      "title": "🔥New Escape Sunami",
+      "category": "another",
+      "thumb": "https://img.youtube.com/vi/Xt0T1P1VkFk/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua\", true))()",
+      "trending": false
+    },
+    {
+      "id": 1776833548780,
+      "title": "🔥New Break a Lucky Block",
+      "category": "another",
+      "thumb": "https://img.youtube.com/vi/I-gV7E5nQOw/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua\", true))()",
+      "trending": false
+    },
+    {
+      "id": 1776833630898,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/9ljB0oY3Di0/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/Main-BF.lua\"))()",
+      "trending": false
+    },
+    {
+      "id": 1776833660795,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/7ODi4G1S7oI/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Anniecreate86/BloxFruits/refs/heads/main/BetaHub-BF\"))()",
+      "trending": false
+    },
+    {
+      "id": 1776833719832,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/DHsN-UjeDdU/maxresdefault.jpg",
+      "script": "`Leaf HUB👇\n \nrepeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer\nloadstring(game:HttpGet(\"https://github.com/LeafHubAcademy/LeafHub/raw/refs/heads/main/Leaf.lua\"))()\n \nOMG HUB👇\n \nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua\"))()",
+      "trending": false
+    },
+    {
+      "id": 1776833768952,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/cpwUSz5DDeU/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Jadelly/bloxfruit/refs/heads/main/HighLoader\", true))()",
+      "trending": false
+    },
+    {
+      "id": 1776841188094,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/FDXR4wV7_xY/maxresdefault.jpg",
+      "script": "repeat task.wait() until game:IsLoaded() and game:GetService(\"Players\") and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild(\"PlayerGui\")\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TEDDYHUB-FREEMIUM\"))()",
+      "trending": false
+    },
+    {
+      "id": 1776841234237,
+      "title": "🔥New Garden Horizons",
+      "category": "another",
+      "thumb": "https://img.youtube.com/vi/C1UuwAgE5Ds/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/meobeo8/a/a/a\"))()",
+      "trending": false
+    },
+    {
+      "id": 1776841323492,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/-EPAv0hRwPc/maxresdefault.jpg",
+      "script": "Config = {\nTeam = \"Pirates\",\nConfiguration = {\nHopWhenIdle = true,\nAutoHop = true,\nAutoHopDelay = 60 * 60,\nFpsBoost = false,\nBlackScreen = true\n},\nItems = {\n-- Melees\nAutoFullyMelees = true,\n-- Swords\nSaber = true,\nCursedDualKatana = true,\n-- Guns\nSoulGuitar = false,\n-- Upgrades\nRaceV2 = true\n},\nSettings = {\nStayInSea2UntilHaveDarkFragments = false\n}\n}\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/hhl29042008-ops/script/refs/heads/main/cac\"))()",
+      "trending": false
+    },
+    {
+      "id": 1776841357153,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/FCfEYlq-RRg/maxresdefault.jpg",
+      "script": "local Settings = {\nJoinTeam = \"Pirates\"; -- Pirates/Marines\nTranslator = true; -- true/false\n}\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/PlockScripts/newredz/refs/heads/main/Remake-version.luau\"))(Settings)",
+      "trending": false
+    },
+    {
+      "id": 1776841387155,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/ueHLbrNRBlI/maxresdefault.jpg",
+      "script": "`loadstring(game:HttpGet(\"https://raw.githubusercontent.com/longhihilonghihi-hub/MaruHubV1/refs/heads/main/MainV1.Lua \"))()",
+      "trending": false
+    },
+    {
+      "id": 1776841428163,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/-lCf-dBK1cs/maxresdefault.jpg",
+      "script": "repeat task.wait() until game:IsLoaded() and game:GetService(\"Players\") and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild(\"PlayerGui\")\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TEDDYHUB-FREEMIUM\"))()",
+      "trending": true
+    },
+    {
+      "id": 1776841474245,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/NxcjNO1i2vw/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/HieuDepTrai-Z/Dev_Orange/refs/heads/main/OrangeHub.lua\"))()",
+      "trending": true
+    },
+    {
+      "id": 1776841529077,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/8nZ66uuYJEA/maxresdefault.jpg",
+      "script": "getgenv().SCRIPT_KEY = \"KEYLESS\" loadstring(game:HttpGet(\"https://raw.githubusercontent.com/DEKTHAT0XX/all_hub/refs/heads/main/DEKTAI.lua\"))()",
+      "trending": true
+    }
+  ]
+}
