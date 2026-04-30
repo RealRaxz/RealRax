@@ -9,21 +9,30 @@
 
 <style>
 
+:root{
+--main:#d60000;
+--dark:#a80000;
+--light:#ff3c3c;
+--active:#a80000;
+--bg:#f5f5f5;
+}
+
 body{
 margin:0;
 font-family:Arial;
-background:#f5f5f5;
+background:var(--bg);
 }
 
 
 
 .navbar{
-background:#d60000;
+background:var(--main);
 color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:12px 30px;
+box-shadow:0 4px 12px rgba(0,0,0,0.15);
 }
 
 .nav-links a{
@@ -37,7 +46,7 @@ font-weight:bold;
 
 .hero{
 position:relative;
-background:linear-gradient(#d60000,#ff3c3c);
+background:linear-gradient(var(--dark),var(--light));
 color:white;
 text-align:center;
 padding:90px 20px;
@@ -78,32 +87,40 @@ padding:30px;
 .card{
 background:white;
 border-radius:12px;
+border:2px solid var(--main);
 box-shadow:0 10px 25px rgba(0,0,0,0.1);
 padding:35px;
 text-align:center;
 }
 
+.card:hover{
+box-shadow:0 12px 28px rgba(0,0,0,0.15);
+transform:translateY(-4px);
+transition:0.25s ease;
+}
 
 
 .download-btn{
 
 display:inline-block;
 margin-top:25px;
-background:#d60000;
+background:var(--main);
 color:white;
 padding:16px 28px;
 font-size:18px;
 border-radius:10px;
 text-decoration:none;
 font-weight:bold;
-transition:0.3s;
+transition:0.25s ease;
+box-shadow:0 4px 12px rgba(0,0,0,0.15);
 
 }
 
 .download-btn:hover{
 
-background:#a80000;
+background:var(--dark);
 transform:scale(1.05);
+box-shadow:0 8px 20px rgba(0,0,0,0.25);
 
 }
 
@@ -113,7 +130,7 @@ transform:scale(1.05);
 
 display:inline-block;
 margin-top:15px;
-color:#d60000;
+color:var(--main);
 text-decoration:none;
 font-weight:bold;
 
@@ -154,12 +171,12 @@ gap:10px;
 
 <div class="navbar">
 
-<div><b>RealRax Scripts</b></div>
+<div><b>RealRax Hub</b></div>
 
 <div class="nav-links">
 <a href="index.html">Home</a>
 <a href="download.html">Download</a>
-<a href="https://youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
+<a href="https://www.youtube.com/@RealRaxScripts" target="_blank">YouTube</a>
 </div>
 
 </div>
@@ -187,8 +204,7 @@ gap:10px;
 <div class="info">
 
 <p>
-Delta Executor เป็นโปรแกรมสำหรับรัน Roblox Script ที่ได้รับความนิยมอย่างมากในหมู่ผู้เล่น Roblox  
-ใช้งานง่าย รองรับสคริปต์หลากหลาย และสามารถรัน Script ได้อย่างรวดเร็ว
+Delta Executor เป็นโปรแกรมสำหรับรัน Roblox Script ที่ได้รับความนิยมอย่างมากในหมู่ผู้เล่น Roblox ใช้งานง่าย รองรับสคริปต์หลากหลาย และสามารถรัน Script ได้อย่างรวดเร็ว
 </p>
 
 <p>
@@ -208,8 +224,7 @@ Delta Executor เป็นโปรแกรมสำหรับรัน Robl
 </p>
 
 <p>
-ตัว Executor นี้สามารถใช้รันสคริปต์ เช่น
-Auto Farm, Auto Level, Auto Raid และ Script อื่น ๆ ใน Roblox ได้
+ตัว Executor นี้สามารถใช้รันสคริปต์ เช่น Auto Farm, Auto Level, Auto Raid และ Script อื่น ๆ ใน Roblox ได้
 </p>
 
 <p>
@@ -318,7 +333,7 @@ let smartlink1 = "https://airconditionstrodefist.com/gtxj7z09s?key=1a543aabeb724
 let smartlink2 = "https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6";
 
 
-let realDownload = "https://delta.filenetwork.vip/file/Delta-2.713.911.apk";
+let realDownload = "https://delta.filenetwork.vip/android.html";
 
 
 window.open(smartlink1, "_blank");
