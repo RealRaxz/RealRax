@@ -147,7 +147,7 @@
     },
     {
       "id": 1777544060936,
-      "title": "🔥Blox Fruits",
+      "title": "🔥New Blox Fruits",
       "category": "Blox Fruits",
       "thumb": "https://img.youtube.com/vi/_sl8VdYCc7E/maxresdefault.jpg",
       "script": "script_key = \"\" -- default is FREEMIUM]\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/BF-Beta.lua\"))()",
