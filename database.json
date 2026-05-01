@@ -160,6 +160,14 @@
       "thumb": "https://img.youtube.com/vi/9MTDbiTw04w/maxresdefault.jpg",
       "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/gumanba/Scripts/main/KickaLuckyBlock\"))()",
       "trending": false
+    },
+    {
+      "id": 1777622649612,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/1fFe1DM86rg/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://relzhub.com/loader\"))()",
+      "trending": false
     }
   ]
 }
