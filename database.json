@@ -168,6 +168,14 @@
       "thumb": "https://img.youtube.com/vi/1fFe1DM86rg/maxresdefault.jpg",
       "script": "loadstring(game:HttpGet(\"https://relzhub.com/loader\"))()",
       "trending": false
+    },
+    {
+      "id": 1777695157692,
+      "title": "🍀Kick a Lucky Block",
+      "category": "another",
+      "thumb": "https://img.youtube.com/vi/5ceznG8ecys/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/kosowa02/x/refs/heads/main/kickaluckyblockk\"))()",
+      "trending": false
     }
   ]
 }
