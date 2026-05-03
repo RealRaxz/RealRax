@@ -176,6 +176,14 @@
       "thumb": "https://img.youtube.com/vi/5ceznG8ecys/maxresdefault.jpg",
       "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/kosowa02/x/refs/heads/main/kickaluckyblockk\"))()",
       "trending": false
+    },
+    {
+      "id": 1777806136460,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/ob9Dus1BSEs/maxresdefault.jpg",
+      "script": "repeat wait() until game:IsLoaded() and game.Players.LocalPlayer \ngetgenv().team = \"Marines\" --  Marines or Pirates\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/Dev-NightMystic/Bloxfruits/refs/heads/main/Script.lua\"))()",
+      "trending": false
     }
   ]
 }
