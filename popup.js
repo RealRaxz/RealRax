@@ -197,7 +197,7 @@ if(window.lucide){
 
       if(yt1Running && !done1){
         yt1Time+=dt;
-        if(yt1Time>=2){
+        if(yt1Time>=1.5){
           done1=true;
           yt1Running=false;
           yt1.className="pf-btn pf-green";
@@ -211,7 +211,7 @@ lucide.createIcons();
 
       if(yt2Running && !done2 && done1){
         yt2Time+=dt;
-        if(yt2Time>=2){
+        if(yt2Time>=1.5){
           done2=true;
           yt2Running=false;
           yt2.className="pf-btn pf-green";
@@ -225,7 +225,7 @@ lucide.createIcons();
 
       if(yt3Running && !done3 && done2){
         yt3Time+=dt;
-        if(yt3Time>=2){
+        if(yt3Time>=1.5){
           done3=true;
           yt3Running=false;
           yt3.className="pf-btn pf-green";
