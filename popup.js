@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <button id="pfYT1" class="pf-btn pf-red">
   <i data-lucide="thumbs-up"></i>
-  <span>กดติดตาม ไลก์ คอมเมนต์ / 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗯𝗲 & 𝗖𝗼𝗺𝗺𝗲𝗻𝘁</span>
+  <span>กดติดตาม คอมเมนต์ / 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗯𝗲 & 𝗖𝗼𝗺𝗺𝗲𝗻𝘁</span>
 </button>
 <div id="pfYTStatus1" class="pf-status">To unlock the next level!</div>
 
