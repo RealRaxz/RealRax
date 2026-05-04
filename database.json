@@ -184,6 +184,14 @@
       "thumb": "https://img.youtube.com/vi/ob9Dus1BSEs/maxresdefault.jpg",
       "script": "repeat wait() until game:IsLoaded() and game.Players.LocalPlayer \ngetgenv().team = \"Marines\" --  Marines or Pirates\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/Dev-NightMystic/Bloxfruits/refs/heads/main/Script.lua\"))()",
       "trending": false
+    },
+    {
+      "id": 1777882233775,
+      "title": "🍀Kick a Lucky Block",
+      "category": "another",
+      "thumb": "https://img.youtube.com/vi/IlwqQQ5ODP0/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/gumanba/Scripts/main/KickaLuckyBlock\"))()",
+      "trending": false
     }
   ]
 }
