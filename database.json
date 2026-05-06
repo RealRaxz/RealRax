@@ -200,6 +200,14 @@
       "thumb": "https://img.youtube.com/vi/OgMAW3FkP98/maxresdefault.jpg",
       "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Huylovemy/Bearhudz/refs/heads/main/Bearhud.lua\"))()",
       "trending": false
+    },
+    {
+      "id": 1778072096787,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/OQGSJCawE60/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/TurboLite/Script/refs/heads/main/MainV2.lua\"))()",
+      "trending": false
     }
   ]
 }
