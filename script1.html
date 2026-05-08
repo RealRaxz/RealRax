@@ -369,7 +369,7 @@ height:180px;
 
 <script>
 
-// 🔒 ระบบกันเข้าตรง
+
 const params = new URLSearchParams(window.location.search);
 
 let token = params.get("t");
@@ -421,24 +421,18 @@ scriptData.title;
 
   
 let clickedOnce = false;
+let adWaiting = false;
+
+let tokenActive = false;
+
+let adTimer = null;
+let tokenTimer = null;
 
 function copyScript(){
 
-// ครั้งแรก → เปิด Smart Link
-if(!clickedOnce){
 
-clickedOnce = true;
+if(tokenActive){
 
-window.open(
-"https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",
-"_blank"
-);
-
-return;
-
-}
-
-// ครั้งที่สอง → ค่อย Copy
 navigator.clipboard.writeText(
 document.getElementById("script").value
 );
@@ -451,8 +445,66 @@ setTimeout(()=>{
 toast.classList.remove("show");
 },2000);
 
+return;
+
 }
 
+
+if(!clickedOnce){
+
+clickedOnce = true;
+adWaiting = true;
+
+window.open(
+"https://airconditionstrodefist.com/zamjdwmm?key=4632b457606c55aeef029a52d64159f6",
+"_blank"
+);
+
+
+clearTimeout(adTimer);
+
+adTimer = setTimeout(()=>{
+
+clickedOnce = false;
+adWaiting = false;
+
+},10000);
+
+return;
+
+}
+
+
+if(adWaiting){
+
+adWaiting = false;
+tokenActive = true;
+
+navigator.clipboard.writeText(
+document.getElementById("script").value
+);
+
+let toast=document.getElementById("toast");
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+toast.classList.remove("show");
+},2000);
+
+
+clearTimeout(tokenTimer);
+
+tokenTimer = setTimeout(()=>{
+
+tokenActive = false;
+clickedOnce = false;
+
+},5000);
+
+}
+
+}
 
 
 const canvas=document.getElementById("snow")
