@@ -224,6 +224,14 @@
       "thumb": "https://img.youtube.com/vi/55YBfoiyvvA/maxresdefault.jpg",
       "script": "getgenv().SettingFarm ={\n    [\"Team\"] = \"Pirates\",\n    [\"Configuration\"] = {\n        [\"HopWhenIdle\"] = true,\n        [\"AutoHop\"] = true,\n        [\"AutoHopDelay\"] = 60 * 60,\n        [\"FpsBoost\"] = false,\n        [\"AutoExecute\"] = true,\n    },\n    [\"Settings\"] = {\n        [\"StayInSea2UntilHaveDarkFragments\"] = true,\n    },\n    [\"Race\"] = {\n        [\"Select Race\"] = {\"Mink\"},\n        [\"Reroll Race\"] = true,\n    },\n    [\"Lock Fps\"] = {\n        [\"Enabled\"] = false,\n        [\"FPS\"] = 10,\n    },\n    [\"Get Items\"] = {\n        [\"Saber\"] = true,\n        [\"All Melees\"] =  true,\n        [\"Skull Guitar\"] = true,\n        [\"Cursed Dual Katana\"] = true,\n        [\"RaceV2\"] = true,\n    },\n    [\"Select Hop\"] = { \n        [\"Hop Find Cake Queen [CDK]\"] = true,\n        [\"Hop Find Fruit [Raid]\"] = true,\n        [\"Hop Find Don Swan [Trevor]\"] = true,\n    },\n    [\"Buy Items\"] = {\n        [\"Abilitys\"] = true,\n        [\"Base Swords\"] = true,\n        [\"Legendary Swords\"] = true,\n        [\"Haki Scrolls\"] = true,\n    },\n    [\"Sniper Fruit Shop\"] = {\n        [\"Enabled\"] = true,\n        [\"Fruit\"] = {\"Leopard-Leopard\",\"Kitsune-Kitsune\",\"Dragon-Dragon\",\"Yeti-Yeti\",\"Gas-Gas\"},\n    },\n    [\"Webhook\"] = {\n        [\"Enabled\"] = false,\n        [\"WebhookUrl\"] = \"\",\n    }\n}\ngetgenv().Mode = \"Kaitun\"\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua\"))()",
       "trending": false
+    },
+    {
+      "id": 1778383269393,
+      "title": "🦠New Slime RNG",
+      "category": "another",
+      "thumb": "https://img.youtube.com/vi/US7mm44CjdY/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/gumanba/Scripts/main/SlimeRNG\"))()",
+      "trending": false
     }
   ]
 }
