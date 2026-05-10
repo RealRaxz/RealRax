@@ -232,6 +232,14 @@
       "thumb": "https://img.youtube.com/vi/US7mm44CjdY/maxresdefault.jpg",
       "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/gumanba/Scripts/main/SlimeRNG\"))()",
       "trending": false
+    },
+    {
+      "id": 1778403609928,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/zhefSIiOyhs/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/Main-Premium.lua\"))()",
+      "trending": false
     }
   ]
 }
