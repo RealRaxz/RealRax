@@ -240,6 +240,14 @@
       "thumb": "https://img.youtube.com/vi/zhefSIiOyhs/maxresdefault.jpg",
       "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/Main-Premium.lua\"))()",
       "trending": false
+    },
+    {
+      "id": 1778819122676,
+      "title": "🔥Blox Fruits - Katakuri V2",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/gAMzdeby9FY/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/fakekuri/Okhubhere/refs/heads/main/MainBloxFruit.lua\"))()",
+      "trending": false
     }
   ]
 }
