@@ -172,7 +172,7 @@ if(window.lucide){
 
   yt2.onclick=()=>{
     if(!done1||done2) return;
-    window.open("https://youtu.be/4q96VhFssrk","_blank");
+    window.open("https://youtu.be/7ODi4G1S7oI","_blank");
     yt2Running=true;
     lastTime=performance.now();
     yt2.className="pf-btn pf-disabled";
@@ -181,7 +181,7 @@ if(window.lucide){
 
   yt3.onclick=()=>{
     if(!done2||done3) return;
-    window.open("https://youtu.be/OQGSJCawE60","_blank");
+    window.open("https://youtu.be/vhA0mCmY6iI","_blank");
     yt3Running=true;
     lastTime=performance.now();
     yt3.className="pf-btn pf-disabled";
