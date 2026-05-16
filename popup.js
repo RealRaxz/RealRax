@@ -172,7 +172,7 @@ if(window.lucide){
 
   yt2.onclick=()=>{
     if(!done1||done2) return;
-    window.open("https://youtu.be/OgMAW3FkP98","_blank");
+    window.open("https://youtu.be/4q96VhFssrk","_blank");
     yt2Running=true;
     lastTime=performance.now();
     yt2.className="pf-btn pf-disabled";
