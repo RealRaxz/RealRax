@@ -256,6 +256,14 @@
       "thumb": "https://img.youtube.com/vi/4q96VhFssrk/maxresdefault.jpg",
       "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/RealRyx/MainDraco/refs/heads/main/DracoMain.lua\"))()",
       "trending": false
+    },
+    {
+      "id": 1779090954173,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/jtXwpfsYvW0/maxresdefault.jpg",
+      "script": "getgenv().Team = \"Marines\" getgenv().Hide_Menu = false getgenv().Auto_Execute = false loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Xero2409/XeroHub/refs/heads/main/main.lua\"))()",
+      "trending": false
     }
   ]
 }
