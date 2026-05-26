@@ -280,6 +280,14 @@
       "thumb": "https://img.youtube.com/vi/0qvz9UoyuvI/maxresdefault.jpg",
       "script": "-- Provided by: https://pastelua.com\nloadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/0d93b3994306893ab5a1f693d5dfe2e9.lua\"))()",
       "trending": false
+    },
+    {
+      "id": 1779789707062,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/IKBOEh7k2WA/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/VoidDeveloper67/Void-Hub/refs/heads/main/VoidHub.lua\", true))()",
+      "trending": false
     }
   ]
 }
