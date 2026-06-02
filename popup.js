@@ -181,7 +181,7 @@ if(window.lucide){
 
   yt3.onclick=()=>{
     if(!done2||done3) return;
-    window.open("https://youtu.be/_qFVwxv7cxY","_blank");
+    window.open("https://youtu.be/vx_dY9tAuag","_blank");
     yt3Running=true;
     lastTime=performance.now();
     yt3.className="pf-btn pf-disabled";
