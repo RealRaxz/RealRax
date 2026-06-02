@@ -296,6 +296,14 @@
       "thumb": "https://img.youtube.com/vi/_qFVwxv7cxY/maxresdefault.jpg",
       "script": "local Settings = {\n  JoinTeam = \"Pirates\"; -- Pirates/Marines\n  Translator = true; -- true/false\n}\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/newredzv3/Scripts/refs/heads/main/main.luau\"))(Settings)",
       "trending": false
+    },
+    {
+      "id": 1780386700671,
+      "title": "🌱Build A Ring Farm",
+      "category": "another",
+      "thumb": "https://img.youtube.com/vi/vx_dY9tAuag/maxresdefault.jpg",
+      "script": "-- Provided by: https://pastelua.com\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/lamduck2005/RobloxScript/master/build-a-ring-farm.lua\", true))()",
+      "trending": false
     }
   ]
 }
