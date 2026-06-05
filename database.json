@@ -304,6 +304,14 @@
       "thumb": "https://img.youtube.com/vi/vx_dY9tAuag/maxresdefault.jpg",
       "script": "-- Provided by: https://pastelua.com\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/lamduck2005/RobloxScript/master/build-a-ring-farm.lua\", true))()",
       "trending": false
+    },
+    {
+      "id": 1780637315805,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/u1e0uyuakKA/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/46e9345c183cf7b7257d7e9476828918.lua\"))()",
+      "trending": false
     }
   ]
 }
