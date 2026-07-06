@@ -312,6 +312,14 @@
       "thumb": "https://img.youtube.com/vi/u1e0uyuakKA/maxresdefault.jpg",
       "script": "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/46e9345c183cf7b7257d7e9476828918.lua\"))()",
       "trending": false
+    },
+    {
+      "id": 1783322558522,
+      "title": "🌱Grow A garden 2",
+      "category": "another",
+      "thumb": "https://img.youtube.com/vi/L28agx7Mjbg/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://www.nolag.wtf\"))()",
+      "trending": false
     }
   ]
 }
