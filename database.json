@@ -320,6 +320,14 @@
       "thumb": "https://img.youtube.com/vi/L28agx7Mjbg/maxresdefault.jpg",
       "script": "loadstring(game:HttpGet(\"https://www.nolag.wtf\"))()",
       "trending": false
+    },
+    {
+      "id": 1784092808876,
+      "title": "🔥New Blox Fruits",
+      "category": "Blox Fruits",
+      "thumb": "https://img.youtube.com/vi/emp4r4tQnt4/maxresdefault.jpg",
+      "script": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/fakekuri/idk-hub/refs/heads/main/RedzHub.luau\"))()",
+      "trending": false
     }
   ]
 }
